@@ -1,0 +1,13 @@
+#!/bin/bash
+
+NAME=antenna
+NAME=signal
+
+
+for size in 16 32 64 128 256 512 1024; do
+    out=${NAME}-${size}.png
+    echo "  * $out"
+    /Applications/Inkscape.app/Contents/MacOS/inkscape -o "${out}" -w ${size} -h ${size} ${NAME}.svg
+    #convert -resize ${size}x${size} ${NAME}.svg ${NAME}-${size}.png
+done
+

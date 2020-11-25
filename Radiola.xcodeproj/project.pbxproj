@@ -1,0 +1,366 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		395F2B00255C7B2600153EE8 /* AddStationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395F2AFF255C7B2600153EE8 /* AddStationController.swift */; };
+		3997FCEB247D65E000D51E1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3997FCEA247D65E000D51E1E /* AppDelegate.swift */; };
+		3997FCEF247D65E300D51E1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3997FCEE247D65E300D51E1E /* Assets.xcassets */; };
+		3997FCF2247D65E300D51E1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3997FCF0247D65E300D51E1E /* Main.storyboard */; };
+		3997FCFB247D699C00D51E1E /* StationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3997FCFA247D699C00D51E1E /* StationsViewController.swift */; };
+		3997FCFD247D6E0B00D51E1E /* Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3997FCFC247D6E0B00D51E1E /* Stations.swift */; };
+		39DCB4C0254F555B009E401B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4BF254F555B009E401B /* Player.swift */; };
+		39DCB4C4254F6EE2009E401B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4C3254F6EE2009E401B /* Notifications.swift */; };
+		39DCB4CC2550B544009E401B /* StationsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4CB2550B544009E401B /* StationsWindowController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		395F2AFF255C7B2600153EE8 /* AddStationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddStationController.swift; path = Radiola/AddStationController.swift; sourceTree = SOURCE_ROOT; };
+		3997FCE7247D65E000D51E1E /* Radiola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Radiola.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3997FCEA247D65E000D51E1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3997FCEE247D65E300D51E1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3997FCF1247D65E300D51E1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3997FCF3247D65E300D51E1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3997FCF4247D65E300D51E1E /* Radiola.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Radiola.entitlements; sourceTree = "<group>"; };
+		3997FCFA247D699C00D51E1E /* StationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsViewController.swift; sourceTree = "<group>"; };
+		3997FCFC247D6E0B00D51E1E /* Stations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stations.swift; sourceTree = "<group>"; };
+		39DCB4BF254F555B009E401B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		39DCB4C3254F6EE2009E401B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		39DCB4CB2550B544009E401B /* StationsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsWindowController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3997FCE4247D65E000D51E1E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3997FCDE247D65E000D51E1E = {
+			isa = PBXGroup;
+			children = (
+				3997FCE9247D65E000D51E1E /* Radiola */,
+				3997FCE8247D65E000D51E1E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3997FCE8247D65E000D51E1E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3997FCE7247D65E000D51E1E /* Radiola.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3997FCE9247D65E000D51E1E /* Radiola */ = {
+			isa = PBXGroup;
+			children = (
+				39DCB4BF254F555B009E401B /* Player.swift */,
+				3997FCEA247D65E000D51E1E /* AppDelegate.swift */,
+				39DCB4C3254F6EE2009E401B /* Notifications.swift */,
+				3997FCEE247D65E300D51E1E /* Assets.xcassets */,
+				3997FCF0247D65E300D51E1E /* Main.storyboard */,
+				3997FCFC247D6E0B00D51E1E /* Stations.swift */,
+				3997FCF3247D65E300D51E1E /* Info.plist */,
+				39DCB4BE254F51B8009E401B /* StationsView */,
+				3997FCF4247D65E300D51E1E /* Radiola.entitlements */,
+			);
+			path = Radiola;
+			sourceTree = "<group>";
+		};
+		39DCB4BE254F51B8009E401B /* StationsView */ = {
+			isa = PBXGroup;
+			children = (
+				395F2AFF255C7B2600153EE8 /* AddStationController.swift */,
+				3997FCFA247D699C00D51E1E /* StationsViewController.swift */,
+				39DCB4CB2550B544009E401B /* StationsWindowController.swift */,
+			);
+			path = StationsView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3997FCE6247D65E000D51E1E /* Radiola */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3997FCF7247D65E300D51E1E /* Build configuration list for PBXNativeTarget "Radiola" */;
+			buildPhases = (
+				3997FCE3247D65E000D51E1E /* Sources */,
+				3997FCE4247D65E000D51E1E /* Frameworks */,
+				3997FCE5247D65E000D51E1E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Radiola;
+			productName = Radiola;
+			productReference = 3997FCE7247D65E000D51E1E /* Radiola.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3997FCDF247D65E000D51E1E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1210;
+				ORGANIZATIONNAME = "Alex Sokolov";
+				TargetAttributes = {
+					3997FCE6247D65E000D51E1E = {
+						CreatedOnToolsVersion = 11.4;
+					};
+				};
+			};
+			buildConfigurationList = 3997FCE2247D65E000D51E1E /* Build configuration list for PBXProject "Radiola" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3997FCDE247D65E000D51E1E;
+			productRefGroup = 3997FCE8247D65E000D51E1E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3997FCE6247D65E000D51E1E /* Radiola */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3997FCE5247D65E000D51E1E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3997FCEF247D65E300D51E1E /* Assets.xcassets in Resources */,
+				3997FCF2247D65E300D51E1E /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3997FCE3247D65E000D51E1E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				39DCB4CC2550B544009E401B /* StationsWindowController.swift in Sources */,
+				395F2B00255C7B2600153EE8 /* AddStationController.swift in Sources */,
+				39DCB4C4254F6EE2009E401B /* Notifications.swift in Sources */,
+				39DCB4C0254F555B009E401B /* Player.swift in Sources */,
+				3997FCFB247D699C00D51E1E /* StationsViewController.swift in Sources */,
+				3997FCFD247D6E0B00D51E1E /* Stations.swift in Sources */,
+				3997FCEB247D65E000D51E1E /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3997FCF0247D65E300D51E1E /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3997FCF1247D65E300D51E1E /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3997FCF5247D65E300D51E1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		3997FCF6247D65E300D51E1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		3997FCF8247D65E300D51E1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Radiola/Radiola.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 635H9TYSZJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Radiola/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.SokoloffA.Radiola;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		3997FCF9247D65E300D51E1E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Radiola/Radiola.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 635H9TYSZJ;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Radiola/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.github.SokoloffA.Radiola;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3997FCE2247D65E000D51E1E /* Build configuration list for PBXProject "Radiola" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3997FCF5247D65E300D51E1E /* Debug */,
+				3997FCF6247D65E300D51E1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3997FCF7247D65E300D51E1E /* Build configuration list for PBXNativeTarget "Radiola" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3997FCF8247D65E300D51E1E /* Debug */,
+				3997FCF9247D65E300D51E1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3997FCDF247D65E000D51E1E /* Project object */;
+}
