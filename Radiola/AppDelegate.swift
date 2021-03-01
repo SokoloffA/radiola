@@ -52,7 +52,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        NSApp.setActivationPolicy(.prohibited)
+        NSApp.setActivationPolicy(.accessory)
         
         let fileName = URL(
             fileURLWithPath: oplFileName,
@@ -81,10 +81,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(rebuildMenu),
                                                name: Notification.Name.StationsChanged,
-                                               object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(windowClose),
-                                               name: NSWindow.willCloseNotification,
                                                object: nil)
         
         let favorites = stationsStore.favorites()
@@ -319,17 +315,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.activate(ignoringOtherApps: true)
     }
     
-    @objc func windowClose() {
-        var windowsCnt = 0
-        for w in NSApp.windows {
-            if w.isVisible && w.canHide {
-                windowsCnt += 1
-            }
-        }
-        
-        if (windowsCnt == 1) {
-            NSApp.setActivationPolicy(.prohibited)
-        }
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        NSApp.setActivationPolicy(.accessory)
+        return false
     }
 
 }
