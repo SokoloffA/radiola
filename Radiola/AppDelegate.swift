@@ -23,8 +23,9 @@ extension String {
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    private let oplFileName = "com.github.SokoloffA.Radiola/bookmarks.opml"
-
+    private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
+    private let oplFileName = "bookmarks.opml"
+    
     private let lastStationKey    = "Url"
     private let recentStationsKey = "RecentStations"
     private let recentStationsLengt = 5
@@ -54,9 +55,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSApp.setActivationPolicy(.accessory)
         
-        let fileName = URL(
-            fileURLWithPath: oplFileName,
+        let dirName = URL(
+            fileURLWithPath: oplDirectoryName,
             relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+        
+        let fileName = URL(
+            fileURLWithPath: oplDirectoryName + "/" + oplFileName,
+            relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+        
+        if !FileManager.default.fileExists(atPath: dirName.absoluteString) {
+            do {
+                try FileManager.default.createDirectory(at: dirName, withIntermediateDirectories: true)
+            }
+            catch {
+                fatalError(error.localizedDescription)
+            }
+        }
         
         stationsStore.load(file: fileName)
 

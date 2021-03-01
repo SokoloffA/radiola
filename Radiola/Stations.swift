@@ -81,7 +81,7 @@ private class Reader: NSObject, XMLParserDelegate {
 }
 
 private class Writer {
-    func write(file: URL, stations: [Station]) {
+    func write(file: URL, stations: [Station]) throws {
         let root = XMLElement(name: "opml")
         root.setAttributesAs(["version" : "2.0"])
         let doc = XMLDocument(rootElement: root)
@@ -97,7 +97,8 @@ private class Writer {
             ])
             body.addChild(outline)
         }
-        try? doc.xmlData(options: XMLNode.Options.nodePrettyPrint).write(to: file)
+        
+        try doc.xmlData(options: XMLNode.Options.nodePrettyPrint).write(to: file)
     }
     
 }
@@ -120,8 +121,14 @@ final class StationsStore: ObservableObject {
 
     func write() {
         if file != nil {
+            print(file!)
             let writer = Writer()
-            writer.write(file: self.file!, stations: stations)
+            do {
+                try writer.write(file: self.file!, stations: stations)
+            }
+            catch {
+                fatalError(error.localizedDescription)
+            }
         }
     }
     
