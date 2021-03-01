@@ -109,7 +109,11 @@ class StationsViewController: NSViewController {
      *
      * ****************************************/
     @IBAction func favClicked(sender: NSButton){
-        guard let row = selectedRow() else { return }
+        let row = self.tableView.row(for: sender)
+        if row < 0 && row >= stationsStore.stations.count {
+            return
+        }
+        
         stationsStore.stations[row].isFavorite = !stationsStore.stations[row].isFavorite
         self.tableView.reloadData(forRowIndexes: [row], columnIndexes: [0])
         emitChanged()
