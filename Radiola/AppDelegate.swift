@@ -33,13 +33,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var recentStations: [String] = []
     
     @IBOutlet weak var mainMenu: NSMenu!
-    //var mainWindowController: NSWindowController!
     
     let player = Player()
     private let settings = UserDefaults.standard
-    
-    private let playItem =
-        NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
     
     private let menuItem =
         NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
@@ -76,16 +72,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         
         setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
-        rebuildMenu()
-        
-        playerStatusChanged()
-//        setIcon(item: playItem, icon: "StatusBarPlay")
-        playItem.button?.action = #selector(togglePlay(_:))
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(playerStatusChanged),
-                                               name: Notification.Name.PlayerStatusChanged,
-                                               object: nil)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateTooltip),
@@ -111,10 +97,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
-        playerStatusChanged()
-        
+        //playerStatusChanged()
+        rebuildMenu()
     }
-    
     
     
     /* ****************************************
@@ -122,10 +107,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     @objc func rebuildMenu() {
         let menu = NSMenu()
-        buildRecentMenu(menu: menu)
+       
+        let item = NSMenuItem()
+        item.target = self
+        item.isEnabled = true
+        let playItemView = PlayItemView()//(frame: NSRect(x: 0, y: 0, width: 400, height: 44))
+        item.view = playItemView
+        menu.addItem(item)
+
         menu.addItem(NSMenuItem.separator())
-        buildFavoritesMenu(menu: menu)
         
+//        buildRecentMenu(menu: menu)
+//        menu.addItem(NSMenuItem.separator())
+        buildFavoritesMenu(menu: menu)
 
         menu.addItem(NSMenuItem.separator())
         
@@ -133,11 +127,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             title: "Open Radiola",
             action: #selector(showStationView(_:)),
             keyEquivalent: ""))
-        
-//        menu.addItem(NSMenuItem(
-//            title: "About Radiola".tr,
-//            action: #selector(NSApplication.orderFrontStandardAboutPanel(_:)),
-//            keyEquivalent: ""))
         
         menu.addItem(NSMenuItem(
             title: "Quit".tr,
@@ -151,7 +140,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
-    func buildRecentMenu(menu: NSMenu) {
+/*    func buildRecentMenu(menu: NSMenu) {
             
         guard let recentStations = settings.stringArray(forKey: recentStationsKey) else { return }
         if recentStations.isEmpty  {
@@ -174,7 +163,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-    
+*/
     /* ****************************************
      *
      * ****************************************/
@@ -189,9 +178,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             item.tag = station.id
             
-            //if station.url == player.station.url {
-            //    item.state = NSControl.StateValue.on
-           // }
             menu.addItem(item)
         }
     }
@@ -226,12 +212,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc func stationClicked(_ sender: NSMenuItem) {
-        /*       let n = sender.tag
-         if n >= stationsStore.favorites().count {
-         return
-         }
-         let station = favorites[n]
-         */
         guard let station = stationsStore.station(byId: sender.tag) else {
             return
         }
@@ -251,23 +231,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
-    @objc func playerStatusChanged() {
-        guard let playButton = playItem.button else {
-            return
-        }
-                
-        addRecentStation(url: player.station.url)
-        
-        if player.status == Player.Status.playing {
-            setIcon(item: playItem, icon: "StatusBarPause")
-        } else {
-            setIcon(item: playItem, icon: "StatusBarPlay")
-            playButton.isEnabled  = !player.station.isEmpty
-        }
-
-        rebuildMenu()
-        updateTooltip()
-    }
+//    @objc func playerStatusChanged() {
+//        guard let playButton = playItem.button else {
+//            return
+//        }
+//
+//        addRecentStation(url: player.station.url)
+//
+//        if player.status == Player.Status.playing {
+//            setIcon(item: playItem, icon: "StatusBarPause")
+//        } else {
+//            setIcon(item: playItem, icon: "StatusBarPlay")
+//            playButton.isEnabled  = !player.station.isEmpty
+//        }
+//
+//        rebuildMenu()
+//        updateTooltip()
+//    }
     
     /* ****************************************
      *
@@ -292,11 +272,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     @objc func updateTooltip() {
         if player.isPlaying {
-            playItem.button?.toolTip = player.station.name + "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" + player.title;
+            menuItem.button?.toolTip = player.station.name + "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" + player.title;
         } else {
-            playItem.button?.toolTip = player.station.name
+            menuItem.button?.toolTip = player.station.name
         }
-        menuItem.button?.toolTip = playItem.button?.toolTip
+       // playItem.button?.toolTip = menuItem.button?.toolTip
     }
     
     var stationsWindowController : StationsWindowController? = nil
@@ -310,13 +290,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.regular)
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
 
-        
-        
-//        guard let viewController = storyboard.instantiateController(withIdentifier: "StationsViewController") as? StationsViewController else {
-//            fatalError("Error getting view controller")
-//        }
-//
-//        viewController.player = player
         if (stationsWindowController == nil) {
             guard let wc = storyboard.instantiateController(withIdentifier: "StationsWindowController") as? StationsWindowController    else {
                 fatalError("Error getting main window controller")

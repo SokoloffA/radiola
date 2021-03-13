@@ -36,6 +36,7 @@ class Player: NSObject {
         
         player = AVPlayer(playerItem: playerItem)
         // player.volume = 0.01
+        player.volume = 0.5
 
         player.addObserver(self,
                             forKeyPath: #keyPath(AVPlayer.timeControlStatus),
@@ -106,6 +107,7 @@ class Player: NSObject {
             self.status = .playing
         } else {
             self.status = .paused
+            NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
         }
         NotificationCenter.default.post(name: Notification.Name.PlayerStatusChanged, object: nil)
     }
