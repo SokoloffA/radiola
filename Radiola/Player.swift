@@ -11,7 +11,16 @@ import AVFoundation
 
 class Player: NSObject {
     var station: Station = Station(id: 0, name: "", url: "")
-    
+    public var title = String()
+
+    public enum Status {
+        case paused
+        case connecting
+        case playing
+    }
+
+    public var status = Status.paused
+
     private var playerItemContext = 0
     private var player : AVPlayer!
     private var playerItem: AVPlayerItem!
@@ -25,18 +34,21 @@ class Player: NSObject {
             return
         }
         
+//        let u2 = URL(string: "file:/Users/sokoloff/tmp/music.wav")!
         asset = AVAsset(url: u)
-        let assetKeys = [
-            "playable",
-            "hasProtectedContent"
-        ]
+//        let assetKeys = [
+//            "playable",
+//            "hasProtectedContent"
+//        ]
 
-        playerItem = AVPlayerItem(asset: asset,
-                                  automaticallyLoadedAssetKeys: assetKeys)
-        
+//        playerItem = AVPlayerItem(asset: asset,
+//                                  automaticallyLoadedAssetKeys: assetKeys)
+
+        playerItem = AVPlayerItem(asset: asset)
         player = AVPlayer(playerItem: playerItem)
         // player.volume = 0.01
         player.volume = 0.5
+
 
         player.addObserver(self,
                             forKeyPath: #keyPath(AVPlayer.timeControlStatus),
@@ -103,18 +115,27 @@ class Player: NSObject {
     }
     
     private func statusChenged(status: AVPlayer.TimeControlStatus) {
-        if (status == AVPlayer.TimeControlStatus.playing) {
+
+        switch (status) {
+
+        case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
+            self.status = .connecting
+            NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
+            
+        case AVPlayer.TimeControlStatus.playing:
             self.status = .playing
-        } else {
+
+        default:
             self.status = .paused
             NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
         }
+        
         NotificationCenter.default.post(name: Notification.Name.PlayerStatusChanged, object: nil)
     }
 
     //****************************************
     // Metadata
-    public var title = String()
+
     
     private func metaDataReady(metadata: [AVMetadataItem]) {
         for m in metadata {
@@ -131,11 +152,5 @@ class Player: NSObject {
     }
  
     
-    public enum Status {
-        case paused
-        case playing
-    }
-
-    public var status = Status.paused
     var isPlaying: Bool { return status == Status.playing }
 }

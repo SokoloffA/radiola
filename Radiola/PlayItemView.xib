@@ -20,15 +20,15 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4gl-fd-kDk">
-                    <rect key="frame" x="50" y="24" width="233" height="16"/>
+                    <rect key="frame" x="56" y="22" width="227" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Song Title" id="bdB-Yn-5GV">
                         <font key="font" metaFont="systemSemibold" size="13"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4WC-0o-pqP">
-                    <rect key="frame" x="50" y="5" width="233" height="14"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4WC-0o-pqP">
+                    <rect key="frame" x="56" y="4" width="227" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" title="Station" id="fhw-Be-fXK">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -36,7 +36,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="K8Y-NX-RzQ">
-                    <rect key="frame" x="2" y="2" width="40" height="40"/>
+                    <rect key="frame" x="8" y="2" width="40" height="40"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="K8Y-NX-RzQ" secondAttribute="height" multiplier="1:1" id="v1T-sF-0Jg"/>
                     </constraints>
@@ -52,9 +52,10 @@
             <constraints>
                 <constraint firstItem="4gl-fd-kDk" firstAttribute="trailing" secondItem="c22-O7-iKe" secondAttribute="trailing" id="8rq-p5-Cdt"/>
                 <constraint firstAttribute="top" secondItem="K8Y-NX-RzQ" secondAttribute="top" constant="-8" id="Ira-i9-N34"/>
-                <constraint firstItem="K8Y-NX-RzQ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="TaA-9U-dA8"/>
-                <constraint firstItem="4gl-fd-kDk" firstAttribute="top" secondItem="K8Y-NX-RzQ" secondAttribute="top" constant="-4" id="Vwt-IB-s7d"/>
+                <constraint firstItem="K8Y-NX-RzQ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="14" id="TaA-9U-dA8"/>
+                <constraint firstItem="4gl-fd-kDk" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="6" id="Vwt-IB-s7d"/>
                 <constraint firstItem="4WC-0o-pqP" firstAttribute="trailing" secondItem="c22-O7-iKe" secondAttribute="trailing" id="WFC-kz-B9N"/>
+                <constraint firstItem="4WC-0o-pqP" firstAttribute="bottom" secondItem="c22-O7-iKe" secondAttribute="bottom" constant="-4" id="cxZ-vn-JBh"/>
                 <constraint firstItem="4WC-0o-pqP" firstAttribute="leading" secondItem="4gl-fd-kDk" secondAttribute="leading" id="guf-UB-J0o"/>
                 <constraint firstItem="4gl-fd-kDk" firstAttribute="leading" secondItem="K8Y-NX-RzQ" secondAttribute="trailing" constant="16" id="q4m-Tx-FEW"/>
                 <constraint firstAttribute="bottom" secondItem="K8Y-NX-RzQ" secondAttribute="bottom" constant="8" id="r9c-91-8cV"/>

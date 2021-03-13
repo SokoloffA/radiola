@@ -74,6 +74,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
         
         NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerStatusChanged),
+                                               name: Notification.Name.PlayerStatusChanged,
+                                               object: nil)
+        
+        NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateTooltip),
                                                name: Notification.Name.PlayerMetadataChanged,
                                                object: nil)
@@ -97,7 +102,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
         
-        //playerStatusChanged()
+        playerStatusChanged()
         rebuildMenu()
     }
     
@@ -231,23 +236,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
-//    @objc func playerStatusChanged() {
-//        guard let playButton = playItem.button else {
-//            return
-//        }
-//
-//        addRecentStation(url: player.station.url)
-//
-//        if player.status == Player.Status.playing {
-//            setIcon(item: playItem, icon: "StatusBarPause")
-//        } else {
-//            setIcon(item: playItem, icon: "StatusBarPlay")
-//            playButton.isEnabled  = !player.station.isEmpty
-//        }
-//
-//        rebuildMenu()
-//        updateTooltip()
-//    }
+    @objc func playerStatusChanged() {
+        switch player.status {
+        case Player.Status.paused:
+            setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
+
+        case Player.Status.connecting:
+            setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
+
+        case Player.Status.playing:
+            setIcon(item: menuItem, icon: "MenuButtonPlay", size: 16)
+        }
+  
+        updateTooltip()
+    }
     
     /* ****************************************
      *
@@ -271,12 +273,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc func updateTooltip() {
-        if player.isPlaying {
-            menuItem.button?.toolTip = player.station.name + "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" + player.title;
-        } else {
+        
+        switch player.status {
+        case Player.Status.paused:
             menuItem.button?.toolTip = player.station.name
+            
+        case Player.Status.connecting:
+            menuItem.button?.toolTip =
+                player.station.name +
+                "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
+                "Connecting...".tr(withComment: "Tooltip text")
+
+        case Player.Status.playing:
+            menuItem.button?.toolTip =
+                player.station.name +
+                "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
+                player.title;
         }
-       // playItem.button?.toolTip = menuItem.button?.toolTip
     }
     
     var stationsWindowController : StationsWindowController? = nil

@@ -64,21 +64,27 @@ class PlayItemView: NSView {
     }
     
     @IBAction func togglePlayPause(_ sender: Any) {
-        print(player != nil)
         player?.toggle()
     }
     
     @objc func playerStatusChanged() {
         guard let player = player else { return }
         
-        if (player.status == Player.Status.playing) {
+        switch player.status {
+        case Player.Status.paused:
+            playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
+            playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
+
+        case Player.Status.connecting:
+            playButton.image = NSImage(named:NSImage.Name("NSTouchBarPauseTemplate"))
+            playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
+
+        case Player.Status.playing:
             playButton.image = NSImage(named:NSImage.Name("NSTouchBarPauseTemplate"))
             playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
         }
-        else {
-            playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
-            playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
-        }
+        
+        updateLabels()
     }
     
     @objc func updateLabels() {
@@ -87,9 +93,20 @@ class PlayItemView: NSView {
             stationLabel.stringValue = ""
             return
         }
-        print("UPDATE LABELS", player.isPlaying, player.station.name, player.title)
-        stationLabel.stringValue = player.station.name
-        songLabel.stringValue = player.isPlaying ? player.title : "";
+
+        switch player.status {
+        case Player.Status.paused:
+            stationLabel.stringValue = player.station.name
+            songLabel.stringValue = "";
+
+        case Player.Status.connecting:
+            stationLabel.stringValue = player.station.name
+            songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
+
+        case Player.Status.playing:
+            stationLabel.stringValue = player.station.name
+            songLabel.stringValue = player.title;
+        }
     }
     
 }
