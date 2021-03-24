@@ -2,6 +2,8 @@
 
 [![Generic badge](https://img.shields.io/badge/-Download_▼-blue.svg?style=for-the-badge)](https://github.com/SokoloffA/radiola/releases)
 
+
+## About
 While most music players provides option for Internet streaming, but you might not always want to run your resource hungry media player. 
 
 Radiola is a lightweight Internet radio player for MacOS, its located in the status bar and allows you to listen to Internet radio stations quickly and without complications.
