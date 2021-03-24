@@ -1,4 +1,6 @@
-# Radiola - lightweight Internet radio player for MacOS.  &nbsp; [![Generic badge](https://img.shields.io/badge/-Download_▼-blue.svg?style=for-the-badge)](https://github.com/SokoloffA/radiola/releases)
+# Radiola - lightweight Internet radio player for MacOS.
+
+[![Generic badge](https://img.shields.io/badge/-Download_▼-blue.svg?style=for-the-badge)](https://github.com/SokoloffA/radiola/releases)
 
 While most music players provides option for Internet streaming, but you might not always want to run your resource hungry media player. 
 
