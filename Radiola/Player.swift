@@ -152,5 +152,8 @@ class Player: NSObject {
     }
  
     
-    var isPlaying: Bool { return status == Status.playing }
+    var isPlaying: Bool {
+        return status != Status.paused
+        
+    }
 }
