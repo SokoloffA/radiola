@@ -2,7 +2,6 @@
 
 [![Generic badge](https://img.shields.io/badge/-Download-blue.svg?style=for-the-badge)](https://github.com/SokoloffA/radiola/releases)
 
-
 ## About
 While most music players provides option for Internet streaming, but you might not always want to run your resource hungry media player. 
 
@@ -21,3 +20,9 @@ Radiola is a lightweight Internet radio player for MacOS, its located in the sta
 
 ___
 You can download the latest version of the program from the [Releases page](https://github.com/SokoloffA/radiola/releases).
+
+## If you want to thank me
+* You can star this project
+* Or buy me a beer  
+
+[![Donate](https://img.shields.io/badge/PayPal-Donate-orange.svg?style=for-the-badge)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVRVWTQL5WERG)
