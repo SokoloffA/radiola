@@ -320,5 +320,37 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 
+    func medialKeyPresset(keyCode: Int32, keyRepeat: Bool) {
+        if keyCode == NX_KEYTYPE_PLAY {
+            player.toggle()
+        }
+    }
+    
+    func medialKeyReleased(keyCode: Int32) {}
+
 }
 
+class Application: NSApplication {
+    
+    override func sendEvent(_ event: NSEvent) {
+        if (event.type == NSEvent.EventType.systemDefined && event.subtype.rawValue == 8) {
+           
+            let keyCode = ((event.data1 & 0xFFFF0000) >> 16)
+            let keyFlags = (event.data1 & 0x0000FFFF)
+            // Get the key state. 0xA is KeyDown, OxB is KeyUp
+            let pressed = (((keyFlags & 0xFF00) >> 8)) == 0xA
+            let keyRepeat = (keyFlags & 0x1) != 0
+
+            if pressed {
+                guard let delegate = delegate as? AppDelegate else { return }
+                delegate.medialKeyPresset(keyCode: Int32(keyCode), keyRepeat: keyRepeat)
+            }
+            else {
+                guard let delegate = delegate as? AppDelegate else { return }
+                delegate.medialKeyReleased(keyCode: Int32(keyCode))
+            }
+        }
+  
+        super.sendEvent(event)
+    }
+}

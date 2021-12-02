@@ -34,7 +34,7 @@
 	<key>NSMainStoryboardFile</key>
 	<string>Main</string>
 	<key>NSPrincipalClass</key>
-	<string>NSApplication</string>
+	<string>Radiola.Application</string>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
 </dict>
