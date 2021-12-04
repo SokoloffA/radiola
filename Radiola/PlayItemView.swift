@@ -9,41 +9,74 @@
 import Cocoa
 
 class PlayItemView: NSView {
-
-    private var nibView: NSView?
+    var playButton: NSButton
+    var songLabel: NSTextField
+    var stationLabel: NSTextField
+    
     let player : Player? = (NSApp.delegate as? AppDelegate)?.player
     
-    @IBOutlet weak var songLabel: NSTextField!
-    @IBOutlet weak var stationLabel: NSTextField!
-    @IBOutlet weak var playButton: NSButton!
-
-    private func loadNib() -> NSView? {
-        let nibName = NSNib.Name(stringLiteral: "PlayItemView")
-        var topLevelArray: NSArray? = nil
-        Bundle.main.loadNibNamed(NSNib.Name(nibName), owner: self, topLevelObjects: &topLevelArray)
-        guard let results = topLevelArray else { return nil }
-        let views = Array<Any>(results).filter { $0 is NSView }
-        return views.last as? NSView
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
-
-    init() {
-        super.init(frame: NSRect.zero)
-        // Load and set constraints ......................
-        nibView = loadNib()
     
-        guard let nibView = nibView else {return }
-        self.addSubview(nibView)
-
-        nibView.translatesAutoresizingMaskIntoConstraints = false
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.frame = nibView.frame
+    required init() {
+        // Button .....................................
+        playButton = NSButton()
+        playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
+        playButton.bezelStyle = NSButton.BezelStyle.texturedSquare
+        playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
+        playButton.imagePosition = NSControl.ImagePosition.imageOnly
+        playButton.alignment = NSTextAlignment.center
+        playButton.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        playButton.state = NSControl.StateValue.on
+        playButton.isBordered = false
+        playButton.imageScaling = NSImageScaling.scaleProportionallyDown
+        #if false
+        playButton.wantsLayer = true
+        playButton.layer?.backgroundColor = NSColor(red: 0, green: 0,blue: 0, alpha: 240).cgColor
+        playButton.layer?.cornerRadius = 6
+        #endif
         
-        nibView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-        nibView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        // Song label ...................................
+        songLabel = NSTextField(labelWithString: "Simple Minds - She's A River")
+        songLabel.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        songLabel.font = NSFont.systemFont(ofSize: NSFont.systemFontSize, weight: NSFont.Weight.semibold)
+        
+        
+        // Station label ................................
+        stationLabel = NSTextField(labelWithString: "Radio Caroline 319 Gold [Hits from '60-'7-]")
+        stationLabel.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+//      stationLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
+        
+        super.init(frame: NSRect.zero)
+        
+        self.addSubview(playButton)
+        self.addSubview(songLabel)
+        self.addSubview(stationLabel)
 
-        nibView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        nibView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        // ...............................................
+        // Constrains .................................
+        self.translatesAutoresizingMaskIntoConstraints = false
+        songLabel.translatesAutoresizingMaskIntoConstraints = false
+        stationLabel.translatesAutoresizingMaskIntoConstraints = false
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        songLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 7).isActive = true
+        stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 5).isActive = true
+        self.bottomAnchor.constraint(equalTo: stationLabel.bottomAnchor, constant: 4).isActive = true
+        
+        songLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 16).isActive = true
+        stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor).isActive = true
+        stationLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
+        songLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor).isActive = true
+
+        playButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 6).isActive = true
+        playButton.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
+        playButton.heightAnchor.constraint(equalTo: playButton.widthAnchor).isActive = true
+        playButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14).isActive = true
+        
+        // :::::::::::::::::::::::::::::::::::::::::::::
+        playButton.target = self
+        playButton.action = #selector(PlayItemView.togglePlayPause)
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerStatusChanged),
@@ -57,13 +90,8 @@ class PlayItemView: NSView {
         playerStatusChanged()
         updateLabels()
     }
-
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    @IBAction func togglePlayPause(_ sender: Any) {
+    @objc func togglePlayPause(_ sender: Any) {
         player?.toggle()
     }
     
@@ -108,5 +136,5 @@ class PlayItemView: NSView {
             songLabel.stringValue = player.title;
         }
     }
-    
 }
+			

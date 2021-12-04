@@ -116,7 +116,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let item = NSMenuItem()
         item.target = self
         item.isEnabled = true
-        let playItemView = PlayItemView()//(frame: NSRect(x: 0, y: 0, width: 400, height: 44))
+        
+        let playItemView = PlayItemView()
         item.view = playItemView
         menu.addItem(item)
 
