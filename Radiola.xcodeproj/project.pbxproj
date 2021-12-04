@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		395F2B00255C7B2600153EE8 /* AddStationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395F2AFF255C7B2600153EE8 /* AddStationController.swift */; };
-		3963AA2625F80D3A009A2D10 /* PlayItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3963AA2525F80D3A009A2D10 /* PlayItemView.xib */; };
 		3963AA2A25F81507009A2D10 /* PlayItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3963AA2925F81507009A2D10 /* PlayItemView.swift */; };
 		3997FCEB247D65E000D51E1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3997FCEA247D65E000D51E1E /* AppDelegate.swift */; };
 		3997FCEF247D65E300D51E1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3997FCEE247D65E300D51E1E /* Assets.xcassets */; };
@@ -18,11 +17,11 @@
 		39DCB4C0254F555B009E401B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4BF254F555B009E401B /* Player.swift */; };
 		39DCB4C4254F6EE2009E401B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4C3254F6EE2009E401B /* Notifications.swift */; };
 		39DCB4CC2550B544009E401B /* StationsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4CB2550B544009E401B /* StationsWindowController.swift */; };
+		39ED166F275B73A20095F5F2 /* AnimatedIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED166E275B73A20095F5F2 /* AnimatedIcon.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		395F2AFF255C7B2600153EE8 /* AddStationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddStationController.swift; path = Radiola/AddStationController.swift; sourceTree = SOURCE_ROOT; };
-		3963AA2525F80D3A009A2D10 /* PlayItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemView.xib; sourceTree = "<group>"; };
 		3963AA2925F81507009A2D10 /* PlayItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItemView.swift; sourceTree = "<group>"; };
 		3997FCE7247D65E000D51E1E /* Radiola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Radiola.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3997FCEA247D65E000D51E1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -35,6 +34,7 @@
 		39DCB4BF254F555B009E401B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		39DCB4C3254F6EE2009E401B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		39DCB4CB2550B544009E401B /* StationsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsWindowController.swift; sourceTree = "<group>"; };
+		39ED166E275B73A20095F5F2 /* AnimatedIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedIcon.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,10 +67,10 @@
 		3997FCE9247D65E000D51E1E /* Radiola */ = {
 			isa = PBXGroup;
 			children = (
-				3963AA2525F80D3A009A2D10 /* PlayItemView.xib */,
 				3963AA2925F81507009A2D10 /* PlayItemView.swift */,
 				39DCB4BF254F555B009E401B /* Player.swift */,
 				3997FCEA247D65E000D51E1E /* AppDelegate.swift */,
+				39ED166E275B73A20095F5F2 /* AnimatedIcon.swift */,
 				39DCB4C3254F6EE2009E401B /* Notifications.swift */,
 				3997FCEE247D65E300D51E1E /* Assets.xcassets */,
 				3997FCF0247D65E300D51E1E /* Main.storyboard */,
@@ -151,7 +151,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3997FCEF247D65E300D51E1E /* Assets.xcassets in Resources */,
-				3963AA2625F80D3A009A2D10 /* PlayItemView.xib in Resources */,
 				3997FCF2247D65E300D51E1E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +164,7 @@
 			files = (
 				39DCB4CC2550B544009E401B /* StationsWindowController.swift in Sources */,
 				395F2B00255C7B2600153EE8 /* AddStationController.swift in Sources */,
+				39ED166F275B73A20095F5F2 /* AnimatedIcon.swift in Sources */,
 				39DCB4C4254F6EE2009E401B /* Notifications.swift in Sources */,
 				39DCB4C0254F555B009E401B /* Player.swift in Sources */,
 				3997FCFB247D699C00D51E1E /* StationsViewController.swift in Sources */,

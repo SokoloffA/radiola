@@ -12,6 +12,7 @@ class PlayItemView: NSView {
     var playButton: NSButton
     var songLabel: NSTextField
     var stationLabel: NSTextField
+    var parent: NSMenu
     
     let player : Player? = (NSApp.delegate as? AppDelegate)?.player
     
@@ -19,7 +20,8 @@ class PlayItemView: NSView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    required init() {
+    required init(parent: NSMenu) {
+        self.parent = parent
         // Button .....................................
         playButton = NSButton()
         playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
@@ -93,6 +95,7 @@ class PlayItemView: NSView {
     
     @objc func togglePlayPause(_ sender: Any) {
         player?.toggle()
+        parent.cancelTracking()
     }
     
     @objc func playerStatusChanged() {

@@ -40,6 +40,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let menuItem =
         NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
     
+    private let startConnectionPauseIcon = 0
+    private let connectionIcon = AnimatedIcon(
+        size: 16, frames: [
+            "connect-2",
+            "connect-3",
+            "connect-4",
+            "connect-5",
+            "connect-6",
+            "connect-5",
+            "connect-4",
+            "connect-3",
+        ]
+    )
+    
     func applicationWillFinishLaunching(_ aNotification: Notification) {
         //NSApp.setActivationPolicy(.prohibited)
     }
@@ -49,6 +63,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        connectionIcon.statusItem = menuItem
+        connectionIcon.framesPerSecond = 8
+
         NSApp.setActivationPolicy(.accessory)
         
         let dirName = URL(
@@ -117,7 +134,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         item.target = self
         item.isEnabled = true
         
-        let playItemView = PlayItemView()
+        let playItemView = PlayItemView(parent: menu)
         item.view = playItemView
         menu.addItem(item)
 
@@ -240,12 +257,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func playerStatusChanged() {
         switch player.status {
         case Player.Status.paused:
+            connectionIcon.stop()
             setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
 
         case Player.Status.connecting:
-            setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
+            connectionIcon.start(startFrame: 0)
 
         case Player.Status.playing:
+            connectionIcon.stop()
             setIcon(item: menuItem, icon: "MenuButtonPlay", size: 16)
         }
   
