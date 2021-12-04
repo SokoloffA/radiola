@@ -64,17 +64,18 @@ class PlayItemView: NSView {
         
         songLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 7).isActive = true
         stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 5).isActive = true
-        self.bottomAnchor.constraint(equalTo: stationLabel.bottomAnchor, constant: 4).isActive = true
+        self.bottomAnchor.constraint(equalTo: stationLabel.bottomAnchor, constant: 6).isActive = true
         
-        songLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 16).isActive = true
+        songLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 10).isActive = true
         stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor).isActive = true
         stationLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
         songLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor).isActive = true
 
-        playButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 6).isActive = true
+        playButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 7).isActive = true
         playButton.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         playButton.heightAnchor.constraint(equalTo: playButton.widthAnchor).isActive = true
         playButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14).isActive = true
+
         
         // :::::::::::::::::::::::::::::::::::::::::::::
         playButton.target = self
