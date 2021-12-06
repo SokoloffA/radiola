@@ -25,20 +25,23 @@ class PlayItemView: NSView {
         // Button .....................................
         playButton = NSButton()
         playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
-        playButton.bezelStyle = NSButton.BezelStyle.texturedSquare
+        playButton.bezelStyle = NSButton.BezelStyle.regularSquare
         playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
         playButton.imagePosition = NSControl.ImagePosition.imageOnly
         playButton.alignment = NSTextAlignment.center
         playButton.lineBreakMode = NSLineBreakMode.byTruncatingTail
         playButton.state = NSControl.StateValue.on
         playButton.isBordered = false
-        playButton.imageScaling = NSImageScaling.scaleProportionallyDown
+        playButton.imageScaling = NSImageScaling.scaleNone
+        playButton.font = NSFont.systemFont(ofSize: 18)
+
         #if false
         playButton.wantsLayer = true
         playButton.layer?.backgroundColor = NSColor(red: 0, green: 0,blue: 0, alpha: 240).cgColor
         playButton.layer?.cornerRadius = 6
         #endif
-        
+
+
         // Song label ...................................
         songLabel = NSTextField(labelWithString: "Simple Minds - She's A River")
         songLabel.lineBreakMode = NSLineBreakMode.byTruncatingTail
@@ -48,8 +51,8 @@ class PlayItemView: NSView {
         // Station label ................................
         stationLabel = NSTextField(labelWithString: "Radio Caroline 319 Gold [Hits from '60-'7-]")
         stationLabel.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
-//      stationLabel.lineBreakMode = NSLineBreakMode.byTruncatingMiddle
-        
+
+
         super.init(frame: NSRect.zero)
         
         self.addSubview(playButton)
@@ -63,23 +66,24 @@ class PlayItemView: NSView {
         playButton.translatesAutoresizingMaskIntoConstraints = false
         
         songLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 7).isActive = true
-        stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 5).isActive = true
-        self.bottomAnchor.constraint(equalTo: stationLabel.bottomAnchor, constant: 6).isActive = true
+        stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 4).isActive = true
+        self.bottomAnchor.constraint(equalTo: stationLabel.bottomAnchor, constant: 4).isActive = true
         
-        songLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 10).isActive = true
+        songLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 20).isActive = true
         stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor).isActive = true
         stationLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16).isActive = true
         songLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor).isActive = true
 
-        playButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 7).isActive = true
+        playButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        playButton.widthAnchor.constraint(equalTo: playButton.heightAnchor).isActive = true
         playButton.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        playButton.heightAnchor.constraint(equalTo: playButton.widthAnchor).isActive = true
-        playButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14).isActive = true
+        playButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20).isActive = true
 
         
         // :::::::::::::::::::::::::::::::::::::::::::::
         playButton.target = self
         playButton.action = #selector(PlayItemView.togglePlayPause)
+        
         
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerStatusChanged),
@@ -92,9 +96,19 @@ class PlayItemView: NSView {
                                                object: nil)
         playerStatusChanged()
         updateLabels()
+        
     }
+
+    override func mouseUp(with theEvent: NSEvent) {
+        togglePlayPause(nil)
+    }
+
+    override func rightMouseUp(with event: NSEvent) {
+        togglePlayPause(nil)
+    }
+
     
-    @objc func togglePlayPause(_ sender: Any) {
+    @objc func togglePlayPause(_ sender: Any?) {
         player?.toggle()
         parent.cancelTracking()
     }
