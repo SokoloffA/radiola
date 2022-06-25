@@ -121,7 +121,6 @@ final class StationsStore: ObservableObject {
 
     func write() {
         if file != nil {
-            print(file!)
             let writer = Writer()
             do {
                 try writer.write(file: self.file!, stations: stations)

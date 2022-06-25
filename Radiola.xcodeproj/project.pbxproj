@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		394F8A022863B485005EA7FA /* StationRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A012863B485005EA7FA /* StationRowView.xib */; };
+		394F8A042863B5A7005EA7FA /* StationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A032863B5A7005EA7FA /* StationRowView.swift */; };
 		395F2B00255C7B2600153EE8 /* AddStationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395F2AFF255C7B2600153EE8 /* AddStationController.swift */; };
 		3963AA2A25F81507009A2D10 /* PlayItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3963AA2925F81507009A2D10 /* PlayItemView.swift */; };
 		3997FCEB247D65E000D51E1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3997FCEA247D65E000D51E1E /* AppDelegate.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		394F8A012863B485005EA7FA /* StationRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationRowView.xib; sourceTree = "<group>"; };
+		394F8A032863B5A7005EA7FA /* StationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationRowView.swift; sourceTree = "<group>"; };
 		395F2AFF255C7B2600153EE8 /* AddStationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddStationController.swift; path = Radiola/AddStationController.swift; sourceTree = SOURCE_ROOT; };
 		3963AA2925F81507009A2D10 /* PlayItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItemView.swift; sourceTree = "<group>"; };
 		3997FCE7247D65E000D51E1E /* Radiola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Radiola.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -88,6 +92,8 @@
 				395F2AFF255C7B2600153EE8 /* AddStationController.swift */,
 				3997FCFA247D699C00D51E1E /* StationsViewController.swift */,
 				39DCB4CB2550B544009E401B /* StationsWindowController.swift */,
+				394F8A012863B485005EA7FA /* StationRowView.xib */,
+				394F8A032863B5A7005EA7FA /* StationRowView.swift */,
 			);
 			path = StationsView;
 			sourceTree = "<group>";
@@ -151,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3997FCEF247D65E300D51E1E /* Assets.xcassets in Resources */,
+				394F8A022863B485005EA7FA /* StationRowView.xib in Resources */,
 				3997FCF2247D65E300D51E1E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -163,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39DCB4CC2550B544009E401B /* StationsWindowController.swift in Sources */,
+				394F8A042863B5A7005EA7FA /* StationRowView.swift in Sources */,
 				395F2B00255C7B2600153EE8 /* AddStationController.swift in Sources */,
 				39ED166F275B73A20095F5F2 /* AnimatedIcon.swift in Sources */,
 				39DCB4C4254F6EE2009E401B /* Notifications.swift in Sources */,

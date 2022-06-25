@@ -31,38 +31,15 @@ extension NSImage {
 }
 
 
-//extension NSTextField{ func controlTextDidChange(obj: NSNotification){} }
-//
-//class SomeViewController:NSViewController,NSTextFieldDelegate {
-//
-//    //optional func controlTextDidBeginEditing(_ obj: Notification)
-//
-//    //  optional func controlTextDidEndEditing(_ obj: Notification)
-//
-//    //optional func controlTextDidChange(_ obj: Notification)
-//    override func controlTextDidChange(_ obj: Notification)
-//    {
-//        let object = obj.object as! NSTextField
-//        let value = object.stringValue
-//        print(value)
-//    }
-//}
-
 class StationsViewController: NSViewController {
     let player : Player? = (NSApp.delegate as? AppDelegate)?.player
     
     @IBOutlet weak var tableView: NSTableView!
-
-    
-    fileprivate enum Identifiers   {
-        static let NameColumn = NSUserInterfaceItemIdentifier(rawValue: "nameColumn")
-        static let UrlColumn  = NSUserInterfaceItemIdentifier(rawValue: "urlColumn")
-        static let NameCell   = NSUserInterfaceItemIdentifier(rawValue: "nameCell")
-        static let UrlCell    = NSUserInterfaceItemIdentifier(rawValue: "urlCell")
-    }
-    
-    private let favoriteOnImage  = NSImage(named:NSImage.Name("star-filled"))?.tint(color: .systemYellow)
-    private let favoriteOffImage = NSImage(named:NSImage.Name("star-empty"))?.tint(color: .lightGray)
+   
+    private let favoriteIcons = [
+        false: NSImage(named:NSImage.Name("star-empty"))?.tint(color: .lightGray),
+        true:  NSImage(named:NSImage.Name("star-filled"))?.tint(color: .systemYellow),
+    ]
 
         
     /* ****************************************
@@ -105,6 +82,7 @@ class StationsViewController: NSViewController {
             object: nil)
     }
     
+    
     /* ****************************************
      *
      * ****************************************/
@@ -115,10 +93,11 @@ class StationsViewController: NSViewController {
         }
         
         stationsStore.stations[row].isFavorite = !stationsStore.stations[row].isFavorite
-        self.tableView.reloadData(forRowIndexes: [row], columnIndexes: [0])
+        sender.image = favoriteIcons[stationsStore.stations[row].isFavorite]!
         emitChanged()
         stationsStore.write()
     }
+    
     
     /* ****************************************
      *
@@ -135,16 +114,12 @@ class StationsViewController: NSViewController {
         stationsMenu.item(withTag: 2)?.isHidden = isPlaing
     }
 
-//    @IBAction func togglePlay(_ sender: Any) {
-//        player?.toggle()
-//    }
  
     /* ****************************************
      *
      * ****************************************/
     @objc func playerStatusChanged() {
         setPlayPauseMenu(isPlaing: player?.status == Player.Status.playing)
-   //     NotificationCenter.default.post(name: Notification.Name("PlayerStatusChangedzz"), object: nil)
     }
 
     
@@ -182,6 +157,7 @@ class StationsViewController: NSViewController {
         })
     }
 
+    
     /* ****************************************
      *
      * ****************************************/
@@ -202,10 +178,11 @@ class StationsViewController: NSViewController {
         })
     }
     
+    
     /* ****************************************
      *
      * ****************************************/
-    @IBAction func stationNameEdited(_ sender: NSTextField) {
+    @IBAction func stationNameEdited(sender: NSTextField) {
         guard let row = selectedRow() else { return }
         stationsStore.stations[row].name = sender.stringValue
         emitChanged()
@@ -216,13 +193,17 @@ class StationsViewController: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    @IBAction func stationUrlEdited(_ sender: NSTextField) {
+    @IBAction func stationUrlEdited(sender: NSTextField) {
         guard let row = selectedRow() else { return }
         stationsStore.stations[row].url = sender.stringValue
         emitChanged()
         stationsStore.write()
     }
     
+    
+    /* ****************************************
+     *
+     * ****************************************/
     func selectedRow() -> Int? {
         let row = self.tableView.selectedRow
         if row > -1 && row < stationsStore.stations.count {
@@ -240,18 +221,7 @@ extension StationsViewController: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return stationsStore.stations.count
     }
-
-//    //func itemTextFieldUpdated
-//     @IBAction func onEnterInTextField(_ sender: Any) {
-//         print("onEnterInTextField")
-//     }
-    
-    //func itemTextFieldUpdated
-     @IBAction func textEdited(_ sender: Any) {
-         print("textEdited")
-     }
 }
-
 
 
 fileprivate let NAME_COLUMN_ID = NSUserInterfaceItemIdentifier(rawValue: "nameColumn")
@@ -263,60 +233,18 @@ extension StationsViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let station = stationsStore.stations[row]
-
-        guard let column = tableColumn else { return nil }
-
-        if column.identifier == Identifiers.NameColumn {
-            guard let cellView = tableView.makeView(withIdentifier: Identifiers.NameCell, owner: self) as? StationNameCellView else { return nil }
-            cellView.textField?.stringValue = station.name
-            
-
-            
-            cellView.favoriteButton?.action = #selector(favClicked(sender:))
-            if station.isFavorite {
-                cellView.favoriteButton?.image = favoriteOnImage
-            } else {
-                cellView.favoriteButton?.image = favoriteOffImage
-            }
-            
-            
-            //cellView.textField?.isEditable = true
-            //cellView.textField?.delegate = self
-           
-//            cellView.imageView?.image = NSImage(named:NSImage.Name(station.isFavorite ? "star-filled" : "star-empty"))
-            return cellView
-
-        } else if tableColumn?.identifier == Identifiers.UrlColumn {
-            guard let cellView = tableView.makeView(withIdentifier: Identifiers.UrlCell, owner: self) as? NSTableCellView else { return nil }
-            cellView.textField?.stringValue = station.url
-            return cellView
-        }
         
-        return nil
+        let view = StationRowView()
+        view.nameEdit.stringValue = station.name
+        view.nameEdit.action = #selector(stationNameEdited(sender:))
+            
+        view.urledit.stringValue = station.url
+        view.urledit.action = #selector(stationUrlEdited(sender:))
+        
+        view.favoriteButton.action = #selector(favClicked(sender:))
+        view.favoriteButton.image = favoriteIcons[station.isFavorite]!
+                
+        return view
     }
-    
-    
- 
-    
-//    @IBAction func favClicked(sender: NSButton){
-//        let row = self.tableView.row(for: sender)
-//        if row > -1 && row < stationsStore.stations.count {
-//            stationsStore.stations[row].isFavorite = !stationsStore.stations[row].isFavorite
-//            self.tableView.reloadData(forRowIndexes: [row], columnIndexes: [0])
-////            self.tableView.reloadData()
-//        }
-//    }
-}
 
-//extension StationsViewController: NSTextFieldDelegate {
-//    func controlTextDidChange(_ notification: NSNotification) {
-//    print("controlTextDidChange")
-//  }
-//}
-
-class StationNameCellView: NSTableCellView {
-
-    @IBOutlet weak var favoriteButton: NSButton?
-
- 
 }
