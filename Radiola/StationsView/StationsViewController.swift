@@ -99,27 +99,12 @@ class StationsViewController: NSViewController {
     }
     
     
-    /* ****************************************
-     *
-     * ****************************************/
-    func setPlayPauseMenu(isPlaing: Bool) {
-        guard
-            let mainMenu = (NSApp.delegate as? AppDelegate)?.mainMenu,
-            let stationsMenu = mainMenu.item(withTitle: "Stations")?.submenu
-            else {
-                return
-        }
-        
-        stationsMenu.item(withTag: 1)?.isHidden = !isPlaing
-        stationsMenu.item(withTag: 2)?.isHidden = isPlaing
-    }
-
  
     /* ****************************************
      *
      * ****************************************/
     @objc func playerStatusChanged() {
-        setPlayPauseMenu(isPlaing: player?.status == Player.Status.playing)
+//        setPlayPauseMenu(isPlaing: player?.status == Player.Status.playing)
     }
 
     

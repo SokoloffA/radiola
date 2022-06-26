@@ -62,7 +62,7 @@
                                     <items>
                                         <menuItem title="New station" keyEquivalent="n" id="Was-JA-tGl">
                                             <connections>
-                                                <action selector="newStation:" target="Ady-hI-5gd" id="WN9-uI-TbI"/>
+                                                <action selector="addStation:" target="Ady-hI-5gd" id="MuP-cg-k1O"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="xDd-HA-3Fw"/>
@@ -70,11 +70,14 @@
                                             <attributedString key="attributedTitle"/>
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="playStation:" target="Ady-hI-5gd" id="yWh-fq-8pL"/>
+                                                <action selector="startPlay:" target="Ady-hI-5gd" id="wml-Jh-fcC"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Pause" tag="2" id="Tdh-YA-Som">
                                             <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="stopPlay:" target="Ady-hI-5gd" id="oPt-Gk-xwT"/>
+                                            </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" hidden="YES" id="m54-Is-iLE"/>
                                         <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
@@ -122,9 +125,11 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Delete station" id="pa3-QI-u2k">
-                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
                                             <connections>
-                                                <action selector="deleteStation:" target="Ady-hI-5gd" id="68n-bQ-8jp"/>
+                                                <action selector="removeStation:" target="Ady-hI-5gd" id="b0B-y2-ffY"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Select All" hidden="YES" keyEquivalent="a" id="Ruw-6m-B2m">
@@ -726,6 +731,9 @@
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HFw-yC-LXX">
                                 <rect key="frame" x="356" y="13" width="110" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="98" id="Sq5-zW-cA5"/>
+                                </constraints>
                                 <buttonCell key="cell" type="push" title="Add station" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ygv-Lp-66H">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -739,6 +747,9 @@ DQ
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lqa-ij-wEU">
                                 <rect key="frame" x="14" y="13" width="82" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="82f-Ge-vwG"/>
+                                </constraints>
                                 <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qI5-QF-TV4">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -898,9 +909,8 @@ Gw
                                                             <rect key="frame" x="1" y="1" width="804" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
-                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fpC-uJ-r1p">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="804" height="17"/>
-                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="fpC-uJ-r1p">
+                                                                    <rect key="frame" x="0.0" y="1" width="804" height="16"/>
                                                                     <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="3wp-Sd-8yg">
                                                                         <font key="font" metaFont="system"/>
                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -911,6 +921,11 @@ Gw
                                                                     </connections>
                                                                 </textField>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="trailing" secondItem="fpC-uJ-r1p" secondAttribute="trailing" constant="2" id="3QF-2W-yPs"/>
+                                                                <constraint firstItem="fpC-uJ-r1p" firstAttribute="leading" secondItem="eag-E5-5zM" secondAttribute="leading" constant="2" id="TXu-yF-nCW"/>
+                                                                <constraint firstItem="fpC-uJ-r1p" firstAttribute="top" secondItem="eag-E5-5zM" secondAttribute="top" id="Z1c-rF-rtb"/>
+                                                            </constraints>
                                                             <connections>
                                                                 <outlet property="textField" destination="fpC-uJ-r1p" id="3ZA-2A-Rgf"/>
                                                             </connections>

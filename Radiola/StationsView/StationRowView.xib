@@ -20,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="534" height="48"/>
             <subviews>
                 <textField identifier="NameEdit" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uoq-wb-Nh3">
-                    <rect key="frame" x="18" y="26" width="454" height="16"/>
+                    <rect key="frame" x="18" y="26" width="476" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Super Radio" usesSingleLineMode="YES" id="t8S-VM-IJy">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -28,7 +28,7 @@
                     </textFieldCell>
                 </textField>
                 <textField identifier="UrlEdit" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P6r-gT-G4r">
-                    <rect key="frame" x="18" y="8" width="498" height="14"/>
+                    <rect key="frame" x="18" y="8" width="476" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="https://github.com/SokoloffA/radiola" id="lcX-yD-f0I">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -52,7 +52,7 @@
             </subviews>
             <constraints>
                 <constraint firstItem="P6r-gT-G4r" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="0K5-ns-muy"/>
-                <constraint firstAttribute="trailing" secondItem="Uoq-wb-Nh3" secondAttribute="trailing" constant="64" id="0b4-xA-A7l"/>
+                <constraint firstAttribute="trailing" secondItem="Uoq-wb-Nh3" secondAttribute="trailing" constant="42" id="0b4-xA-A7l"/>
                 <constraint firstAttribute="bottom" secondItem="2k0-0m-GJT" secondAttribute="bottom" id="4j0-ot-cAU"/>
                 <constraint firstItem="dBC-Jw-E96" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="7" id="KZD-lw-B3m"/>
                 <constraint firstAttribute="height" constant="48" id="OV8-9l-rLg"/>
@@ -62,7 +62,7 @@
                 <constraint firstItem="Uoq-wb-Nh3" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="vwD-sQ-TBf"/>
                 <constraint firstAttribute="trailing" secondItem="dBC-Jw-E96" secondAttribute="trailing" constant="8" id="yFM-9Y-tC2"/>
                 <constraint firstItem="2k0-0m-GJT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="zD1-tf-efW"/>
-                <constraint firstAttribute="trailing" secondItem="P6r-gT-G4r" secondAttribute="trailing" constant="20" symbolic="YES" id="zDd-gH-1a9"/>
+                <constraint firstAttribute="trailing" secondItem="P6r-gT-G4r" secondAttribute="trailing" constant="42" id="zDd-gH-1a9"/>
             </constraints>
             <point key="canvasLocation" x="-147" y="22"/>
         </customView>

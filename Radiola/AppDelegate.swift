@@ -222,6 +222,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
+
+    
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func startPlay(_ sender: NSMenuItem) {
+        player.play()
+    }
+
+    
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func stopPlay(_ sender: NSMenuItem) {
+        player.stop()
+    }
+
     
     /* ****************************************
      *
@@ -250,26 +267,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     
-    
     /* ****************************************
      *
      * ****************************************/
     @objc func playerStatusChanged() {
+        let MENU_PLAY_ITEM = 1
+        let MENU_PAUSE_ITEM = 2
+        
         switch player.status {
         case Player.Status.paused:
             connectionIcon.stop()
             setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
+            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = false
+            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = true
 
         case Player.Status.connecting:
             connectionIcon.start(startFrame: 0)
+            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = true
+            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = false
 
         case Player.Status.playing:
             connectionIcon.stop()
             setIcon(item: menuItem, icon: "MenuButtonPlay", size: 16)
+            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = true
+            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = false
         }
   
         updateTooltip()
     }
+
+
     
     /* ****************************************
      *
