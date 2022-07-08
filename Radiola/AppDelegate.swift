@@ -32,7 +32,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     private var recentStations: [String] = []
     
-    @IBOutlet weak var mainMenu: NSMenu!
+    @IBOutlet weak var pauseMenuItem: NSMenuItem!
+    @IBOutlet weak var playMenuItem: NSMenuItem!
+
     
     let player = Player()
     private let settings = UserDefaults.standard
@@ -129,64 +131,40 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     @objc func rebuildMenu() {
         let menu = NSMenu()
-       
+
         let item = NSMenuItem()
         item.target = self
         item.isEnabled = true
-        
+
         let playItemView = PlayItemView(parent: menu)
         item.view = playItemView
         menu.addItem(item)
 
         menu.addItem(NSMenuItem.separator())
-        
-//        buildRecentMenu(menu: menu)
-//        menu.addItem(NSMenuItem.separator())
+
         buildFavoritesMenu(menu: menu)
 
         menu.addItem(NSMenuItem.separator())
-        
+
         menu.addItem(NSMenuItem(
             title: "Open Radiola",
             action: #selector(showStationView(_:)),
             keyEquivalent: ""))
-        
+
+        menu.addItem(NSMenuItem(
+            title: "Show History",
+            action: #selector(showHistory(_:)),
+            keyEquivalent: "y"))
+
         menu.addItem(NSMenuItem(
             title: "Quit".tr,
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"))
-        
+
         menuItem.menu = menu
     }
-    
-    
-    /* ****************************************
-     *
-     * ****************************************/
-/*    func buildRecentMenu(menu: NSMenu) {
-            
-        guard let recentStations = settings.stringArray(forKey: recentStationsKey) else { return }
-        if recentStations.isEmpty  {
-            return
-        }
-        menu.addItem(NSMenuItem(title: "Recent stations".tr, action: nil, keyEquivalent: ""))
 
-        for url in recentStations {
-            if let station = stationsStore.station(byUrl: url) {
-                let item = NSMenuItem(
-                    title: "  " + station.name,
-                    action:  #selector(AppDelegate.stationClicked(_:)),
-                    keyEquivalent: "")
-                item.tag = station.id
-                
-//                if station.url == player.station.url {
-//                    item.state = NSControl.StateValue.on
-//                }
-                menu.addItem(item)
-            }
-        }
-    }
-*/
+
     /* ****************************************
      *
      * ****************************************/
@@ -271,28 +249,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc func playerStatusChanged() {
-        let MENU_PLAY_ITEM = 1
-        let MENU_PAUSE_ITEM = 2
-        
+
         switch player.status {
         case Player.Status.paused:
             connectionIcon.stop()
             setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = false
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = true
+            playMenuItem.isHidden  = false
+            pauseMenuItem.isHidden = true
 
         case Player.Status.connecting:
             connectionIcon.start(startFrame: 0)
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = true
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = false
+            playMenuItem.isHidden  = true
+            pauseMenuItem.isHidden = false
 
         case Player.Status.playing:
             connectionIcon.stop()
             setIcon(item: menuItem, icon: "MenuButtonPlay", size: 16)
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = true
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = false
+            playMenuItem.isHidden  = true
+            pauseMenuItem.isHidden = false
         }
-  
+
         updateTooltip()
     }
 
@@ -320,11 +296,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc func updateTooltip() {
-        
+
         switch player.status {
         case Player.Status.paused:
             menuItem.button?.toolTip = player.station.name
-            
+
         case Player.Status.connecting:
             menuItem.button?.toolTip =
                 player.station.name +
@@ -338,30 +314,55 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 player.title;
         }
     }
-    
-    var stationsWindowController : StationsWindowController? = nil
-    
+
     /* ****************************************
      *
      * ****************************************/
-//    private var window: NSWindow?
+    private var stationsWindow: StationsWindow?
     @objc func showStationView(_ sender: Any?) {
+        StationsWindow.show()
+//        NSApp.setActivationPolicy(.regular)
+//
+//        stationsWindow = StationsWindow()
+//        stationsWindow?.window?.makeKeyAndOrderFront(nil)
+//
+//        NSApp.activate(ignoringOtherApps: true)
 
+
+     //   let storyboard = NSStoryboard(name: "Main", bundle: nil)
+
+    //    if (stationsWindowController == nil) {
+    //        guard let wc = storyboard.instantiateController(withIdentifier: "StationsWindowController") as? StationsWindowController    else {
+    //            fatalError("Error getting main window controller")
+    //        }
+
+     //       stationsWindowController = wc
+     //   }
+
+    }
+
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private var historyWindow: HistoryWindow?
+    @objc func showHistory(_ sender: Any?) {
         NSApp.setActivationPolicy(.regular)
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
 
-        if (stationsWindowController == nil) {
-            guard let wc = storyboard.instantiateController(withIdentifier: "StationsWindowController") as? StationsWindowController    else {
-                fatalError("Error getting main window controller")
-            }
-    
-            stationsWindowController = wc
-        }
-        
-        stationsWindowController?.window?.makeKeyAndOrderFront(nil)
+//        historyWindow = HistoryWindow(windowNibName: "HistoryWindow")
+        historyWindow = HistoryWindow()
+       // historyWindow?.loadWindow()
+        historyWindow!.showWindow(nil)
+        historyWindow!.window?.makeKeyAndOrderFront(nil)
+
+    //    let img = NSImage(named:NSImage.Name("AppIcon"))
+        //img?.size = NSSize(width: size, height: size)
+        //img?.isTemplate = true
+        //item.button?.image = img
+
         NSApp.activate(ignoringOtherApps: true)
     }
-    
+
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         NSApp.setActivationPolicy(.accessory)
         return false

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="StationsWindow" customModule="Radiola" customModuleProvider="target">
+            <connections>
+                <outlet property="playButton" destination="VUb-bq-E9f" id="EyB-bJ-m9l"/>
+                <outlet property="tableView" destination="kkO-oE-ztH" id="KoP-Nf-IQ2"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Stations" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" frameAutosaveName="StationsWindow" animationBehavior="default" titleVisibility="hidden" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="240" width="720" height="298"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="720" height="298"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXW-Sj-pMa">
+                        <rect key="frame" x="0.0" y="0.0" width="720" height="298"/>
+                        <clipView key="contentView" id="2ql-yn-PBr">
+                            <rect key="frame" x="0.0" y="0.0" width="720" height="298"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" tableStyle="plain" columnReordering="NO" columnResizing="NO" multipleSelection="NO" emptySelection="NO" autosaveColumns="NO" rowHeight="24" usesAutomaticRowHeights="YES" viewBased="YES" id="kkO-oE-ztH">
+                                    <rect key="frame" x="0.0" y="0.0" width="720" height="298"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <size key="intercellSpacing" width="17" height="0.0"/>
+                                    <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
+                                    <tableColumns>
+                                        <tableColumn width="703" minWidth="40" maxWidth="1000" id="cKc-Nb-97o">
+                                            <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
+                                                <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
+                                            </tableHeaderCell>
+                                            <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" title="Text Cell" id="TF4-Ga-5hz">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                            <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
+                                            <prototypeCellViews>
+                                                <tableCellView id="fil-Bd-2Ct">
+                                                    <rect key="frame" x="8" y="0.0" width="703" height="24"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oZo-fk-5Qt">
+                                                            <rect key="frame" x="0.0" y="4" width="703" height="16"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="l7N-OM-mhz">
+                                                                <font key="font" usesAppearanceFont="YES"/>
+                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                            </textFieldCell>
+                                                        </textField>
+                                                    </subviews>
+                                                    <connections>
+                                                        <outlet property="textField" destination="oZo-fk-5Qt" id="kWA-Ui-TkE"/>
+                                                    </connections>
+                                                </tableCellView>
+                                            </prototypeCellViews>
+                                        </tableColumn>
+                                    </tableColumns>
+                                </tableView>
+                            </subviews>
+                        </clipView>
+                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="OM3-zS-EkR">
+                            <rect key="frame" x="1" y="119" width="223" height="15"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                        <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="QFm-8K-1ij">
+                            <rect key="frame" x="224" y="17" width="15" height="102"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                        </scroller>
+                    </scrollView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="cXW-Sj-pMa" secondAttribute="trailing" id="GVo-AG-bJK"/>
+                    <constraint firstItem="cXW-Sj-pMa" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" id="Nd0-nZ-Wq9"/>
+                    <constraint firstItem="cXW-Sj-pMa" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" id="Ov8-Mb-5o5"/>
+                    <constraint firstAttribute="bottom" secondItem="cXW-Sj-pMa" secondAttribute="bottom" id="tXz-iB-Ytb"/>
+                </constraints>
+            </view>
+            <toolbar key="toolbar" implicitIdentifier="E97217E2-9AC3-4262-96E3-AD848AB707BC" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="QsC-BA-Pth">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="5DB-hO-C1x"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="Do9-wN-cAg"/>
+                    <toolbarItem implicitItemIdentifier="E568CABC-CAB6-4951-B6CD-58D6659C05E6" label="Play" paletteLabel="Play" tag="-1" image="NSTouchBarPlayTemplate" bordered="YES" sizingBehavior="auto" id="VUb-bq-E9f">
+                        <connections>
+                            <action selector="playPouseClicked:" target="-2" id="nWN-nQ-tP2"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="ED394DD6-E9BC-4ADC-A699-92D04CD4C5E8" label="Add station" paletteLabel="Add station" tag="-1" image="NSAddTemplate" bordered="YES" sizingBehavior="auto" id="gHw-Ob-rIG">
+                        <connections>
+                            <action selector="addStation:" target="-2" id="bRt-0S-fNg"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="64C49694-6A7F-4786-A452-FE70C1F0814E" label="Remove station" paletteLabel="Remove station" tag="-1" image="NSRemoveTemplate" bordered="YES" sizingBehavior="auto" id="Flh-D7-xlN">
+                        <connections>
+                            <action selector="removeSttion:" target="-2" id="0Y5-vr-bgP"/>
+                        </connections>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="5DB-hO-C1x"/>
+                    <toolbarItem reference="VUb-bq-E9f"/>
+                    <toolbarItem reference="Do9-wN-cAg"/>
+                    <toolbarItem reference="gHw-Ob-rIG"/>
+                    <toolbarItem reference="Flh-D7-xlN"/>
+                </defaultToolbarItems>
+            </toolbar>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="260" y="90"/>
+        </window>
+    </objects>
+    <resources>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
+        <image name="NSTouchBarPlayTemplate" width="12" height="13"/>
+    </resources>
+</document>

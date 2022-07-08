@@ -3,46 +3,56 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		394F8A022863B485005EA7FA /* StationRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A012863B485005EA7FA /* StationRowView.xib */; };
-		394F8A042863B5A7005EA7FA /* StationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A032863B5A7005EA7FA /* StationRowView.swift */; };
-		395F2B00255C7B2600153EE8 /* AddStationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395F2AFF255C7B2600153EE8 /* AddStationController.swift */; };
-		3963AA2A25F81507009A2D10 /* PlayItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3963AA2925F81507009A2D10 /* PlayItemView.swift */; };
-		3997FCEB247D65E000D51E1E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3997FCEA247D65E000D51E1E /* AppDelegate.swift */; };
-		3997FCEF247D65E300D51E1E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3997FCEE247D65E300D51E1E /* Assets.xcassets */; };
-		3997FCF2247D65E300D51E1E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3997FCF0247D65E300D51E1E /* Main.storyboard */; };
-		3997FCFB247D699C00D51E1E /* StationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3997FCFA247D699C00D51E1E /* StationsViewController.swift */; };
-		3997FCFD247D6E0B00D51E1E /* Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3997FCFC247D6E0B00D51E1E /* Stations.swift */; };
-		39DCB4C0254F555B009E401B /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4BF254F555B009E401B /* Player.swift */; };
-		39DCB4C4254F6EE2009E401B /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4C3254F6EE2009E401B /* Notifications.swift */; };
-		39DCB4CC2550B544009E401B /* StationsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DCB4CB2550B544009E401B /* StationsWindowController.swift */; };
-		39ED166F275B73A20095F5F2 /* AnimatedIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ED166E275B73A20095F5F2 /* AnimatedIcon.swift */; };
+		394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A3B28739339005EA7FA /* AppDelegate.swift */; };
+		394F8A3F28739339005EA7FA /* Radiola.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A3D28739339005EA7FA /* Radiola.xcdatamodeld */; };
+		394F8A412873933A005EA7FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A402873933A005EA7FA /* Assets.xcassets */; };
+		394F8A442873933A005EA7FA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A422873933A005EA7FA /* MainMenu.xib */; };
+		394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A4B2873937F005EA7FA /* HistoryWindow.swift */; };
+		394F8A4E2873937F005EA7FA /* HistoryWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A4C2873937F005EA7FA /* HistoryWindow.xib */; };
+		394F8A51287394D0005EA7FA /* Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A50287394D0005EA7FA /* Stations.swift */; };
+		394F8A53287394E1005EA7FA /* AnimatedIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A52287394E1005EA7FA /* AnimatedIcon.swift */; };
+		394F8A55287394E8005EA7FA /* AddStationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A54287394E8005EA7FA /* AddStationController.swift */; };
+		394F8A57287394F1005EA7FA /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A56287394F1005EA7FA /* Notifications.swift */; };
+		394F8A59287394FD005EA7FA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A58287394FD005EA7FA /* Player.swift */; };
+		394F8A5B28739504005EA7FA /* PlayItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A5A28739504005EA7FA /* PlayItemView.swift */; };
+		394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A6128739A15005EA7FA /* StationsWindow.swift */; };
+		394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A6228739A15005EA7FA /* StationsWindow.xib */; };
+		394F8A6928739A9C005EA7FA /* StationRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A6628739A9C005EA7FA /* StationRowView.xib */; };
+		394F8A6B28739A9C005EA7FA /* StationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A6828739A9C005EA7FA /* StationRowView.swift */; };
+		39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39541B32287623F200A2A5CB /* AddStationDialog.swift */; };
+		39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39541B33287623F200A2A5CB /* AddStationDialog.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		394F8A012863B485005EA7FA /* StationRowView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationRowView.xib; sourceTree = "<group>"; };
-		394F8A032863B5A7005EA7FA /* StationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationRowView.swift; sourceTree = "<group>"; };
-		395F2AFF255C7B2600153EE8 /* AddStationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddStationController.swift; path = Radiola/AddStationController.swift; sourceTree = SOURCE_ROOT; };
-		3963AA2925F81507009A2D10 /* PlayItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItemView.swift; sourceTree = "<group>"; };
-		3997FCE7247D65E000D51E1E /* Radiola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Radiola.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		3997FCEA247D65E000D51E1E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3997FCEE247D65E300D51E1E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		3997FCF1247D65E300D51E1E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		3997FCF3247D65E300D51E1E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3997FCF4247D65E300D51E1E /* Radiola.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Radiola.entitlements; sourceTree = "<group>"; };
-		3997FCFA247D699C00D51E1E /* StationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsViewController.swift; sourceTree = "<group>"; };
-		3997FCFC247D6E0B00D51E1E /* Stations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stations.swift; sourceTree = "<group>"; };
-		39DCB4BF254F555B009E401B /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		39DCB4C3254F6EE2009E401B /* Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
-		39DCB4CB2550B544009E401B /* StationsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsWindowController.swift; sourceTree = "<group>"; };
-		39ED166E275B73A20095F5F2 /* AnimatedIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedIcon.swift; sourceTree = "<group>"; };
+		394F8A3828739339005EA7FA /* Radiola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Radiola.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		394F8A3B28739339005EA7FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		394F8A3E28739339005EA7FA /* Radiola.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Radiola.xcdatamodel; sourceTree = "<group>"; };
+		394F8A402873933A005EA7FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		394F8A432873933A005EA7FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		394F8A452873933A005EA7FA /* Radiola.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Radiola.entitlements; sourceTree = "<group>"; };
+		394F8A4B2873937F005EA7FA /* HistoryWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryWindow.swift; sourceTree = "<group>"; };
+		394F8A4C2873937F005EA7FA /* HistoryWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryWindow.xib; sourceTree = "<group>"; };
+		394F8A50287394D0005EA7FA /* Stations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stations.swift; sourceTree = "<group>"; };
+		394F8A52287394E1005EA7FA /* AnimatedIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedIcon.swift; sourceTree = "<group>"; };
+		394F8A54287394E8005EA7FA /* AddStationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddStationController.swift; sourceTree = "<group>"; };
+		394F8A56287394F1005EA7FA /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
+		394F8A58287394FD005EA7FA /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		394F8A5A28739504005EA7FA /* PlayItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayItemView.swift; sourceTree = "<group>"; };
+		394F8A6128739A15005EA7FA /* StationsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsWindow.swift; sourceTree = "<group>"; };
+		394F8A6228739A15005EA7FA /* StationsWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationsWindow.xib; sourceTree = "<group>"; };
+		394F8A6628739A9C005EA7FA /* StationRowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StationRowView.xib; sourceTree = "<group>"; };
+		394F8A6828739A9C005EA7FA /* StationRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StationRowView.swift; sourceTree = "<group>"; };
+		394F8A6C2873A2FE005EA7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		39541B32287623F200A2A5CB /* AddStationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationDialog.swift; sourceTree = "<group>"; };
+		39541B33287623F200A2A5CB /* AddStationDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3997FCE4247D65E000D51E1E /* Frameworks */ = {
+		394F8A3528739339005EA7FA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -52,62 +62,75 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3997FCDE247D65E000D51E1E = {
+		394F8A2F28739339005EA7FA = {
 			isa = PBXGroup;
 			children = (
-				3997FCE9247D65E000D51E1E /* Radiola */,
-				3997FCE8247D65E000D51E1E /* Products */,
+				394F8A3A28739339005EA7FA /* Radiola */,
+				394F8A3928739339005EA7FA /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		3997FCE8247D65E000D51E1E /* Products */ = {
+		394F8A3928739339005EA7FA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3997FCE7247D65E000D51E1E /* Radiola.app */,
+				394F8A3828739339005EA7FA /* Radiola.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3997FCE9247D65E000D51E1E /* Radiola */ = {
+		394F8A3A28739339005EA7FA /* Radiola */ = {
 			isa = PBXGroup;
 			children = (
-				3963AA2925F81507009A2D10 /* PlayItemView.swift */,
-				39DCB4BF254F555B009E401B /* Player.swift */,
-				3997FCEA247D65E000D51E1E /* AppDelegate.swift */,
-				39ED166E275B73A20095F5F2 /* AnimatedIcon.swift */,
-				39DCB4C3254F6EE2009E401B /* Notifications.swift */,
-				3997FCEE247D65E300D51E1E /* Assets.xcassets */,
-				3997FCF0247D65E300D51E1E /* Main.storyboard */,
-				3997FCFC247D6E0B00D51E1E /* Stations.swift */,
-				3997FCF3247D65E300D51E1E /* Info.plist */,
-				39DCB4BE254F51B8009E401B /* StationsView */,
-				3997FCF4247D65E300D51E1E /* Radiola.entitlements */,
+				394F8A6C2873A2FE005EA7FA /* Info.plist */,
+				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
+				394F8A5A28739504005EA7FA /* PlayItemView.swift */,
+				394F8A58287394FD005EA7FA /* Player.swift */,
+				394F8A56287394F1005EA7FA /* Notifications.swift */,
+				394F8A52287394E1005EA7FA /* AnimatedIcon.swift */,
+				394F8A50287394D0005EA7FA /* Stations.swift */,
+				394F8A402873933A005EA7FA /* Assets.xcassets */,
+				394F8A422873933A005EA7FA /* MainMenu.xib */,
+				394F8A452873933A005EA7FA /* Radiola.entitlements */,
+				394F8A3D28739339005EA7FA /* Radiola.xcdatamodeld */,
+				394F8A6528739A1D005EA7FA /* StationsWindow */,
+				394F8A4F2873938B005EA7FA /* History */,
 			);
 			path = Radiola;
 			sourceTree = "<group>";
 		};
-		39DCB4BE254F51B8009E401B /* StationsView */ = {
+		394F8A4F2873938B005EA7FA /* History */ = {
 			isa = PBXGroup;
 			children = (
-				395F2AFF255C7B2600153EE8 /* AddStationController.swift */,
-				3997FCFA247D699C00D51E1E /* StationsViewController.swift */,
-				39DCB4CB2550B544009E401B /* StationsWindowController.swift */,
-				394F8A012863B485005EA7FA /* StationRowView.xib */,
-				394F8A032863B5A7005EA7FA /* StationRowView.swift */,
+				394F8A4B2873937F005EA7FA /* HistoryWindow.swift */,
+				394F8A4C2873937F005EA7FA /* HistoryWindow.xib */,
 			);
-			path = StationsView;
+			path = History;
+			sourceTree = "<group>";
+		};
+		394F8A6528739A1D005EA7FA /* StationsWindow */ = {
+			isa = PBXGroup;
+			children = (
+				394F8A6128739A15005EA7FA /* StationsWindow.swift */,
+				39541B32287623F200A2A5CB /* AddStationDialog.swift */,
+				394F8A6828739A9C005EA7FA /* StationRowView.swift */,
+				394F8A54287394E8005EA7FA /* AddStationController.swift */,
+				394F8A6228739A15005EA7FA /* StationsWindow.xib */,
+				394F8A6628739A9C005EA7FA /* StationRowView.xib */,
+				39541B33287623F200A2A5CB /* AddStationDialog.xib */,
+			);
+			path = StationsWindow;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3997FCE6247D65E000D51E1E /* Radiola */ = {
+		394F8A3728739339005EA7FA /* Radiola */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3997FCF7247D65E300D51E1E /* Build configuration list for PBXNativeTarget "Radiola" */;
+			buildConfigurationList = 394F8A482873933A005EA7FA /* Build configuration list for PBXNativeTarget "Radiola" */;
 			buildPhases = (
-				3997FCE3247D65E000D51E1E /* Sources */,
-				3997FCE4247D65E000D51E1E /* Frameworks */,
-				3997FCE5247D65E000D51E1E /* Resources */,
+				394F8A3428739339005EA7FA /* Sources */,
+				394F8A3528739339005EA7FA /* Frameworks */,
+				394F8A3628739339005EA7FA /* Resources */,
 			);
 			buildRules = (
 			);
@@ -115,94 +138,99 @@
 			);
 			name = Radiola;
 			productName = Radiola;
-			productReference = 3997FCE7247D65E000D51E1E /* Radiola.app */;
+			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		3997FCDF247D65E000D51E1E /* Project object */ = {
+		394F8A3028739339005EA7FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1210;
-				ORGANIZATIONNAME = "Alex Sokolov";
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
 				TargetAttributes = {
-					3997FCE6247D65E000D51E1E = {
-						CreatedOnToolsVersion = 11.4;
+					394F8A3728739339005EA7FA = {
+						CreatedOnToolsVersion = 13.2.1;
 					};
 				};
 			};
-			buildConfigurationList = 3997FCE2247D65E000D51E1E /* Build configuration list for PBXProject "Radiola" */;
-			compatibilityVersion = "Xcode 9.3";
+			buildConfigurationList = 394F8A3328739339005EA7FA /* Build configuration list for PBXProject "Radiola" */;
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = 3997FCDE247D65E000D51E1E;
-			productRefGroup = 3997FCE8247D65E000D51E1E /* Products */;
+			mainGroup = 394F8A2F28739339005EA7FA;
+			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3997FCE6247D65E000D51E1E /* Radiola */,
+				394F8A3728739339005EA7FA /* Radiola */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		3997FCE5247D65E000D51E1E /* Resources */ = {
+		394F8A3628739339005EA7FA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3997FCEF247D65E300D51E1E /* Assets.xcassets in Resources */,
-				394F8A022863B485005EA7FA /* StationRowView.xib in Resources */,
-				3997FCF2247D65E300D51E1E /* Main.storyboard in Resources */,
+				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
+				394F8A412873933A005EA7FA /* Assets.xcassets in Resources */,
+				394F8A4E2873937F005EA7FA /* HistoryWindow.xib in Resources */,
+				394F8A6928739A9C005EA7FA /* StationRowView.xib in Resources */,
+				39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */,
+				394F8A442873933A005EA7FA /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		3997FCE3247D65E000D51E1E /* Sources */ = {
+		394F8A3428739339005EA7FA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				39DCB4CC2550B544009E401B /* StationsWindowController.swift in Sources */,
-				394F8A042863B5A7005EA7FA /* StationRowView.swift in Sources */,
-				395F2B00255C7B2600153EE8 /* AddStationController.swift in Sources */,
-				39ED166F275B73A20095F5F2 /* AnimatedIcon.swift in Sources */,
-				39DCB4C4254F6EE2009E401B /* Notifications.swift in Sources */,
-				39DCB4C0254F555B009E401B /* Player.swift in Sources */,
-				3997FCFB247D699C00D51E1E /* StationsViewController.swift in Sources */,
-				3963AA2A25F81507009A2D10 /* PlayItemView.swift in Sources */,
-				3997FCFD247D6E0B00D51E1E /* Stations.swift in Sources */,
-				3997FCEB247D65E000D51E1E /* AppDelegate.swift in Sources */,
+				394F8A55287394E8005EA7FA /* AddStationController.swift in Sources */,
+				394F8A5B28739504005EA7FA /* PlayItemView.swift in Sources */,
+				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
+				394F8A53287394E1005EA7FA /* AnimatedIcon.swift in Sources */,
+				394F8A3F28739339005EA7FA /* Radiola.xcdatamodeld in Sources */,
+				394F8A59287394FD005EA7FA /* Player.swift in Sources */,
+				394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */,
+				394F8A6B28739A9C005EA7FA /* StationRowView.swift in Sources */,
+				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
+				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,
+				394F8A51287394D0005EA7FA /* Stations.swift in Sources */,
+				394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3997FCF0247D65E300D51E1E /* Main.storyboard */ = {
+		394F8A422873933A005EA7FA /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3997FCF1247D65E300D51E1E /* Base */,
+				394F8A432873933A005EA7FA /* Base */,
 			);
-			name = Main.storyboard;
+			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		3997FCF5247D65E300D51E1E /* Debug */ = {
+		394F8A462873933A005EA7FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -247,7 +275,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -257,13 +285,13 @@
 			};
 			name = Debug;
 		};
-		3997FCF6247D65E300D51E1E /* Release */ = {
+		394F8A472873933A005EA7FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -302,7 +330,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -311,46 +339,62 @@
 			};
 			name = Release;
 		};
-		3997FCF8247D65E300D51E1E /* Debug */ = {
+		394F8A492873933A005EA7FA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Radiola/Radiola.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 635H9TYSZJ;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Radiola/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2020 Alex Sokolov. All rights reserved.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.SokoloffA.Radiola;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
-		3997FCF9247D65E300D51E1E /* Release */ = {
+		394F8A4A2873933A005EA7FA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Radiola/Radiola.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 635H9TYSZJ;
 				ENABLE_HARDENED_RUNTIME = YES;
+				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Radiola/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2020 Alex Sokolov. All rights reserved.";
+				INFOPLIST_KEY_NSMainNibFile = MainMenu;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 2.2;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.SokoloffA.Radiola;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -358,25 +402,38 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3997FCE2247D65E000D51E1E /* Build configuration list for PBXProject "Radiola" */ = {
+		394F8A3328739339005EA7FA /* Build configuration list for PBXProject "Radiola" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3997FCF5247D65E300D51E1E /* Debug */,
-				3997FCF6247D65E300D51E1E /* Release */,
+				394F8A462873933A005EA7FA /* Debug */,
+				394F8A472873933A005EA7FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3997FCF7247D65E300D51E1E /* Build configuration list for PBXNativeTarget "Radiola" */ = {
+		394F8A482873933A005EA7FA /* Build configuration list for PBXNativeTarget "Radiola" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				3997FCF8247D65E300D51E1E /* Debug */,
-				3997FCF9247D65E300D51E1E /* Release */,
+				394F8A492873933A005EA7FA /* Debug */,
+				394F8A4A2873933A005EA7FA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		394F8A3D28739339005EA7FA /* Radiola.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				394F8A3E28739339005EA7FA /* Radiola.xcdatamodel */,
+			);
+			currentVersion = 394F8A3E28739339005EA7FA /* Radiola.xcdatamodel */;
+			path = Radiola.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
-	rootObject = 3997FCDF247D65E000D51E1E /* Project object */;
+	rootObject = 394F8A3028739339005EA7FA /* Project object */;
 }

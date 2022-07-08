@@ -70,6 +70,8 @@ class Player: NSObject {
      * ****************************************/
     @objc func stop() {
         self.player.pause()
+        player = nil
+        playerItem = nil
     }
     
     
