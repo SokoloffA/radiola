@@ -122,6 +122,7 @@ class Player: NSObject {
 
         case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
             self.status = .connecting
+            title = ""
             NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
             
         case AVPlayer.TimeControlStatus.playing:
@@ -129,6 +130,7 @@ class Player: NSObject {
 
         default:
             self.status = .paused
+            title = ""
             NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
         }
         

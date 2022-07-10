@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,7 +15,6 @@
 		394F8A4E2873937F005EA7FA /* HistoryWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A4C2873937F005EA7FA /* HistoryWindow.xib */; };
 		394F8A51287394D0005EA7FA /* Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A50287394D0005EA7FA /* Stations.swift */; };
 		394F8A53287394E1005EA7FA /* AnimatedIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A52287394E1005EA7FA /* AnimatedIcon.swift */; };
-		394F8A55287394E8005EA7FA /* AddStationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A54287394E8005EA7FA /* AddStationController.swift */; };
 		394F8A57287394F1005EA7FA /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A56287394F1005EA7FA /* Notifications.swift */; };
 		394F8A59287394FD005EA7FA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A58287394FD005EA7FA /* Player.swift */; };
 		394F8A5B28739504005EA7FA /* PlayItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A5A28739504005EA7FA /* PlayItemView.swift */; };
@@ -38,7 +37,6 @@
 		394F8A4C2873937F005EA7FA /* HistoryWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryWindow.xib; sourceTree = "<group>"; };
 		394F8A50287394D0005EA7FA /* Stations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stations.swift; sourceTree = "<group>"; };
 		394F8A52287394E1005EA7FA /* AnimatedIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedIcon.swift; sourceTree = "<group>"; };
-		394F8A54287394E8005EA7FA /* AddStationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddStationController.swift; sourceTree = "<group>"; };
 		394F8A56287394F1005EA7FA /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		394F8A58287394FD005EA7FA /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		394F8A5A28739504005EA7FA /* PlayItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayItemView.swift; sourceTree = "<group>"; };
@@ -113,7 +111,6 @@
 				394F8A6128739A15005EA7FA /* StationsWindow.swift */,
 				39541B32287623F200A2A5CB /* AddStationDialog.swift */,
 				394F8A6828739A9C005EA7FA /* StationRowView.swift */,
-				394F8A54287394E8005EA7FA /* AddStationController.swift */,
 				394F8A6228739A15005EA7FA /* StationsWindow.xib */,
 				394F8A6628739A9C005EA7FA /* StationRowView.xib */,
 				39541B33287623F200A2A5CB /* AddStationDialog.xib */,
@@ -147,7 +144,6 @@
 		394F8A3028739339005EA7FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1320;
 				TargetAttributes = {
@@ -157,7 +153,7 @@
 				};
 			};
 			buildConfigurationList = 394F8A3328739339005EA7FA /* Build configuration list for PBXProject "Radiola" */;
-			compatibilityVersion = "Xcode 13.0";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -195,7 +191,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				394F8A55287394E8005EA7FA /* AddStationController.swift in Sources */,
 				394F8A5B28739504005EA7FA /* PlayItemView.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
 				394F8A53287394E1005EA7FA /* AnimatedIcon.swift in Sources */,
@@ -275,7 +270,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -330,7 +325,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.1;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -361,6 +356,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.SokoloffA.Radiola;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -391,6 +387,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.SokoloffA.Radiola;
 				PRODUCT_NAME = "$(TARGET_NAME)";

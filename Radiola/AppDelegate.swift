@@ -56,9 +56,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ]
     )
     
-    func applicationWillFinishLaunching(_ aNotification: Notification) {
-        //NSApp.setActivationPolicy(.prohibited)
-    }
+//    func applicationWillFinishLaunching(_ aNotification: Notification) {
+//        //NSApp.setActivationPolicy(.prohibited)
+//    }
     
     
     /* ****************************************
