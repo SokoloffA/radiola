@@ -21,8 +21,15 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         case playing
     }
 
+    struct HistoryRecord  {
+        var song : String
+        var station : String
+        var date : Date = Date()
+    }
+    
     public var status = Status.paused
-
+    public var history : [HistoryRecord] = []
+    
     private var playerItemContext = 0
     private var player: AVPlayer!
     private var playerItem: AVPlayerItem?
@@ -154,10 +161,29 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         }
 
         title = "\(value)"
-
+        addHistory()
+        
         NotificationCenter.default.post(
             name: Notification.Name.PlayerMetadataChanged,
             object: nil,
             userInfo: ["Title": title])
+    }
+    
+    private func addHistory() {
+        if history.last?.song == title && history.last?.station == station.name {
+            return
+        }
+        
+        history.append(HistoryRecord(song: title, station: station.name, date: Date()))
+        if history.count > 100 {
+            history.removeFirst(history.count - 100)
+        }
+
+        
+//        history.insert(HistoryRecord(song: title, station: station.name, date: Date()), at: 0)
+//        if history.count > 100 {
+//            history.removeLast(history.count - 100)
+//        }
+     
     }
 }

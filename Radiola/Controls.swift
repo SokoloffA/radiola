@@ -7,6 +7,27 @@
 
 import Cocoa
 
+extension NSImage {
+    func tint(color: NSColor) -> NSImage {
+        if isTemplate == false {
+            return self
+        }
+
+        let image = copy() as! NSImage
+        image.lockFocus()
+
+        color.set()
+
+        let imageRect = NSRect(origin: .zero, size: image.size)
+        imageRect.fill(using: .sourceIn)
+
+        image.unlockFocus()
+        image.isTemplate = false
+
+        return image
+    }
+}
+
 class ScrollableSlider: NSSlider {
     override func scrollWheel(with event: NSEvent) {
         guard isEnabled else { return }

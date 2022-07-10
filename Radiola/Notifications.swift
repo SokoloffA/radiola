@@ -14,5 +14,5 @@ extension Notification.Name {
 
     static let PlayerStatusChanged   = Notification.Name("PlayerStatusChanged")
     static let PlayerMetadataChanged = Notification.Name("PlayerMetadataChanged")
-    
+ 
 }
