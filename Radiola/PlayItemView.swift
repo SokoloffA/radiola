@@ -13,9 +13,7 @@ class PlayItemView: NSView {
     var songLabel: NSTextField
     var stationLabel: NSTextField
     var parent: NSMenu
-    
-    let player : Player? = (NSApp.delegate as? AppDelegate)?.player
-    
+       
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -109,13 +107,11 @@ class PlayItemView: NSView {
 
     
     @objc func togglePlayPause(_ sender: Any?) {
-        player?.toggle()
+        player.toggle()
         parent.cancelTracking()
     }
     
     @objc func playerStatusChanged() {
-        guard let player = player else { return }
-        
         switch player.status {
         case Player.Status.paused:
             playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
@@ -134,12 +130,6 @@ class PlayItemView: NSView {
     }
     
     @objc func updateLabels() {
-        guard let player = player else {
-            songLabel.stringValue = ""
-            stationLabel.stringValue = ""
-            return
-        }
-
         switch player.status {
         case Player.Status.paused:
             stationLabel.stringValue = player.station.name

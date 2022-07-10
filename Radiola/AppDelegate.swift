@@ -36,7 +36,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var playMenuItem: NSMenuItem!
 
     
-    let player = Player()
     private let settings = UserDefaults.standard
     
     private let menuItem =
@@ -120,6 +119,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 player.station = favorites.first!
             }
         }
+        
+        playMenuItem.target = player
+        playMenuItem.action = #selector(Player.play)
+        
+        pauseMenuItem.target = player
+        pauseMenuItem.action = #selector(Player.stop)
         
         playerStatusChanged()
         rebuildMenu()

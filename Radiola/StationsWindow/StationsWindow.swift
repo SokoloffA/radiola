@@ -30,9 +30,7 @@ extension NSImage {
 
 let stationPasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
 
-class StationsWindow: NSWindowController {
-    private let player: Player? = (NSApp.delegate as? AppDelegate)?.player
-
+class StationsWindow: NSWindowController, NSWindowDelegate {
     private let favoriteIcons = [
         false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
         true: NSImage(named: NSImage.Name("star-filled"))?.tint(color: .systemYellow),
@@ -61,6 +59,7 @@ class StationsWindow: NSWindowController {
      * ****************************************/
     override func windowDidLoad() {
         super.windowDidLoad()
+        window?.delegate = self
 
         tableView.delegate = self
         tableView.dataSource = self
@@ -81,7 +80,15 @@ class StationsWindow: NSWindowController {
                                                name: Notification.Name.PlayerMetadataChanged,
                                                object: nil)
 
+        volumeControl.minValue = 0
+        volumeControl.maxValue = 1
+        volumeControl.doubleValue = Double(player.volume)
+
         refresh()
+    }
+
+    func windowWillClose(_ notification: Notification) {
+        StationsWindow.instance = nil
     }
 
     /* ****************************************
@@ -132,12 +139,6 @@ class StationsWindow: NSWindowController {
      *
      * ****************************************/
     @objc func refresh() {
-        guard let player = player else {
-            songLabel.stringValue = ""
-            stationLabel.stringValue = ""
-            return
-        }
-
         switch player.status {
         case Player.Status.paused:
             stationLabel.stringValue = player.station.name
@@ -181,9 +182,9 @@ class StationsWindow: NSWindowController {
      * ****************************************/
     @objc func doubleClickRow(sender: AnyObject) {
         guard let row = selectedRow() else { return }
-        if player?.station != stationsStore.stations[row] {
-            player?.station = stationsStore.stations[row]
-            player?.play()
+        if player.station != stationsStore.stations[row] {
+            player.station = stationsStore.stations[row]
+            player.play()
         }
     }
 
@@ -235,6 +236,20 @@ class StationsWindow: NSWindowController {
                 stationsStore.write()
             }
         })
+    }
+
+    @IBAction func volumeChanged(_ sender: Any) {
+        player.volume = Float(volumeControl.doubleValue)
+    }
+
+    @IBAction func volumeUp(_ sender: Any) {
+        volumeControl.doubleValue += 0.05
+        volumeChanged(0)
+    }
+
+    @IBAction func volumeDown(_ sender: Any) {
+        volumeControl.doubleValue -= 0.05
+        volumeChanged(0)
     }
 }
 

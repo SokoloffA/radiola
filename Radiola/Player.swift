@@ -9,6 +9,8 @@
 import AVFoundation
 import Foundation
 
+var player = Player()
+
 class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     var station: Station = Station(id: 0, name: "", url: "")
     public var title = String()
@@ -24,13 +26,26 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private var playerItemContext = 0
     private var player: AVPlayer!
     private var playerItem: AVPlayerItem?
-    var asset: AVAsset!
+    private var asset: AVAsset!
+    private let settings = UserDefaults.standard
 
+    var volume: Float {
+        get { return player.volume }
+
+        set(value) {
+            player.volume = value
+            settings.set(value, forKey: "Volume")
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     override init() {
         super.init()
 
         player = AVPlayer()
-        player.volume = 0.5
+        player.volume = settings.float(forKey: "Volume")
 
         player.addObserver(self,
                            forKeyPath: #keyPath(AVPlayer.timeControlStatus),

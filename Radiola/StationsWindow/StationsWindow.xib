@@ -116,11 +116,12 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rqd-Q6-TBW">
-                                <rect key="frame" x="581" y="18" width="96" height="19"/>
+                            <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rqd-Q6-TBW" customClass="ScrollableSlider" customModule="Radiola" customModuleProvider="target">
+                                <rect key="frame" x="581" y="19" width="96" height="17"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                <sliderCell key="cell" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="c8y-OF-AXt"/>
+                                <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="c8y-OF-AXt"/>
                                 <connections>
+                                    <action selector="volumeChanged:" target="-2" id="Ll4-F3-8Hb"/>
                                     <outlet property="nextKeyView" destination="o7J-cr-zMe" id="ly0-hu-MUM"/>
                                 </connections>
                             </slider>
@@ -131,6 +132,9 @@
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="volumeUp:" target="-2" id="BKa-k4-ugj"/>
+                                </connections>
                             </button>
                             <button focusRingType="exterior" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7J3-oJ-8Un">
                                 <rect key="frame" x="99" y="7" width="42" height="42"/>
@@ -158,7 +162,7 @@
                         </connections>
                     </customView>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dK7-sI-WcJ">
-                        <rect key="frame" x="42" y="6" width="24" height="24"/>
+                        <rect key="frame" x="38" y="6" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSRemoveTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ctc-Nu-3FC">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -170,7 +174,7 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o7J-cr-zMe">
-                        <rect key="frame" x="20" y="6" width="24" height="24"/>
+                        <rect key="frame" x="16" y="6" width="24" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ivp-zk-EGq">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
