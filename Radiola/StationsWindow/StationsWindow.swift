@@ -28,6 +28,8 @@ extension NSImage {
     }
 }
 
+let stationPasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
+
 class StationsWindow: NSWindowController {
     private let player: Player? = (NSApp.delegate as? AppDelegate)?.player
 
@@ -63,6 +65,8 @@ class StationsWindow: NSWindowController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.doubleAction = #selector(doubleClickRow)
+
+        tableView.registerForDraggedTypes([stationPasteboardType])
 
         playButton.target = player
         playButton.action = #selector(Player.toggle)
@@ -114,6 +118,14 @@ class StationsWindow: NSWindowController {
             return row
         }
         return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func selectedStation() -> Station? {
+        guard let row = selectedRow() else { return nil }
+        return stationsStore.stations[row]
     }
 
     /* ****************************************
@@ -175,6 +187,9 @@ class StationsWindow: NSWindowController {
         }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     @IBAction func addStation(_ sender: Any) {
         let dialog = AddStationDialog()
         window?.beginSheet(dialog.window!, completionHandler: { response in
@@ -199,6 +214,9 @@ class StationsWindow: NSWindowController {
         })
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     @IBAction func removeStation(_ sender: Any) {
         guard let row = selectedRow() else { return }
         guard let wnd = window else { return }
@@ -279,7 +297,64 @@ extension StationsWindow: NSTableViewDelegate {
  *
  * ****************************************/
 extension StationsWindow: NSTableViewDataSource {
+    /* ****************************************
+     *
+     * ****************************************/
     func numberOfRows(in tableView: NSTableView) -> Int {
         return stationsStore.stations.count
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+        let pasteboardItem = NSPasteboardItem()
+        pasteboardItem.setString(String(row), forType: stationPasteboardType)
+        return pasteboardItem
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+        if dropOperation == .above {
+            return .move
+        } else {
+            return []
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        guard
+            let str = info.draggingPasteboard.pasteboardItems?.first?.string(forType: stationPasteboardType),
+            let srcRow = Int(str)
+        else { return false }
+
+        // When you drag an item downwards, the "new row" index is actually --1. Remember dragging operation is `.above`.
+        var newRow = row
+        if srcRow < newRow {
+            newRow = row - 1
+        }
+
+        if srcRow == newRow {
+            return false
+        }
+
+        // Animate the rows .......................
+        tableView.beginUpdates()
+        tableView.moveRow(at: srcRow, to: newRow)
+        tableView.endUpdates()
+
+        let station = stationsStore.stations[srcRow]
+        stationsStore.stations.remove(at: srcRow)
+        stationsStore.stations.insert(station, at: newRow)
+
+        emitChanged()
+        stationsStore.write()
+
+        return true
     }
 }
