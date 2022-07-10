@@ -320,25 +320,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     private var stationsWindow: StationsWindow?
     @objc func showStationView(_ sender: Any?) {
-        StationsWindow.show()
-//        NSApp.setActivationPolicy(.regular)
-//
-//        stationsWindow = StationsWindow()
-//        stationsWindow?.window?.makeKeyAndOrderFront(nil)
-//
-//        NSApp.activate(ignoringOtherApps: true)
-
-
-     //   let storyboard = NSStoryboard(name: "Main", bundle: nil)
-
-    //    if (stationsWindowController == nil) {
-    //        guard let wc = storyboard.instantiateController(withIdentifier: "StationsWindowController") as? StationsWindowController    else {
-    //            fatalError("Error getting main window controller")
-    //        }
-
-     //       stationsWindowController = wc
-     //   }
-
+        _ = StationsWindow.show()
     }
 
 
