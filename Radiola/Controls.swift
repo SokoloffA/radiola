@@ -7,7 +7,7 @@
 
 import Cocoa
 
-extension NSImage {
+public extension NSImage {
     func tint(color: NSColor) -> NSImage {
         if isTemplate == false {
             return self
@@ -26,6 +26,25 @@ extension NSImage {
 
         return image
     }
+
+    
+    func writePNG(toURL url: URL) {
+        
+        guard let data = tiffRepresentation,
+              let rep = NSBitmapImageRep(data: data),
+              let imgData = rep.representation(using: .png, properties: [.compressionFactor : NSNumber(floatLiteral: 1.0)]) else {
+                  
+                  Swift.print("\(self) Error Function '\(#function)' Line: \(#line) No tiff rep found for image writing to \(url)")
+                  return
+              }
+        
+        do {
+            try imgData.write(to: url)
+        }catch let error {
+            Swift.print("\(self) Error Function '\(#function)' Line: \(#line) \(error.localizedDescription)")
+        }
+    }
+    
 }
 
 class ScrollableSlider: NSSlider {

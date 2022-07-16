@@ -52,6 +52,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         super.init()
 
         player = AVPlayer()
+        settings.register(defaults: ["Volume" : 0.5])
         player.volume = settings.float(forKey: "Volume")
 
         player.addObserver(self,

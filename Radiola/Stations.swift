@@ -47,6 +47,7 @@ private class Reader: NSObject, XMLParserDelegate {
     var stations: [Station] = []
 
     func load(file: URL) -> [Station] {
+        //print(file)
         let parser = XMLParser(contentsOf: file)!
         let reader = self
         parser.delegate = reader

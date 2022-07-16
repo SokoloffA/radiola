@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -27,7 +27,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="720" height="367"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="720" height="367"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -103,7 +103,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Artist - Song" id="0dt-mx-21x">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
@@ -117,18 +117,18 @@
                                 </textFieldCell>
                             </textField>
                             <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rqd-Q6-TBW" customClass="ScrollableSlider" customModule="Radiola" customModuleProvider="target">
-                                <rect key="frame" x="581" y="19" width="96" height="17"/>
+                                <rect key="frame" x="577" y="21" width="96" height="13"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                <sliderCell key="cell" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="c8y-OF-AXt"/>
+                                <sliderCell key="cell" controlSize="mini" state="on" alignment="left" maxValue="1" doubleValue="1" tickMarkPosition="above" sliderType="linear" id="c8y-OF-AXt"/>
                                 <connections>
                                     <action selector="volumeChanged:" target="-2" id="Ll4-F3-8Hb"/>
                                     <outlet property="nextKeyView" destination="o7J-cr-zMe" id="ly0-hu-MUM"/>
                                 </connections>
                             </slider>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2g-k1-hj9">
-                                <rect key="frame" x="678" y="17" width="22" height="22"/>
+                                <rect key="frame" x="677" y="16" width="23" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarVolumeUpTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="3s3-pp-QeG">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarVolumeUpTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="3s3-pp-QeG">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -137,21 +137,21 @@
                                 </connections>
                             </button>
                             <button focusRingType="exterior" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7J3-oJ-8Un">
-                                <rect key="frame" x="99" y="7" width="42" height="42"/>
+                                <rect key="frame" x="102" y="7" width="42" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarPlayTemplate" imagePosition="only" alignment="center" focusRingType="exterior" imageScaling="proportionallyUpOrDown" inset="2" id="NtH-Ec-3b4">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarPlayTemplate" imagePosition="only" alignment="center" focusRingType="exterior" inset="2" id="NtH-Ec-3b4">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
-                                <color key="contentTintColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="contentTintColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
                                 <connections>
                                     <outlet property="nextKeyView" destination="rqd-Q6-TBW" id="4j0-O6-nEy"/>
                                 </connections>
                             </button>
                             <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uei-sa-PFE">
-                                <rect key="frame" x="560" y="17" width="22" height="22"/>
+                                <rect key="frame" x="554" y="16" width="23" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
-                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarVolumeDownTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Ep0-Xy-Ktb">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarAudioOutputVolumeOffTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Ep0-Xy-Ktb">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -195,10 +195,10 @@
         </window>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
-        <image name="NSRemoveTemplate" width="11" height="11"/>
-        <image name="NSTouchBarPlayTemplate" width="14" height="30"/>
-        <image name="NSTouchBarVolumeDownTemplate" width="15" height="30"/>
-        <image name="NSTouchBarVolumeUpTemplate" width="23" height="30"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
+        <image name="NSTouchBarAudioOutputVolumeOffTemplate" width="13" height="14"/>
+        <image name="NSTouchBarPlayTemplate" width="12" height="13"/>
+        <image name="NSTouchBarVolumeUpTemplate" width="22" height="15"/>
     </resources>
 </document>

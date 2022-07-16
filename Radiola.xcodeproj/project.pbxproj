@@ -20,13 +20,14 @@
 		394F8A53287394E1005EA7FA /* AnimatedIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A52287394E1005EA7FA /* AnimatedIcon.swift */; };
 		394F8A57287394F1005EA7FA /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A56287394F1005EA7FA /* Notifications.swift */; };
 		394F8A59287394FD005EA7FA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A58287394FD005EA7FA /* Player.swift */; };
-		394F8A5B28739504005EA7FA /* PlayItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A5A28739504005EA7FA /* PlayItemView.swift */; };
 		394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A6128739A15005EA7FA /* StationsWindow.swift */; };
 		394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A6228739A15005EA7FA /* StationsWindow.xib */; };
 		394F8A6928739A9C005EA7FA /* StationRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A6628739A9C005EA7FA /* StationRowView.xib */; };
 		394F8A6B28739A9C005EA7FA /* StationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A6828739A9C005EA7FA /* StationRowView.swift */; };
 		39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39541B32287623F200A2A5CB /* AddStationDialog.swift */; };
 		39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39541B33287623F200A2A5CB /* AddStationDialog.xib */; };
+		39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */; };
+		39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,7 +46,6 @@
 		394F8A52287394E1005EA7FA /* AnimatedIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimatedIcon.swift; sourceTree = "<group>"; };
 		394F8A56287394F1005EA7FA /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		394F8A58287394FD005EA7FA /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		394F8A5A28739504005EA7FA /* PlayItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayItemView.swift; sourceTree = "<group>"; };
 		394F8A6128739A15005EA7FA /* StationsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsWindow.swift; sourceTree = "<group>"; };
 		394F8A6228739A15005EA7FA /* StationsWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationsWindow.xib; sourceTree = "<group>"; };
 		394F8A6628739A9C005EA7FA /* StationRowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StationRowView.xib; sourceTree = "<group>"; };
@@ -53,6 +53,8 @@
 		394F8A6C2873A2FE005EA7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		39541B32287623F200A2A5CB /* AddStationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationDialog.swift; sourceTree = "<group>"; };
 		39541B33287623F200A2A5CB /* AddStationDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
+		39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItemController.swift; sourceTree = "<group>"; };
+		39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,16 +87,17 @@
 		394F8A3A28739339005EA7FA /* Radiola */ = {
 			isa = PBXGroup;
 			children = (
-				394F8A6C2873A2FE005EA7FA /* Info.plist */,
+				39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
-				394F8A5A28739504005EA7FA /* PlayItemView.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
 				390C7293287B213200E17BAE /* Controls.swift */,
 				394F8A56287394F1005EA7FA /* Notifications.swift */,
 				394F8A52287394E1005EA7FA /* AnimatedIcon.swift */,
 				394F8A50287394D0005EA7FA /* Stations.swift */,
-				394F8A402873933A005EA7FA /* Assets.xcassets */,
 				394F8A422873933A005EA7FA /* MainMenu.xib */,
+				39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */,
+				394F8A402873933A005EA7FA /* Assets.xcassets */,
+				394F8A6C2873A2FE005EA7FA /* Info.plist */,
 				394F8A452873933A005EA7FA /* Radiola.entitlements */,
 				394F8A3D28739339005EA7FA /* Radiola.xcdatamodeld */,
 				394F8A6528739A1D005EA7FA /* StationsWindow */,
@@ -189,6 +192,7 @@
 				394F8A412873933A005EA7FA /* Assets.xcassets in Resources */,
 				394F8A4E2873937F005EA7FA /* HistoryWindow.xib in Resources */,
 				394F8A6928739A9C005EA7FA /* StationRowView.xib in Resources */,
+				39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */,
 				39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */,
 				394F8A442873933A005EA7FA /* MainMenu.xib in Resources */,
 			);
@@ -201,7 +205,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				394F8A5B28739504005EA7FA /* PlayItemView.swift in Sources */,
 				390C7294287B213200E17BAE /* Controls.swift in Sources */,
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
@@ -213,6 +216,7 @@
 				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,
 				394F8A51287394D0005EA7FA /* Stations.swift in Sources */,
+				39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */,
 				394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,7 +357,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Radiola/Radiola.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -384,7 +388,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = Radiola/Radiola.entitlements;
-				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

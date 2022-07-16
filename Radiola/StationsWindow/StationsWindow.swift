@@ -32,6 +32,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     override var windowNibName: String! {
         return "StationsWindow"
     }
+    
 
     /* ****************************************
      *
@@ -39,7 +40,20 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
         window?.delegate = self
-
+        
+//        playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
+      //  playButton.contentTintColor = NSColor.systemGray4
+        playButton.bezelStyle = NSButton.BezelStyle.regularSquare
+        playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
+        playButton.imagePosition = NSControl.ImagePosition.imageOnly
+        playButton.alignment = NSTextAlignment.center
+        playButton.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        playButton.state = NSControl.StateValue.on
+        playButton.isBordered = false
+        playButton.imageScaling = NSImageScaling.scaleNone
+        playButton.font = NSFont.systemFont(ofSize: 24)
+        playButton.image?.isTemplate = true
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.doubleAction = #selector(doubleClickRow)
@@ -135,14 +149,17 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         switch player.status {
         case Player.Status.paused:
             playButton.image = NSImage(named: NSImage.Name("NSTouchBarPlayTemplate"))
+            playButton.image?.isTemplate = true
             playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
 
         case Player.Status.connecting:
             playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
+            playButton.image?.isTemplate = true
             playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
 
         case Player.Status.playing:
             playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
+            playButton.image?.isTemplate = true
             playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
         }
     }
