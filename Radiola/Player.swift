@@ -21,15 +21,15 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         case playing
     }
 
-    struct HistoryRecord  {
-        var song : String = ""
-        var station : String = ""
-        var date : Date = Date()
+    struct HistoryRecord {
+        var song: String = ""
+        var station: String = ""
+        var date: Date = Date()
     }
-    
+
     public var status = Status.paused
-    public var history : [HistoryRecord] = []
-    
+    public var history: [HistoryRecord] = []
+
     private var playerItemContext = 0
     private var player: AVPlayer!
     private var playerItem: AVPlayerItem?
@@ -52,7 +52,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         super.init()
 
         player = AVPlayer()
-        settings.register(defaults: ["Volume" : 0.5])
+        settings.register(defaults: ["Volume": 0.5])
         player.volume = settings.float(forKey: "Volume")
 
         player.addObserver(self,
@@ -78,6 +78,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         playerItem?.add(metadataOutput)
 
         player.replaceCurrentItem(with: playerItem)
+        statusChenged(status: AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate)
         player.play()
     }
 
@@ -163,21 +164,21 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         title = "\(value)"
         addHistory()
-        
+
         NotificationCenter.default.post(
             name: Notification.Name.PlayerMetadataChanged,
             object: nil,
             userInfo: ["Title": title])
     }
-    
+
     private func addHistory() {
         if history.last?.song == title && history.last?.station == station.name {
             return
         }
-        
+
         history.append(HistoryRecord(song: title, station: station.name, date: Date()))
         if history.count > 100 {
             history.removeFirst(history.count - 100)
-        }    
+        }
     }
 }

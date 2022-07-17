@@ -32,7 +32,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     override var windowNibName: String! {
         return "StationsWindow"
     }
-    
 
     /* ****************************************
      *
@@ -40,9 +39,9 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
         window?.delegate = self
-        
+
 //        playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
-      //  playButton.contentTintColor = NSColor.systemGray4
+        //  playButton.contentTintColor = NSColor.systemGray4
         playButton.bezelStyle = NSButton.BezelStyle.regularSquare
         playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
         playButton.imagePosition = NSControl.ImagePosition.imageOnly
@@ -53,7 +52,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         playButton.imageScaling = NSImageScaling.scaleNone
         playButton.font = NSFont.systemFont(ofSize: 24)
         playButton.image?.isTemplate = true
-        
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.doubleAction = #selector(doubleClickRow)
@@ -178,10 +177,12 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
      * ****************************************/
     @objc func doubleClickRow(sender: AnyObject) {
         guard let row = selectedRow() else { return }
-        if player.station != stationsStore.stations[row] {
-            player.station = stationsStore.stations[row]
-            player.play()
+        if player.station == stationsStore.stations[row] && player.isPlaying {
+            return
         }
+
+        player.station = stationsStore.stations[row]
+        player.play()
     }
 
     /* ****************************************
