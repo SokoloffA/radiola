@@ -96,3 +96,12 @@ class ScrollableSlider: NSSlider {
         }
     }
 }
+
+public extension NSAlert {
+    static func showWarning(message: String) {
+        let alert = NSAlert()
+        alert.messageText = message
+        alert.alertStyle = .warning
+        alert.runModal()
+    }
+}

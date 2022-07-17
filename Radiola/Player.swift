@@ -8,6 +8,7 @@
 
 import AVFoundation
 import Foundation
+import Cocoa
 
 var player = Player()
 
@@ -65,11 +66,18 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     @objc func play() {
-        guard let u = URL(string: station.url) else {
+        var u = URL(string: station.url)
+
+        if u == nil{
+            u = URL.init(string: station.url.replacingOccurrences(of: " ", with: "%20"))
+        }
+        
+        if u == nil{
+            NSAlert.showWarning(message: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
             return
         }
 
-        asset = AVAsset(url: u)
+        asset = AVAsset(url: u!)
         playerItem = AVPlayerItem(asset: asset)
         playerItem?.preferredForwardBufferDuration = 1
 
