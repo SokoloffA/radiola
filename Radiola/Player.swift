@@ -178,13 +178,6 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         history.append(HistoryRecord(song: title, station: station.name, date: Date()))
         if history.count > 100 {
             history.removeFirst(history.count - 100)
-        }
-
-        
-//        history.insert(HistoryRecord(song: title, station: station.name, date: Date()), at: 0)
-//        if history.count > 100 {
-//            history.removeLast(history.count - 100)
-//        }
-     
+        }    
     }
 }

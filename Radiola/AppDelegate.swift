@@ -145,7 +145,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         menu.addItem(NSMenuItem(
             title: "Open Radiola",
             action: #selector(showStationView(_:)),
-            keyEquivalent: ""))
+            keyEquivalent: "r"))
 
         menu.addItem(NSMenuItem(
             title: "Show History",
@@ -293,9 +293,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         case Player.Status.playing:
             menuItem.button?.toolTip =
-                player.station.name +
+                player.title +
                 "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                player.title
+                player.station.name
         }
     }
 

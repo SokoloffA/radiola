@@ -32,6 +32,8 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
             selector: #selector(refresh),
             name: Notification.Name.PlayerMetadataChanged,
             object: nil)
+        
+        refresh()
     }
 
     /* ****************************************
@@ -61,12 +63,11 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
      *
      * ****************************************/
     @objc func refresh() {
-        tableView.noteNumberOfRowsChanged()
+        tableView.reloadData()
 
         if tableView.numberOfRows > 0 {
             placeholderLabel.isHidden = true
-
-            let indexSet = IndexSet(integer: tableView.numberOfRows - 1)
+            let indexSet = IndexSet(integer: 0)
             tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
             tableView.scrollRowToVisible(tableView.selectedRow)
         } else {
@@ -81,7 +82,7 @@ extension HistoryWindow: NSTableViewDelegate {
      *
      * ****************************************/
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        return HistoryRow(history: player.history[row])
+        return HistoryRow(history: player.history[ player.history.count - row - 1])
     }
 }
 
