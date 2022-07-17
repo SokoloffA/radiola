@@ -302,7 +302,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
-    private var stationsWindow: StationsWindow?
     @objc func showStationView(_ sender: Any?) {
         _ = StationsWindow.show()
     }
@@ -310,23 +309,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
-    private var historyWindow: HistoryWindow?
     @objc func showHistory(_ sender: Any?) {
         _ = HistoryWindow.show()
-//        NSApp.setActivationPolicy(.regular)
-//
-        ////        historyWindow = HistoryWindow(windowNibName: "HistoryWindow")
-//        historyWindow = HistoryWindow()
-//       // historyWindow?.loadWindow()
-//        historyWindow!.showWindow(nil)
-//        historyWindow!.window?.makeKeyAndOrderFront(nil)
-//
-//    //    let img = NSImage(named:NSImage.Name("AppIcon"))
-//        //img?.size = NSSize(width: size, height: size)
-//        //img?.isTemplate = true
-//        //item.button?.image = img
-//
-//        NSApp.activate(ignoringOtherApps: true)
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {

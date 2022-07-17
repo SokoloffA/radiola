@@ -22,8 +22,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     }
 
     struct HistoryRecord  {
-        var song : String
-        var station : String
+        var song : String = ""
+        var station : String = ""
         var date : Date = Date()
     }
     

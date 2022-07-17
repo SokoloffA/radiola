@@ -20,17 +20,16 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="48"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XL6-jb-M50">
-                    <rect key="frame" x="18" y="25" width="338" height="16"/>
+                    <rect key="frame" x="18" y="25" width="454" height="16"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Label" id="tmc-Jj-1ot">
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" title="Label" id="tmc-Jj-1ot">
                         <font key="font" metaFont="systemMedium" size="13"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Om4-NY-0Wv">
-                    <rect key="frame" x="266" y="7" width="206" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Om4-NY-0Wv">
+                    <rect key="frame" x="392" y="7" width="70" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" alignment="right" title="01.02.2012" id="Nwo-lo-Ywh">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -41,10 +40,9 @@
                     <rect key="frame" x="0.0" y="0.0" width="480" height="5"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </box>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R58-db-BlK">
-                    <rect key="frame" x="18" y="7" width="244" height="14"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" selectable="YES" title="Label" id="PoR-Ch-qQB">
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R58-db-BlK">
+                    <rect key="frame" x="18" y="7" width="370" height="14"/>
+                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" title="Label" id="PoR-Ch-qQB">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -52,7 +50,10 @@
                 </textField>
             </subviews>
             <constraints>
+                <constraint firstItem="R58-db-BlK" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="6ox-9V-Mck"/>
                 <constraint firstAttribute="height" constant="48" id="mhT-qK-QO4"/>
+                <constraint firstAttribute="trailing" secondItem="Om4-NY-0Wv" secondAttribute="trailing" constant="20" symbolic="YES" id="xha-h0-wac"/>
+                <constraint firstItem="Om4-NY-0Wv" firstAttribute="leading" secondItem="R58-db-BlK" secondAttribute="trailing" constant="8" symbolic="YES" id="z1I-6x-kRQ"/>
             </constraints>
             <point key="canvasLocation" x="-109" y="121"/>
         </customView>

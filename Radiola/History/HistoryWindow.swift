@@ -8,27 +8,42 @@
 import Cocoa
 
 class HistoryWindow: NSWindowController, NSWindowDelegate {
+    @IBOutlet var tableView: NSTableView!
+    @IBOutlet var placeholderLabel: NSTextField!
 
-    @IBOutlet weak var tableView: NSTableView!
-    @IBOutlet weak var placeholderLabel: NSTextField!
-    
+    /* ****************************************
+     *
+     * ****************************************/
     override var windowNibName: String! {
         return "HistoryWindow"
     }
-    
+
+    /* ****************************************
+     *
+     * ****************************************/
     override func windowDidLoad() {
         super.windowDidLoad()
 
         tableView.delegate = self
         tableView.dataSource = self
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(refresh),
-                                               name: Notification.Name.PlayerMetadataChanged,
-                                               object: nil)
 
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refresh),
+            name: Notification.Name.PlayerMetadataChanged,
+            object: nil)
     }
-    
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func windowWillClose(_ notification: Notification) {
+        HistoryWindow.instance = nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     private static var instance: HistoryWindow?
     class func show() -> HistoryWindow {
         if instance == nil {
@@ -41,24 +56,23 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
 
         return instance!
     }
-    
+
+    /* ****************************************
+     *
+     * ****************************************/
     @objc func refresh() {
         tableView.noteNumberOfRowsChanged()
-        
+
         if tableView.numberOfRows > 0 {
             placeholderLabel.isHidden = true
 
-//            let indexSet = IndexSet(integer: tableView.numberOfRows - 1)
-//            tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
-//            tableView.scrollRowToVisible(tableView.selectedRow)
-        }
-        else {
+            let indexSet = IndexSet(integer: tableView.numberOfRows - 1)
+            tableView.selectRowIndexes(indexSet, byExtendingSelection: false)
+            tableView.scrollRowToVisible(tableView.selectedRow)
+        } else {
             placeholderLabel.isHidden = false
             placeholderLabel.layer?.zPosition = 1
-
         }
-        
-
     }
 }
 
@@ -66,50 +80,8 @@ extension HistoryWindow: NSTableViewDelegate {
     /* ****************************************
      *
      * ****************************************/
-    
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-/*
-        let station = stationsStore.stations[row]
-        let view = StationRowView()
-        view.nameEdit.stringValue = station.name
-        view.nameEdit.tag = station.id
-        //view.nameEdit.action = #selector(stationNameEdited(sender:))
-
-        view.urledit.stringValue = station.url
-        view.urledit.tag = station.id
-//        view.urledit.action = #selector(stationUrlEdited(sender:))
-
-//        view.favoriteButton.action = #selector(favClicked(sender:))
-        view.favoriteButton.tag = station.id
-  //      view.favoriteButton.image = favoriteIcons[station.isFavorite]!
-
-        return view
-*/
-        let record = player.history[row]
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .medium
-        if !Calendar.current.isDate(Date(), equalTo: record.date, toGranularity: .day) {
-            dateFormatter.dateStyle = .long
-        }
-        else {
-            dateFormatter.dateStyle = .none
-        }
-
-        let preferredLanguages = Locale.preferredLanguages
-        if !preferredLanguages.isEmpty {
-            dateFormatter.locale = Locale(identifier: preferredLanguages[0])
-        }
-        
-
-
-        let view = HistoryRow()
-        view.songLabel.stringValue = record.song
-        view.stationLabel.stringValue = record.station
-        print(dateFormatter.string(from: record.date))
-        view.dateLabel.stringValue = dateFormatter.string(from: record.date)
-
-        return view
+        return HistoryRow(history: player.history[row])
     }
 }
 
