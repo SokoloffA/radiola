@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -69,21 +70,34 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="File" id="bib-Uj-vzu">
                         <items>
-                            <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
+                            <menuItem title="New station" keyEquivalent="n" id="DcO-1r-sRD">
+                                <connections>
+                                    <action selector="addStation:" target="-1" id="mDU-ha-EIB"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete station" id="SRc-Kl-kmc">
+                                <string key="keyEquivalent" base64-UTF8="YES">
+CA
+</string>
+                                <connections>
+                                    <action selector="removeStation:" target="-1" id="hbe-1S-jhr"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="New" hidden="YES" keyEquivalent="n" id="Was-JA-tGl">
                                 <connections>
                                     <action selector="newDocument:" target="-1" id="4Si-XN-c54"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
+                            <menuItem title="Open…" hidden="YES" keyEquivalent="o" id="IAo-SY-fd9">
                                 <connections>
                                     <action selector="openDocument:" target="-1" id="bVn-NM-KNZ"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Open Recent" id="tXI-mr-wws">
+                            <menuItem title="Open Recent" hidden="YES" id="tXI-mr-wws">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Open Recent" systemMenu="recentDocuments" id="oas-Oc-fiZ">
                                     <items>
-                                        <menuItem title="Clear Menu" id="vNY-rz-j42">
+                                        <menuItem title="Clear Menu" hidden="YES" id="vNY-rz-j42">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
                                                 <action selector="clearRecentDocuments:" target="-1" id="Daa-9d-B3U"/>
@@ -93,34 +107,34 @@
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                            <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
-                                <connections>
-                                    <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
+                            <menuItem title="Save…" hidden="YES" keyEquivalent="s" id="pxx-59-PXV">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="teZ-XB-qJY"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
+                            <menuItem title="Save As…" hidden="YES" keyEquivalent="S" id="Bw7-FT-i3A">
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="mDf-zr-I0C"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Revert to Saved" keyEquivalent="r" id="KaW-ft-85H">
+                            <menuItem title="Revert to Saved" hidden="YES" keyEquivalent="r" id="KaW-ft-85H">
                                 <connections>
                                     <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="aJh-i4-bef"/>
-                            <menuItem title="Page Setup…" keyEquivalent="P" id="qIS-W8-SiK">
+                            <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
+                                <connections>
+                                    <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Page Setup…" hidden="YES" keyEquivalent="P" id="qIS-W8-SiK">
                                 <modifierMask key="keyEquivalentModifierMask" shift="YES" command="YES"/>
                                 <connections>
                                     <action selector="runPageLayout:" target="-1" id="Din-rz-gC5"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Print…" keyEquivalent="p" id="aTl-1u-JFS">
+                            <menuItem title="Print…" hidden="YES" keyEquivalent="p" id="aTl-1u-JFS">
                                 <connections>
                                     <action selector="print:" target="-1" id="qaZ-4w-aoO"/>
                                 </connections>
@@ -347,7 +361,16 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Format" id="jxT-CU-nIS">
+                <menuItem title="Control" id="aye-6h-PUN">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Control" id="orG-FP-eYf">
+                        <items>
+                            <menuItem title="Play" tag="1" keyEquivalent="p" id="pkP-Vg-BQh"/>
+                            <menuItem title="Pause" tag="2" keyEquivalent="p" id="ZaX-dn-1ol"/>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="Format" hidden="YES" id="jxT-CU-nIS">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Format" id="GEO-Iw-cKr">
                         <items>
@@ -609,7 +632,7 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="View" id="H8h-7b-M4v">
+                <menuItem title="View" hidden="YES" id="H8h-7b-M4v">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
                         <items>
@@ -638,15 +661,6 @@
                                     <action selector="toggleFullScreen:" target="-1" id="dU3-MA-1Rq"/>
                                 </connections>
                             </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
-                <menuItem title="Control" id="aye-6h-PUN">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Control" id="orG-FP-eYf">
-                        <items>
-                            <menuItem title="Play" tag="1" keyEquivalent="p" id="pkP-Vg-BQh"/>
-                            <menuItem title="Pause" tag="2" keyEquivalent="p" id="ZaX-dn-1ol"/>
                         </items>
                     </menu>
                 </menuItem>
