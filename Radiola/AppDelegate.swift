@@ -121,7 +121,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         rebuildMenu()
     }
 
-    let playItem = PlayItemController()
+    var playItem : PlayItemController?
     /* ****************************************
      *
      * ****************************************/
@@ -132,8 +132,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         item.target = self
         item.isEnabled = true
 
-        playItem.parentMenu = menu
-        item.view = playItem.view
+        playItem = PlayItemController()
+        playItem?.parentMenu = menu
+        item.view = playItem?.view
         menu.addItem(item)
 
         menu.addItem(NSMenuItem.separator())
