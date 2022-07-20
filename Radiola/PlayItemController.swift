@@ -6,10 +6,21 @@
 //
 
 import Cocoa
+class PlayButtonImage: NSImageView {
+    weak var playItemController: PlayItemController?
+    
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        return true
+    }
+    
+    override func mouseUp(with theEvent: NSEvent) {
+        playItemController?.toggle()
+    }
+}
 
 class PlayItemController: NSViewController {
 
-    @IBOutlet var playIcon: NSImageView!
+    @IBOutlet var playIcon: PlayButtonImage!
     @IBOutlet var songLabel: NSTextField!
     @IBOutlet var stationLabel: NSTextField!
 
@@ -25,6 +36,7 @@ class PlayItemController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        playIcon.playItemController = self
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refresh),
@@ -39,14 +51,17 @@ class PlayItemController: NSViewController {
         refresh()
     }
 
-    override func mouseUp(with theEvent: NSEvent) {
+    @objc func toggle() {
         player.toggle()
         parentMenu?.cancelTracking()
     }
 
+    override func mouseUp(with theEvent: NSEvent) {
+        toggle()
+    }
+
     override func rightMouseUp(with event: NSEvent) {
-        player.toggle()
-        parentMenu?.cancelTracking()
+        toggle()
     }
 
     @objc private func refresh() {
