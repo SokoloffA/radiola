@@ -28,6 +28,11 @@
 		39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39541B33287623F200A2A5CB /* AddStationDialog.xib */; };
 		39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */; };
 		39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */; };
+		39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */; };
+		39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BA288C56C300273AB0 /* UpdatePanel.swift */; };
+		39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F869BB288C56C300273AB0 /* UpdatePanel.xib */; };
+		39F869C1288C639900273AB0 /* GeneralPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BF288C639900273AB0 /* GeneralPage.swift */; };
+		39F869C2288C639900273AB0 /* GeneralPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F869C0288C639900273AB0 /* GeneralPage.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,6 +60,11 @@
 		39541B33287623F200A2A5CB /* AddStationDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
 		39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItemController.swift; sourceTree = "<group>"; };
 		39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemController.xib; sourceTree = "<group>"; };
+		39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
+		39F869BA288C56C300273AB0 /* UpdatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePanel.swift; sourceTree = "<group>"; };
+		39F869BB288C56C300273AB0 /* UpdatePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePanel.xib; sourceTree = "<group>"; };
+		39F869BF288C639900273AB0 /* GeneralPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPage.swift; sourceTree = "<group>"; };
+		39F869C0288C639900273AB0 /* GeneralPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPage.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +97,8 @@
 		394F8A3A28739339005EA7FA /* Radiola */ = {
 			isa = PBXGroup;
 			children = (
-				39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
+				39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
 				390C7293287B213200E17BAE /* Controls.swift */,
 				394F8A56287394F1005EA7FA /* Notifications.swift */,
@@ -102,6 +112,7 @@
 				394F8A3D28739339005EA7FA /* Radiola.xcdatamodeld */,
 				394F8A6528739A1D005EA7FA /* StationsWindow */,
 				394F8A4F2873938B005EA7FA /* History */,
+				39F869A3288C11B600273AB0 /* Preferences */,
 			);
 			path = Radiola;
 			sourceTree = "<group>";
@@ -128,6 +139,18 @@
 				394F8A6628739A9C005EA7FA /* StationRowView.xib */,
 			);
 			path = StationsWindow;
+			sourceTree = "<group>";
+		};
+		39F869A3288C11B600273AB0 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */,
+				39F869BF288C639900273AB0 /* GeneralPage.swift */,
+				39F869BA288C56C300273AB0 /* UpdatePanel.swift */,
+				39F869C0288C639900273AB0 /* GeneralPage.xib */,
+				39F869BB288C56C300273AB0 /* UpdatePanel.xib */,
+			);
+			path = Preferences;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,8 +212,10 @@
 			files = (
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
 				390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */,
+				39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */,
 				394F8A412873933A005EA7FA /* Assets.xcassets in Resources */,
 				394F8A4E2873937F005EA7FA /* HistoryWindow.xib in Resources */,
+				39F869C2288C639900273AB0 /* GeneralPage.xib in Resources */,
 				394F8A6928739A9C005EA7FA /* StationRowView.xib in Resources */,
 				39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */,
 				39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */,
@@ -206,12 +231,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				390C7294287B213200E17BAE /* Controls.swift in Sources */,
+				39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */,
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
 				394F8A53287394E1005EA7FA /* AnimatedIcon.swift in Sources */,
 				394F8A3F28739339005EA7FA /* Radiola.xcdatamodeld in Sources */,
 				394F8A59287394FD005EA7FA /* Player.swift in Sources */,
+				39F869C1288C639900273AB0 /* GeneralPage.swift in Sources */,
 				394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */,
+				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
 				394F8A6B28739A9C005EA7FA /* StationRowView.swift in Sources */,
 				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,

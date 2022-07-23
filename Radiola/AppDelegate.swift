@@ -319,6 +319,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 
+    @IBAction func showPreferences(_ sender: Any) {
+        _ = PreferencesWindow.show()
+    }
+    
     func medialKeyPresset(keyCode: Int32, keyRepeat: Bool) {
         if keyCode == NX_KEYTYPE_PLAY {
             player.toggle()
