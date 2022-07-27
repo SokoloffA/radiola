@@ -12,7 +12,6 @@ class GeneralPage: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "General"
-        // Do view setup here.
     }
     
 }

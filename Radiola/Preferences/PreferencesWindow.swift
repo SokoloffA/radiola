@@ -21,10 +21,11 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
         super.init(window: NSWindow(contentViewController: viewController))
         self.windowFrameAutosaveName = "PreferencesWindow"
         
-        var tab = NSTabViewItem(viewController: GeneralPage())
-        tab.label = "General"
-        tab.image = NSImage(named: NSImage.preferencesGeneralName)
-        viewController.addTabViewItem(tab)
+        var tab: NSTabViewItem
+//        var tab = NSTabViewItem(viewController: GeneralPage())
+//        tab.label = "General"
+//        tab.image = NSImage(named: NSImage.preferencesGeneralName)
+//        viewController.addTabViewItem(tab)
 
         tab = NSTabViewItem(viewController: UpdatePanel())
         tab.label = "Update"

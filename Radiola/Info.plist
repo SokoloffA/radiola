@@ -19,5 +19,7 @@
 	<true/>
 	<key>NSPrincipalClass</key>
 	<string>Radiola.Application</string>
+	<key>SUFeedURL</key>
+	<string>https://sokoloffa.github.io/radiola/feed.xml</string>
 </dict>
 </plist>

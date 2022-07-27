@@ -33,6 +33,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet var pauseMenuItem: NSMenuItem!
     @IBOutlet var playMenuItem: NSMenuItem!
+    @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!
 
     private let settings = UserDefaults.standard
 
@@ -117,11 +118,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         pauseMenuItem.target = player
         pauseMenuItem.action = #selector(Player.stop)
 
+        checkForUpdatesMenuItem.target = updater
+        checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
+
         playerStatusChanged()
         rebuildMenu()
     }
 
-    var playItem : PlayItemController?
+    var playItem: PlayItemController?
     /* ****************************************
      *
      * ****************************************/
@@ -314,15 +318,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         _ = HistoryWindow.show()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func showPreferences(_ sender: Any) {
+        _ = PreferencesWindow.show()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         NSApp.setActivationPolicy(.accessory)
         return false
     }
 
-    @IBAction func showPreferences(_ sender: Any) {
-        _ = PreferencesWindow.show()
-    }
-    
     func medialKeyPresset(keyCode: Int32, keyRepeat: Bool) {
         if keyCode == NX_KEYTYPE_PLAY {
             player.toggle()

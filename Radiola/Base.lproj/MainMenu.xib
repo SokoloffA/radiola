@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -15,6 +15,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Radiola" customModuleProvider="target">
             <connections>
                 <outlet property="PlayMenuItem" destination="pkP-Vg-BQh" id="KlB-25-xFd"/>
+                <outlet property="checkForUpdatesMenuItem" destination="XQ9-kA-ObC" id="CQ9-EO-NEx"/>
                 <outlet property="pauseMenuItem" destination="ZaX-dn-1ol" id="UFX-ia-QJ3"/>
                 <outlet property="playMenuItem" destination="pkP-Vg-BQh" id="xNN-sF-odp"/>
             </connections>
@@ -31,6 +32,9 @@
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-1" id="Exp-CZ-Vem"/>
                                 </connections>
+                            </menuItem>
+                            <menuItem title="Check For Updates…" id="XQ9-kA-ObC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
                             <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
