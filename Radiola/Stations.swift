@@ -27,14 +27,14 @@ let defaultStations: [Station] = [
         url: "http://sc3.radiocaroline.net:8030",
         isFavorite: true
     ),
-           
+
     Station(
         id: 2,
         name: "Radio Caroline 319 Gold [ Hits from '60-'70 ]",
         url: "http://www.rcgoldserver.eu:8192",
         isFavorite: true
     ),
-           
+
     Station(
         id: 3,
         name: "Radio Caroline 259 Gold [ Happy Rock &amp; Album Station ]",
@@ -47,6 +47,7 @@ private class Reader: NSObject, XMLParserDelegate {
     var stations: [Station] = []
 
     func load(file: URL) -> [Station] {
+        //print(file)
         let parser = XMLParser(contentsOf: file)!
         let reader = self
         parser.delegate = reader
@@ -59,7 +60,7 @@ private class Reader: NSObject, XMLParserDelegate {
         }
     }
 
-    
+
     func parser(_ parser: XMLParser,
                 didStartElement elementName: String,
                 namespaceURI: String?,
@@ -69,7 +70,7 @@ private class Reader: NSObject, XMLParserDelegate {
         if elementName != "outline" || attributeDict["url"] == nil {
             return
         }
-        
+
         let station = Station(
             id:         stations.count,
             name:       attributeDict["text"] ?? "",
@@ -97,10 +98,10 @@ private class Writer {
             ])
             body.addChild(outline)
         }
-        
+
         try doc.xmlData(options: XMLNode.Options.nodePrettyPrint).write(to: file)
     }
-    
+
 }
 
 
@@ -108,7 +109,7 @@ private class Writer {
 final class StationsStore: ObservableObject {
     @Published var stations: [Station] = [] //allStations
     var file: URL?
-    
+
     func load(file: URL) {
         self.file = file
         if !FileManager().fileExists(atPath: file.path)
@@ -130,17 +131,21 @@ final class StationsStore: ObservableObject {
             }
         }
     }
-    
+
     func favorites() -> [Station] {
         return self.stations.filter{$0.isFavorite}
     }
-    
+
     func station(byId: Int) -> Station? {
         return self.stations.first{$0.id == byId}
     }
-    
+
     func station(byUrl: String) -> Station? {
         return self.stations.first{$0.url == byUrl}
+    }
+
+    func index(byId: Int) -> Int? {
+        return self.stations.firstIndex{$0.id == byId}
     }
 }
 

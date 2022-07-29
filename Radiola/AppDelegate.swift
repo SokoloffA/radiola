@@ -15,31 +15,31 @@ extension String {
 }
 
 extension String {
-    func tr(withComment:String) -> String {
+    func tr(withComment: String) -> String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: withComment)
     }
 }
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
-    
-    private let lastStationKey    = "Url"
+
+    private let lastStationKey = "Url"
     private let recentStationsKey = "RecentStations"
     private let recentStationsLengt = 5
 
     private var recentStations: [String] = []
-    
-    @IBOutlet weak var mainMenu: NSMenu!
-    
-    let player = Player()
+
+    @IBOutlet var pauseMenuItem: NSMenuItem!
+    @IBOutlet var playMenuItem: NSMenuItem!
+    @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!
+
     private let settings = UserDefaults.standard
-    
+
     private let menuItem =
-        NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
-    
+        NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+
     private let startConnectionPauseIcon = 0
     private let connectionIcon = AnimatedIcon(
         size: 16, frames: [
@@ -53,12 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             "connect-3",
         ]
     )
-    
-    func applicationWillFinishLaunching(_ aNotification: Notification) {
-        //NSApp.setActivationPolicy(.prohibited)
-    }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -67,44 +62,42 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         connectionIcon.framesPerSecond = 8
 
         NSApp.setActivationPolicy(.accessory)
-        
+
         let dirName = URL(
             fileURLWithPath: oplDirectoryName,
             relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
-        
+
         let fileName = URL(
             fileURLWithPath: oplDirectoryName + "/" + oplFileName,
             relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
-        
+
         if !FileManager.default.fileExists(atPath: dirName.absoluteString) {
             do {
                 try FileManager.default.createDirectory(at: dirName, withIntermediateDirectories: true)
-            }
-            catch {
+            } catch {
                 fatalError(error.localizedDescription)
             }
         }
-        
+
         stationsStore.load(file: fileName)
 
-        
         setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerStatusChanged),
                                                name: Notification.Name.PlayerStatusChanged,
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateTooltip),
                                                name: Notification.Name.PlayerMetadataChanged,
                                                object: nil)
-    
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(rebuildMenu),
                                                name: Notification.Name.StationsChanged,
                                                object: nil)
-        
+
         let favorites = stationsStore.favorites()
         if let last = settings.string(forKey: lastStationKey) {
             for s in favorites {
@@ -118,104 +111,88 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 player.station = favorites.first!
             }
         }
-        
+
+        playMenuItem.target = player
+        playMenuItem.action = #selector(Player.play)
+
+        pauseMenuItem.target = player
+        pauseMenuItem.action = #selector(Player.stop)
+
+        checkForUpdatesMenuItem.target = updater
+        checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
+
         playerStatusChanged()
         rebuildMenu()
     }
-    
-    
+
+    var playItem: PlayItemController?
     /* ****************************************
      *
      * ****************************************/
     @objc func rebuildMenu() {
         let menu = NSMenu()
-       
+
         let item = NSMenuItem()
         item.target = self
         item.isEnabled = true
-        
-        let playItemView = PlayItemView(parent: menu)
-        item.view = playItemView
+
+        playItem = PlayItemController()
+        playItem?.parentMenu = menu
+        item.view = playItem?.view
         menu.addItem(item)
 
         menu.addItem(NSMenuItem.separator())
-        
-//        buildRecentMenu(menu: menu)
-//        menu.addItem(NSMenuItem.separator())
+
         buildFavoritesMenu(menu: menu)
 
         menu.addItem(NSMenuItem.separator())
-        
+
         menu.addItem(NSMenuItem(
             title: "Open Radiola",
             action: #selector(showStationView(_:)),
-            keyEquivalent: ""))
-        
+            keyEquivalent: "r"))
+
+        menu.addItem(NSMenuItem(
+            title: "Show History",
+            action: #selector(showHistory(_:)),
+            keyEquivalent: "y"))
+
         menu.addItem(NSMenuItem(
             title: "Quit".tr,
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"))
-        
+
         menuItem.menu = menu
     }
-    
-    
-    /* ****************************************
-     *
-     * ****************************************/
-/*    func buildRecentMenu(menu: NSMenu) {
-            
-        guard let recentStations = settings.stringArray(forKey: recentStationsKey) else { return }
-        if recentStations.isEmpty  {
-            return
-        }
-        menu.addItem(NSMenuItem(title: "Recent stations".tr, action: nil, keyEquivalent: ""))
 
-        for url in recentStations {
-            if let station = stationsStore.station(byUrl: url) {
-                let item = NSMenuItem(
-                    title: "  " + station.name,
-                    action:  #selector(AppDelegate.stationClicked(_:)),
-                    keyEquivalent: "")
-                item.tag = station.id
-                
-//                if station.url == player.station.url {
-//                    item.state = NSControl.StateValue.on
-//                }
-                menu.addItem(item)
-            }
-        }
-    }
-*/
     /* ****************************************
      *
      * ****************************************/
     func buildFavoritesMenu(menu: NSMenu) {
         menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
-        
+
         for station in stationsStore.favorites() {
             let item = NSMenuItem(
                 title: "  " + station.name,
-                action:  #selector(AppDelegate.stationClicked(_:)),
+                action: #selector(AppDelegate.stationClicked(_:)),
                 keyEquivalent: "")
 
             item.tag = station.id
-            
+
             menu.addItem(item)
         }
     }
-        
+
     /* ****************************************
      *
      * ****************************************/
     private func setIcon(item: NSStatusItem, icon: String, size: Int = 12) {
-        let img = NSImage(named:NSImage.Name(icon))
+        let img = NSImage(named: NSImage.Name(icon))
         img?.size = NSSize(width: size, height: size)
         img?.isTemplate = true
         item.button?.image = img
     }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -223,7 +200,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to tear down your application
     }
 
-    
     /* ****************************************
      *
      * ****************************************/
@@ -231,7 +207,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         player.play()
     }
 
-    
     /* ****************************************
      *
      * ****************************************/
@@ -239,15 +214,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         player.stop()
     }
 
-    
     /* ****************************************
      *
      * ****************************************/
     @objc func togglePlay(_ sender: NSMenuItem) {
         player.toggle()
     }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -255,49 +228,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let station = stationsStore.station(byId: sender.tag) else {
             return
         }
-        
+
         if player.station == station && player.isPlaying {
             player.stop()
             return
         }
-        
+
         player.station = station
         settings.set(station.url, forKey: lastStationKey)
         player.play()
     }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
     @objc func playerStatusChanged() {
-        let MENU_PLAY_ITEM = 1
-        let MENU_PAUSE_ITEM = 2
-        
         switch player.status {
         case Player.Status.paused:
             connectionIcon.stop()
             setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = false
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = true
+            playMenuItem.isHidden = false
+            pauseMenuItem.isHidden = true
 
         case Player.Status.connecting:
             connectionIcon.start(startFrame: 0)
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = true
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = false
+            playMenuItem.isHidden = true
+            pauseMenuItem.isHidden = false
 
         case Player.Status.playing:
             connectionIcon.stop()
             setIcon(item: menuItem, icon: "MenuButtonPlay", size: 16)
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PLAY_ITEM)?.isHidden = true
-            mainMenu.item(withTitle: "Stations")?.submenu?.item(withTag: MENU_PAUSE_ITEM)?.isHidden = false
+            playMenuItem.isHidden = true
+            pauseMenuItem.isHidden = false
         }
-  
+
         updateTooltip()
     }
 
-
-    
     /* ****************************************
      *
      * ****************************************/
@@ -311,20 +278,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
-        let new = Array(([url] + old.filter{$0 != url}).prefix(recentStationsLengt))
+        let new = Array(([url] + old.filter { $0 != url }).prefix(recentStationsLengt))
         settings.set(new, forKey: recentStationsKey)
     }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
     @objc func updateTooltip() {
-        
         switch player.status {
         case Player.Status.paused:
             menuItem.button?.toolTip = player.station.name
-            
+
         case Player.Status.connecting:
             menuItem.button?.toolTip =
                 player.station.name +
@@ -333,35 +298,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         case Player.Status.playing:
             menuItem.button?.toolTip =
-                player.station.name +
+                player.title +
                 "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                player.title;
+                player.station.name
         }
     }
-    
-    var stationsWindowController : StationsWindowController? = nil
-    
+
     /* ****************************************
      *
      * ****************************************/
-//    private var window: NSWindow?
     @objc func showStationView(_ sender: Any?) {
-
-        NSApp.setActivationPolicy(.regular)
-        let storyboard = NSStoryboard(name: "Main", bundle: nil)
-
-        if (stationsWindowController == nil) {
-            guard let wc = storyboard.instantiateController(withIdentifier: "StationsWindowController") as? StationsWindowController    else {
-                fatalError("Error getting main window controller")
-            }
-    
-            stationsWindowController = wc
-        }
-        
-        stationsWindowController?.window?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
+        _ = StationsWindow.show()
     }
-    
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func showHistory(_ sender: Any?) {
+        _ = HistoryWindow.show()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func showPreferences(_ sender: Any) {
+        _ = PreferencesWindow.show()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         NSApp.setActivationPolicy(.accessory)
         return false
@@ -372,32 +338,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             player.toggle()
         }
     }
-    
-    func medialKeyReleased(keyCode: Int32) {}
 
+    func medialKeyReleased(keyCode: Int32) {}
 }
 
 class Application: NSApplication {
-    
     override func sendEvent(_ event: NSEvent) {
-        if (event.type == NSEvent.EventType.systemDefined && event.subtype.rawValue == 8) {
-           
+        if event.type == NSEvent.EventType.systemDefined && event.subtype.rawValue == 8 {
             let keyCode = ((event.data1 & 0xFFFF0000) >> 16)
             let keyFlags = (event.data1 & 0x0000FFFF)
             // Get the key state. 0xA is KeyDown, OxB is KeyUp
-            let pressed = (((keyFlags & 0xFF00) >> 8)) == 0xA
+            let pressed = ((keyFlags & 0xFF00) >> 8) == 0xA
             let keyRepeat = (keyFlags & 0x1) != 0
 
             if pressed {
                 guard let delegate = delegate as? AppDelegate else { return }
                 delegate.medialKeyPresset(keyCode: Int32(keyCode), keyRepeat: keyRepeat)
-            }
-            else {
+            } else {
                 guard let delegate = delegate as? AppDelegate else { return }
                 delegate.medialKeyReleased(keyCode: Int32(keyCode))
             }
         }
-  
+
         super.sendEvent(event)
     }
 }

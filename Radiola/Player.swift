@@ -6,10 +6,13 @@
 //  Copyright © 2020 Alex Sokolov. All rights reserved.
 //
 
-import Foundation
 import AVFoundation
+import Foundation
+import Cocoa
 
-class Player: NSObject {
+var player = Player()
+
+class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     var station: Station = Station(id: 0, name: "", url: "")
     public var title = String()
 
@@ -19,60 +22,82 @@ class Player: NSObject {
         case playing
     }
 
+    struct HistoryRecord {
+        var song: String = ""
+        var station: String = ""
+        var date: Date = Date()
+    }
+
     public var status = Status.paused
+    public var history: [HistoryRecord] = []
 
     private var playerItemContext = 0
-    private var player : AVPlayer!
-    private var playerItem: AVPlayerItem!
-    var asset : AVAsset!
-       
+    private var player: AVPlayer!
+    private var playerItem: AVPlayerItem?
+    private var asset: AVAsset!
+    private let settings = UserDefaults.standard
+
+    var volume: Float {
+        get { return player.volume }
+
+        set(value) {
+            player.volume = value
+            settings.set(value, forKey: "Volume")
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override init() {
+        super.init()
+
+        player = AVPlayer()
+        settings.register(defaults: ["Volume": 0.5])
+        player.volume = settings.float(forKey: "Volume")
+
+        player.addObserver(self,
+                           forKeyPath: #keyPath(AVPlayer.timeControlStatus),
+                           options: [.old, .new],
+                           context: &playerItemContext)
+    }
+
     /* ****************************************
      *
      * ****************************************/
     @objc func play() {
-        guard let u = URL(string: self.station.url) else {
-            return
+        var u = URL(string: station.url)
+
+        if u == nil{
+            u = URL.init(string: station.url.replacingOccurrences(of: " ", with: "%20"))
         }
         
-//        let u2 = URL(string: "file:/Users/sokoloff/tmp/music.wav")!
-        asset = AVAsset(url: u)
-//        let assetKeys = [
-//            "playable",
-//            "hasProtectedContent"
-//        ]
+        if u == nil{
+            NSAlert.showWarning(message: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
+            return
+        }
 
-//        playerItem = AVPlayerItem(asset: asset,
-//                                  automaticallyLoadedAssetKeys: assetKeys)
-
+        asset = AVAsset(url: u!)
         playerItem = AVPlayerItem(asset: asset)
-        player = AVPlayer(playerItem: playerItem)
-        // player.volume = 0.01
-        player.volume = 0.5
+        playerItem?.preferredForwardBufferDuration = 1
 
+        let metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
+        metadataOutput.setDelegate(self, queue: DispatchQueue.main)
+        playerItem?.add(metadataOutput)
 
-        player.addObserver(self,
-                            forKeyPath: #keyPath(AVPlayer.timeControlStatus),
-                            options: [.old, .new],
-                            context: &playerItemContext)
-
-        playerItem.addObserver(self,
-                            forKeyPath: #keyPath(AVPlayerItem.timedMetadata),
-                            options: NSKeyValueObservingOptions(),
-                            context: &playerItemContext)
-
-        playerItem.preferredForwardBufferDuration = 1
+        player.replaceCurrentItem(with: playerItem)
+        statusChenged(status: AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate)
         player.play()
     }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
     @objc func stop() {
-        self.player.pause()
+        player.pause()
+        playerItem = nil
     }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -81,18 +106,23 @@ class Player: NSObject {
             stop()
             return
         }
-        
+
         if !station.isEmpty {
             play()
         }
     }
-    
-    
-    override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
-                               context: UnsafeMutableRawPointer?) {
 
+    /* ****************************************
+     *
+     * ****************************************/
+    var isPlaying: Bool {
+        return status != Status.paused
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         guard context == &playerItemContext else {
             super.observeValue(forKeyPath: keyPath,
                                of: object,
@@ -100,60 +130,63 @@ class Player: NSObject {
                                context: context)
             return
         }
-        
+
         if keyPath == #keyPath(AVPlayer.timeControlStatus) {
             if let statusNumber = change?[.newKey] as? NSNumber {
                 self.statusChenged(status: AVPlayer.TimeControlStatus(rawValue: statusNumber.intValue)!)
             }
         }
-        
-        if keyPath == #keyPath(AVPlayerItem.timedMetadata) {
-            if let metaData = playerItem.timedMetadata {
-                metaDataReady(metadata: metaData)
-            }
-        }
     }
-    
+
+    /* ****************************************
+     *
+     * ****************************************/
     private func statusChenged(status: AVPlayer.TimeControlStatus) {
-
-        switch (status) {
-
+        switch status {
         case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
             self.status = .connecting
+            title = ""
             NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
-            
+
         case AVPlayer.TimeControlStatus.playing:
             self.status = .playing
 
         default:
             self.status = .paused
+            title = ""
             NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
         }
-        
+
         NotificationCenter.default.post(name: Notification.Name.PlayerStatusChanged, object: nil)
     }
 
-    //****************************************
+    // ****************************************
     // Metadata
-
-    
-    private func metaDataReady(metadata: [AVMetadataItem]) {
-        for m in metadata {
-            if m.commonKey == AVMetadataKey("title") {
-                if let v = m.stringValue {
-                    title = v
-                    NotificationCenter.default.post(
-                        name: Notification.Name.PlayerMetadataChanged,
-                        object: nil,
-                        userInfo: ["Title": v])
-                }
-            }
+    func metadataOutput(_ output: AVPlayerItemMetadataOutput, didOutputTimedMetadataGroups groups: [AVTimedMetadataGroup], from track: AVPlayerItemTrack?) {
+        guard
+            let item = groups.first?.items.first,
+            let value = item.value(forKeyPath: #keyPath(AVMetadataItem.value))
+        else {
+            return
         }
+
+        title = "\(value)"
+        addHistory()
+
+        NotificationCenter.default.post(
+            name: Notification.Name.PlayerMetadataChanged,
+            object: nil,
+            userInfo: ["Title": title])
     }
- 
-    
-    var isPlaying: Bool {
-        return status != Status.paused
-        
+
+    private func addHistory() {
+        if history.last?.song == title && history.last?.station == station.name {
+            return
+        }
+
+        history.append(HistoryRecord(song: title, station: station.name, date: Date()))
+        if history.count > 100 {
+            history.removeFirst(history.count - 100)
+        }
     }
 }
