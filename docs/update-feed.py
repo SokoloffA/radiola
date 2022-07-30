@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/usr/bin/env python3
 # v 0.1
 
 GITHUB_USER = "SokoloffA"
