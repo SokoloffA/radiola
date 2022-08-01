@@ -7,11 +7,17 @@ While most music players provides option for Internet streaming, but you might n
 
 Radiola is a lightweight Internet radio player for MacOS, its located in the status bar and allows you to listen to Internet radio stations quickly and without complications.
 
+More often, you use the **menu in the status bar**.  
+![Radiola menu](https://user-images.githubusercontent.com/854935/182122940-a42de641-3377-4728-bd95-b3b6e54f2ea9.png)  
 
 
-![Radiola menu](https://user-images.githubusercontent.com/854935/112380318-4eff5100-8cfa-11eb-93a9-cfd7ee954276.png)
+  
+In the **station window** you can both manage the station list and use it as an Internet radio player.  
+![Radiola Main Window](https://user-images.githubusercontent.com/854935/182121740-67f47916-85a7-4d3d-8742-a0ea06c511c9.png)
 
 
+The **history window** allows you to find out what song is playing now or has played recently.  
+![Radiola History Window](https://user-images.githubusercontent.com/854935/182125735-6dd7494a-c899-471e-a617-1dd09dbe497c.png)
 
 ## Radiola features
 * Very light, less than 2 megabytes.
@@ -23,6 +29,5 @@ You can download the latest version of the program from the [Releases page](http
 
 ## If you want to thank me
 * You can star this project
-* Or buy me a beer  
+* Or advise the program on social networks
 
-[![Donate](https://img.shields.io/badge/PayPal-Donate-orange.svg?style=for-the-badge)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=XVRVWTQL5WERG)
