@@ -69,19 +69,19 @@ class PlayItemController: NSViewController {
         case Player.Status.paused:
             playIcon.image = NSImage(named: NSImage.Name("PlayMenu"))
             playIcon.image?.isTemplate = true
-            stationLabel.stringValue = player.station.name
+            stationLabel.stringValue = player.stationName
             songLabel.stringValue = ""
 
         case Player.Status.connecting:
             playIcon.image = NSImage(named: NSImage.Name("PauseMenu"))
             playIcon.image?.isTemplate = true
-            stationLabel.stringValue = player.station.name
+            stationLabel.stringValue = player.stationName
             songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
 
         case Player.Status.playing:
             playIcon.image = NSImage(named: NSImage.Name("PauseMenu"))
             playIcon.image?.isTemplate = true
-            stationLabel.stringValue = player.station.name
+            stationLabel.stringValue = player.stationName
             songLabel.stringValue = player.title
         }
     }

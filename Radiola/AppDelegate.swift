@@ -225,11 +225,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc func stationClicked(_ sender: NSMenuItem) {
-        guard let station = stationsStore.station(byId: sender.tag) else {
-            return
-        }
+        guard let station = stationsStore.station(byId: sender.tag) else { return }
 
-        if player.station == station && player.isPlaying {
+        if player.station?.id == station.id && player.isPlaying {
             player.stop()
             return
         }
@@ -288,11 +286,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func updateTooltip() {
         switch player.status {
         case Player.Status.paused:
-            menuItem.button?.toolTip = player.station.name
+            menuItem.button?.toolTip = player.stationName
 
         case Player.Status.connecting:
             menuItem.button?.toolTip =
-                player.station.name +
+                player.stationName +
                 "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
                 "Connecting...".tr(withComment: "Tooltip text")
 
@@ -300,7 +298,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             menuItem.button?.toolTip =
                 player.title +
                 "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                player.station.name
+                player.stationName
         }
     }
 

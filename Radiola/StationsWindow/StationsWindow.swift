@@ -10,12 +10,9 @@ import Cocoa
 let stationPasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
 
 class StationsWindow: NSWindowController, NSWindowDelegate {
-    private let favoriteIcons = [
-        false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
-        true: NSImage(named: NSImage.Name("star-filled"))?.tint(color: .systemYellow),
-    ]
 
-    @IBOutlet var tableView: NSTableView!
+
+    @IBOutlet weak var stationsView: NSOutlineView!
     @IBOutlet var playButton: NSButton!
     @IBOutlet var songLabel: NSTextField!
     @IBOutlet var stationLabel: NSTextField!
@@ -53,12 +50,14 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         playButton.font = NSFont.systemFont(ofSize: 24)
         playButton.image?.isTemplate = true
 
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.doubleAction = #selector(doubleClickRow)
-
-        tableView.registerForDraggedTypes([stationPasteboardType])
-
+        stationsView.rowHeight = 48
+        stationsView.delegate = self
+        stationsView.dataSource = self
+        stationsView.doubleAction = #selector(doubleClickRow)
+        stationsView.registerForDraggedTypes([stationPasteboardType])
+        stationsView.expandItem(nil, expandChildren: true)
+        stationsView.selectRowIndexes(IndexSet(arrayLiteral: 0), byExtendingSelection: true)
+        
         playButton.target = player
         playButton.action = #selector(Player.toggle)
 
@@ -111,20 +110,19 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     /* ****************************************
      *
      * ****************************************/
-    func selectedRow() -> Int? {
-        let row = tableView.selectedRow
-        if row > -1 && row < stationsStore.stations.count {
-            return row
-        }
-        return nil
-    }
+//    func selectedRow() -> Int? {
+//        let row = stationsView.selectedRow
+//        if row > -1 && row < stationsStore.stations.count {
+//            return row
+//        }
+//        return nil
+//    }
 
     /* ****************************************
      *
-     * ****************************************/
-    func selectedStation() -> Station? {
-        guard let row = selectedRow() else { return nil }
-        return stationsStore.stations[row]
+//     * ****************************************/
+    func selectedNode() -> StationsStore.Node? {
+        return stationsView.item(atRow: stationsView.selectedRow) as? StationsStore.Node
     }
 
     /* ****************************************
@@ -133,15 +131,15 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     @objc func refresh() {
         switch player.status {
         case Player.Status.paused:
-            stationLabel.stringValue = player.station.name
+            stationLabel.stringValue = player.stationName
             songLabel.stringValue = ""
 
         case Player.Status.connecting:
-            stationLabel.stringValue = player.station.name
+            stationLabel.stringValue = player.stationName
             songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
 
         case Player.Status.playing:
-            stationLabel.stringValue = player.station.name
+            stationLabel.stringValue = player.stationName
             songLabel.stringValue = player.title
         }
 
@@ -166,73 +164,119 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     /* ****************************************
      *
      * ****************************************/
-    func emitChanged() {
-        NotificationCenter.default.post(
-            name: Notification.Name.StationsChanged,
-            object: nil)
-    }
+//    func emitChanged() {
+//        NotificationCenter.default.post(
+//            name: Notification.Name.StationsChanged,
+//            object: nil)
+//    }
 
     /* ****************************************
      *
      * ****************************************/
     @objc func doubleClickRow(sender: AnyObject) {
-        guard let row = selectedRow() else { return }
-        if player.station == stationsStore.stations[row] && player.isPlaying {
-            return
-        }
-
-        player.station = stationsStore.stations[row]
-        player.play()
+//        guard let station = selectedStation() else { return }
+//        if player.station == station && player.isPlaying {
+//            return
+//        }
+//
+//        player.station = station
+//        player.play()
     }
 
     /* ****************************************
      *
      * ****************************************/
     @IBAction func addStation(_ sender: Any) {
+        func doAdd(name: String, url: String) {
+            if url.isEmpty {
+                return
+            }
+
+            let newStation = Station(name: name, url: url)
+            let node = selectedNode()
+
+            // ::::::::::::::::::::::::::::::
+            // No items selected, we append to endo of top items
+            if node == nil {
+                stationsStore.root.append(newStation)
+            }
+            
+            // ::::::::::::::::::::::::::::::
+            // A group is selected, we add to its end
+            if let group = node as? Group {
+                group.append(newStation)
+            }
+
+            // ::::::::::::::::::::::::::::::
+            // A station is selected, we after it
+            if let station = node as? Station, let group = station.parent() {
+                group.insert(newStation, after: station)
+            }
+            
+            stationsStore.emitChanged()
+            stationsStore.write()
+            
+            stationsView.reloadData()
+            let row = stationsView.row(forItem: newStation)
+            if row > -1 {
+                print("ROW: \(row)")
+                stationsView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: true)
+            }
+        }
+
+
         let dialog = AddStationDialog()
         window?.beginSheet(dialog.window!, completionHandler: { response in
             if response == NSApplication.ModalResponse.OK {
-                if dialog.url.isEmpty {
-                    return
-                }
-
-                let station = Station(
-                    id: stationsStore.stations.count,
-                    name: dialog.title,
-                    url: dialog.url
-                )
-
-                let row = max(0, self.tableView.selectedRow + 1)
-                stationsStore.stations.insert(station, at: row)
-                self.tableView.reloadData()
-                self.tableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
-                self.emitChanged()
-                stationsStore.write()
+                doAdd(name: dialog.title, url: dialog.url)
             }
         })
+//                let station = Station(
+//                    name: dialog.title,
+//                    url: dialog.url
+//                )
+//
+//                let node = self.selectedNode()
+//
+////                if let g = node?.group() {
+////                        stationsStore.addStation(toGroup: g, station: station)
+////                }
+//
+////                stationsStore.addStation(after: node, station: station)
+//
+////                stationsStore.addStation(station, parent)
+//
+////                let row = max(0, self.stationsView.selectedRow + 1)
+////                stationsStore.stations.insert(station, at: row)
+//                self.stationsView.reloadData()
+////                self.stationsView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+//                stationsStore.emitChanged()
+//                stationsStore.write()
+//            }
+//        })
     }
 
     /* ****************************************
      *
      * ****************************************/
     @IBAction func removeStation(_ sender: Any) {
-        guard let row = selectedRow() else { return }
-        guard let wnd = window else { return }
-
-        let alert = NSAlert()
-        alert.messageText = String(format: "Do you want to remove the station %@?", stationsStore.stations[row].name)
-        alert.informativeText = "This operation cannot be undone."
-        alert.addButton(withTitle: "Yes")
-        alert.addButton(withTitle: "Cancel")
-
-        alert.beginSheetModal(for: wnd, completionHandler: { response in
-            if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-                stationsStore.stations.remove(at: row)
-                self.tableView.reloadData()
-                self.emitChanged()
-                stationsStore.write()
-            }
-        })
+//        guard let row = selectedRow() else { return }
+//        guard let wnd = window else { return }
+//
+//        let alert = NSAlert()
+//        alert.messageText = String(format: "Do you want to remove the station %@?", stationsStore.stations[row].name)
+//        alert.informativeText = "This operation cannot be undone."
+//        alert.addButton(withTitle: "Yes")
+//        alert.addButton(withTitle: "Cancel")
+//
+//        alert.beginSheetModal(for: wnd, completionHandler: { response in
+//            if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+//                stationsStore.stations.remove(at: row)
+//                self.stationsView.reloadData()
+//                self.emitChanged()
+//                stationsStore.write()
+//            }
+//        })
     }
 
     @IBAction func volumeChanged(_ sender: Any) {
@@ -250,123 +294,146 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     }
 }
 
-extension StationsWindow: NSTableViewDelegate {
-    /* ****************************************
-     *
-     * ****************************************/
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let station = stationsStore.stations[row]
-
-        let view = StationRowView()
-        view.nameEdit.stringValue = station.name
-        view.nameEdit.tag = station.id
-        view.nameEdit.action = #selector(stationNameEdited(sender:))
-
-        view.urledit.stringValue = station.url
-        view.urledit.tag = station.id
-        view.urledit.action = #selector(stationUrlEdited(sender:))
-
-        view.favoriteButton.action = #selector(favClicked(sender:))
-        view.favoriteButton.tag = station.id
-        view.favoriteButton.image = favoriteIcons[station.isFavorite]!
-
-        return view
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction func stationNameEdited(sender: NSTextField) {
-        guard let n = stationsStore.index(byId: sender.tag) else { return }
-        stationsStore.stations[n].name = sender.stringValue
-        emitChanged()
-        stationsStore.write()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction func stationUrlEdited(sender: NSTextField) {
-        guard let n = stationsStore.index(byId: sender.tag) else { return }
-        stationsStore.stations[n].url = sender.stringValue
-        emitChanged()
-        stationsStore.write()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction func favClicked(sender: NSButton) {
-        guard let n = stationsStore.index(byId: sender.tag) else { return }
-        stationsStore.stations[n].isFavorite = !stationsStore.stations[n].isFavorite
-        sender.image = favoriteIcons[stationsStore.stations[n].isFavorite]!
-        emitChanged()
-        stationsStore.write()
-    }
-}
+/* ****************************************
+ *
+ * ****************************************/
+ extension StationsWindow: NSOutlineViewDelegate {
+     /* ****************************************
+      *
+      * ****************************************/
+     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+        if let group = item as? Group {
+            return GroupRowView(group: group)
+        }
+        
+        if let station = item as? Station {
+            return StationRowView(station: station)
+        }
+        
+        return nil
+     }
+ }
 
 /* ****************************************
  *
  * ****************************************/
-extension StationsWindow: NSTableViewDataSource {
-    /* ****************************************
-     *
-     * ****************************************/
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return stationsStore.stations.count
-    }
+extension StationsWindow:  NSOutlineViewDataSource {
 
     /* ****************************************
-     *
+     * Returns the number of child items each item in the outline
      * ****************************************/
-    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
-        let pasteboardItem = NSPasteboardItem()
-        pasteboardItem.setString(String(row), forType: stationPasteboardType)
-        return pasteboardItem
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
-        if dropOperation == .above {
-            return .move
-        } else {
-            return []
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
-        guard
-            let str = info.draggingPasteboard.pasteboardItems?.first?.string(forType: stationPasteboardType),
-            let srcRow = Int(str)
-        else { return false }
-
-        // When you drag an item downwards, the "new row" index is actually --1. Remember dragging operation is `.above`.
-        var newRow = row
-        if srcRow < newRow {
-            newRow = row - 1
+    func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        // Root item
+        if item == nil {
+            return stationsStore.root.nodes.count
         }
 
-        if srcRow == newRow {
-            return false
+        if item is Station {
+            return 1
+        }
+        
+        if let group = item as? Group {
+            return max(1, group.nodes.count)
+        }
+        
+        return 0
+    }
+    
+    /* ****************************************
+     * Returns the actual item
+     * ****************************************/
+    func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        // Root item
+        if item == nil {
+            return stationsStore.root.nodes[index]
         }
 
-        // Animate the rows .......................
-        tableView.beginUpdates()
-        tableView.moveRow(at: srcRow, to: newRow)
-        tableView.endUpdates()
+        if let group = item as? Group {
+            if index < group.nodes.count {
+                return group.nodes[index]
+            }
+        }
+        
+        return item!
+    }
+    
+    
+    /* ****************************************
+     * We must specify if a given item should be expandable or not.
+     * ****************************************/
+    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
+        if let group = item as? Group {
+            return !group.nodes.isEmpty
+        }
+        
+        return false
+    }
+    
 
-        let station = stationsStore.stations[srcRow]
-        stationsStore.stations.remove(at: srcRow)
-        stationsStore.stations.insert(station, at: newRow)
+    /* ****************************************
+     * Variable Row Heights
+     * ****************************************/
+    func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
+        if item is Group {
+            return CGFloat(38.0)
+        }
 
-        emitChanged()
-        stationsStore.write()
-
-        return true
+        return CGFloat(48.0)
     }
 }
+//extension StationsWindow: NSTableViewDataSource {
+//
+//    /* ****************************************
+//     *
+//     * ****************************************/
+//    func tableView(_ tableView: NSTableView, pasteboardWriterForRow row: Int) -> NSPasteboardWriting? {
+//        let pasteboardItem = NSPasteboardItem()
+//        pasteboardItem.setString(String(row), forType: stationPasteboardType)
+//        return pasteboardItem
+//    }
+//
+//    /* ****************************************
+//     *
+//     * ****************************************/
+//    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
+//        if dropOperation == .above {
+//            return .move
+//        } else {
+//            return []
+//        }
+//    }
+//
+//    /* ****************************************
+//     *
+//     * ****************************************/
+//    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+//        guard
+//            let str = info.draggingPasteboard.pasteboardItems?.first?.string(forType: stationPasteboardType),
+//            let srcRow = Int(str)
+//        else { return false }
+//
+//        // When you drag an item downwards, the "new row" index is actually --1. Remember dragging operation is `.above`.
+//        var newRow = row
+//        if srcRow < newRow {
+//            newRow = row - 1
+//        }
+//
+//        if srcRow == newRow {
+//            return false
+//        }
+//
+//        // Animate the rows .......................
+//        tableView.beginUpdates()
+//        tableView.moveRow(at: srcRow, to: newRow)
+//        tableView.endUpdates()
+//
+//        let station = stationsStore.stations[srcRow]
+//        stationsStore.stations.remove(at: srcRow)
+//        stationsStore.stations.insert(station, at: newRow)
+//
+//        emitChanged()
+//        stationsStore.write()
+//
+//        return true
+//    }
+//}

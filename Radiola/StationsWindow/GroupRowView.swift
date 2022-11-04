@@ -8,52 +8,34 @@
 
 import Cocoa
 
-class StationRowView: NSView  {
-
-    @IBOutlet var contentView: NSView!
-    @IBOutlet weak var nameEdit: NSTextField!
-    @IBOutlet weak var urledit: NSTextField!
-    @IBOutlet weak var favoriteButton: NSButton!
-
-    private let favoriteIcons = [
-        false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
-        true: NSImage(named: NSImage.Name("star-filled"))?.tint(color: .systemYellow),
-    ]
+class GroupRowView: NSView  {
     
-    private let station: Station
+    @IBOutlet weak var nameEdit: NSTextField!
+    
+    private let group: Group
     
     var mainView: NSView?
     
-    init(station: Station) {
-        self.station = station
+    init(group: Group) {
+        self.group = group
         super.init(frame: NSRect.zero)
-        _ = load(fromNIBNamed: "StationRowView")
+        _ = load(fromNIBNamed: "GroupRowView")
         
-        nameEdit.stringValue = station.name
-        nameEdit.tag = station.id
+        nameEdit.stringValue = group.name
+        nameEdit.tag = group.id
         nameEdit.target = self
         nameEdit.action = #selector(nameEdited(sender:))
-
-        urledit.stringValue = station.url
-        urledit.tag = station.id
-        urledit.target = self
-        urledit.action = #selector(urlEdited(sender:))
-
-        favoriteButton.tag = station.id
-        favoriteButton.image = favoriteIcons[station.isFavorite]!
-        favoriteButton.target = self
-        favoriteButton.action = #selector(favClicked(sender:))
     }
-       
+    
     required init?(coder: NSCoder) {
-        station = Station(name: "", url: "")
+        self.group = Group(name: "")
         super.init(coder: coder)
     }
     
     func load(fromNIBNamed nibName: String) -> Bool {
         var nibObjects: NSArray?
         let nibName = NSNib.Name(stringLiteral: nibName)
-        
+  
         if Bundle.main.loadNibNamed(nibName, owner: self, topLevelObjects: &nibObjects) {
             guard let nibObjects = nibObjects else { return false }
             
@@ -76,34 +58,14 @@ class StationRowView: NSView  {
         
         return false
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction private func nameEdited(sender: NSTextField) {
+        group.name = sender.stringValue
+        stationsStore.emitChanged()
+        stationsStore.write()
+    }
     
-    
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction func nameEdited(sender: NSTextField) {
-        station.name = sender.stringValue
-        stationsStore.emitChanged()
-        stationsStore.write()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction private func urlEdited(sender: NSTextField) {
-        station.url = sender.stringValue
-        stationsStore.emitChanged()
-        stationsStore.write()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction private func favClicked(sender: NSButton) {
-        station.isFavorite = !station.isFavorite
-        sender.image = favoriteIcons[station.isFavorite]!
-        stationsStore.emitChanged()
-        stationsStore.write()
-    }
-
 }

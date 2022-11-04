@@ -13,9 +13,10 @@ import Cocoa
 var player = Player()
 
 class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
-    var station: Station = Station(id: 0, name: "", url: "")
+    var station: Station?
     public var title = String()
-
+    public var stationName: String { station?.name ?? "" }
+    
     public enum Status {
         case paused
         case connecting
@@ -66,6 +67,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     @objc func play() {
+        guard let station = self.station else { return }
+        
         var u = URL(string: station.url)
 
         if u == nil{
@@ -102,6 +105,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     @objc func toggle() {
+        guard let station = self.station else { return }
+        
         if isPlaying {
             stop()
             return
@@ -180,6 +185,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     }
 
     private func addHistory() {
+        guard let station = self.station else { return }
+        
         if history.last?.song == title && history.last?.station == station.name {
             return
         }
