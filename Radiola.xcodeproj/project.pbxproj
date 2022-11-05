@@ -26,6 +26,10 @@
 		394F8A6B28739A9C005EA7FA /* StationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A6828739A9C005EA7FA /* StationRowView.swift */; };
 		39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39541B32287623F200A2A5CB /* AddStationDialog.swift */; };
 		39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39541B33287623F200A2A5CB /* AddStationDialog.xib */; };
+		39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44A9290D42D8008E5A30 /* GroupRowView.xib */; };
+		39BF44AD290D4367008E5A30 /* GroupRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44AC290D4367008E5A30 /* GroupRowView.swift */; };
+		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
+		39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */; };
 		39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */; };
 		39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */; };
 		39E8DFD5288F316A00082467 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 39E8DFD4288F316A00082467 /* Sparkle */; };
@@ -60,6 +64,10 @@
 		394F8A6C2873A2FE005EA7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		39541B32287623F200A2A5CB /* AddStationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationDialog.swift; sourceTree = "<group>"; };
 		39541B33287623F200A2A5CB /* AddStationDialog.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
+		39BF44A9290D42D8008E5A30 /* GroupRowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupRowView.xib; sourceTree = "<group>"; };
+		39BF44AC290D4367008E5A30 /* GroupRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRowView.swift; sourceTree = "<group>"; };
+		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
+		39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupDialog.swift; sourceTree = "<group>"; };
 		39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItemController.swift; sourceTree = "<group>"; };
 		39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemController.xib; sourceTree = "<group>"; };
 		39E8DFD62890839500082467 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
@@ -138,10 +146,14 @@
 			children = (
 				394F8A6128739A15005EA7FA /* StationsWindow.swift */,
 				39541B32287623F200A2A5CB /* AddStationDialog.swift */,
+				39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */,
 				394F8A6828739A9C005EA7FA /* StationRowView.swift */,
+				39BF44AC290D4367008E5A30 /* GroupRowView.swift */,
 				394F8A6228739A15005EA7FA /* StationsWindow.xib */,
 				39541B33287623F200A2A5CB /* AddStationDialog.xib */,
+				39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */,
 				394F8A6628739A9C005EA7FA /* StationRowView.xib */,
+				39BF44A9290D42D8008E5A30 /* GroupRowView.xib */,
 			);
 			path = StationsWindow;
 			sourceTree = "<group>";
@@ -221,6 +233,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */,
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
 				390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */,
 				39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */,
@@ -229,6 +242,7 @@
 				39F869C2288C639900273AB0 /* GeneralPage.xib in Resources */,
 				394F8A6928739A9C005EA7FA /* StationRowView.xib in Resources */,
 				39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */,
+				39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */,
 				39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */,
 				394F8A442873933A005EA7FA /* MainMenu.xib in Resources */,
 			);
@@ -246,10 +260,12 @@
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
 				394F8A53287394E1005EA7FA /* AnimatedIcon.swift in Sources */,
+				39BF44AD290D4367008E5A30 /* GroupRowView.swift in Sources */,
 				394F8A3F28739339005EA7FA /* Radiola.xcdatamodeld in Sources */,
 				394F8A59287394FD005EA7FA /* Player.swift in Sources */,
 				39F869C1288C639900273AB0 /* GeneralPage.swift in Sources */,
 				394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */,
+				39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */,
 				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
 				394F8A6B28739A9C005EA7FA /* StationRowView.swift in Sources */,
 				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
