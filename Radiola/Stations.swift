@@ -96,7 +96,7 @@ class Group: StationsStore.Node {
             }
         }
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -106,6 +106,13 @@ class Group: StationsStore.Node {
         if let index = index {
             nodes.remove(at: index)
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func index(_ node: StationsStore.Node) -> Int? {
+        return nodes.firstIndex { $0.id == node.id }
     }
 }
 
@@ -155,43 +162,128 @@ class StationsStore {
         }
     }
 
-    func loadFake() {
-        let s = Station(
-            name: "First station",
-            url: "https://first_radio.com"
-        )
-        root.nodes.append(s)
+    /*
+         func loadFake() {
+             let s = Station(
+                 name: "First station",
+                 url: "https://first_radio.com"
+             )
+             root.nodes.append(s)
+             root.nodes.append(Station(name: "Station 2",  url: "https://first_radio.com"))
+             root.nodes.append(Station(name: "Station 3",  url: "https://first_radio.com"))
 
-        let g = Group(name: "Super Group")
-        root.nodes.append(g)
+             root.nodes.append(Group(name: "Empty Group 1"))
 
-        for i in 1 ... 5 {
-            g.nodes.append(Station(
-                name: "Station \(i)",
-                url: "https://radio-\(i).com"
-            ))
-        }
+             let g = Group(name: "Super Group")
+             root.nodes.append(g)
 
-//        print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-//        print(s.parent()?.id)
-//        print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-//        dump()
-    }
+             for i in 1 ... 5 {
+                 g.nodes.append(Station(
+                     name: "Station \(i)",
+                     url: "https://radio-\(i).com"
+                 ))
+             }
+             g.nodes.append(Group(name: "Empty Group in Super"))
 
+             root.nodes.append(Group(name: "Empty Group 2"))
+
+     //        print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+     //        print(s.parent()?.id)
+     //        print("-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+     //        dump()
+         }
+     */
     /* ****************************************
      *
      * ****************************************/
     func load(file: URL) {
-//        print(file)
+        // print(file)
         self.file = file
 
-        // return loadFake()
+//        return loadFake()
 
         if !FileManager().fileExists(atPath: file.path) {
             for s in defaultStations {
                 root.nodes.append(s)
             }
             return
+        }
+
+        func getBoolAttribute(xml: XMLElement, attribute: String) -> Bool {
+            return (xml.attribute(forName: attribute)?.stringValue ?? "").uppercased() == "TRUE"
+        }
+
+        func loadOutline(xml: XMLElement, parent: Group) {
+            let children = xml.elements(forName: "outline")
+
+            if getBoolAttribute(xml: xml, attribute: "group") || !children.isEmpty {
+                let group = Group(name: xml.attribute(forName: "text")?.stringValue ?? "")
+
+                for outline in children {
+                    loadOutline(xml: outline, parent: group)
+                }
+                parent.nodes.append(group)
+                return
+            }
+
+            let station = Station(
+                name: xml.attribute(forName: "text")?.stringValue ?? "",
+                url: xml.attribute(forName: "url")?.stringValue ?? "",
+                isFavorite: getBoolAttribute(xml: xml, attribute: "fav")
+            )
+            parent.nodes.append(station)
+        }
+
+        do {
+            let xml = try XMLDocument(contentsOf: file)
+            guard let xmlRoot = xml.rootElement() else { return }
+            let xmlBody = xmlRoot.elements(forName: "body")
+            if xmlBody.isEmpty {
+                return
+            }
+
+            for outline in xmlBody[0].elements(forName: "outline") {
+                loadOutline(xml: outline, parent: root)
+            }
+        } catch {
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func write() {
+        func writeOutline(parent: XMLElement, node: Node) {
+            let outline = XMLElement(name: "outline")
+            outline.addAttribute(XMLNode.attribute(withName: "text", stringValue: node.name) as! XMLNode)
+
+            if let station = node as? Station {
+                outline.addAttribute(XMLNode.attribute(withName: "url", stringValue: station.url) as! XMLNode)
+                if station.isFavorite {
+                    outline.addAttribute(XMLNode.attribute(withName: "fav", stringValue: "true") as! XMLNode)
+                }
+            }
+
+            if let group = node as? Group {
+                outline.addAttribute(XMLNode.attribute(withName: "group", stringValue: "true") as! XMLNode)
+                for n in group.nodes {
+                    writeOutline(parent: outline, node: n)
+                }
+            }
+
+            parent.addChild(outline)
+        }
+
+        guard let file = file else { return }
+
+        let ompl = XMLElement(name: "ompl")
+        ompl.addAttribute(XMLNode.attribute(withName: "version", stringValue: "2.0") as! XMLNode)
+        ompl.addChild(XMLElement(name: "head"))
+        let body = XMLElement(name: "body")
+        ompl.addChild(body)
+
+        for node in stationsStore.root.nodes {
+            writeOutline(parent: body, node: node)
         }
 
         func loadOutline(xml: XMLElement, parent: Group) {
@@ -215,33 +307,11 @@ class StationsStore {
         }
 
         do {
-            let xml = try XMLDocument(contentsOf: file)
-            guard let xmlRoot = xml.rootElement() else { return }
-            let xmlBody = xmlRoot.elements(forName: "body")
-            if xmlBody.isEmpty {
-                return
-            }
-
-            for outline in xmlBody[0].elements(forName: "outline") {
-                loadOutline(xml: outline, parent: root)
-            }
+            let document = XMLDocument(rootElement: ompl)
+            let xmlData = document.xmlData(options: .nodePrettyPrint)
+            try xmlData.write(to: file)
         } catch {
         }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func write() {
-//         if file != nil {
-//            let writer = Writer()
-//            do {
-//                try writer.write(file: self.file!, stations: stations)
-//            }
-//            catch {
-//                fatalError(error.localizedDescription)
-//            }
-//        }
     }
 
     /* ****************************************
