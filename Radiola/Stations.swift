@@ -96,6 +96,17 @@ class Group: StationsStore.Node {
             }
         }
     }
+    
+    /* ****************************************
+     *
+     * ****************************************/
+    func remove(_ node: StationsStore.Node) {
+        let index = nodes.firstIndex { $0.id == node.id }
+
+        if let index = index {
+            nodes.remove(at: index)
+        }
+    }
 }
 
 /* ****************************************

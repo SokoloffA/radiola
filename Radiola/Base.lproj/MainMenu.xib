@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -74,16 +74,22 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="File" id="dMs-cI-mzQ">
+                <menuItem title="File" identifier="file" id="dMs-cI-mzQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="File" id="bib-Uj-vzu">
+                    <menu key="submenu" title="File" autoenablesItems="NO" id="bib-Uj-vzu">
                         <items>
-                            <menuItem title="New station" keyEquivalent="n" id="DcO-1r-sRD">
+                            <menuItem title="New Station" tag="3" keyEquivalent="n" id="DcO-1r-sRD">
                                 <connections>
                                     <action selector="addStation:" target="-1" id="mDU-ha-EIB"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Delete station" id="SRc-Kl-kmc">
+                            <menuItem title="New Station Group" tag="4" id="wMs-Pa-zXE">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="addGroup:" target="-1" id="uhB-Bp-q6X"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Delete Station or Group" tag="5" identifier="delStation" id="SRc-Kl-kmc">
                                 <string key="keyEquivalent" base64-UTF8="YES">
 CA
 </string>

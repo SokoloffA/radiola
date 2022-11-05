@@ -10,9 +10,7 @@ import Cocoa
 let stationPasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
 
 class StationsWindow: NSWindowController, NSWindowDelegate {
-
-
-    @IBOutlet weak var stationsView: NSOutlineView!
+    @IBOutlet var stationsView: NSOutlineView!
     @IBOutlet var playButton: NSButton!
     @IBOutlet var songLabel: NSTextField!
     @IBOutlet var stationLabel: NSTextField!
@@ -37,8 +35,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         super.windowDidLoad()
         window?.delegate = self
 
-//        playButton.image = NSImage(named:NSImage.Name("NSTouchBarPlayTemplate"))
-        //  playButton.contentTintColor = NSColor.systemGray4
         playButton.bezelStyle = NSButton.BezelStyle.regularSquare
         playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
         playButton.imagePosition = NSControl.ImagePosition.imageOnly
@@ -57,7 +53,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         stationsView.registerForDraggedTypes([stationPasteboardType])
         stationsView.expandItem(nil, expandChildren: true)
         stationsView.selectRowIndexes(IndexSet(arrayLiteral: 0), byExtendingSelection: true)
-        
+
         playButton.target = player
         playButton.action = #selector(Player.toggle)
 
@@ -69,6 +65,11 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refresh),
                                                name: Notification.Name.PlayerMetadataChanged,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: NSOutlineView.selectionDidChangeNotification,
                                                object: nil)
 
         volumeControl.minValue = 0
@@ -110,17 +111,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     /* ****************************************
      *
      * ****************************************/
-//    func selectedRow() -> Int? {
-//        let row = stationsView.selectedRow
-//        if row > -1 && row < stationsStore.stations.count {
-//            return row
-//        }
-//        return nil
-//    }
-
-    /* ****************************************
-     *
-//     * ****************************************/
     func selectedNode() -> StationsStore.Node? {
         return stationsView.item(atRow: stationsView.selectedRow) as? StationsStore.Node
     }
@@ -159,124 +149,123 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
             playButton.image?.isTemplate = true
             playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
         }
+
+        let selNode = selectedNode()
+        print(#function, selNode != nil)
+        removeStationButton.isEnabled = (selNode != nil)
     }
 
     /* ****************************************
      *
      * ****************************************/
-//    func emitChanged() {
-//        NotificationCenter.default.post(
-//            name: Notification.Name.StationsChanged,
-//            object: nil)
-//    }
+    @objc func doubleClickRow(sender: AnyObject) {
+        guard let station = selectedNode() as? Station else { return }
+
+        if player.station?.id == station.id && player.isPlaying {
+            return
+        }
+
+        player.station = station
+        player.play()
+    }
 
     /* ****************************************
      *
      * ****************************************/
-    @objc func doubleClickRow(sender: AnyObject) {
-//        guard let station = selectedStation() else { return }
-//        if player.station == station && player.isPlaying {
-//            return
-//        }
-//
-//        player.station = station
-//        player.play()
+    private func addNode(newNode: StationsStore.Node) {
+        let node = selectedNode()
+
+        // ::::::::::::::::::::::::::::::
+        // No items selected, we append to endo of top items
+        if node == nil {
+            stationsStore.root.append(newNode)
+        }
+
+        // ::::::::::::::::::::::::::::::
+        // A group is selected, we add to its end
+        if let group = node as? Group {
+            group.append(newNode)
+        }
+
+        // ::::::::::::::::::::::::::::::
+        // A station is selected, we after it
+        if let station = node as? Station, let group = station.parent() {
+            group.insert(newNode, after: station)
+        }
+
+        stationsStore.emitChanged()
+        stationsStore.write()
+
+        stationsView.reloadData()
+        stationsView.expandItem(newNode.parent())
+        // Select new item
+        let row = stationsView.row(forItem: newNode)
+        if row > -1 {
+            stationsView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: true)
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
     @IBAction func addStation(_ sender: Any) {
-        func doAdd(name: String, url: String) {
-            if url.isEmpty {
+        let dialog = AddStationDialog()
+        window?.beginSheet(dialog.window!, completionHandler: { response in
+            if response != NSApplication.ModalResponse.OK || dialog.url.isEmpty {
                 return
             }
 
-            let newStation = Station(name: name, url: url)
-            let node = selectedNode()
-
-            // ::::::::::::::::::::::::::::::
-            // No items selected, we append to endo of top items
-            if node == nil {
-                stationsStore.root.append(newStation)
-            }
-            
-            // ::::::::::::::::::::::::::::::
-            // A group is selected, we add to its end
-            if let group = node as? Group {
-                group.append(newStation)
-            }
-
-            // ::::::::::::::::::::::::::::::
-            // A station is selected, we after it
-            if let station = node as? Station, let group = station.parent() {
-                group.insert(newStation, after: station)
-            }
-            
-            stationsStore.emitChanged()
-            stationsStore.write()
-            
-            stationsView.reloadData()
-            let row = stationsView.row(forItem: newStation)
-            if row > -1 {
-                print("ROW: \(row)")
-                stationsView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: true)
-            }
-        }
-
-
-        let dialog = AddStationDialog()
-        window?.beginSheet(dialog.window!, completionHandler: { response in
-            if response == NSApplication.ModalResponse.OK {
-                doAdd(name: dialog.title, url: dialog.url)
-            }
+            self.addNode(newNode: Station(name: dialog.title, url: dialog.url))
         })
-//                let station = Station(
-//                    name: dialog.title,
-//                    url: dialog.url
-//                )
-//
-//                let node = self.selectedNode()
-//
-////                if let g = node?.group() {
-////                        stationsStore.addStation(toGroup: g, station: station)
-////                }
-//
-////                stationsStore.addStation(after: node, station: station)
-//
-////                stationsStore.addStation(station, parent)
-//
-////                let row = max(0, self.stationsView.selectedRow + 1)
-////                stationsStore.stations.insert(station, at: row)
-//                self.stationsView.reloadData()
-////                self.stationsView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
-//                stationsStore.emitChanged()
-//                stationsStore.write()
-//            }
-//        })
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func addGroup(_ sender: Any) {
+        let dialog = AddGroupDialog()
+        window?.beginSheet(dialog.window!, completionHandler: { response in
+            if response != NSApplication.ModalResponse.OK {
+                return
+            }
+
+            self.addNode(newNode: Group(name: dialog.title))
+        })
     }
 
     /* ****************************************
      *
      * ****************************************/
     @IBAction func removeStation(_ sender: Any) {
-//        guard let row = selectedRow() else { return }
-//        guard let wnd = window else { return }
-//
-//        let alert = NSAlert()
-//        alert.messageText = String(format: "Do you want to remove the station %@?", stationsStore.stations[row].name)
-//        alert.informativeText = "This operation cannot be undone."
-//        alert.addButton(withTitle: "Yes")
-//        alert.addButton(withTitle: "Cancel")
-//
-//        alert.beginSheetModal(for: wnd, completionHandler: { response in
-//            if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-//                stationsStore.stations.remove(at: row)
-//                self.stationsView.reloadData()
-//                self.emitChanged()
-//                stationsStore.write()
-//            }
-//        })
+        guard let wnd = window else { return }
+        guard let node = selectedNode() else { return }
+        guard let parent = node.parent() else { return }
+
+        let alert = NSAlert()
+        alert.informativeText = "This operation cannot be undone."
+        alert.addButton(withTitle: "Yes")
+        alert.addButton(withTitle: "Cancel")
+
+        if let station = node as? Station {
+            alert.messageText = "Are you sure you want to remove the station \"\(station.name)\"?"
+        }
+
+        if let group = node as? Group {
+            if group.nodes.isEmpty {
+                alert.messageText = "Are you sure you want to remove the group \"\(group.name)\"?"
+            } else {
+                alert.messageText = "Are you sure you want to remove the group \"\(group.name)\", and all of its children?"
+            }
+        }
+
+        alert.beginSheetModal(for: wnd, completionHandler: { response in
+            if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+                parent.remove(node)
+                self.stationsView.reloadData()
+                stationsStore.emitChanged()
+                stationsStore.write()
+            }
+        })
     }
 
     @IBAction func volumeChanged(_ sender: Any) {
@@ -297,28 +286,27 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
 /* ****************************************
  *
  * ****************************************/
- extension StationsWindow: NSOutlineViewDelegate {
-     /* ****************************************
-      *
-      * ****************************************/
-     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
+extension StationsWindow: NSOutlineViewDelegate {
+    /* ****************************************
+     *
+     * ****************************************/
+    func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         if let group = item as? Group {
             return GroupRowView(group: group)
         }
-        
+
         if let station = item as? Station {
             return StationRowView(station: station)
         }
-        
+
         return nil
-     }
- }
+    }
+}
 
 /* ****************************************
  *
  * ****************************************/
-extension StationsWindow:  NSOutlineViewDataSource {
-
+extension StationsWindow: NSOutlineViewDataSource {
     /* ****************************************
      * Returns the number of child items each item in the outline
      * ****************************************/
@@ -331,14 +319,14 @@ extension StationsWindow:  NSOutlineViewDataSource {
         if item is Station {
             return 1
         }
-        
+
         if let group = item as? Group {
             return max(1, group.nodes.count)
         }
-        
+
         return 0
     }
-    
+
     /* ****************************************
      * Returns the actual item
      * ****************************************/
@@ -353,11 +341,10 @@ extension StationsWindow:  NSOutlineViewDataSource {
                 return group.nodes[index]
             }
         }
-        
+
         return item!
     }
-    
-    
+
     /* ****************************************
      * We must specify if a given item should be expandable or not.
      * ****************************************/
@@ -365,10 +352,9 @@ extension StationsWindow:  NSOutlineViewDataSource {
         if let group = item as? Group {
             return !group.nodes.isEmpty
         }
-        
+
         return false
     }
-    
 
     /* ****************************************
      * Variable Row Heights
@@ -381,7 +367,8 @@ extension StationsWindow:  NSOutlineViewDataSource {
         return CGFloat(48.0)
     }
 }
-//extension StationsWindow: NSTableViewDataSource {
+
+// extension StationsWindow: NSTableViewDataSource {
 //
 //    /* ****************************************
 //     *
@@ -436,4 +423,4 @@ extension StationsWindow:  NSOutlineViewDataSource {
 //
 //        return true
 //    }
-//}
+// }
