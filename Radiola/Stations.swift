@@ -375,7 +375,7 @@ class StationsStore {
             if let station = node as? Station {
                 if f(station) { res.append(station) }
             } else if let group = node as? Group {
-                queue += group.nodes
+                queue.insert(contentsOf: group.nodes, at: 0)
             }
         }
 
