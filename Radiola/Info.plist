@@ -13,12 +13,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSMainNibFile</key>
-	<string>MainMenu</string>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
-	<key>NSPrincipalClass</key>
-	<string>Radiola.Application</string>
 	<key>SUFeedURL</key>
 	<string>https://sokoloffa.github.io/radiola/feed.xml</string>
 </dict>
