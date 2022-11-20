@@ -31,3 +31,4 @@ You can download the latest version of the program from the [Releases page](http
 * You can star this project
 * Or advise the program on social networks
 
+
