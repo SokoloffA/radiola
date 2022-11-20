@@ -52,7 +52,9 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         stationsView.doubleAction = #selector(doubleClickRow)
         stationsView.registerForDraggedTypes([nodePasteboardType])
         stationsView.expandItem(nil, expandChildren: true)
-        stationsView.selectRowIndexes(IndexSet(arrayLiteral: 0), byExtendingSelection: true)
+        
+        let n = max(0, stationsView.row(forItem: player.station)
+        stationsView.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
 
         playButton.target = player
         playButton.action = #selector(Player.toggle)
