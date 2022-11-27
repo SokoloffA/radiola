@@ -30,6 +30,7 @@
 		39BF44AD290D4367008E5A30 /* GroupRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44AC290D4367008E5A30 /* GroupRowView.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
 		39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */; };
+		39D79E632933BEAB00210D94 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D79E622933BEAB00210D94 /* Settings.swift */; };
 		39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */; };
 		39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */; };
 		39E8DFD5288F316A00082467 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 39E8DFD4288F316A00082467 /* Sparkle */; };
@@ -39,6 +40,7 @@
 		39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F869BB288C56C300273AB0 /* UpdatePanel.xib */; };
 		39F869C1288C639900273AB0 /* GeneralPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BF288C639900273AB0 /* GeneralPage.swift */; };
 		39F869C2288C639900273AB0 /* GeneralPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F869C0288C639900273AB0 /* GeneralPage.xib */; };
+		39FF07732933A59900751A03 /* StatuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF07722933A59900751A03 /* StatuBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,7 @@
 		39BF44AC290D4367008E5A30 /* GroupRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRowView.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
 		39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupDialog.swift; sourceTree = "<group>"; };
+		39D79E622933BEAB00210D94 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItemController.swift; sourceTree = "<group>"; };
 		39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemController.xib; sourceTree = "<group>"; };
 		39E8DFD62890839500082467 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
@@ -76,6 +79,7 @@
 		39F869BB288C56C300273AB0 /* UpdatePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePanel.xib; sourceTree = "<group>"; };
 		39F869BF288C639900273AB0 /* GeneralPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPage.swift; sourceTree = "<group>"; };
 		39F869C0288C639900273AB0 /* GeneralPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPage.xib; sourceTree = "<group>"; };
+		39FF07722933A59900751A03 /* StatuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatuBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,15 +114,14 @@
 			isa = PBXGroup;
 			children = (
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
-				39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
 				390C7293287B213200E17BAE /* Controls.swift */,
 				394F8A56287394F1005EA7FA /* Notifications.swift */,
+				39D79E622933BEAB00210D94 /* Settings.swift */,
 				394F8A52287394E1005EA7FA /* AnimatedIcon.swift */,
 				394F8A50287394D0005EA7FA /* Stations.swift */,
 				39E8DFD62890839500082467 /* Updater.swift */,
 				394F8A422873933A005EA7FA /* MainMenu.xib */,
-				39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */,
 				394F8A402873933A005EA7FA /* Assets.xcassets */,
 				394F8A6C2873A2FE005EA7FA /* Info.plist */,
 				394F8A452873933A005EA7FA /* Radiola.entitlements */,
@@ -126,6 +129,7 @@
 				394F8A6528739A1D005EA7FA /* StationsWindow */,
 				394F8A4F2873938B005EA7FA /* History */,
 				39F869A3288C11B600273AB0 /* Preferences */,
+				39FF07712933A55600751A03 /* StatusBar */,
 			);
 			path = Radiola;
 			sourceTree = "<group>";
@@ -168,6 +172,16 @@
 				39F869BB288C56C300273AB0 /* UpdatePanel.xib */,
 			);
 			path = Preferences;
+			sourceTree = "<group>";
+		};
+		39FF07712933A55600751A03 /* StatusBar */ = {
+			isa = PBXGroup;
+			children = (
+				39FF07722933A59900751A03 /* StatuBarController.swift */,
+				39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */,
+				39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */,
+			);
+			path = StatusBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,10 +282,12 @@
 				39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */,
 				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
 				394F8A6B28739A9C005EA7FA /* StationRowView.swift in Sources */,
+				39FF07732933A59900751A03 /* StatuBarController.swift in Sources */,
 				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,
 				394F8A51287394D0005EA7FA /* Stations.swift in Sources */,
 				39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */,
+				39D79E632933BEAB00210D94 /* Settings.swift in Sources */,
 				394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */,
 				39E8DFD72890839500082467 /* Updater.swift in Sources */,
 			);

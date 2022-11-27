@@ -53,7 +53,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         stationsView.registerForDraggedTypes([nodePasteboardType])
         stationsView.expandItem(nil, expandChildren: true)
         
-        let n = max(0, stationsView.row(forItem: player.station)
+        let n = max(0, stationsView.row(forItem: player.station))
         stationsView.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
 
         playButton.target = player
