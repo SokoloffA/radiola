@@ -36,14 +36,12 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private var player: AVPlayer!
     private var playerItem: AVPlayerItem?
     private var asset: AVAsset!
-    private let settings = UserDefaults.standard
-
+   
     var volume: Float {
-        get { return player.volume }
-
-        set(value) {
-            player.volume = value
-            settings.set(value, forKey: "Volume")
+        get { player.volume }
+        set {
+            player.volume = newValue
+            settings.volumeLevel = newValue
         }
     }
 
@@ -54,8 +52,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         super.init()
 
         player = AVPlayer()
-        settings.register(defaults: ["Volume": 0.5])
-        player.volume = settings.float(forKey: "Volume")
+        player.volume = settings.volumeLevel
 
         player.addObserver(self,
                            forKeyPath: #keyPath(AVPlayer.timeControlStatus),

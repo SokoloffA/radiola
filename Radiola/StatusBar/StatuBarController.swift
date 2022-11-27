@@ -178,7 +178,7 @@ class StatusBarController: NSObject {
         }
 
         player.station = station
-        _settings.lastStationUrl = station.url
+        settings.lastStationUrl = station.url
         player.play()
     }
     

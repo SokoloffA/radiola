@@ -25,11 +25,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
 
-    private let lastStationKey = "Url"
-    private let recentStationsKey = "RecentStations"
-    private let recentStationsLengt = 5
-
-
     @IBOutlet var pauseMenuItem: NSMenuItem!
     @IBOutlet var playMenuItem: NSMenuItem!
     @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!
@@ -65,19 +60,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                name: Notification.Name.PlayerStatusChanged,
                                                object: nil)
 
-
-        let favorites = stationsStore.favorites()
-        if let last = settings.string(forKey: lastStationKey) {
-            for s in favorites {
-                if s.url == last {
-                    player.station = s
-                    break
-                }
-            }
+        if let url = settings.lastStationUrl {
+            player.station = stationsStore.station(byUrl: url)
         } else {
-            if !favorites.isEmpty {
-                player.station = favorites.first!
-            }
+            player.station = stationsStore.favorites().first
         }
 
         statusBar = StatusBarController()
