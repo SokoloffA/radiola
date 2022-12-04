@@ -7,11 +7,15 @@
 
 import Cocoa
 
+/* ****************************************
+ *
+ * ****************************************/
 class StatusBarController: NSObject {
+    private let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
 
-    var playItem: PlayItemController?
-    private let menuItem =        NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-    
+    /* ****************************************
+     *
+     * ****************************************/
     private let startConnectionPauseIcon = 0
     private let connectionIcon = AnimatedIcon(
         size: 16, frames: [
@@ -25,19 +29,22 @@ class StatusBarController: NSObject {
             "connect-3",
         ]
     )
-    
-  override  init() {
-      super.init()
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override init() {
+        super.init()
         connectionIcon.statusItem = menuItem
         connectionIcon.framesPerSecond = 8
-        
+
         setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerStatusChanged),
                                                name: Notification.Name.PlayerStatusChanged,
                                                object: nil)
-       
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateTooltip),
                                                name: Notification.Name.PlayerMetadataChanged,
@@ -48,24 +55,31 @@ class StatusBarController: NSObject {
                                                name: Notification.Name.StationsChanged,
                                                object: nil)
 
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(rebuildMenu),
+                                               name: Notification.Name.SettingsChanged,
+                                               object: nil)
+
         playerStatusChanged()
         rebuildMenu()
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
     @objc func rebuildMenu() {
         let menu = NSMenu()
 
-        let item = NSMenuItem()
-        item.target = self
-        item.isEnabled = true
+        let  playItem = PlayMenuItem()
+        playItem.target = self
+        playItem.isEnabled = true
+        menu.addItem(playItem)
 
-        playItem = PlayItemController()
-        playItem?.parentMenu = menu
-        item.view = playItem?.view
-        menu.addItem(item)
+        if settings.showVolumeInMenu {
+            menu.addItem(NSMenuItem.separator())
+            let volumeItem = VolumeMenuItem()
+            menu.addItem(volumeItem)
+        }
 
         menu.addItem(NSMenuItem.separator())
 
@@ -73,11 +87,10 @@ class StatusBarController: NSObject {
 
         menu.addItem(NSMenuItem.separator())
 
-        
         menu.addItem(NSMenuItem(
             title: "Open Radiola",
             action: #selector(AppDelegate.showStationView(_:)),
-             keyEquivalent: "r"))
+            keyEquivalent: "r"))
 
         menu.addItem(NSMenuItem(
             title: "Show History",
@@ -91,8 +104,7 @@ class StatusBarController: NSObject {
 
         menuItem.menu = menu
     }
- 
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -111,13 +123,11 @@ class StatusBarController: NSObject {
             menu.addItem(item)
         }
     }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
     @objc func playerStatusChanged() {
-
         switch player.status {
         case Player.Status.paused:
             connectionIcon.stop()
@@ -133,7 +143,7 @@ class StatusBarController: NSObject {
 
         updateTooltip()
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -155,7 +165,7 @@ class StatusBarController: NSObject {
                 player.stationName
         }
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -165,7 +175,7 @@ class StatusBarController: NSObject {
         img?.isTemplate = true
         item.button?.image = img
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -181,7 +191,4 @@ class StatusBarController: NSObject {
         settings.lastStationUrl = station.url
         player.play()
     }
-    
-
 }
-

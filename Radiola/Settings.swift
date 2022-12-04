@@ -11,7 +11,9 @@ class Settings {
     private let lastStationKey = "Url"
     // private let recentStationsKey = "RecentStations"
     private let volumeLevelKey = "Volume"
+    private let volumeIsMutedKey = "Muted"
     private let showVolumeInMenuKey = "ShowVolumeInMenu"
+    private let favoritesMenuTypeKey = "FavoritesMenuType"
 
     private let recentStationsLengt = 5
 
@@ -20,6 +22,7 @@ class Settings {
     init() {
         let defaults: [String: Any] = [
             volumeLevelKey: 0.5,
+            volumeIsMutedKey: false,
             showVolumeInMenuKey: false,
         ]
         data.register(defaults: defaults)
@@ -35,9 +38,35 @@ class Settings {
         set { data.set(newValue, forKey: volumeLevelKey) }
     }
 
+    var volumeIsMuted: Bool {
+        get { data.bool(forKey: volumeIsMutedKey) }
+        set { data.set(newValue, forKey: volumeIsMutedKey) }
+    }
+
     var showVolumeInMenu: Bool {
         get { data.bool(forKey: showVolumeInMenuKey) }
         set { data.set(newValue, forKey: showVolumeInMenuKey) }
+    }
+
+    enum FavoritesMenuType: Int {
+        case flat, margin, submenu
+    }
+
+    var favoritesMenuType: FavoritesMenuType {
+        get {
+            let s = data.string(forKey: "favoritesMenuTypeKey") ?? ""
+            if s == "submenu" { return .submenu }
+            if s == "margin" { return .margin }
+            return .flat
+        }
+
+        set {
+            switch newValue {
+            case .flat: data.set("flat", forKey: favoritesMenuTypeKey)
+            case .margin: data.set("margin", forKey: favoritesMenuTypeKey)
+            case .submenu: data.set("submenu", forKey: favoritesMenuTypeKey)
+            }
+        }
     }
 }
 
