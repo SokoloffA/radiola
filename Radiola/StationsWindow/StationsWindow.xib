@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -27,7 +27,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="656" height="375"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
             <value key="minSize" type="size" width="500" height="200"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="656" height="375"/>
@@ -199,10 +199,10 @@
         </window>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="18" height="16"/>
-        <image name="NSRemoveTemplate" width="18" height="4"/>
-        <image name="NSTouchBarAudioOutputVolumeOffTemplate" width="16" height="17"/>
-        <image name="NSTouchBarPlayTemplate" width="15" height="16"/>
-        <image name="NSTouchBarVolumeUpTemplate" width="26" height="18"/>
+        <image name="NSAddTemplate" width="15" height="13"/>
+        <image name="NSRemoveTemplate" width="15" height="4"/>
+        <image name="NSTouchBarAudioOutputVolumeOffTemplate" width="13" height="14"/>
+        <image name="NSTouchBarPlayTemplate" width="12" height="13"/>
+        <image name="NSTouchBarVolumeUpTemplate" width="22" height="15"/>
     </resources>
 </document>

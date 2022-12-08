@@ -29,6 +29,9 @@ class AppearancePage: NSViewController {
 
         favoritesMenuGroupTypeCbx.addItem(withTitle:  "as a submenu")
         favoritesMenuGroupTypeCbx.lastItem?.tag = Settings.FavoritesMenuType.submenu.rawValue
+
+        favoritesMenuGroupTypeCbx.selectItem(withTag: settings.favoritesMenuType.rawValue)
+        
     }
     
     @IBAction func showVolumeChanged(_ sender: NSButton) {

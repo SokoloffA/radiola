@@ -12,6 +12,7 @@ import Cocoa
  * ****************************************/
 class StatusBarController: NSObject {
     private let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    private let menuPrefix = "  "
 
     /* ****************************************
      *
@@ -70,7 +71,7 @@ class StatusBarController: NSObject {
     @objc func rebuildMenu() {
         let menu = NSMenu()
 
-        let  playItem = PlayMenuItem()
+        let playItem = PlayMenuItem()
         playItem.target = self
         playItem.isEnabled = true
         menu.addItem(playItem)
@@ -83,7 +84,11 @@ class StatusBarController: NSObject {
 
         menu.addItem(NSMenuItem.separator())
 
-        buildFavoritesMenu(menu: menu)
+        switch settings.favoritesMenuType {
+        case .flat: buildFlatFavoritesMenu(menu: menu)
+        case .margin: buildMarginFavoritesMenu(menu: menu)
+        case .submenu: buildSubmenuFavoritesMenu(menu: menu)
+        }
 
         menu.addItem(NSMenuItem.separator())
 
@@ -108,20 +113,85 @@ class StatusBarController: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    func buildFavoritesMenu(menu: NSMenu) {
+    private func createStationMenuItem(_ station: Station, prefix: String = "") -> NSMenuItem {
+        let res = NSMenuItem(
+            title: prefix + station.name,
+            action: #selector(stationClicked(_:)),
+            keyEquivalent: "")
+
+        res.target = self
+        res.tag = station.id
+
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func buildFlatFavoritesMenu(menu: NSMenu) {
         menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
 
         for station in stationsStore.favorites() {
-            let item = NSMenuItem(
-                title: "  " + station.name,
-                action: #selector(stationClicked(_:)),
-                keyEquivalent: "")
-
-            item.target = self
-            item.tag = station.id
-
-            menu.addItem(item)
+            menu.addItem(createStationMenuItem(station))
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func buildMarginFavoritesMenu(menu: NSMenu) {
+        func build(root: Group, menu: NSMenu, prefix: String = "") {
+            for node in root.nodes {
+                if let station = node as? Station {
+                    if station.isFavorite {
+                        menu.addItem(createStationMenuItem(station, prefix: prefix))
+                    }
+                    continue
+                }
+
+                if let group = node as? Group {
+                    let n = menu.numberOfItems
+
+                    build(root: group, menu: menu, prefix: prefix + menuPrefix + "  ")
+                    if menu.numberOfItems > n {
+                        let groupItem = NSMenuItem(title: prefix + group.name, action: nil, keyEquivalent: "")
+                        menu.insertItem(groupItem, at: n)
+                    }
+                }
+            }
+        }
+
+        menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
+        build(root: stationsStore.root, menu: menu, prefix: menuPrefix)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func buildSubmenuFavoritesMenu(menu: NSMenu) {
+        func build(root: Group, menu: NSMenu, prefix: String = "") {
+            for node in root.nodes {
+                if let station = node as? Station {
+                    if station.isFavorite {
+                        menu.addItem(createStationMenuItem(station, prefix: prefix))
+                    }
+                    continue
+                }
+
+                if let group = node as? Group {
+                    let subMenu = NSMenu()
+                    build(root: group, menu: subMenu)
+                    if subMenu.numberOfItems > 0 {
+                        let subMenuItem = NSMenuItem(title: prefix + group.name, action: nil, keyEquivalent: "")
+                        subMenuItem.submenu = subMenu
+                        menu.addItem(subMenuItem)
+                    }
+                }
+            }
+        }
+
+        menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
+        build(root: stationsStore.root, menu: menu, prefix: menuPrefix)
     }
 
     /* ****************************************

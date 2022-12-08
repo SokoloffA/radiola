@@ -54,7 +54,7 @@ class Settings {
 
     var favoritesMenuType: FavoritesMenuType {
         get {
-            let s = data.string(forKey: "favoritesMenuTypeKey") ?? ""
+            let s = data.string(forKey: favoritesMenuTypeKey) ?? ""
             if s == "submenu" { return .submenu }
             if s == "margin" { return .margin }
             return .flat

@@ -286,26 +286,6 @@ class StationsStore {
             writeOutline(parent: body, node: node)
         }
 
-        func loadOutline(xml: XMLElement, parent: Group) {
-            let children = xml.elements(forName: "outline")
-            if !children.isEmpty {
-                let group = Group(name: xml.attribute(forName: "text")?.stringValue ?? "")
-
-                for outline in children {
-                    loadOutline(xml: outline, parent: group)
-                }
-                parent.nodes.append(group)
-            }
-
-            let station = Station(
-                name: xml.attribute(forName: "text")?.stringValue ?? "",
-                url: xml.attribute(forName: "url")?.stringValue ?? "",
-                isFavorite: (xml.attribute(forName: "fav")?.stringValue ?? "") == "True"
-            )
-
-            parent.nodes.append(station)
-        }
-
         do {
             let document = XMLDocument(rootElement: ompl)
             let xmlData = document.xmlData(options: .nodePrettyPrint)

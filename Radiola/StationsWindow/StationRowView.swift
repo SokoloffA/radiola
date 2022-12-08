@@ -83,8 +83,8 @@ class StationRowView: NSView  {
      * ****************************************/
     @IBAction func nameEdited(sender: NSTextField) {
         station.name = sender.stringValue
-        stationsStore.emitChanged()
         stationsStore.write()
+        stationsStore.emitChanged()
     }
 
     /* ****************************************
@@ -92,8 +92,8 @@ class StationRowView: NSView  {
      * ****************************************/
     @IBAction private func urlEdited(sender: NSTextField) {
         station.url = sender.stringValue
-        stationsStore.emitChanged()
         stationsStore.write()
+        stationsStore.emitChanged()
     }
 
     /* ****************************************
@@ -102,8 +102,8 @@ class StationRowView: NSView  {
     @IBAction private func favClicked(sender: NSButton) {
         station.isFavorite = !station.isFavorite
         sender.image = favoriteIcons[station.isFavorite]!
-        stationsStore.emitChanged()
         stationsStore.write()
+        stationsStore.emitChanged()
     }
 
 }
