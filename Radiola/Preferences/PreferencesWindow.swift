@@ -23,6 +23,12 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
         tab.image = NSImage(systemSymbolName: "eye", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
 
+        tab = NSTabViewItem(viewController: AudioPage())
+        tab.label = "Audio"
+        tab.image = NSImage(systemSymbolName: "hifispeaker.2", accessibilityDescription: "")
+        viewController.addTabViewItem(tab)
+
+        
         tab = NSTabViewItem(viewController: UpdatePanel())
         tab.label = "Updates"
         tab.image = NSImage(systemSymbolName: "icloud.and.arrow.down", accessibilityDescription: "")
@@ -30,7 +36,6 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
 
         viewController.tabStyle = .toolbar
         contentViewController = viewController
-        // viewController.wnd = window
     }
 
     /* ****************************************

@@ -24,7 +24,8 @@ extension String {
 class AppDelegate: NSObject, NSApplicationDelegate {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
-
+    private let audioSytstem = AudioSytstem()
+    
     @IBOutlet var pauseMenuItem: NSMenuItem!
     @IBOutlet var playMenuItem: NSMenuItem!
     @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!

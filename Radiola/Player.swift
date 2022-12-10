@@ -68,16 +68,35 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     /* ****************************************
      *
      * ****************************************/
+    var audioDeviceUID: String? {
+        get { player.audioOutputDeviceUniqueID }
+        set {
+            if player.audioOutputDeviceUniqueID != newValue {
+                player.audioOutputDeviceUniqueID = newValue
+                settings.audioDevice = newValue
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     override init() {
         super.init()
 
         player = AVPlayer()
         player.volume = settings.volumeLevel
+        player.audioOutputDeviceUniqueID = settings.audioDevice
 
         player.addObserver(self,
                            forKeyPath: #keyPath(AVPlayer.timeControlStatus),
                            options: [.old, .new],
                            context: &playerItemContext)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateAudioDevice),
+                                               name: Notification.Name.AudioDeviceChanged,
+                                               object: nil)
     }
 
     /* ****************************************
@@ -202,6 +221,9 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             userInfo: ["Title": title])
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     private func addHistory() {
         guard let station = station else { return }
 
@@ -213,5 +235,24 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         if history.count > 100 {
             history.removeFirst(history.count - 100)
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func updateAudioDevice() {
+        let uid = player.audioOutputDeviceUniqueID
+
+        if uid == nil {
+            return
+        }
+
+        for d in AudioSytstem.devices() {
+            if d.UID == uid {
+                return
+            }
+        }
+
+        audioDeviceUID = nil
     }
 }

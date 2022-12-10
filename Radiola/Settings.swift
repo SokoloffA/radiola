@@ -9,16 +9,17 @@ import Foundation
 
 class Settings {
     private let lastStationKey = "Url"
-    // private let recentStationsKey = "RecentStations"
     private let volumeLevelKey = "Volume"
     private let volumeIsMutedKey = "Muted"
     private let showVolumeInMenuKey = "ShowVolumeInMenu"
     private let favoritesMenuTypeKey = "FavoritesMenuType"
-
-    private let recentStationsLengt = 5
+    private let audioDeviceKey = "AudioDevice"
 
     private let data = UserDefaults.standard
 
+    /* ****************************************
+     *
+     * ****************************************/
     init() {
         let defaults: [String: Any] = [
             volumeLevelKey: 0.5,
@@ -28,26 +29,41 @@ class Settings {
         data.register(defaults: defaults)
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     var lastStationUrl: String? {
         get { data.string(forKey: lastStationKey) }
         set { data.set(newValue, forKey: lastStationKey) }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     var volumeLevel: Float {
         get { data.float(forKey: volumeLevelKey) }
         set { data.set(newValue, forKey: volumeLevelKey) }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     var volumeIsMuted: Bool {
         get { data.bool(forKey: volumeIsMutedKey) }
         set { data.set(newValue, forKey: volumeIsMutedKey) }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     var showVolumeInMenu: Bool {
         get { data.bool(forKey: showVolumeInMenuKey) }
         set { data.set(newValue, forKey: showVolumeInMenuKey) }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     enum FavoritesMenuType: Int {
         case flat, margin, submenu
     }
@@ -67,6 +83,14 @@ class Settings {
             case .submenu: data.set("submenu", forKey: favoritesMenuTypeKey)
             }
         }
+    }
+    
+    /* ****************************************
+     *
+     * ****************************************/
+    var audioDevice: String? {
+        get { data.string(forKey: audioDeviceKey) }
+        set { data.set(newValue, forKey: audioDeviceKey) }
     }
 }
 
