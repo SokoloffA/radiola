@@ -73,7 +73,12 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
                                                selector: #selector(refresh),
                                                name: NSOutlineView.selectionDidChangeNotification,
                                                object: nil)
-
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: Notification.Name.PlayerVolumeChanged,
+                                               object: nil)
+        
         volumeControl.minValue = 0
         volumeControl.maxValue = 1
         volumeControl.doubleValue = Double(player.volume)
@@ -154,7 +159,22 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
 
         let selNode = selectedNode()
         removeStationButton.isEnabled = (selNode != nil)
+        
+        volumeControl.doubleValue = Double(player.volume)
+        
+        if  player.isMuted {
+            volumeControl.isEnabled = false
+            volumeDownButton.isEnabled = false
+            volumeUpButton.isEnabled = false
+        }
+        else {
+            volumeControl.isEnabled = true
+            volumeDownButton.isEnabled = volumeControl.doubleValue > volumeControl.minValue
+            volumeUpButton.isEnabled = volumeControl.doubleValue < volumeControl.maxValue
+        }
+        
     }
+
 
     /* ****************************************
      *

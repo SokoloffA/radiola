@@ -8,32 +8,66 @@
 import Cocoa
 class PlayButtonImage: NSImageView {
     weak var playItemController: PlayItemController?
-    
+
     override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
         return true
     }
-    
+
     override func mouseUp(with theEvent: NSEvent) {
         playItemController?.toggle()
     }
 }
 
-class PlayItemController: NSViewController {
+/* ****************************************
+ *
+ * ****************************************/
+class PlayMenuItem: NSMenuItem {
+    public let controller: PlayItemController!
 
+    /* ****************************************
+     *
+     * ****************************************/
+    init() {
+        controller = PlayItemController()
+        super.init(title: "", action: nil, keyEquivalent: "")
+        view = controller.view
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+/* ****************************************
+ *
+ * ****************************************/
+class PlayItemController: NSViewController {
     @IBOutlet var playIcon: PlayButtonImage!
     @IBOutlet var songLabel: NSTextField!
     @IBOutlet var stationLabel: NSTextField!
 
     weak var parentMenu: NSMenu?
 
+    /* ****************************************
+     *
+     * ****************************************/
     init() {
         super.init(nibName: "PlayItemController", bundle: nil)
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
         playIcon.playItemController = self
@@ -51,19 +85,31 @@ class PlayItemController: NSViewController {
         refresh()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     @objc func toggle() {
         player.toggle()
         parentMenu?.cancelTracking()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     override func mouseUp(with theEvent: NSEvent) {
         toggle()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     override func rightMouseUp(with event: NSEvent) {
         toggle()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     @objc private func refresh() {
         switch player.status {
         case Player.Status.paused:

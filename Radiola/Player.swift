@@ -7,8 +7,8 @@
 //
 
 import AVFoundation
-import Foundation
 import Cocoa
+import Foundation
 
 var player = Player()
 
@@ -16,7 +16,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     var station: Station?
     public var title = String()
     public var stationName: String { station?.name ?? "" }
-    
+
     public enum Status {
         case paused
         case connecting
@@ -36,14 +36,45 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private var player: AVPlayer!
     private var playerItem: AVPlayerItem?
     private var asset: AVAsset!
-    private let settings = UserDefaults.standard
 
+    /* ****************************************
+     *
+     * ****************************************/
     var volume: Float {
-        get { return player.volume }
+        get { player.volume }
+        set {
+            if player.volume != newValue {
+                player.volume = newValue
+                settings.volumeLevel = newValue
+                NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
+            }
+        }
+    }
 
-        set(value) {
-            player.volume = value
-            settings.set(value, forKey: "Volume")
+    /* ****************************************
+     *
+     * ****************************************/
+    var isMuted: Bool {
+        get { player.isMuted }
+        set {
+            if player.isMuted != newValue {
+                player.isMuted = newValue
+                settings.volumeIsMuted = newValue
+                NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var audioDeviceUID: String? {
+        get { player.audioOutputDeviceUniqueID }
+        set {
+            if player.audioOutputDeviceUniqueID != newValue {
+                player.audioOutputDeviceUniqueID = newValue
+                settings.audioDevice = newValue
+            }
         }
     }
 
@@ -54,28 +85,33 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         super.init()
 
         player = AVPlayer()
-        settings.register(defaults: ["Volume": 0.5])
-        player.volume = settings.float(forKey: "Volume")
+        player.volume = settings.volumeLevel
+        player.audioOutputDeviceUniqueID = settings.audioDevice
 
         player.addObserver(self,
                            forKeyPath: #keyPath(AVPlayer.timeControlStatus),
                            options: [.old, .new],
                            context: &playerItemContext)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateAudioDevice),
+                                               name: Notification.Name.AudioDeviceChanged,
+                                               object: nil)
     }
 
     /* ****************************************
      *
      * ****************************************/
     @objc func play() {
-        guard let station = self.station else { return }
-        
+        guard let station = station else { return }
+
         var u = URL(string: station.url)
 
-        if u == nil{
-            u = URL.init(string: station.url.replacingOccurrences(of: " ", with: "%20"))
+        if u == nil {
+            u = URL(string: station.url.replacingOccurrences(of: " ", with: "%20"))
         }
-        
-        if u == nil{
+
+        if u == nil {
             NSAlert.showWarning(message: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
             return
         }
@@ -105,8 +141,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     @objc func toggle() {
-        guard let station = self.station else { return }
-        
+        guard let station = station else { return }
+
         if isPlaying {
             stop()
             return
@@ -167,6 +203,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
     // ****************************************
     // Metadata
+    // ****************************************
     func metadataOutput(_ output: AVPlayerItemMetadataOutput, didOutputTimedMetadataGroups groups: [AVTimedMetadataGroup], from track: AVPlayerItemTrack?) {
         guard
             let item = groups.first?.items.first,
@@ -184,9 +221,12 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             userInfo: ["Title": title])
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     private func addHistory() {
-        guard let station = self.station else { return }
-        
+        guard let station = station else { return }
+
         if history.last?.song == title && history.last?.station == station.name {
             return
         }
@@ -195,5 +235,24 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         if history.count > 100 {
             history.removeFirst(history.count - 100)
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func updateAudioDevice() {
+        let uid = player.audioOutputDeviceUniqueID
+
+        if uid == nil {
+            return
+        }
+
+        for d in AudioSytstem.devices() {
+            if d.UID == uid {
+                return
+            }
+        }
+
+        audioDeviceUID = nil
     }
 }

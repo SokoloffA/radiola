@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AudioPage" customModule="Radiola" customModuleProvider="target">
+            <connections>
+                <outlet property="deviceCombobox" destination="PaD-M5-caT" id="xbs-gb-wrq"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="115"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PaD-M5-caT">
+                    <rect key="frame" x="77" y="71" width="387" height="25"/>
+                    <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="AIS-rh-gI2">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="Rlg-Rk-7Pl"/>
+                    </popUpButtonCell>
+                    <connections>
+                        <action selector="deviceChanged:" target="-2" id="U6v-xl-ebf"/>
+                    </connections>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ddb-mV-91W">
+                    <rect key="frame" x="18" y="77" width="56" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Devices:" id="zMh-T4-jKN">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="PaD-M5-caT" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="0Ep-EN-WoL"/>
+                <constraint firstItem="ddb-mV-91W" firstAttribute="centerY" secondItem="PaD-M5-caT" secondAttribute="centerY" id="3fd-Xp-SlA"/>
+                <constraint firstItem="ddb-mV-91W" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="7SQ-CG-qHI"/>
+                <constraint firstItem="PaD-M5-caT" firstAttribute="leading" secondItem="ddb-mV-91W" secondAttribute="trailing" constant="8" symbolic="YES" id="FHE-xr-la7"/>
+                <constraint firstAttribute="trailing" secondItem="PaD-M5-caT" secondAttribute="trailing" constant="20" symbolic="YES" id="FLz-bk-ItX"/>
+                <constraint firstAttribute="bottom" secondItem="PaD-M5-caT" secondAttribute="bottom" constant="75" id="cMV-TN-ogR"/>
+            </constraints>
+            <point key="canvasLocation" x="140" y="154"/>
+        </customView>
+    </objects>
+</document>
