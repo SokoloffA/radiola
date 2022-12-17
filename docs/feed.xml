@@ -1,25 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
   <channel>
-    <title></title>
-      <description>Most recent updates to </description>
-      <language>en</language>
-
-      <item>
-        <title>Radiola 3.0.0</title>
-        <description>&lt;ul&gt;
-            &lt;li&gt;Redesigned station window&lt;ul&gt;
-                &lt;li&gt;Nice looking stations table&lt;/li&gt;
-                &lt;li&gt;The current station and song are displayed in the window title bar.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
-                &lt;li&gt;Added volume control&lt;/li&gt;
-            &lt;li&gt;A history window has been added. Now you can see the names of songs you recently listened to.&lt;/li&gt;
-            &lt;/ul&gt;
-        </description>
-        <pubDate>Sat, 30 Jul 2022 09:21:06 +0300</pubDate>
-        <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v3.0/Radiola-3.0.dmg"
-                   sparkle:version="3.0.0"
-                   length="0"
-                   type="application/octet-stream" />
+    <title/>
+    <description>Most recent updates to </description>
+    <language>en</language>
+    <item>
+      <title>Radiola 4.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;You can create groups from a station like a tree. &lt;/li&gt;
+&lt;li&gt;In preferences you can choose the style of ground stations in the main menu. Grouped favorite stations can be displayed in three ways:&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Like a flat list.&lt;/strong&gt; All stations are displayed one below the other, without any indentation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;With margins.&lt;/strong&gt;  All stations are displayed without a submenu, but the names of stations from the group are visually shifted to the right by a couple of characters. &lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;As a submenu.&lt;/strong&gt; Each group is represented as a submenu.&lt;/li&gt;
+&lt;li&gt;Added volume control to the main menu. You can enable this in the preferences dialog.&lt;/li&gt;
+&lt;li&gt;In the preferences dialog, you can specify the audio device which the program will use. By default, the standard system device is used.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 17 Dec 2022 14:30:50 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v4.0/Radiola-4.0.dmg" sparkle:version="4.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
+      <title>Radiola 3.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Redesigned station window&lt;/li&gt;
+&lt;li&gt;Nice looking stations table&lt;/li&gt;
+&lt;li&gt;The current station and song are displayed in the window title bar&lt;/li&gt;
+&lt;li&gt;Added volume control&lt;/li&gt;
+&lt;li&gt;A history window has been added. Now you can see the names of songs you recently listened to&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 30 Jul 2022 06:10:23 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v3.0/Radiola-3.0.dmg" sparkle:version="3.0" length="0" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>

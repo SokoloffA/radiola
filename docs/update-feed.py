@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# v 0.1
+# v 0.2
 
 GITHUB_USER = "SokoloffA"
 GITHUB_REPO = "radiola"
@@ -25,6 +25,15 @@ import markdown
 
 class Error(Exception):
     pass
+
+class Version(tuple):
+    def __init__(self, str) -> None:
+        super().__init__()
+        self = map(int, (str.split(".")))
+
+
+def versiontuple(str):
+    return tuple(map(int, (str.split("."))))
 
 class Release:
     def __init__(self, data):
@@ -103,8 +112,8 @@ def write(releases):
 
 
     rss = add(doc, "rss")
-    rss.setAttribute('xmlns:sparkle', "http://www.andymatuschak.org/xml-namespaces/sparkle")
     rss.setAttribute("version", "2.0")
+    rss.setAttribute('xmlns:sparkle', "http://www.andymatuschak.org/xml-namespaces/sparkle")
 
     channel = add(rss, "channel")
 
@@ -112,11 +121,11 @@ def write(releases):
     addText(channel, "description", FEED_DESCRIPTION)
     addText(channel, "language", FEED_LANGUAGE)
 
+    min_version = Version(MIN_VERSION)
     for r in releases:
 
-        if r.version == MIN_VERSION:
-            break
-
+        if  Version(r.version) < min_version:
+            continue
 
         if r.prerelease:
             continue
@@ -142,7 +151,7 @@ def write(releases):
         # print("<hr>")
 
     f =  open(FEED_FILE, "wb")
-    f.write(doc.toprettyxml(indent ="  ").encode("UTF-8"))
+    f.write(doc.toprettyxml(indent ="  ", encoding="UTF-8"))
     f.close()
 
 

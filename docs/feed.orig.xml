@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+  <channel>
+    <title/>
+    <description>Most recent updates to </description>
+    <language>en</language>
+
+    <item>
+      <title>Radiola 3.0.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Redesigned station window&lt;ul&gt;
+&lt;li&gt;Nice looking stations table&lt;/li&gt;
+&lt;li&gt;The current station and song are displayed in the window title bar.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;Added volume control&lt;/li&gt;
+&lt;li&gt;A history window has been added. Now you can see the names of songs you recently listened to.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 30 Jul 2022 09:21:06 +0300</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v3.0/Radiola-3.0.dmg"
+                 sparkle:version="3.0.0"
+                 length="0"
+                 type="application/octet-stream" />
+    </item>
+  </channel>
+</rss>
