@@ -14,6 +14,7 @@ class Settings {
     private let showVolumeInMenuKey = "ShowVolumeInMenu"
     private let favoritesMenuTypeKey = "FavoritesMenuType"
     private let audioDeviceKey = "AudioDevice"
+    private let playLastStationKey = "playLastStation"
 
     private let data = UserDefaults.standard
 
@@ -25,6 +26,7 @@ class Settings {
             volumeLevelKey: 0.5,
             volumeIsMutedKey: false,
             showVolumeInMenuKey: false,
+            playLastStationKey: false,
         ]
         data.register(defaults: defaults)
     }
@@ -91,6 +93,14 @@ class Settings {
     var audioDevice: String? {
         get { data.string(forKey: audioDeviceKey) }
         set { data.set(newValue, forKey: audioDeviceKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var playLastStation: Bool {
+        get { data.bool(forKey: playLastStationKey) }
+        set { data.set(newValue, forKey: playLastStationKey) }
     }
 }
 

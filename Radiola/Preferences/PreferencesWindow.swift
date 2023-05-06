@@ -28,7 +28,11 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
         tab.image = NSImage(systemSymbolName: "hifispeaker.2", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
 
-        
+        tab = NSTabViewItem(viewController: StartupPage())
+        tab.label = "Startup"
+        tab.image = NSImage(systemSymbolName: "autostartstop", accessibilityDescription: "")
+        viewController.addTabViewItem(tab)
+
         tab = NSTabViewItem(viewController: UpdatePanel())
         tab.label = "Updates"
         tab.image = NSImage(systemSymbolName: "icloud.and.arrow.down", accessibilityDescription: "")
