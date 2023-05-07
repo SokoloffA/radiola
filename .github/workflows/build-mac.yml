@@ -21,4 +21,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Radiola.app
-          path: build/Radiola.app.tar
+          path: Radiola.app.tar
