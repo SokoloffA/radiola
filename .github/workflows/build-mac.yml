@@ -15,10 +15,11 @@ jobs:
       - name: Build
         run: |
           xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-          tar cvfz build/Radiola.app.tgz build/Release/Radiola.app
+          tar cvfz build/Radiola.app.tgz Radiola.app --directory=build/Release/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
+        if: failure()
         with:
           name: Radiola.app
           path: build/Radiola.app.tgz
