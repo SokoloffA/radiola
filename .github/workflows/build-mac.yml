@@ -21,4 +21,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Radiola.app.tar
-          path: Radiola.app.tar
+          path: |
+            Radiola.app.tar
+            ${{github.workspace}}/.github/workflows/makedmg.sh
