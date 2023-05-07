@@ -46,6 +46,8 @@
 		39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BA288C56C300273AB0 /* UpdatePanel.swift */; };
 		39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F869BB288C56C300273AB0 /* UpdatePanel.xib */; };
 		39FF07732933A59900751A03 /* StatuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF07722933A59900751A03 /* StatuBarController.swift */; };
+		9D1D31CA2A06448200F0BA44 /* StartupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D31C92A06448200F0BA44 /* StartupPage.swift */; };
+		9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +92,8 @@
 		39F869BA288C56C300273AB0 /* UpdatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePanel.swift; sourceTree = "<group>"; };
 		39F869BB288C56C300273AB0 /* UpdatePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePanel.xib; sourceTree = "<group>"; };
 		39FF07722933A59900751A03 /* StatuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatuBarController.swift; sourceTree = "<group>"; };
+		9D1D31C92A06448200F0BA44 /* StartupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupPage.swift; sourceTree = "<group>"; };
+		9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StartupPage.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,9 +184,11 @@
 				39F869BA288C56C300273AB0 /* UpdatePanel.swift */,
 				39E042D2293B81A900A2167E /* AppearancePage.swift */,
 				3967046A2944961500012FFD /* AudioPage.swift */,
+				9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */,
 				3967046B2944961500012FFD /* AudioPage.xib */,
 				39E042D3293B81A900A2167E /* AppearancePage.xib */,
 				39F869BB288C56C300273AB0 /* UpdatePanel.xib */,
+				9D1D31C92A06448200F0BA44 /* StartupPage.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -262,6 +268,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */,
 				39E042D5293B81A900A2167E /* AppearancePage.xib in Resources */,
 				39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */,
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
@@ -289,6 +296,7 @@
 				390C7294287B213200E17BAE /* Controls.swift in Sources */,
 				39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */,
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
+				9D1D31CA2A06448200F0BA44 /* StartupPage.swift in Sources */,
 				396704692943AD2700012FFD /* AudioDevice.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
 				394F8A53287394E1005EA7FA /* AnimatedIcon.swift in Sources */,

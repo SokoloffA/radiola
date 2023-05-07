@@ -79,6 +79,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
 
         playerStatusChanged()
+
+        if settings.playLastStation {
+            #if DEBUG
+                let _ = print(settings.lastStationUrl!)
+            #endif
+            player.play()
+        }
     }
 
     /* ****************************************
