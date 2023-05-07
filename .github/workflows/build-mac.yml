@@ -13,4 +13,12 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build
-        run: xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+        run: |
+          xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+          tar -C build/Release -cf Radiola.app.tar Radiola.app
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Radiola.app.tar
+          path: Radiola.app.tar
