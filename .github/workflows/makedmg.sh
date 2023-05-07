@@ -8,7 +8,7 @@ CERT_IDENTITY="Developer ID Application: Alex Sokolov (635H9TYSZJ)"
 #--------------------
 
 set -Eeuo pipefail
-set -x
+#set -x
 
 TAR="${APP_NAME}.app.tar"
 

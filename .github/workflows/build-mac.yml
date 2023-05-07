@@ -16,6 +16,7 @@ jobs:
         run: |
           xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
           tar -C build/Release -cf Radiola.app.tar Radiola.app
+          cp ${{github.workspace}}/.github/workflows/makedmg.sh makedmg.sh
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -23,4 +24,4 @@ jobs:
           name: Radiola.app.tar
           path: |
             Radiola.app.tar
-            ${{github.workspace}}/.github/workflows/makedmg.sh
+            makedmg.sh
