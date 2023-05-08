@@ -10,10 +10,9 @@ CERT_IDENTITY="Developer ID Application: Alex Sokolov (635H9TYSZJ)"
 set -Eeuo pipefail
 #set -x
 
-TAR="${APP_NAME}.app.tar"
-
-if [[ ! -e ${TAR} ]]; then
-    echo "${TAR} file not found" >&2
+TAR=$(find . -name "${APP_NAME}-*.tar" | sort | tail -n 1)
+if [[ -z ${TAR} ]]; then
+    echo "Tar file not found" >&2
     exit 1
 fi
 

@@ -14,14 +14,18 @@ jobs:
 
       - name: Build
         run: |
+          BUILD_DATE=$(date +%Y.%m.%d-%H.%M.%S)
+          echo "BUILD_DATE=${BUILD_DATE}" >> $GITHUB_ENV
+
           xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-          tar -C build/Release -cf Radiola.app.tar Radiola.app
+          
+          tar -C build/Release -cf Radiola-${BUILD_DATE}.tar Radiola.app
           cp ${{github.workspace}}/.github/workflows/makedmg.sh makedmg.sh
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: Radiola.app.tar
+          name: Radiola-${{ BUILD_DATE }}
           path: |
-            Radiola.app.tar
+            Radiola-${{ BUILD_DATE }}.tar
             makedmg.sh
