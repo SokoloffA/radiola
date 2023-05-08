@@ -13,12 +13,16 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build
-        run: |
-          echo "BUILD_DATE=$(date +%Y.%m.%d-%H.%M.%S)" >> $GITHUB_ENV
+        run: xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 
-          xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
-          
-          tar -C build/Release -cf Radiola-${{ env.BUILD_DATE }}.tar Radiola.app
+      - name: Prepare artifacts
+        run : |
+          export "BUILD_DATE=$(date +%Y.%m.%d-%H.%M.%S)"
+          echo "BUILD_DATE=${BUILD_DATE}" >> $GITHUB_ENV
+          echo "================================"
+          echo "TAR: Radiola-${BUILD_DATE}.tar"
+          echo "================================"
+          tar -C build/Release -cf Radiola-${BUILD_DATE}.tar Radiola.app
           cp ${{github.workspace}}/.github/workflows/makedmg.sh makedmg.sh
 
       - name: Upload artifact
