@@ -14,12 +14,11 @@ jobs:
 
       - name: Build
         run: |
-          export "BUILD_DATE=$(date +%Y.%m.%d-%H.%M.%S)"
-          echo "BUILD_DATE=${BUILD_DATE}" >> $GITHUB_ENV
+          echo "BUILD_DATE=$(date +%Y.%m.%d-%H.%M.%S)" >> $GITHUB_ENV
 
           xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
           
-          tar -C build/Release -cf Radiola-${BUILD_DATE}.tar Radiola.app
+          tar -C build/Release -cf Radiola-${{ BUILD_DATE }}.tar Radiola.app
           cp ${{github.workspace}}/.github/workflows/makedmg.sh makedmg.sh
 
       - name: Upload artifact
