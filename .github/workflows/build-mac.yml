@@ -24,7 +24,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: Radiola-${{ BUILD_DATE }}
+          name: Radiola-${{ env.BUILD_DATE }}
           path: |
-            Radiola-${{ BUILD_DATE }}.tar
+            Radiola-${{ env.BUILD_DATE }}.tar
             makedmg.sh
