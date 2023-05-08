@@ -14,7 +14,7 @@ jobs:
 
       - name: Build
         run: |
-          export BUILD_DATE=$(date +%Y.%m.%d-%H.%M.%S)
+          export "BUILD_DATE=$(date +%Y.%m.%d-%H.%M.%S)"
           echo "BUILD_DATE=${BUILD_DATE}" >> $GITHUB_ENV
 
           xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
