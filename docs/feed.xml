@@ -5,6 +5,19 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 5.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Added the ability to play the last station directly after startup. Thanks @Paulchen-Panther!&lt;/li&gt;
+&lt;li&gt;Now you can configure different actions for different mouse buttons. The following actions are available:&lt;/li&gt;
+&lt;li&gt;Show the popup menu&lt;/li&gt;
+&lt;li&gt;Toggle play/pause playback&lt;/li&gt;
+&lt;li&gt;Show the main program window&lt;/li&gt;
+&lt;li&gt;Show the history window &lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Thu, 11 May 2023 11:29:33 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v5.0/Radiola-5.0.dmg" sparkle:version="5.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 4.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;You can create groups from a station like a tree. &lt;/li&gt;
