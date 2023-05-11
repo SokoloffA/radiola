@@ -51,24 +51,108 @@ class StatusBarController: NSObject {
                                                name: Notification.Name.PlayerMetadataChanged,
                                                object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(rebuildMenu),
-                                               name: Notification.Name.StationsChanged,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(rebuildMenu),
-                                               name: Notification.Name.SettingsChanged,
-                                               object: nil)
+        NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown], handler: mouseDown)
+        NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp], handler: mouseUp)
 
         playerStatusChanged()
-        rebuildMenu()
     }
 
     /* ****************************************
      *
      * ****************************************/
-    @objc func rebuildMenu() {
+    private func actionType(_ event: NSEvent) -> MouseButtonAction? {
+        guard let btn = MouseButton(rawValue: event.buttonNumber) else { return nil }
+
+        if event.modifierFlags.contains(.control) {
+            return MouseButtonAction.showMenu
+        }
+
+        return settings.mouseAction(forButton: btn)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func mouseDown(_ event: NSEvent) -> NSEvent? {
+        if event.window != menuItem.button?.window {
+            return event
+        }
+
+        let action = actionType(event)
+
+        switch action {
+            case .showMenu:
+                menuItem.menu = buildMenu()
+                return NSEvent.mouseEvent(
+                    with: .leftMouseDown,
+                    location: event.locationInWindow,
+                    modifierFlags: event.modifierFlags,
+                    timestamp: event.timestamp,
+                    windowNumber: event.windowNumber,
+                    context: nil,
+                    eventNumber:
+                    event.eventNumber,
+                    clickCount: event.clickCount,
+                    pressure: event.pressure)
+
+            case .playPause:
+                player.toggle()
+                return nil
+
+            case .showMainWindow:
+                _ = StationsWindow.show()
+                return nil
+
+            case .showHistory:
+                _ = HistoryWindow.show()
+                return nil
+
+            case nil:
+                return event
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func mouseUp(_ event: NSEvent) -> NSEvent? {
+        if event.window != menuItem.button?.window {
+            return event
+        }
+
+        let action = actionType(event)
+
+        switch action {
+            case .showMenu:
+                return NSEvent.mouseEvent(
+                    with: .leftMouseUp,
+                    location: event.locationInWindow,
+                    modifierFlags: event.modifierFlags,
+                    timestamp: event.timestamp,
+                    windowNumber: event.windowNumber,
+                    context: nil,
+                    eventNumber: event.eventNumber,
+                    clickCount: event.clickCount,
+                    pressure: event.pressure)
+
+            case .playPause:
+                return nil
+
+            case .showMainWindow:
+                return nil
+
+            case .showHistory:
+                return nil
+
+            case nil:
+                return event
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func buildMenu() -> NSMenu {
         let menu = NSMenu()
 
         let playItem = PlayMenuItem()
@@ -85,9 +169,9 @@ class StatusBarController: NSObject {
         menu.addItem(NSMenuItem.separator())
 
         switch settings.favoritesMenuType {
-        case .flat: buildFlatFavoritesMenu(menu: menu)
-        case .margin: buildMarginFavoritesMenu(menu: menu)
-        case .submenu: buildSubmenuFavoritesMenu(menu: menu)
+            case .flat: buildFlatFavoritesMenu(menu: menu)
+            case .margin: buildMarginFavoritesMenu(menu: menu)
+            case .submenu: buildSubmenuFavoritesMenu(menu: menu)
         }
 
         menu.addItem(NSMenuItem.separator())
@@ -98,16 +182,21 @@ class StatusBarController: NSObject {
             keyEquivalent: "r"))
 
         menu.addItem(NSMenuItem(
-            title: "Show History",
+            title: "History...",
             action: #selector(AppDelegate.showHistory(_:)),
             keyEquivalent: "y"))
+
+        menu.addItem(NSMenuItem(
+            title: "Settings...",
+            action: #selector(AppDelegate.showPreferences(_:)),
+            keyEquivalent: ","))
 
         menu.addItem(NSMenuItem(
             title: "Quit".tr,
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"))
 
-        menuItem.menu = menu
+        return menu
     }
 
     /* ****************************************
@@ -199,16 +288,16 @@ class StatusBarController: NSObject {
      * ****************************************/
     @objc func playerStatusChanged() {
         switch player.status {
-        case Player.Status.paused:
-            connectionIcon.stop()
-            setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
+            case Player.Status.paused:
+                connectionIcon.stop()
+                setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
 
-        case Player.Status.connecting:
-            connectionIcon.start(startFrame: 0)
+            case Player.Status.connecting:
+                connectionIcon.start(startFrame: 0)
 
-        case Player.Status.playing:
-            connectionIcon.stop()
-            setIcon(item: menuItem, icon: "MenuButtonPlay", size: 16)
+            case Player.Status.playing:
+                connectionIcon.stop()
+                setIcon(item: menuItem, icon: "MenuButtonPlay", size: 16)
         }
 
         updateTooltip()
@@ -219,20 +308,20 @@ class StatusBarController: NSObject {
      * ****************************************/
     @objc func updateTooltip() {
         switch player.status {
-        case Player.Status.paused:
-            menuItem.button?.toolTip = player.stationName
+            case Player.Status.paused:
+                menuItem.button?.toolTip = player.stationName
 
-        case Player.Status.connecting:
-            menuItem.button?.toolTip =
-                player.stationName +
-                "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                "Connecting...".tr(withComment: "Tooltip text")
+            case Player.Status.connecting:
+                menuItem.button?.toolTip =
+                    player.stationName +
+                    "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
+                    "Connecting...".tr(withComment: "Tooltip text")
 
-        case Player.Status.playing:
-            menuItem.button?.toolTip =
-                player.title +
-                "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                player.stationName
+            case Player.Status.playing:
+                menuItem.button?.toolTip =
+                    player.title +
+                    "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
+                    player.stationName
         }
     }
 

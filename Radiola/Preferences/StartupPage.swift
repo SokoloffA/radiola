@@ -15,7 +15,7 @@ class StartupPage: NSViewController {
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        title = "Startup"
+
         playLastStation.state = settings.playLastStation ? .on : .off
     }
     

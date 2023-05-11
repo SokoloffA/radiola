@@ -17,6 +17,7 @@ class Settings {
     private let playLastStationKey = "playLastStation"
 
     private let data = UserDefaults.standard
+    private var mouseActs: [MouseButton: MouseButtonAction] = [:]
 
     /* ****************************************
      *
@@ -70,6 +71,9 @@ class Settings {
         case flat, margin, submenu
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     var favoritesMenuType: FavoritesMenuType {
         get {
             let s = data.string(forKey: favoritesMenuTypeKey) ?? ""
@@ -80,13 +84,13 @@ class Settings {
 
         set {
             switch newValue {
-            case .flat: data.set("flat", forKey: favoritesMenuTypeKey)
-            case .margin: data.set("margin", forKey: favoritesMenuTypeKey)
-            case .submenu: data.set("submenu", forKey: favoritesMenuTypeKey)
+                case .flat: data.set("flat", forKey: favoritesMenuTypeKey)
+                case .margin: data.set("margin", forKey: favoritesMenuTypeKey)
+                case .submenu: data.set("submenu", forKey: favoritesMenuTypeKey)
             }
         }
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -101,6 +105,41 @@ class Settings {
     var playLastStation: Bool {
         get { data.bool(forKey: playLastStationKey) }
         set { data.set(newValue, forKey: playLastStationKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func mouseActionKey(forButton: MouseButton) -> String {
+        switch forButton {
+            case .left: return "LeftButtonAction"
+            case .right: return "RightButtonAction"
+            case .middle: return "MiddleButtonAction"
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func mouseAction(forButton: MouseButton) -> MouseButtonAction {
+        let res = mouseActs[forButton]
+        if res != nil {
+            return res!
+        }
+
+        let s = data.string(forKey: mouseActionKey(forButton: forButton)) ?? ""
+        let v = MouseButtonAction(fromString: s, defaultVal: .showMenu)
+        mouseActs[forButton] = v
+        return v
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func setMouseAction(forButton: MouseButton, action: MouseButtonAction) {
+        mouseActs[forButton] = action
+        data.set(action.toString(), forKey: mouseActionKey(forButton: forButton))
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 }
 

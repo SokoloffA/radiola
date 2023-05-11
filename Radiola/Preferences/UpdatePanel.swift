@@ -14,7 +14,7 @@ class UpdatePanel: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Updates"
+
         checkNowButton.target = updater
         checkNowButton.action = #selector(Updater.checkForUpdates)
 

@@ -38,10 +38,11 @@
 		39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */; };
 		39E042D0293B3ACA00A2167E /* VolumeMenuItemContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E042CE293B3AC900A2167E /* VolumeMenuItemContoller.swift */; };
 		39E042D1293B3ACA00A2167E /* VolumeMenuItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39E042CF293B3AC900A2167E /* VolumeMenuItem.xib */; };
-		39E042D4293B81A900A2167E /* AppearancePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E042D2293B81A900A2167E /* AppearancePage.swift */; };
-		39E042D5293B81A900A2167E /* AppearancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39E042D3293B81A900A2167E /* AppearancePage.xib */; };
+		39E042D4293B81A900A2167E /* GeneralPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E042D2293B81A900A2167E /* GeneralPage.swift */; };
+		39E042D5293B81A900A2167E /* GeneralPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39E042D3293B81A900A2167E /* GeneralPage.xib */; };
 		39E8DFD5288F316A00082467 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 39E8DFD4288F316A00082467 /* Sparkle */; };
 		39E8DFD72890839500082467 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E8DFD62890839500082467 /* Updater.swift */; };
+		39F08E462A0CC582006B65D0 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F08E452A0CC582006B65D0 /* Types.swift */; };
 		39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */; };
 		39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BA288C56C300273AB0 /* UpdatePanel.swift */; };
 		39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F869BB288C56C300273AB0 /* UpdatePanel.xib */; };
@@ -85,9 +86,10 @@
 		39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemController.xib; sourceTree = "<group>"; };
 		39E042CE293B3AC900A2167E /* VolumeMenuItemContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMenuItemContoller.swift; sourceTree = "<group>"; };
 		39E042CF293B3AC900A2167E /* VolumeMenuItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VolumeMenuItem.xib; sourceTree = "<group>"; };
-		39E042D2293B81A900A2167E /* AppearancePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePage.swift; sourceTree = "<group>"; };
-		39E042D3293B81A900A2167E /* AppearancePage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppearancePage.xib; sourceTree = "<group>"; };
+		39E042D2293B81A900A2167E /* GeneralPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralPage.swift; sourceTree = "<group>"; };
+		39E042D3293B81A900A2167E /* GeneralPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GeneralPage.xib; sourceTree = "<group>"; };
 		39E8DFD62890839500082467 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		39F08E452A0CC582006B65D0 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		39F869BA288C56C300273AB0 /* UpdatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePanel.swift; sourceTree = "<group>"; };
 		39F869BB288C56C300273AB0 /* UpdatePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePanel.xib; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		394F8A3A28739339005EA7FA /* Radiola */ = {
 			isa = PBXGroup;
 			children = (
+				39F08E452A0CC582006B65D0 /* Types.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
 				396704682943AD2700012FFD /* AudioDevice.swift */,
@@ -182,13 +185,13 @@
 			children = (
 				39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */,
 				39F869BA288C56C300273AB0 /* UpdatePanel.swift */,
-				39E042D2293B81A900A2167E /* AppearancePage.swift */,
+				39E042D2293B81A900A2167E /* GeneralPage.swift */,
 				3967046A2944961500012FFD /* AudioPage.swift */,
+				9D1D31C92A06448200F0BA44 /* StartupPage.swift */,
 				9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */,
 				3967046B2944961500012FFD /* AudioPage.xib */,
-				39E042D3293B81A900A2167E /* AppearancePage.xib */,
+				39E042D3293B81A900A2167E /* GeneralPage.xib */,
 				39F869BB288C56C300273AB0 /* UpdatePanel.xib */,
-				9D1D31C92A06448200F0BA44 /* StartupPage.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -269,7 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */,
-				39E042D5293B81A900A2167E /* AppearancePage.xib in Resources */,
+				39E042D5293B81A900A2167E /* GeneralPage.xib in Resources */,
 				39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */,
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
 				390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */,
@@ -308,12 +311,13 @@
 				39E042D0293B3ACA00A2167E /* VolumeMenuItemContoller.swift in Sources */,
 				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
 				394F8A6B28739A9C005EA7FA /* StationRowView.swift in Sources */,
-				39E042D4293B81A900A2167E /* AppearancePage.swift in Sources */,
+				39E042D4293B81A900A2167E /* GeneralPage.swift in Sources */,
 				39FF07732933A59900751A03 /* StatuBarController.swift in Sources */,
 				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
 				3967046C2944961500012FFD /* AudioPage.swift in Sources */,
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,
 				394F8A51287394D0005EA7FA /* Stations.swift in Sources */,
+				39F08E462A0CC582006B65D0 /* Types.swift in Sources */,
 				39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */,
 				39D79E632933BEAB00210D94 /* Settings.swift in Sources */,
 				394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */,
