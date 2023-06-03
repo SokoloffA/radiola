@@ -8,6 +8,8 @@
 import Foundation
 
 class Settings {
+    private let data = UserDefaults.standard
+
     private let lastStationKey = "Url"
     private let volumeLevelKey = "Volume"
     private let volumeIsMutedKey = "Muted"
@@ -15,9 +17,21 @@ class Settings {
     private let favoritesMenuTypeKey = "FavoritesMenuType"
     private let audioDeviceKey = "AudioDevice"
     private let playLastStationKey = "playLastStation"
+    private let mediaKeysKey = "MmediaKeys"
 
-    private let data = UserDefaults.standard
     private var mouseActs: [MouseButton: MouseButtonAction] = [:]
+
+    enum FavoritesMenuType: Int {
+        case flat
+        case margin
+        case submenu
+    }
+
+    enum MediaKeysHandleType: Int {
+        case enable
+        case disable
+        case mainWindowActive
+    }
 
     /* ****************************************
      *
@@ -28,6 +42,7 @@ class Settings {
             volumeIsMutedKey: false,
             showVolumeInMenuKey: false,
             playLastStationKey: false,
+            mediaKeysKey: true,
         ]
         data.register(defaults: defaults)
     }
@@ -62,13 +77,6 @@ class Settings {
     var showVolumeInMenu: Bool {
         get { data.bool(forKey: showVolumeInMenuKey) }
         set { data.set(newValue, forKey: showVolumeInMenuKey) }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    enum FavoritesMenuType: Int {
-        case flat, margin, submenu
     }
 
     /* ****************************************
@@ -140,6 +148,27 @@ class Settings {
         mouseActs[forButton] = action
         data.set(action.toString(), forKey: mouseActionKey(forButton: forButton))
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var mediaKeysHandle: MediaKeysHandleType {
+        get {
+            let s = data.string(forKey: mediaKeysKey) ?? ""
+            if s == "enable" { return .enable }
+            if s == "disable" { return .disable }
+            if s == "mainWindowActive" { return .mainWindowActive }
+            return .enable
+        }
+
+        set {
+            switch newValue {
+                case .enable: data.set("enable", forKey: mediaKeysKey)
+                case .disable: data.set("disable", forKey: mediaKeysKey)
+                case .mainWindowActive: data.set("mainWindowActive", forKey: mediaKeysKey)
+            }
+        }
     }
 }
 

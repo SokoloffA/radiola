@@ -164,16 +164,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return false
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    private func needHandleMediaKey() -> Bool {
+        switch settings.mediaKeysHandle {
+            case .disable: return false
+            case .enable: return true
+            case .mainWindowActive: return StationsWindow.isActie()
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func medialKeyPresset(keyCode: Int32, keyRepeat: Bool) {
+        if !needHandleMediaKey() {
+            return
+        }
+
         if keyCode == NX_KEYTYPE_PLAY {
             player.toggle()
         }
     }
 
-    func medialKeyReleased(keyCode: Int32) {}
+    /* ****************************************
+     *
+     * ****************************************/
+    func medialKeyReleased(keyCode: Int32) {
+    }
 }
 
 class Application: NSApplication {
+    /* ****************************************
+     *
+     * ****************************************/
     override func sendEvent(_ event: NSEvent) {
         if event.type == NSEvent.EventType.systemDefined && event.subtype.rawValue == 8 {
             let keyCode = ((event.data1 & 0xFFFF0000) >> 16)

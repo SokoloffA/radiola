@@ -109,6 +109,13 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     /* ****************************************
      *
      * ****************************************/
+    class func isActie() -> Bool {
+        return instance != nil
+    }
+    
+    /* ****************************************
+     *
+     * ****************************************/
     override public func mouseDown(with event: NSEvent) {
         if NSPointInRect(event.locationInWindow, titleBar.frame) {
             window?.performDrag(with: event)

@@ -13,9 +13,15 @@ class GeneralPage: NSViewController {
     @IBOutlet var showVolume: NSButton!
 
     @IBOutlet var leftButtonCbx: NSPopUpButton!
-    @IBOutlet var rightButtonCbx: NSPopUpButton!
     @IBOutlet var middleButtonCbx: NSPopUpButton!
+    @IBOutlet var rightButtonCbx: NSPopUpButton!
 
+    @IBOutlet var mediaKeysLabel: NSTextField!
+    @IBOutlet var mediaKeysCbx: NSPopUpButton!
+
+    /* ****************************************
+     *
+     * ****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "General"
@@ -28,6 +34,8 @@ class GeneralPage: NSViewController {
         initButtonCbx(leftButtonCbx, button: .left)
         initButtonCbx(rightButtonCbx, button: .right)
         initButtonCbx(middleButtonCbx, button: .middle)
+
+        initMediaKeysCbx()
     }
 
     /* ****************************************
@@ -73,6 +81,28 @@ class GeneralPage: NSViewController {
     /* ****************************************
      *
      * ****************************************/
+    private func initMediaKeysCbx() {
+        guard let cbx = mediaKeysCbx else { return }
+
+        cbx.removeAllItems()
+
+        cbx.addItem(withTitle: "always")
+        cbx.lastItem?.tag = Settings.MediaKeysHandleType.enable.rawValue
+
+        cbx.addItem(withTitle: "never")
+        cbx.lastItem?.tag = Settings.MediaKeysHandleType.disable.rawValue
+
+        cbx.addItem(withTitle: "when the main window is open")
+        cbx.lastItem?.tag = Settings.MediaKeysHandleType.mainWindowActive.rawValue
+
+        cbx.selectItem(withTag: settings.mediaKeysHandle.rawValue)
+        cbx.target = self
+        cbx.action = #selector(multimediaKeysHandle)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @IBAction func showVolumeChanged(_ sender: NSButton) {
         settings.showVolumeInMenu = showVolume.state == .on
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
@@ -94,7 +124,21 @@ class GeneralPage: NSViewController {
     @objc func buttonActionChanged(_ sender: NSPopUpButton) {
         guard let btn = MouseButton(rawValue: sender.tag) else { return }
         guard let act = MouseButtonAction(rawValue: sender.selectedItem?.tag ?? 0) else { return }
-        print(#function, btn, act)
+
         settings.setMouseAction(forButton: btn, action: act)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func multimediaKeysHandle(_ sender: NSPopUpButton) {
+        guard
+            let tag = sender.selectedItem?.tag,
+            let val = Settings.MediaKeysHandleType(rawValue: tag)
+        else {
+            return
+        }
+
+        settings.mediaKeysHandle = val
     }
 }
