@@ -8,11 +8,10 @@
 import Cocoa
 
 class AddGroupDialog: NSWindowController, NSTextFieldDelegate {
+    @IBOutlet var titleEdit: NSTextField!
+    @IBOutlet var okButton: NSButton!
+    @IBOutlet var cancelButton: NSButton!
 
-    @IBOutlet weak var titleEdit: NSTextField!
-    @IBOutlet weak var okButton: NSButton!
-    @IBOutlet weak var cancelButton: NSButton!
-    
     var title: String { return titleEdit?.stringValue ?? "" }
 
     /* ****************************************
@@ -30,7 +29,7 @@ class AddGroupDialog: NSWindowController, NSTextFieldDelegate {
     }
 
     func controlTextDidChange(_ obj: Notification) {
-        okButton.isEnabled =            
+        okButton.isEnabled =
             !titleEdit.stringValue.isEmpty
     }
 

@@ -8,27 +8,26 @@
 
 import Cocoa
 
-class StationRowView: NSView  {
-
+class StationRowView: NSView {
     @IBOutlet var contentView: NSView!
-    @IBOutlet weak var nameEdit: NSTextField!
-    @IBOutlet weak var urledit: NSTextField!
-    @IBOutlet weak var favoriteButton: NSButton!
+    @IBOutlet var nameEdit: NSTextField!
+    @IBOutlet var urledit: NSTextField!
+    @IBOutlet var favoriteButton: NSButton!
 
     private let favoriteIcons = [
         false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
         true: NSImage(named: NSImage.Name("star-filled"))?.tint(color: .systemYellow),
     ]
-    
+
     private let station: Station
-    
+
     var mainView: NSView?
-    
+
     init(station: Station) {
         self.station = station
         super.init(frame: NSRect.zero)
         _ = load(fromNIBNamed: "StationRowView")
-        
+
         nameEdit.stringValue = station.name
         nameEdit.tag = station.id
         nameEdit.target = self
@@ -44,40 +43,39 @@ class StationRowView: NSView  {
         favoriteButton.target = self
         favoriteButton.action = #selector(favClicked(sender:))
     }
-       
+
     required init?(coder: NSCoder) {
         station = Station(name: "", url: "")
         super.init(coder: coder)
     }
-    
+
     func load(fromNIBNamed nibName: String) -> Bool {
         var nibObjects: NSArray?
         let nibName = NSNib.Name(stringLiteral: nibName)
-        
+
         if Bundle.main.loadNibNamed(nibName, owner: self, topLevelObjects: &nibObjects) {
             guard let nibObjects = nibObjects else { return false }
-            
+
             let viewObjects = nibObjects.filter { $0 is NSView }
-            
+
             if viewObjects.count > 0 {
                 guard let view = viewObjects[0] as? NSView else { return false }
                 mainView = view
-                self.addSubview(mainView!)
-                
+                addSubview(mainView!)
+
                 mainView?.translatesAutoresizingMaskIntoConstraints = false
-                mainView?.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-                mainView?.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-                mainView?.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-                mainView?.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-                
+                mainView?.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+                mainView?.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+                mainView?.topAnchor.constraint(equalTo: topAnchor).isActive = true
+                mainView?.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
                 return true
             }
         }
-        
+
         return false
     }
-    
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -105,5 +103,4 @@ class StationRowView: NSView  {
         stationsStore.write()
         stationsStore.emitChanged()
     }
-
 }

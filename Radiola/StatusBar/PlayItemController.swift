@@ -112,23 +112,23 @@ class PlayItemController: NSViewController {
      * ****************************************/
     @objc private func refresh() {
         switch player.status {
-        case Player.Status.paused:
-            playIcon.image = NSImage(named: NSImage.Name("PlayMenu"))
-            playIcon.image?.isTemplate = true
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = ""
+            case Player.Status.paused:
+                playIcon.image = NSImage(named: NSImage.Name("PlayMenu"))
+                playIcon.image?.isTemplate = true
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = ""
 
-        case Player.Status.connecting:
-            playIcon.image = NSImage(named: NSImage.Name("PauseMenu"))
-            playIcon.image?.isTemplate = true
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
+            case Player.Status.connecting:
+                playIcon.image = NSImage(named: NSImage.Name("PauseMenu"))
+                playIcon.image?.isTemplate = true
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
 
-        case Player.Status.playing:
-            playIcon.image = NSImage(named: NSImage.Name("PauseMenu"))
-            playIcon.image?.isTemplate = true
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = player.title
+            case Player.Status.playing:
+                playIcon.image = NSImage(named: NSImage.Name("PauseMenu"))
+                playIcon.image?.isTemplate = true
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = player.title
         }
     }
 }

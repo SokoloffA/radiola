@@ -52,7 +52,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
         stationsView.doubleAction = #selector(doubleClickRow)
         stationsView.registerForDraggedTypes([nodePasteboardType])
         stationsView.expandItem(nil, expandChildren: true)
-        
+
         let n = max(0, stationsView.row(forItem: player.station))
         stationsView.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
 
@@ -73,12 +73,12 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
                                                selector: #selector(refresh),
                                                name: NSOutlineView.selectionDidChangeNotification,
                                                object: nil)
-        
+
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refresh),
                                                name: Notification.Name.PlayerVolumeChanged,
                                                object: nil)
-        
+
         volumeControl.minValue = 0
         volumeControl.maxValue = 1
         volumeControl.doubleValue = Double(player.volume)
@@ -112,7 +112,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     class func isActie() -> Bool {
         return instance != nil
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -134,54 +134,51 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
      * ****************************************/
     @objc func refresh() {
         switch player.status {
-        case Player.Status.paused:
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = ""
+            case Player.Status.paused:
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = ""
 
-        case Player.Status.connecting:
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
+            case Player.Status.connecting:
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
 
-        case Player.Status.playing:
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = player.title
+            case Player.Status.playing:
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = player.title
         }
 
         switch player.status {
-        case Player.Status.paused:
-            playButton.image = NSImage(named: NSImage.Name("NSTouchBarPlayTemplate"))
-            playButton.image?.isTemplate = true
-            playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
+            case Player.Status.paused:
+                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPlayTemplate"))
+                playButton.image?.isTemplate = true
+                playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
 
-        case Player.Status.connecting:
-            playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
-            playButton.image?.isTemplate = true
-            playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
+            case Player.Status.connecting:
+                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
+                playButton.image?.isTemplate = true
+                playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
 
-        case Player.Status.playing:
-            playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
-            playButton.image?.isTemplate = true
-            playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
+            case Player.Status.playing:
+                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
+                playButton.image?.isTemplate = true
+                playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
         }
 
         let selNode = selectedNode()
         removeStationButton.isEnabled = (selNode != nil)
-        
+
         volumeControl.doubleValue = Double(player.volume)
-        
-        if  player.isMuted {
+
+        if player.isMuted {
             volumeControl.isEnabled = false
             volumeDownButton.isEnabled = false
             volumeUpButton.isEnabled = false
-        }
-        else {
+        } else {
             volumeControl.isEnabled = true
             volumeDownButton.isEnabled = volumeControl.doubleValue > volumeControl.minValue
             volumeUpButton.isEnabled = volumeControl.doubleValue < volumeControl.maxValue
         }
-        
     }
-
 
     /* ****************************************
      *
@@ -469,13 +466,13 @@ extension StationsWindow: NSOutlineViewDataSource {
             if node?.id == src.id {
                 return false
             }
-            
+
             node = node?.parent()
         }
-        
+
         return true
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
@@ -507,7 +504,7 @@ extension StationsWindow: NSOutlineViewDataSource {
             let srcNode = draggedNode(info: info),
             let srcParent = srcNode.parent(),
             let srcIndex = srcParent.index(srcNode),
-            
+
             let destParent = getDestParent()
         else {
             return false
@@ -516,7 +513,7 @@ extension StationsWindow: NSOutlineViewDataSource {
         if !canDragAndDrop(src: srcNode, dest: destParent) {
             return false
         }
-        
+
         var destIndex = index
         if srcParent !== destParent {
             let node = srcParent.nodes.remove(at: srcIndex)

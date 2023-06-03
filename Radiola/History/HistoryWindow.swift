@@ -32,7 +32,7 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
             selector: #selector(refresh),
             name: Notification.Name.PlayerMetadataChanged,
             object: nil)
-        
+
         refresh()
     }
 
@@ -82,7 +82,7 @@ extension HistoryWindow: NSTableViewDelegate {
      *
      * ****************************************/
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        return HistoryRow(history: player.history[ player.history.count - row - 1])
+        return HistoryRow(history: player.history[player.history.count - row - 1])
     }
 }
 

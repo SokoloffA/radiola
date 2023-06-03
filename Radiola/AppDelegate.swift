@@ -121,17 +121,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     @objc func playerStatusChanged() {
         switch player.status {
-        case Player.Status.paused:
-            playMenuItem.isHidden = false
-            pauseMenuItem.isHidden = true
+            case Player.Status.paused:
+                playMenuItem.isHidden = false
+                pauseMenuItem.isHidden = true
 
-        case Player.Status.connecting:
-            playMenuItem.isHidden = true
-            pauseMenuItem.isHidden = false
+            case Player.Status.connecting:
+                playMenuItem.isHidden = true
+                pauseMenuItem.isHidden = false
 
-        case Player.Status.playing:
-            playMenuItem.isHidden = true
-            pauseMenuItem.isHidden = false
+            case Player.Status.playing:
+                playMenuItem.isHidden = true
+                pauseMenuItem.isHidden = false
         }
     }
 

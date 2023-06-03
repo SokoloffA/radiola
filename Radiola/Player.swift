@@ -184,18 +184,18 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     private func statusChenged(status: AVPlayer.TimeControlStatus) {
         switch status {
-        case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
-            self.status = .connecting
-            title = ""
-            NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
+            case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
+                self.status = .connecting
+                title = ""
+                NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
 
-        case AVPlayer.TimeControlStatus.playing:
-            self.status = .playing
+            case AVPlayer.TimeControlStatus.playing:
+                self.status = .playing
 
-        default:
-            self.status = .paused
-            title = ""
-            NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
+            default:
+                self.status = .paused
+                title = ""
+                NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
         }
 
         NotificationCenter.default.post(name: Notification.Name.PlayerStatusChanged, object: nil)
