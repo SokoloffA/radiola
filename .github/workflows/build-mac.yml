@@ -44,3 +44,4 @@ jobs:
           path: |
             ${{env.TAR_NAME}}
             makedmg.sh
+            dmg_settings.json
