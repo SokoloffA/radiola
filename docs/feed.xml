@@ -5,6 +5,14 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 5.1.1</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fixed the direction of volume change when the &quot;Natural Scrolling&quot; mode is enabled&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sun, 04 Jun 2023 20:27:08 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v5.1.1/Radiola-5.1.1.dmg" sparkle:version="5.1.1" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 5.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;You can customize how the program handle multimedia keys:&lt;ul&gt;
