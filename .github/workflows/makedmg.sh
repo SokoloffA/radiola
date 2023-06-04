@@ -45,14 +45,5 @@ echo "  OK"
 echo ""
 
 if [[ MAKE_DMG ]]; then
-    create-dmg \
-        --volname ${APP_NAME} \
-        --volicon ${BUNDLE_PATH}/Contents/Resources/AppIcon.icns \
-        --window-size 500 300 \
-        --icon-size 96 \
-        --icon ${BUNDLE_NAME} 135 102 \
-        --hide-extension ${BUNDLE_NAME} \
-        --app-drop-link 365 102 \
-        ${DMG_NAME} \
-        ${BUNDLE_PATH}
+    dmgbuild -s dmg_settings.json "${BUNDLE_PATH}" "${DMG_NAME}"
 fi
