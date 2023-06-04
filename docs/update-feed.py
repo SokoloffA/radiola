@@ -133,7 +133,7 @@ def write(releases):
         if not r.url:
             continue
 
-        description = markdown.markdown(r.changeLog)
+        description = markdown.markdown(r.changeLog, tab_length=2)
 
         item = add(channel, "item")
         addText(item, "title", f"{PROGRAM_NAME} {r.version}")
