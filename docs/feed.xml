@@ -5,14 +5,31 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 5.1</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;You can customize how the program handle multimedia keys:&lt;ul&gt;
+&lt;li&gt;Always handles play/pause key presses (previous behaviour).&lt;/li&gt;
+&lt;li&gt;Ignore multimedia keys.&lt;/li&gt;
+&lt;li&gt;Handle the play/pause key only if the main window is open.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;A mute button has been added to the main program window.&lt;/li&gt;
+&lt;li&gt;Now you can change the volume by rolling mouse scroll wheel over the status bar icon. This is configurable in the settings.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sun, 04 Jun 2023 07:54:26 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v5.1/Radiola-5.1.dmg" sparkle:version="5.1" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 5.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Added the ability to play the last station directly after startup. Thanks @Paulchen-Panther!&lt;/li&gt;
-&lt;li&gt;Now you can configure different actions for different mouse buttons. The following actions are available:&lt;/li&gt;
+&lt;li&gt;Now you can configure different actions for different mouse buttons. The following actions are available:&lt;ul&gt;
 &lt;li&gt;Show the popup menu&lt;/li&gt;
 &lt;li&gt;Toggle play/pause playback&lt;/li&gt;
 &lt;li&gt;Show the main program window&lt;/li&gt;
 &lt;li&gt;Show the history window &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;</description>
       <pubDate>Thu, 11 May 2023 11:29:33 +0000</pubDate>
       <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v5.0/Radiola-5.0.dmg" sparkle:version="5.0" length="0" type="application/octet-stream"/>
@@ -21,10 +38,12 @@
       <title>Radiola 4.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;You can create groups from a station like a tree. &lt;/li&gt;
-&lt;li&gt;In preferences you can choose the style of ground stations in the main menu. Grouped favorite stations can be displayed in three ways:&lt;/li&gt;
+&lt;li&gt;In preferences you can choose the style of ground stations in the main menu. Grouped favorite stations can be displayed in three ways:&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Like a flat list.&lt;/strong&gt; All stations are displayed one below the other, without any indentation.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;With margins.&lt;/strong&gt;  All stations are displayed without a submenu, but the names of stations from the group are visually shifted to the right by a couple of characters. &lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;As a submenu.&lt;/strong&gt; Each group is represented as a submenu.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;Added volume control to the main menu. You can enable this in the preferences dialog.&lt;/li&gt;
 &lt;li&gt;In the preferences dialog, you can specify the audio device which the program will use. By default, the standard system device is used.&lt;/li&gt;
 &lt;/ul&gt;</description>
@@ -34,10 +53,12 @@
     <item>
       <title>Radiola 3.0</title>
       <description>&lt;ul&gt;
-&lt;li&gt;Redesigned station window&lt;/li&gt;
+&lt;li&gt;Redesigned station window&lt;ul&gt;
 &lt;li&gt;Nice looking stations table&lt;/li&gt;
 &lt;li&gt;The current station and song are displayed in the window title bar&lt;/li&gt;
 &lt;li&gt;Added volume control&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;li&gt;A history window has been added. Now you can see the names of songs you recently listened to&lt;/li&gt;
 &lt;/ul&gt;</description>
       <pubDate>Sat, 30 Jul 2022 06:10:23 +0000</pubDate>
