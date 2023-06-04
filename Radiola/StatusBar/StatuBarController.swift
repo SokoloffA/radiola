@@ -159,7 +159,12 @@ class StatusBarController: NSObject {
         }
 
         if settings.mouseWheelAction != MouseWheelAction.nothing {
-            player.volume += Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+            var vol = Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+            if event.isDirectionInvertedFromDevice {
+                vol = -vol
+            }
+
+            player.volume += vol
         }
 
         return event
