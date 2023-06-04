@@ -25,7 +25,6 @@ class AudioSytstem {
     }
 
     private func dispatchEvent(_ numAddresses: UInt32, addresses: UnsafePointer<AudioObjectPropertyAddress>) {
-        print(#function)
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: Notification.Name.AudioDeviceChanged, object: nil)
         }

@@ -15,6 +15,7 @@ class GeneralPage: NSViewController {
     @IBOutlet var leftButtonCbx: NSPopUpButton!
     @IBOutlet var middleButtonCbx: NSPopUpButton!
     @IBOutlet var rightButtonCbx: NSPopUpButton!
+    @IBOutlet var mouseWheelCbx: NSPopUpButton!
 
     @IBOutlet var mediaKeysLabel: NSTextField!
     @IBOutlet var mediaKeysCbx: NSPopUpButton!
@@ -36,6 +37,7 @@ class GeneralPage: NSViewController {
         initButtonCbx(middleButtonCbx, button: .middle)
 
         initMediaKeysCbx()
+        initMouseWheelCbx()
     }
 
     /* ****************************************
@@ -97,7 +99,26 @@ class GeneralPage: NSViewController {
 
         cbx.selectItem(withTag: settings.mediaKeysHandle.rawValue)
         cbx.target = self
-        cbx.action = #selector(multimediaKeysHandle)
+        cbx.action = #selector(multimediaKeysHandleChanged)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func initMouseWheelCbx() {
+        guard let cbx = mouseWheelCbx else { return }
+
+        cbx.removeAllItems()
+
+        cbx.addItem(withTitle: "does nothing")
+        cbx.lastItem?.tag = MouseWheelAction.nothing.rawValue
+
+        cbx.addItem(withTitle: "changes the volume")
+        cbx.lastItem?.tag = MouseWheelAction.volume.rawValue
+
+        cbx.selectItem(withTag: settings.mouseWheelAction.rawValue)
+        cbx.target = self
+        cbx.action = #selector(mouseWheelCbxChanged)
     }
 
     /* ****************************************
@@ -131,7 +152,7 @@ class GeneralPage: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    @objc func multimediaKeysHandle(_ sender: NSPopUpButton) {
+    @objc func multimediaKeysHandleChanged(_ sender: NSPopUpButton) {
         guard
             let tag = sender.selectedItem?.tag,
             let val = Settings.MediaKeysHandleType(rawValue: tag)
@@ -140,5 +161,19 @@ class GeneralPage: NSViewController {
         }
 
         settings.mediaKeysHandle = val
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func mouseWheelCbxChanged(_ sender: NSPopUpButton) {
+        guard
+            let tag = sender.selectedItem?.tag,
+            let val = MouseWheelAction(rawValue: tag)
+        else {
+            return
+        }
+
+        settings.mouseWheelAction = val
     }
 }

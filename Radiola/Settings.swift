@@ -17,7 +17,8 @@ class Settings {
     private let favoritesMenuTypeKey = "FavoritesMenuType"
     private let audioDeviceKey = "AudioDevice"
     private let playLastStationKey = "playLastStation"
-    private let mediaKeysKey = "MmediaKeys"
+    private let mediaKeysKey = "MediaKeys"
+    private let mouseWheelActionKey = "MouseWheelAction"
 
     private var mouseActs: [MouseButton: MouseButtonAction] = [:]
 
@@ -167,6 +168,25 @@ class Settings {
                 case .enable: data.set("enable", forKey: mediaKeysKey)
                 case .disable: data.set("disable", forKey: mediaKeysKey)
                 case .mainWindowActive: data.set("mainWindowActive", forKey: mediaKeysKey)
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var mouseWheelAction: MouseWheelAction {
+        get {
+            let s = data.string(forKey: mouseWheelActionKey) ?? ""
+            if s == "nothing" { return .nothing }
+            if s == "volume" { return .volume }
+            return .nothing
+        }
+
+        set {
+            switch newValue {
+                case .nothing: data.set("nothing", forKey: mouseWheelActionKey)
+                case .volume: data.set("volume", forKey: mouseWheelActionKey)
             }
         }
     }

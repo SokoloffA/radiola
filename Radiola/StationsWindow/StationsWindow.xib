@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,6 +17,7 @@
                 <outlet property="titleBar" destination="ywr-cg-l3j" id="aYH-Vz-yzy"/>
                 <outlet property="volumeControl" destination="rqd-Q6-TBW" id="pD1-WO-1h4"/>
                 <outlet property="volumeDownButton" destination="uei-sa-PFE" id="hFa-KF-Gzh"/>
+                <outlet property="volumeMuteButton" destination="YZe-Tx-ITg" id="yR3-vY-Lrv"/>
                 <outlet property="volumeUpButton" destination="b2g-k1-hj9" id="hOM-Ud-XHS"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -27,7 +28,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="682" height="375"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1415"/>
             <value key="minSize" type="size" width="500" height="200"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
@@ -38,7 +39,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n6a-cd-fYc">
-                                <rect key="frame" x="150" y="27" width="360" height="16"/>
+                                <rect key="frame" x="150" y="27" width="333" height="16"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Artist - Song" id="0dt-mx-21x">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
@@ -47,7 +48,7 @@
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KNk-HA-izV">
-                                <rect key="frame" x="150" y="8" width="360" height="14"/>
+                                <rect key="frame" x="150" y="8" width="333" height="14"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Syper station" id="Id3-6k-iRL">
                                     <font key="font" metaFont="smallSystem"/>
@@ -64,7 +65,7 @@
                                     <outlet property="nextKeyView" destination="o7J-cr-zMe" id="ly0-hu-MUM"/>
                                 </connections>
                             </slider>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2g-k1-hj9">
+                            <button toolTip="Increase volume" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b2g-k1-hj9">
                                 <rect key="frame" x="639" y="16" width="23" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarVolumeUpTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="3s3-pp-QeG">
@@ -75,7 +76,7 @@
                                     <action selector="volumeUp:" target="-2" id="BKa-k4-ugj"/>
                                 </connections>
                             </button>
-                            <button focusRingType="exterior" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7J3-oJ-8Un">
+                            <button toolTip="Play/Pause" focusRingType="exterior" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7J3-oJ-8Un">
                                 <rect key="frame" x="102" y="6" width="42" height="42"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarPlayTemplate" imagePosition="only" alignment="center" focusRingType="exterior" inset="2" id="NtH-Ec-3b4">
@@ -87,7 +88,7 @@
                                     <outlet property="nextKeyView" destination="rqd-Q6-TBW" id="4j0-O6-nEy"/>
                                 </connections>
                             </button>
-                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uei-sa-PFE">
+                            <button toolTip="Decrease volume" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uei-sa-PFE">
                                 <rect key="frame" x="516" y="16" width="23" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                                 <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarAudioOutputVolumeOffTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Ep0-Xy-Ktb">
@@ -96,6 +97,17 @@
                                 </buttonCell>
                                 <connections>
                                     <action selector="volumeDown:" target="-2" id="coq-F1-QLn"/>
+                                </connections>
+                            </button>
+                            <button toolTip="Mute" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YZe-Tx-ITg">
+                                <rect key="frame" x="489" y="17" width="23" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="NSTouchBarAudioOutputMuteTemplate" imagePosition="trailing" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Vol-QY-822">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                                    <font key="font" metaFont="systemBold" size="12"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="volumeMute:" target="-2" id="edO-b0-QKF"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -199,10 +211,11 @@
         </window>
     </objects>
     <resources>
-        <image name="NSAddTemplate" width="15" height="13"/>
-        <image name="NSRemoveTemplate" width="15" height="4"/>
-        <image name="NSTouchBarAudioOutputVolumeOffTemplate" width="13" height="14"/>
-        <image name="NSTouchBarPlayTemplate" width="12" height="13"/>
-        <image name="NSTouchBarVolumeUpTemplate" width="22" height="15"/>
+        <image name="NSAddTemplate" width="18" height="16"/>
+        <image name="NSRemoveTemplate" width="18" height="4"/>
+        <image name="NSTouchBarAudioOutputMuteTemplate" width="16" height="18"/>
+        <image name="NSTouchBarAudioOutputVolumeOffTemplate" width="16" height="17"/>
+        <image name="NSTouchBarPlayTemplate" width="15" height="16"/>
+        <image name="NSTouchBarVolumeUpTemplate" width="26" height="18"/>
     </resources>
 </document>

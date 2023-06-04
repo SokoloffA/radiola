@@ -82,7 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if settings.playLastStation {
             #if DEBUG
-                _ = print(settings.lastStationUrl!)
+                print(settings.lastStationUrl!)
             #endif
             player.play()
         }

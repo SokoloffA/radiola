@@ -36,3 +36,8 @@ enum MouseButtonAction: Int {
         }
     }
 }
+
+enum MouseWheelAction: Int {
+    case nothing
+    case volume
+}

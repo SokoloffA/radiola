@@ -43,8 +43,10 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     var volume: Float {
         get { player.volume }
         set {
-            if player.volume != newValue {
-                player.volume = newValue
+            let vol = max(0, min(1, newValue))
+
+            if player.volume != vol {
+                player.volume = vol
                 settings.volumeLevel = newValue
                 NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
             }
@@ -254,5 +256,13 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         }
 
         audioDeviceUID = nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func mouseWheelToVolume(delta: CGFloat) -> Float {
+        let res = pow(abs(Float(delta) * 0.001), 1 / 2)
+        return delta > 0 ? res : -res
     }
 }

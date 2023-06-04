@@ -53,6 +53,7 @@ class StatusBarController: NSObject {
 
         NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown], handler: mouseDown)
         NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp], handler: mouseUp)
+        NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel], handler: scrollWheel)
 
         playerStatusChanged()
     }
@@ -147,6 +148,21 @@ class StatusBarController: NSObject {
             case nil:
                 return event
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func scrollWheel(_ event: NSEvent) -> NSEvent? {
+        if event.window != menuItem.button?.window {
+            return event
+        }
+
+        if settings.mouseWheelAction != MouseWheelAction.nothing {
+            player.volume += Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+        }
+
+        return event
     }
 
     /* ****************************************

@@ -17,6 +17,8 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet var volumeControl: NSSlider!
     @IBOutlet var volumeDownButton: NSButton!
     @IBOutlet var volumeUpButton: NSButton!
+    @IBOutlet var volumeMuteButton: NSButton!
+
     @IBOutlet var titleBar: NSView!
 
     private let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
@@ -173,10 +175,14 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
             volumeControl.isEnabled = false
             volumeDownButton.isEnabled = false
             volumeUpButton.isEnabled = false
+            volumeMuteButton.state = .on
+            volumeMuteButton.toolTip = "Unmute"
         } else {
             volumeControl.isEnabled = true
             volumeDownButton.isEnabled = volumeControl.doubleValue > volumeControl.minValue
             volumeUpButton.isEnabled = volumeControl.doubleValue < volumeControl.maxValue
+            volumeMuteButton.state = .off
+            volumeMuteButton.toolTip = "Mute"
         }
     }
 
@@ -330,6 +336,11 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
 
     @IBAction func volumeDown(_ sender: Any) {
         volumeControl.doubleValue -= 0.05
+        volumeChanged(0)
+    }
+
+    @IBAction func volumeMute(_ sender: Any) {
+        player.isMuted = !player.isMuted
         volumeChanged(0)
     }
 }
