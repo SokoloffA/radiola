@@ -22,14 +22,14 @@ class PlayButtonImage: NSImageView {
  *
  * ****************************************/
 class PlayMenuItem: NSMenuItem {
-    public let controller: PlayItemController!
+    public var controller: PlayItemController!
 
     /* ****************************************
      *
      * ****************************************/
     init() {
-        controller = PlayItemController()
         super.init(title: "", action: nil, keyEquivalent: "")
+        controller = PlayItemController(menuItem: self)
         view = controller.view
     }
 
@@ -49,12 +49,13 @@ class PlayItemController: NSViewController {
     @IBOutlet var songLabel: NSTextField!
     @IBOutlet var stationLabel: NSTextField!
 
-    weak var parentMenu: NSMenu?
+    private let menuItem: NSMenuItem
 
     /* ****************************************
      *
      * ****************************************/
-    init() {
+    init(menuItem: NSMenuItem) {
+        self.menuItem = menuItem
         super.init(nibName: "PlayItemController", bundle: nil)
     }
 
@@ -90,7 +91,7 @@ class PlayItemController: NSViewController {
      * ****************************************/
     @objc func toggle() {
         player.toggle()
-        parentMenu?.cancelTracking()
+        menuItem.menu?.cancelTracking()
     }
 
     /* ****************************************

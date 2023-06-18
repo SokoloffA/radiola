@@ -11,11 +11,11 @@ import Cocoa
  *
  * ****************************************/
 class VolumeMenuItem: NSMenuItem {
-    public let controller: VolumeMenuItemContoller!
+    public var controller: VolumeMenuItemContoller!
 
     init() {
-        controller = VolumeMenuItemContoller()
         super.init(title: "", action: nil, keyEquivalent: "")
+        controller = VolumeMenuItemContoller(menuItem: self)
         view = controller.view
     }
 
@@ -28,7 +28,7 @@ class VolumeMenuItem: NSMenuItem {
  *
  * ****************************************/
 class VolumeMenuItemContoller: NSViewController {
-    weak var parentMenu: NSMenu?
+    private let menuItem: NSMenuItem
 
     @IBOutlet var volumeDownButton: NSButton!
     @IBOutlet var volumeUpButton: NSButton!
@@ -37,7 +37,8 @@ class VolumeMenuItemContoller: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    init() {
+    init(menuItem: NSMenuItem) {
+        self.menuItem = menuItem
         super.init(nibName: "VolumeMenuItem", bundle: nil)
     }
 
