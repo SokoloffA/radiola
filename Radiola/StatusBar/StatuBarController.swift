@@ -13,33 +13,15 @@ import Cocoa
 class StatusBarController: NSObject {
     private let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menuPrefix = "  "
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private let startConnectionPauseIcon = 0
-    private let connectionIcon = AnimatedIcon(
-        size: 16, frames: [
-            "connect-2",
-            "connect-3",
-            "connect-4",
-            "connect-5",
-            "connect-6",
-            "connect-5",
-            "connect-4",
-            "connect-3",
-        ]
-    )
+    private let icon = StatusBarIcon(size: 16)
 
     /* ****************************************
      *
      * ****************************************/
     override init() {
         super.init()
-        connectionIcon.statusItem = menuItem
-        connectionIcon.framesPerSecond = 8
-
-        setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
+        icon.statusItem = menuItem
+        icon.framesPerSecond = 8
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerStatusChanged),
@@ -49,6 +31,11 @@ class StatusBarController: NSObject {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateTooltip),
                                                name: Notification.Name.PlayerMetadataChanged,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerVolumeChanged),
+                                               name: Notification.Name.PlayerVolumeChanged,
                                                object: nil)
 
         NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown], handler: mouseDown)
@@ -308,20 +295,12 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     @objc func playerStatusChanged() {
-        switch player.status {
-            case Player.Status.paused:
-                connectionIcon.stop()
-                setIcon(item: menuItem, icon: "MenuButtonImage", size: 16)
-
-            case Player.Status.connecting:
-                connectionIcon.start(startFrame: 0)
-
-            case Player.Status.playing:
-                connectionIcon.stop()
-                setIcon(item: menuItem, icon: "MenuButtonPlay", size: 16)
-        }
-
+        icon.playerStatus = player.status
         updateTooltip()
+    }
+
+    @objc func playerVolumeChanged() {
+        icon.muted = player.isMuted
     }
 
     /* ****************************************
@@ -344,16 +323,6 @@ class StatusBarController: NSObject {
                     "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
                     player.stationName
         }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func setIcon(item: NSStatusItem, icon: String, size: Int = 12) {
-        let img = NSImage(named: NSImage.Name(icon))
-        img?.size = NSSize(width: size, height: size)
-        img?.isTemplate = true
-        item.button?.image = img
     }
 
     /* ****************************************
