@@ -52,14 +52,14 @@ class StatusBarIcon {
         images[.pausedMuted] = loadImages(["StatusBarPauseMute"])
         images[.playingMuted] = loadImages(["StatusBarPlayMute"])
         images[.connectingMuted] = loadImages([
-            "ConnectingMuted-1",
-            "ConnectingMuted-2",
-            "ConnectingMuted-3",
-            "ConnectingMuted-4",
-            "ConnectingMuted-5",
-            "ConnectingMuted-4",
-            "ConnectingMuted-3",
-            "ConnectingMuted-2",
+            "Connecting-1",
+            "Connecting-2",
+            "Connecting-3",
+            "Connecting-4",
+            "Connecting-5",
+            "Connecting-4",
+            "Connecting-3",
+            "Connecting-2",
         ])
 
         update()
@@ -88,7 +88,6 @@ class StatusBarIcon {
      *
      * ****************************************/
     private func update(force: Bool = false) {
-        print("update")
         let st = getState()
         if !force && state == st {
             return
