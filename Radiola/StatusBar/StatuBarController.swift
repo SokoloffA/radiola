@@ -22,6 +22,8 @@ class StatusBarController: NSObject {
         super.init()
         icon.statusItem = menuItem
         icon.framesPerSecond = 8
+        icon.playerStatus = player.status
+        icon.muted = player.isMuted
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerStatusChanged),
@@ -95,6 +97,10 @@ class StatusBarController: NSObject {
                 _ = HistoryWindow.show()
                 return nil
 
+            case .mute:
+                player.isMuted = !player.isMuted
+                return nil
+
             case nil:
                 return event
         }
@@ -130,6 +136,9 @@ class StatusBarController: NSObject {
                 return nil
 
             case .showHistory:
+                return nil
+
+            case .mute:
                 return nil
 
             case nil:

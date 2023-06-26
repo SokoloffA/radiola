@@ -75,9 +75,22 @@ class GeneralPage: NSViewController {
         cbx.addItem(withTitle: "shows the history")
         cbx.lastItem?.tag = MouseButtonAction.showHistory.rawValue
 
+        cbx.addItem(withTitle: "toggles mute")
+        cbx.lastItem?.tag = MouseButtonAction.mute.rawValue
+
         cbx.selectItem(withTag: settings.mouseAction(forButton: button).rawValue)
         cbx.target = self
         cbx.action = #selector(buttonActionChanged)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func buttonActionChanged(_ sender: NSPopUpButton) {
+        guard let btn = MouseButton(rawValue: sender.tag) else { return }
+        guard let act = MouseButtonAction(rawValue: sender.selectedItem?.tag ?? 0) else { return }
+
+        settings.setMouseAction(forButton: btn, action: act)
     }
 
     /* ****************************************
@@ -137,16 +150,6 @@ class GeneralPage: NSViewController {
             settings.favoritesMenuType = type
             NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
         }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc func buttonActionChanged(_ sender: NSPopUpButton) {
-        guard let btn = MouseButton(rawValue: sender.tag) else { return }
-        guard let act = MouseButtonAction(rawValue: sender.selectedItem?.tag ?? 0) else { return }
-
-        settings.setMouseAction(forButton: btn, action: act)
     }
 
     /* ****************************************

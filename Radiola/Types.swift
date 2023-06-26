@@ -16,6 +16,7 @@ enum MouseButtonAction: Int {
     case playPause
     case showMainWindow
     case showHistory
+    case mute
 
     init(fromString: String, defaultVal: MouseButtonAction) {
         switch fromString {
@@ -23,6 +24,7 @@ enum MouseButtonAction: Int {
             case "playPause": self = .playPause
             case "showMainWindow": self = .showMainWindow
             case "showHistory": self = .showHistory
+            case "mute": self = .mute
             default: self = defaultVal
         }
     }
@@ -33,6 +35,7 @@ enum MouseButtonAction: Int {
             case .playPause: return "playPause"
             case .showMainWindow: return "showMainWindow"
             case .showHistory: return "showHistory"
+            case .mute: return "mute"
         }
     }
 }

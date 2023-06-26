@@ -88,6 +88,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         player = AVPlayer()
         player.volume = settings.volumeLevel
+        player.isMuted = settings.volumeIsMuted
         player.audioOutputDeviceUniqueID = settings.audioDevice
 
         player.addObserver(self,

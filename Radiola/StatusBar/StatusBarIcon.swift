@@ -10,7 +10,7 @@ import Cocoa
 class StatusBarIcon {
     var framesPerSecond = 8 { didSet { update() } }
     let size: Int
-    var statusItem: NSStatusItem? { didSet { update(); changeIcon() } }
+    var statusItem: NSStatusItem? { didSet { update(force: true) } }
     var playerStatus: Player.Status = .paused { didSet { update() } }
     var muted: Bool = false { didSet { update() } }
 
@@ -36,8 +36,8 @@ class StatusBarIcon {
     init(size: Int = 16) {
         self.size = size
 
-        images[.paused] = loadImages(["StatusBarPaused"])
-        images[.playing] = loadImages(["StatusBarPlayed"])
+        images[.paused] = loadImages(["StatusBarPause"])
+        images[.playing] = loadImages(["StatusBarPlay"])
         images[.connecting] = loadImages([
             "Connecting-1",
             "Connecting-2",
@@ -49,8 +49,8 @@ class StatusBarIcon {
             "Connecting-2",
         ])
 
-        images[.pausedMuted] = loadImages(["StatusBarPaused"])
-        images[.playingMuted] = loadImages(["StatusBarPlayMuted"])
+        images[.pausedMuted] = loadImages(["StatusBarPauseMute"])
+        images[.playingMuted] = loadImages(["StatusBarPlayMute"])
         images[.connectingMuted] = loadImages([
             "ConnectingMuted-1",
             "ConnectingMuted-2",
@@ -87,9 +87,10 @@ class StatusBarIcon {
     /* ****************************************
      *
      * ****************************************/
-    private func update() {
+    private func update(force: Bool = false) {
+        print("update")
         let st = getState()
-        if state != nil && state == st {
+        if !force && state == st {
             return
         }
         state = st
