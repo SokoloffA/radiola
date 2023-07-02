@@ -18,7 +18,10 @@ class Settings {
     private let audioDeviceKey = "AudioDevice"
     private let playLastStationKey = "playLastStation"
     private let mediaKeysKey = "MediaKeys"
+    private let mediaPrevNextKeyActionKey = "MediaPrevNextAction"
     private let mouseWheelActionKey = "MouseWheelAction"
+    private let showMuteInMenuKey = "ShowMuteInMenu"
+    private let showTooltipKey = "ShowTooltip"
 
     private var mouseActs: [MouseButton: MouseButtonAction] = [:]
 
@@ -43,7 +46,8 @@ class Settings {
             volumeIsMutedKey: false,
             showVolumeInMenuKey: false,
             playLastStationKey: false,
-            mediaKeysKey: true,
+            showMuteInMenuKey: false,
+            showTooltipKey: true,
         ]
         data.register(defaults: defaults)
     }
@@ -175,6 +179,25 @@ class Settings {
     /* ****************************************
      *
      * ****************************************/
+    var mediaPrevNextKeyAction: MediaPrevNextKeyAction {
+        get {
+            let s = data.string(forKey: mediaPrevNextKeyActionKey) ?? ""
+            if s == "disable" { return .disable }
+            if s == "switchStation" { return .switchStation }
+            return .disable
+        }
+
+        set {
+            switch newValue {
+                case .disable: data.set("disable", forKey: mediaPrevNextKeyActionKey)
+                case .switchStation: data.set("switchStation", forKey: mediaPrevNextKeyActionKey)
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     var mouseWheelAction: MouseWheelAction {
         get {
             let s = data.string(forKey: mouseWheelActionKey) ?? ""
@@ -189,6 +212,22 @@ class Settings {
                 case .volume: data.set("volume", forKey: mouseWheelActionKey)
             }
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var showMuteInMenu: Bool {
+        get { data.bool(forKey: showMuteInMenuKey) }
+        set { data.set(newValue, forKey: showMuteInMenuKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var showTooltip: Bool {
+        get { data.bool(forKey: showTooltipKey) }
+        set { data.set(newValue, forKey: showTooltipKey) }
     }
 }
 

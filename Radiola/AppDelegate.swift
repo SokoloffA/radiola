@@ -178,6 +178,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
+    private func needHandlePrevNextMediaKey() -> Bool {
+        if !needHandleMediaKey() { return false }
+        if settings.mediaPrevNextKeyAction != .switchStation { return false }
+        // if !player.isPlaying {return false}
+        return true
+    }
+
+    private func switchStation(offset: Int) {
+        guard let cur = player.station else { return }
+        let favorites = stationsStore.favorites()
+        if favorites.count < 2 { return }
+
+        var n = favorites.firstIndex { $0.url == cur.url }
+        if n != nil {
+            n = (n! + offset) % favorites.count
+        } else {
+            n = 0
+        }
+
+        print(n, "of", favorites.count)
+//        if n >= favorites.count { n = 0 }
+//        if n
+        print("Switch to ", favorites[n!].name)
+        player.station = favorites[n!]
+        player.play()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func medialKeyPresset(keyCode: Int32, keyRepeat: Bool) {
         if !needHandleMediaKey() {
             return
@@ -185,6 +215,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if keyCode == NX_KEYTYPE_PLAY {
             player.toggle()
+            return
+        }
+
+        if needHandlePrevNextMediaKey() {
+            if keyCode == NX_KEYTYPE_NEXT {
+                print("NEXT ====================")
+                switchStation(offset: 1)
+            }
+
+            if keyCode == NX_KEYTYPE_PREVIOUS {
+                print("PREV ===================")
+                switchStation(offset: -1)
+            }
         }
     }
 

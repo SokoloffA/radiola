@@ -44,3 +44,8 @@ enum MouseWheelAction: Int {
     case nothing
     case volume
 }
+
+enum MediaPrevNextKeyAction: Int {
+    case disable
+    case switchStation
+}

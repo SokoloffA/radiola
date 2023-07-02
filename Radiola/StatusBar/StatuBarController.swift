@@ -40,6 +40,11 @@ class StatusBarController: NSObject {
                                                name: Notification.Name.PlayerVolumeChanged,
                                                object: nil)
 
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateTooltip),
+                                               name: Notification.Name.SettingsChanged,
+                                               object: nil)
+
         NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown], handler: mouseDown)
         NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp], handler: mouseUp)
         NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel], handler: scrollWheel)
@@ -183,6 +188,15 @@ class StatusBarController: NSObject {
             menu.addItem(volumeItem)
         }
 
+        if settings.showMuteInMenu {
+            let item = NSMenuItem(
+                title: player.isMuted ? "Unmute" : "Mute",
+                action: #selector(Player.toggleMute),
+                keyEquivalent: "m")
+            item.target = player
+            menu.addItem(item)
+        }
+
         menu.addItem(NSMenuItem.separator())
 
         switch settings.favoritesMenuType {
@@ -316,6 +330,11 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     @objc func updateTooltip() {
+        if settings.showTooltip == false {
+            menuItem.button?.toolTip = ""
+            return
+        }
+
         switch player.status {
             case Player.Status.paused:
                 menuItem.button?.toolTip = player.stationName

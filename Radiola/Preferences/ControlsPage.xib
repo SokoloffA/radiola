@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ControlsPage" customModule="Radiola" customModuleProvider="target">
+            <connections>
+                <outlet property="leftMouseButtonCbx" destination="ESH-xs-giK" id="JCR-jP-zkS"/>
+                <outlet property="mediaKeysHandlingCbx" destination="IOy-zH-Vw1" id="cSq-J1-Hkq"/>
+                <outlet property="mediaPrevNextButtonCbx" destination="kcw-xT-gHQ" id="jyz-fk-vwH"/>
+                <outlet property="mediaPrevNextButtonLabel" destination="kcw-xT-gHQ" id="Ycl-SC-dTF"/>
+                <outlet property="middleMouseButtonCbx" destination="Wzi-qk-mTa" id="0TB-Kn-vz6"/>
+                <outlet property="rightMouseButtonCbx" destination="zK8-zr-cs9" id="0UM-o3-H1F"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+                <outlet property="wheellMouseCbx" destination="Jv1-HU-HCW" id="uQU-TB-vNA"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="598" height="301"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ESH-xs-giK">
+                    <rect key="frame" x="229" y="257" width="353" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="leftMouseButtonCbx" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="6tR-Uo-ime" id="bXt-Lz-t2q">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="zSn-z1-wzb">
+                            <items>
+                                <menuItem title="leftMouseButtonCbx" state="on" id="6tR-Uo-ime"/>
+                                <menuItem title="Item 2" id="6F0-IZ-2Td"/>
+                                <menuItem title="Item 3" id="YJl-Ga-Xkg"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wzi-qk-mTa">
+                    <rect key="frame" x="229" y="227" width="353" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="middleMouseButtonCbx" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="msw-hC-WWS" id="FZ8-kl-mUq">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="DVR-7z-5Dd">
+                            <items>
+                                <menuItem title="middleMouseButtonCbx" state="on" id="msw-hC-WWS"/>
+                                <menuItem title="Item 2" id="dDb-3n-nDi"/>
+                                <menuItem title="Item 3" id="sRy-9c-0uE"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zK8-zr-cs9">
+                    <rect key="frame" x="229" y="197" width="353" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="rightMouseButtonCbx" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="az5-ti-pMd" id="ODW-Z5-cKG">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="0NI-QX-6DQ">
+                            <items>
+                                <menuItem title="rightMouseButtonCbx" state="on" id="az5-ti-pMd"/>
+                                <menuItem title="Item 2" id="P4K-6p-QpZ"/>
+                                <menuItem title="Item 3" id="aDd-Bt-cwH"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Jv1-HU-HCW">
+                    <rect key="frame" x="229" y="123" width="353" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="wheellMouseCbx" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="8Fo-3A-GQR" id="ZVM-eV-qAo">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="Dr7-e1-JLH">
+                            <items>
+                                <menuItem title="wheellMouseCbx" state="on" id="8Fo-3A-GQR"/>
+                                <menuItem title="Item 2" id="9DB-rb-Ehz"/>
+                                <menuItem title="Item 3" id="1Uh-7o-fxw"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="csX-qB-nmk">
+                    <rect key="frame" x="14" y="233" width="200" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Middle mouse button:" id="eeS-ZZ-xTS">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vfi-OP-m9N">
+                    <rect key="frame" x="14" y="203" width="200" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Right mouse button:" id="e8W-K9-WXX">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="alC-Uo-lDA">
+                    <rect key="frame" x="230" y="171" width="350" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="You can always open the menu with Control+Mouse Click" id="CQG-gF-piB">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jCf-ur-7Ib">
+                    <rect key="frame" x="14" y="129" width="200" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Mouse wheel:" id="e0p-0Y-cjp">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PLh-vQ-CqK">
+                    <rect key="frame" x="14" y="64" width="200" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Media key handling:" id="7ea-xX-7kt">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Hxe-6X-8Od">
+                    <rect key="frame" x="14" y="34" width="200" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Previous and next track buttons:" id="Jso-eh-d3x">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IOy-zH-Vw1">
+                    <rect key="frame" x="229" y="58" width="353" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="mediaKeysHandlingCbx" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="RIz-tf-43X" id="B3d-XQ-XOZ">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="00o-Cv-VVE">
+                            <items>
+                                <menuItem title="mediaKeysHandlingCbx" state="on" id="RIz-tf-43X"/>
+                                <menuItem title="Item 2" id="m8J-cv-Bz8"/>
+                                <menuItem title="Item 3" id="gYa-tw-TJw"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kcw-xT-gHQ">
+                    <rect key="frame" x="229" y="28" width="353" height="25"/>
+                    <popUpButtonCell key="cell" type="push" title="mediaPrevNextButtonCbx" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="f4j-6I-vBN" id="qEw-JE-nd8">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="PZS-JG-I6S">
+                            <items>
+                                <menuItem title="mediaPrevNextButtonCbx" state="on" id="f4j-6I-vBN"/>
+                                <menuItem title="Item 2" id="gFp-Mz-sD8"/>
+                                <menuItem title="Item 3" id="S37-NG-hZU"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="zuE-dO-AMo">
+                    <rect key="frame" x="20" y="100" width="555" height="5"/>
+                </box>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pxb-XQ-yB9">
+                    <rect key="frame" x="14" y="263" width="200" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Left mouse button:" id="JDj-UY-vpb">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Hxe-6X-8Od" firstAttribute="width" secondItem="Pxb-XQ-yB9" secondAttribute="width" id="0tN-V6-jqK"/>
+                <constraint firstItem="vfi-OP-m9N" firstAttribute="centerY" secondItem="zK8-zr-cs9" secondAttribute="centerY" id="1TA-sF-p5s"/>
+                <constraint firstItem="kcw-xT-gHQ" firstAttribute="leading" secondItem="IOy-zH-Vw1" secondAttribute="leading" id="3am-1v-YRO"/>
+                <constraint firstItem="zK8-zr-cs9" firstAttribute="width" secondItem="Wzi-qk-mTa" secondAttribute="width" id="4Df-qr-eAy"/>
+                <constraint firstItem="Jv1-HU-HCW" firstAttribute="top" secondItem="alC-Uo-lDA" secondAttribute="bottom" constant="24" id="4RL-qF-3mi"/>
+                <constraint firstItem="ESH-xs-giK" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="20" symbolic="YES" id="4Xr-Bd-G94"/>
+                <constraint firstAttribute="trailing" secondItem="zuE-dO-AMo" secondAttribute="trailing" constant="23" id="56p-du-xQl"/>
+                <constraint firstItem="csX-qB-nmk" firstAttribute="leading" secondItem="Pxb-XQ-yB9" secondAttribute="leading" id="613-mP-BXO"/>
+                <constraint firstItem="PLh-vQ-CqK" firstAttribute="leading" secondItem="jCf-ur-7Ib" secondAttribute="leading" id="7GL-2x-04w"/>
+                <constraint firstItem="vfi-OP-m9N" firstAttribute="leading" secondItem="csX-qB-nmk" secondAttribute="leading" id="9ap-a1-jBu"/>
+                <constraint firstItem="jCf-ur-7Ib" firstAttribute="centerY" secondItem="Jv1-HU-HCW" secondAttribute="centerY" id="ECx-eh-gLU"/>
+                <constraint firstItem="jCf-ur-7Ib" firstAttribute="leading" secondItem="vfi-OP-m9N" secondAttribute="leading" id="EcJ-SN-TLK"/>
+                <constraint firstItem="alC-Uo-lDA" firstAttribute="width" secondItem="zK8-zr-cs9" secondAttribute="width" id="JHi-L9-16m"/>
+                <constraint firstItem="PLh-vQ-CqK" firstAttribute="width" secondItem="jCf-ur-7Ib" secondAttribute="width" id="JUe-Q4-oIH"/>
+                <constraint firstItem="IOy-zH-Vw1" firstAttribute="leading" secondItem="Jv1-HU-HCW" secondAttribute="leading" id="LHT-2l-GYr"/>
+                <constraint firstItem="kcw-xT-gHQ" firstAttribute="top" secondItem="IOy-zH-Vw1" secondAttribute="bottom" constant="10" symbolic="YES" id="PMo-IC-VpL"/>
+                <constraint firstItem="kcw-xT-gHQ" firstAttribute="width" secondItem="IOy-zH-Vw1" secondAttribute="width" id="Q7N-bF-s34"/>
+                <constraint firstItem="Wzi-qk-mTa" firstAttribute="top" secondItem="ESH-xs-giK" secondAttribute="bottom" constant="10" symbolic="YES" id="RdO-8J-xA9"/>
+                <constraint firstItem="Jv1-HU-HCW" firstAttribute="width" secondItem="zK8-zr-cs9" secondAttribute="width" id="TQy-z0-QH0"/>
+                <constraint firstItem="Pxb-XQ-yB9" firstAttribute="centerY" secondItem="ESH-xs-giK" secondAttribute="centerY" id="TuE-zo-7Sl"/>
+                <constraint firstItem="Hxe-6X-8Od" firstAttribute="leading" secondItem="Pxb-XQ-yB9" secondAttribute="leading" id="UMJ-1e-Iww"/>
+                <constraint firstItem="Wzi-qk-mTa" firstAttribute="leading" secondItem="ESH-xs-giK" secondAttribute="leading" id="UV8-bs-juz"/>
+                <constraint firstItem="alC-Uo-lDA" firstAttribute="leading" secondItem="zK8-zr-cs9" secondAttribute="leading" id="Uj3-Ka-8m0"/>
+                <constraint firstItem="csX-qB-nmk" firstAttribute="centerY" secondItem="Wzi-qk-mTa" secondAttribute="centerY" id="WAJ-SI-AYt"/>
+                <constraint firstItem="zK8-zr-cs9" firstAttribute="leading" secondItem="Wzi-qk-mTa" secondAttribute="leading" id="Y63-Jn-1dB"/>
+                <constraint firstItem="Pxb-XQ-yB9" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="16" id="YfI-TV-Uyg"/>
+                <constraint firstItem="PLh-vQ-CqK" firstAttribute="centerY" secondItem="IOy-zH-Vw1" secondAttribute="centerY" id="Ym5-wB-53z"/>
+                <constraint firstItem="vfi-OP-m9N" firstAttribute="width" secondItem="csX-qB-nmk" secondAttribute="width" id="cXk-EY-fAS"/>
+                <constraint firstItem="Hxe-6X-8Od" firstAttribute="centerY" secondItem="kcw-xT-gHQ" secondAttribute="centerY" id="dPG-qK-qYl"/>
+                <constraint firstItem="zuE-dO-AMo" firstAttribute="top" secondItem="Jv1-HU-HCW" secondAttribute="bottom" constant="24" id="f9H-dY-j8f"/>
+                <constraint firstItem="alC-Uo-lDA" firstAttribute="top" secondItem="zK8-zr-cs9" secondAttribute="bottom" constant="14" id="jZF-Fg-eLf"/>
+                <constraint firstItem="Jv1-HU-HCW" firstAttribute="leading" secondItem="zK8-zr-cs9" secondAttribute="leading" id="kpB-42-b78"/>
+                <constraint firstItem="IOy-zH-Vw1" firstAttribute="top" secondItem="zuE-dO-AMo" secondAttribute="bottom" constant="20" symbolic="YES" id="mKt-2v-TWX"/>
+                <constraint firstItem="IOy-zH-Vw1" firstAttribute="width" secondItem="Jv1-HU-HCW" secondAttribute="width" id="n6j-7T-Q1b"/>
+                <constraint firstItem="Wzi-qk-mTa" firstAttribute="width" secondItem="ESH-xs-giK" secondAttribute="width" id="pOB-DW-ESt"/>
+                <constraint firstItem="zK8-zr-cs9" firstAttribute="top" secondItem="Wzi-qk-mTa" secondAttribute="bottom" constant="10" symbolic="YES" id="pqz-i7-pzE"/>
+                <constraint firstAttribute="bottom" secondItem="kcw-xT-gHQ" secondAttribute="bottom" constant="32" id="qhn-jq-bYC"/>
+                <constraint firstItem="jCf-ur-7Ib" firstAttribute="width" secondItem="vfi-OP-m9N" secondAttribute="width" id="s55-sL-uWf"/>
+                <constraint firstAttribute="trailing" secondItem="ESH-xs-giK" secondAttribute="trailing" constant="20" symbolic="YES" id="tMo-Se-PXO"/>
+                <constraint firstItem="csX-qB-nmk" firstAttribute="width" secondItem="Pxb-XQ-yB9" secondAttribute="width" id="tR2-Pn-BXd"/>
+                <constraint firstItem="ESH-xs-giK" firstAttribute="leading" secondItem="Pxb-XQ-yB9" secondAttribute="trailing" constant="20" id="vHW-P2-sNt"/>
+                <constraint firstItem="zuE-dO-AMo" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="ybC-n3-Ifz"/>
+            </constraints>
+            <point key="canvasLocation" x="189.5" y="-252.5"/>
+        </customView>
+    </objects>
+</document>

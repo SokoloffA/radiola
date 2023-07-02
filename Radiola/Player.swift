@@ -266,4 +266,11 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         let res = pow(abs(Float(delta) * 0.001), 1 / 2)
         return delta > 0 ? res : -res
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc public func toggleMute() {
+        isMuted = !isMuted
+    }
 }

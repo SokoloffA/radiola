@@ -18,9 +18,15 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
         super.init(window: NSWindow(contentViewController: viewController))
         windowFrameAutosaveName = "PreferencesWindow"
 
-        var tab = NSTabViewItem(viewController: GeneralPage())
-        tab.label = "General"
-        tab.image = NSImage(systemSymbolName: "gearshape", accessibilityDescription: "")
+        var tab = NSTabViewItem(viewController: ControlsPage())
+        tab.label = "Controls"
+        tab.image = NSImage(systemSymbolName: "computermouse", accessibilityDescription: "")
+        viewController.addTabViewItem(tab)
+        tab.viewController?.title = tab.label
+
+        tab = NSTabViewItem(viewController: AppearancePage())
+        tab.label = "Appearance"
+        tab.image = NSImage(systemSymbolName: "filemenu.and.cursorarrow", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
 
