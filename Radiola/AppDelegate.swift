@@ -163,100 +163,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSApp.setActivationPolicy(.accessory)
         return false
     }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func needHandleMediaKey() -> Bool {
-        switch settings.mediaKeysHandle {
-            case .disable: return false
-            case .enable: return true
-            case .mainWindowActive: return StationsWindow.isActie()
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func needHandlePrevNextMediaKey() -> Bool {
-        if !needHandleMediaKey() { return false }
-        if settings.mediaPrevNextKeyAction != .switchStation { return false }
-        // if !player.isPlaying {return false}
-        return true
-    }
-
-    private func switchStation(offset: Int) {
-        guard let cur = player.station else { return }
-        let favorites = stationsStore.favorites()
-        if favorites.count < 2 { return }
-
-        var n = favorites.firstIndex { $0.url == cur.url }
-        if n != nil {
-            n = (n! + offset) % favorites.count
-        } else {
-            n = 0
-        }
-
-        print(n, "of", favorites.count)
-//        if n >= favorites.count { n = 0 }
-//        if n
-        print("Switch to ", favorites[n!].name)
-        player.station = favorites[n!]
-        player.play()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func medialKeyPresset(keyCode: Int32, keyRepeat: Bool) {
-        if !needHandleMediaKey() {
-            return
-        }
-
-        if keyCode == NX_KEYTYPE_PLAY {
-            player.toggle()
-            return
-        }
-
-        if needHandlePrevNextMediaKey() {
-            if keyCode == NX_KEYTYPE_NEXT {
-                print("NEXT ====================")
-                switchStation(offset: 1)
-            }
-
-            if keyCode == NX_KEYTYPE_PREVIOUS {
-                print("PREV ===================")
-                switchStation(offset: -1)
-            }
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func medialKeyReleased(keyCode: Int32) {
-    }
 }
 
 class Application: NSApplication {
+    private let mediaKeys = MediaKeysController()
+
     /* ****************************************
      *
      * ****************************************/
     override func sendEvent(_ event: NSEvent) {
         if event.type == NSEvent.EventType.systemDefined && event.subtype.rawValue == 8 {
-            let keyCode = ((event.data1 & 0xFFFF0000) >> 16)
-            let keyFlags = (event.data1 & 0x0000FFFF)
-            // Get the key state. 0xA is KeyDown, OxB is KeyUp
-            let pressed = ((keyFlags & 0xFF00) >> 8) == 0xA
-            let keyRepeat = (keyFlags & 0x1) != 0
-
-            if pressed {
-                guard let delegate = delegate as? AppDelegate else { return }
-                delegate.medialKeyPresset(keyCode: Int32(keyCode), keyRepeat: keyRepeat)
-            } else {
-                guard let delegate = delegate as? AppDelegate else { return }
-                delegate.medialKeyReleased(keyCode: Int32(keyCode))
-            }
+            mediaKeys.handleEvent(event)
         }
 
         super.sendEvent(event)
