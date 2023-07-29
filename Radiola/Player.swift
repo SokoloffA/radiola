@@ -36,6 +36,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private var player: AVPlayer!
     private var playerItem: AVPlayerItem?
     private var asset: AVAsset!
+    private var timer: Timer?
+    private let connectDelay = 15.0
 
     /* ****************************************
      *
@@ -130,6 +132,13 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         player.replaceCurrentItem(with: playerItem)
         statusChenged(status: AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate)
         player.play()
+
+        timer = Timer.scheduledTimer(
+            timeInterval: connectDelay,
+            target: self,
+            selector: #selector(connectTimeout),
+            userInfo: nil,
+            repeats: false)
     }
 
     /* ****************************************
@@ -161,6 +170,15 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     var isPlaying: Bool {
         return status != Status.paused
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func connectTimeout(timer: Timer) {
+        if status == .connecting && timer == self.timer {
+            stop()
+        }
     }
 
     /* ****************************************
