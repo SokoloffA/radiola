@@ -36,6 +36,7 @@ jobs:
         run : |
           tar -C build/Release -cf ${{env.TAR_NAME}} Radiola.app
           cp ${{github.workspace}}/.github/workflows/makedmg.sh makedmg.sh
+          cp ${{github.workspace}}/.github/workflows/dmg_settings.json dmg_settings.json
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
