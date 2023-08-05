@@ -5,6 +5,18 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 5.2</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Added ability to mute volume by clicking on the status bar icon. &lt;/li&gt;
+&lt;li&gt;The mute mode is indicated by a special icon in the status bar.&lt;/li&gt;
+&lt;li&gt;You can turn on the previous/next track multimedia key handling. Going to the previous/next station in the favorite stations list is now supported.&lt;/li&gt;
+&lt;li&gt;Added a timeout of 15 seconds to connect to a station.&lt;/li&gt;
+&lt;li&gt;Small improvements in the appearance and behaviour of the program.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 05 Aug 2023 12:48:17 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v5.2/Radiola-5.2.0.dmg" sparkle:version="5.2" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 5.1.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Fixed the direction of volume change when the &quot;Natural Scrolling&quot; mode is enabled&lt;/li&gt;
