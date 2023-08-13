@@ -35,12 +35,12 @@ First, make sure you have installed [`homebrew`](https://brew.sh) if you haven't
 
 Then add radiola tap. You only need to do this once.
 ```
-$ brew tap sokoloffa/radiola
+brew tap sokoloffa/radiola
 ```
 
 Install the program
 ```
-$ brew install --cask --no-quarantine radiola
+brew install --cask --no-quarantine radiola
 ```
 *Why you need the **"--no-quarantine"** parameter?  
 MacOS marks all files downloaded from the Internet as quarantined. When you run a quarantined program, OS displays the message **«Radiola can’t be opened because Apple cannot check it for malicious software"**.
