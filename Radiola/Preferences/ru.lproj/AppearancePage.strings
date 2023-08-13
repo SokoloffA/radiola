@@ -1,0 +1,21 @@
+
+/* Class = "NSButtonCell"; title = "Show the mute item in the menu"; ObjectID = "1Mz-g5-I2i"; */
+"1Mz-g5-I2i.title" = "Show the mute item in the menu";
+
+/* Class = "NSTextFieldCell"; title = "Show groups in favorites:"; ObjectID = "Ckb-V6-GgF"; */
+"Ckb-V6-GgF.title" = "Show groups in favorites:";
+
+/* Class = "NSButtonCell"; title = "Show a tooltip with the radiostation and song"; ObjectID = "DDF-hw-Iom"; */
+"DDF-hw-Iom.title" = "Show a tooltip with the radiostation and song";
+
+/* Class = "NSButtonCell"; title = "Show the volume control in the menu"; ObjectID = "QYm-7i-K0J"; */
+"QYm-7i-K0J.title" = "Show the volume control in the menu";
+
+/* Class = "NSMenuItem"; title = "Item 3"; ObjectID = "U3e-KN-HLW"; */
+"U3e-KN-HLW.title" = "Item 3";
+
+/* Class = "NSMenuItem"; title = "menuGroupTypeCbx"; ObjectID = "XmY-v4-CAh"; */
+"XmY-v4-CAh.title" = "menuGroupTypeCbx";
+
+/* Class = "NSMenuItem"; title = "Item 2"; ObjectID = "fLw-mJ-8jb"; */
+"fLw-mJ-8jb.title" = "Item 2";

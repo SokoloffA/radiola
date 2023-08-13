@@ -91,3 +91,5 @@ iOSInjectionProject/
 
 ._*
 .DS_Store
+
+.tx/tmp

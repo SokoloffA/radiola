@@ -1,0 +1,109 @@
+
+[main]
+host = https://www.transifex.com
+
+[o:sokoloff:p:radiola:r:MainMenu]
+source_file = ../Radiola/en.lproj/MainMenu.strings
+file_filter = ../Radiola/<lang>.lproj/MainMenu.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:Localizable]
+source_file = ../Radiola/en.lproj/Localizable.strings
+file_filter = ../Radiola/<lang>.lproj/Localizable.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:StartupPage]
+source_file = ../Radiola/Preferences/en.lproj/StartupPage.strings
+file_filter = ../Radiola/Preferences/<lang>.lproj/StartupPage.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:ControlsPage]
+source_file = ../Radiola/Preferences/en.lproj/ControlsPage.strings
+file_filter = ../Radiola/Preferences/<lang>.lproj/ControlsPage.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:AppearancePage]
+source_file = ../Radiola/Preferences/en.lproj/AppearancePage.strings
+file_filter = ../Radiola/Preferences/<lang>.lproj/AppearancePage.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:UpdatePanel]
+source_file = ../Radiola/Preferences/en.lproj/UpdatePanel.strings
+file_filter = ../Radiola/Preferences/<lang>.lproj/UpdatePanel.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:AudioPage]
+source_file = ../Radiola/Preferences/en.lproj/AudioPage.strings
+file_filter = ../Radiola/Preferences/<lang>.lproj/AudioPage.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:PlayItemController]
+source_file = ../Radiola/StatusBar/en.lproj/PlayItemController.strings
+file_filter = ../Radiola/StatusBar/<lang>.lproj/PlayItemController.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:VolumeMenuItem]
+source_file = ../Radiola/StatusBar/en.lproj/VolumeMenuItem.strings
+file_filter = ../Radiola/StatusBar/<lang>.lproj/VolumeMenuItem.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:AddStationDialog]
+source_file = ../Radiola/StationsWindow/en.lproj/AddStationDialog.strings
+file_filter = ../Radiola/StationsWindow/<lang>.lproj/AddStationDialog.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:StationsWindow]
+source_file = ../Radiola/StationsWindow/en.lproj/StationsWindow.strings
+file_filter = ../Radiola/StationsWindow/<lang>.lproj/StationsWindow.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:AddGroupDialog]
+source_file = ../Radiola/StationsWindow/en.lproj/AddGroupDialog.strings
+file_filter = ../Radiola/StationsWindow/<lang>.lproj/AddGroupDialog.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:GroupRowView]
+source_file = ../Radiola/StationsWindow/en.lproj/GroupRowView.strings
+file_filter = ../Radiola/StationsWindow/<lang>.lproj/GroupRowView.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:StationRowView]
+source_file = ../Radiola/StationsWindow/en.lproj/StationRowView.strings
+file_filter = ../Radiola/StationsWindow/<lang>.lproj/StationRowView.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:HistoryWindow]
+source_file = ../Radiola/History/en.lproj/HistoryWindow.strings
+file_filter = ../Radiola/History/<lang>.lproj/HistoryWindow.strings:
+source_lang = en
+type        = STRINGS_UTF8
+minimum_perc = 10
+

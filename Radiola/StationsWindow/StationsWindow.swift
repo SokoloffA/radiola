@@ -142,7 +142,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate {
 
             case Player.Status.connecting:
                 stationLabel.stringValue = player.stationName
-                songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
+                songLabel.stringValue = NSLocalizedString("Connecting...", comment:  "Station label text")
 
             case Player.Status.playing:
                 stationLabel.stringValue = player.stationName

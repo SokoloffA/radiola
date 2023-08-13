@@ -1,0 +1,27 @@
+
+/* Class = "NSTextFieldCell"; title = "Artist - Song"; ObjectID = "0dt-mx-21x"; */
+"0dt-mx-21x.title" = "Artist - Song";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Play/Pause"; ObjectID = "7J3-oJ-8Un"; */
+"7J3-oJ-8Un.ibShadowedToolTip" = "Play/Pause";
+
+/* Class = "NSWindow"; title = "Stations"; ObjectID = "F0z-JX-Cv5"; */
+"F0z-JX-Cv5.title" = "Stations";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "GZX-tE-REw"; */
+"GZX-tE-REw.title" = "Text Cell";
+
+/* Class = "NSTextFieldCell"; title = "Syper station"; ObjectID = "Id3-6k-iRL"; */
+"Id3-6k-iRL.title" = "Syper station";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "YXK-f9-cnm"; */
+"YXK-f9-cnm.title" = "Table View Cell";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Mute"; ObjectID = "YZe-Tx-ITg"; */
+"YZe-Tx-ITg.ibShadowedToolTip" = "Mute";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Increase volume"; ObjectID = "b2g-k1-hj9"; */
+"b2g-k1-hj9.ibShadowedToolTip" = "Increase volume";
+
+/* Class = "NSButton"; ibShadowedToolTip = "Decrease volume"; ObjectID = "uei-sa-PFE"; */
+"uei-sa-PFE.ibShadowedToolTip" = "Decrease volume";

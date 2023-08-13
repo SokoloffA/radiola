@@ -1,0 +1,12 @@
+
+/* Class = "NSWindow"; title = "History"; ObjectID = "F0z-JX-Cv5"; */
+"F0z-JX-Cv5.title" = "История";
+
+/* Class = "NSTextFieldCell"; title = "No records yet"; ObjectID = "Ngo-v5-8mm"; */
+"Ngo-v5-8mm.title" = "Пока нет записей";
+
+/* Class = "NSTextFieldCell"; title = "Text Cell"; ObjectID = "dko-qx-QJm"; */
+"dko-qx-QJm.title" = "Text Cell";
+
+/* Class = "NSTextFieldCell"; title = "Table View Cell"; ObjectID = "zxK-Wx-A7G"; */
+"zxK-Wx-A7G.title" = "Table View Cell";

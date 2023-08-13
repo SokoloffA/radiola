@@ -190,7 +190,7 @@ class StatusBarController: NSObject {
 
         if settings.showMuteInMenu {
             let item = NSMenuItem(
-                title: player.isMuted ? "Unmute" : "Mute",
+                title: player.isMuted ? NSLocalizedString("Unmute", comment: "Menu Item") : NSLocalizedString("Mute", comment: "Menu Item"),
                 action: #selector(Player.toggleMute),
                 keyEquivalent: "m")
             item.target = player

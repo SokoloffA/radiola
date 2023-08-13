@@ -1,0 +1,18 @@
+
+/* Class = "NSTextFieldCell"; title = "To add a station, fill out the following information:"; ObjectID = "19Y-iO-yxt"; */
+"19Y-iO-yxt.title" = "To add a station, fill out the following information:";
+
+/* Class = "NSTextFieldCell"; title = "Title:"; ObjectID = "3jl-Qx-xPY"; */
+"3jl-Qx-xPY.title" = "Title:";
+
+/* Class = "NSWindow"; title = "Window"; ObjectID = "F0z-JX-Cv5"; */
+"F0z-JX-Cv5.title" = "Window";
+
+/* Class = "NSTextFieldCell"; title = "Url:"; ObjectID = "V47-5Y-kRY"; */
+"V47-5Y-kRY.title" = "Url:";
+
+/* Class = "NSButtonCell"; title = "Add station"; ObjectID = "Zk4-aX-M4e"; */
+"Zk4-aX-M4e.title" = "Add station";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "clL-kY-g23"; */
+"clL-kY-g23.title" = "Cancel";
