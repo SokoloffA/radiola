@@ -7,6 +7,34 @@
 
 import Cocoa
 
+public extension NSView {
+    func load(fromNIBNamed nibName: String) -> NSView? {
+        var nibObjects: NSArray?
+        let nibName = NSNib.Name(stringLiteral: nibName)
+
+        if Bundle.main.loadNibNamed(nibName, owner: self, topLevelObjects: &nibObjects) {
+            guard let nibObjects = nibObjects else { return nil }
+
+            let viewObjects = nibObjects.filter { $0 is NSView }
+
+            if viewObjects.count > 0 {
+                guard let view = viewObjects[0] as? NSView else { return nil }
+                addSubview(view)
+
+                view.translatesAutoresizingMaskIntoConstraints = false
+                view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+                view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+               view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+               view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+                return view
+            }
+        }
+
+        return nil
+    }
+}
+
 public extension NSImage {
     func tint(color: NSColor) -> NSImage {
         if isTemplate == false {

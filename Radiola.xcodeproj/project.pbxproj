@@ -16,6 +16,10 @@
 		392024B32A519FF900670ABD /* AppearancePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024B12A519FF900670ABD /* AppearancePage.swift */; };
 		392024B42A519FF900670ABD /* AppearancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 392024B22A519FF900670ABD /* AppearancePage.xib */; };
 		392C469B2A6C21BD0095DDA2 /* MediaKeysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */; };
+		393920712A922722008C0B11 /* StationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3939206F2A922722008C0B11 /* StationView.swift */; };
+		393920722A922722008C0B11 /* StationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 393920702A922722008C0B11 /* StationView.xib */; };
+		393920752A925E21008C0B11 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393920732A925E21008C0B11 /* SideBar.swift */; };
+		393920762A925E21008C0B11 /* SideBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 393920742A925E21008C0B11 /* SideBar.xib */; };
 		394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A3B28739339005EA7FA /* AppDelegate.swift */; };
 		394F8A3F28739339005EA7FA /* Radiola.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A3D28739339005EA7FA /* Radiola.xcdatamodeld */; };
 		394F8A412873933A005EA7FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A402873933A005EA7FA /* Assets.xcassets */; };
@@ -64,6 +68,10 @@
 		392024B12A519FF900670ABD /* AppearancePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePage.swift; sourceTree = "<group>"; };
 		392024B22A519FF900670ABD /* AppearancePage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppearancePage.xib; sourceTree = "<group>"; };
 		392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeysController.swift; sourceTree = "<group>"; };
+		3939206F2A922722008C0B11 /* StationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationView.swift; sourceTree = "<group>"; };
+		393920702A922722008C0B11 /* StationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationView.xib; sourceTree = "<group>"; };
+		393920732A925E21008C0B11 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
+		393920742A925E21008C0B11 /* SideBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideBar.xib; sourceTree = "<group>"; };
 		394F8A3828739339005EA7FA /* Radiola.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Radiola.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		394F8A3B28739339005EA7FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		394F8A3E28739339005EA7FA /* Radiola.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Radiola.xcdatamodel; sourceTree = "<group>"; };
@@ -173,10 +181,14 @@
 			isa = PBXGroup;
 			children = (
 				394F8A6128739A15005EA7FA /* StationsWindow.swift */,
+				393920732A925E21008C0B11 /* SideBar.swift */,
+				393920742A925E21008C0B11 /* SideBar.xib */,
 				39541B32287623F200A2A5CB /* AddStationDialog.swift */,
 				39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */,
 				394F8A6828739A9C005EA7FA /* StationRowView.swift */,
 				39BF44AC290D4367008E5A30 /* GroupRowView.swift */,
+				3939206F2A922722008C0B11 /* StationView.swift */,
+				393920702A922722008C0B11 /* StationView.xib */,
 				394F8A6228739A15005EA7FA /* StationsWindow.xib */,
 				39541B33287623F200A2A5CB /* AddStationDialog.xib */,
 				39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */,
@@ -284,6 +296,7 @@
 				392024B02A51953600670ABD /* ControlsPage.xib in Resources */,
 				39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */,
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
+				393920762A925E21008C0B11 /* SideBar.xib in Resources */,
 				390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */,
 				392024B42A519FF900670ABD /* AppearancePage.xib in Resources */,
 				39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */,
@@ -295,6 +308,7 @@
 				39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */,
 				39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */,
 				39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */,
+				393920722A922722008C0B11 /* StationView.xib in Resources */,
 				394F8A442873933A005EA7FA /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -316,6 +330,7 @@
 				39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
 				39BF44AD290D4367008E5A30 /* GroupRowView.swift in Sources */,
+				393920752A925E21008C0B11 /* SideBar.swift in Sources */,
 				394F8A3F28739339005EA7FA /* Radiola.xcdatamodeld in Sources */,
 				394F8A59287394FD005EA7FA /* Player.swift in Sources */,
 				394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */,
@@ -328,6 +343,7 @@
 				3967046C2944961500012FFD /* AudioPage.swift in Sources */,
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,
 				394F8A51287394D0005EA7FA /* Stations.swift in Sources */,
+				393920712A922722008C0B11 /* StationView.swift in Sources */,
 				39F08E462A0CC582006B65D0 /* Types.swift in Sources */,
 				39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */,
 				392024AF2A51953600670ABD /* ControlsPage.swift in Sources */,
