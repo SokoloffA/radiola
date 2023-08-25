@@ -9,12 +9,14 @@
         <customObject id="-2" userLabel="File's Owner" customClass="StationsWindow" customModule="Radiola" customModuleProvider="target">
             <connections>
                 <outlet property="splitView" destination="ait-XJ-lkI" id="OBF-Zk-JMe"/>
+                <outlet property="toggleSideBarItem" destination="eXH-n3-Cb0" id="uyY-WZ-zmZ"/>
+                <outlet property="toolBar" destination="r23-UB-pbU" id="plD-5F-fSa"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <window title="Stations" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="StationsWindow" animationBehavior="default" titlebarAppearsTransparent="YES" toolbarStyle="preference" titleVisibility="hidden" id="F0z-JX-Cv5">
+        <window title="Stations" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="StationsWindow" animationBehavior="default" titlebarAppearsTransparent="YES" toolbarStyle="unified" titleVisibility="hidden" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="682" height="375"/>
@@ -24,25 +26,30 @@
                 <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <splitView fixedFrame="YES" arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ait-XJ-lkI">
+                    <splitView identifier="StationsSplit" fixedFrame="YES" arrangesAllSubviews="NO" autosaveName="StationsWindowSplitter" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ait-XJ-lkI">
                         <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <customView fixedFrame="YES" id="dCJ-WF-aan" customClass="SideBarView" customModule="Radiola" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                            </customView>
-                        </subviews>
-                        <holdingPriorities>
-                            <real value="250"/>
-                        </holdingPriorities>
                     </splitView>
                 </subviews>
             </view>
+            <toolbar key="toolbar" implicitIdentifier="F7631EB7-F9B5-4D5F-8D3A-8C960B6D9FF7" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="r23-UB-pbU">
+                <allowedToolbarItems>
+                    <toolbarItem implicitItemIdentifier="DE9C9BBB-250D-4EE7-B079-78ABC089A248" label="" paletteLabel="Side Bar" tag="-1" image="sidebar.left" catalog="system" bordered="YES" id="eXH-n3-Cb0">
+                        <size key="minSize" width="31" height="25"/>
+                        <size key="maxSize" width="31" height="25"/>
+                    </toolbarItem>
+                </allowedToolbarItems>
+                <defaultToolbarItems>
+                    <toolbarItem reference="eXH-n3-Cb0"/>
+                </defaultToolbarItems>
+            </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
             <point key="canvasLocation" x="241" y="21.5"/>
         </window>
     </objects>
+    <resources>
+        <image name="sidebar.left" catalog="system" width="19" height="14"/>
+    </resources>
 </document>

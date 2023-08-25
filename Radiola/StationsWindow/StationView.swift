@@ -7,6 +7,7 @@
 
 import Cocoa
 
+
 class StationView: NSView {
     private let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
 
@@ -24,6 +25,9 @@ class StationView: NSView {
     var stations: Group = Group(name: "") {
         didSet {
             stationsTree.reloadData()
+            let n = max(0, stationsTree.row(forItem: player.station))
+            stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
+            stationsTree.scrollRowToVisible(stationsTree.selectedRow)
         }
     }
 
@@ -55,9 +59,6 @@ class StationView: NSView {
         stationsTree.doubleAction = #selector(doubleClickRow)
         stationsTree.registerForDraggedTypes([nodePasteboardType])
         stationsTree.expandItem(nil, expandChildren: true)
-
-        let n = max(0, stationsTree.row(forItem: player.station))
-        stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
 
         volumeControl.minValue = 0
         volumeControl.maxValue = 1

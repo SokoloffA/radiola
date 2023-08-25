@@ -28,11 +28,11 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8jZ-rA-PWA">
-                    <rect key="frame" x="0.0" y="320" width="682" height="55"/>
+                    <rect key="frame" x="0.0" y="324" width="682" height="52"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7OX-eR-KBD">
-                            <rect key="frame" x="150" y="27" width="333" height="16"/>
+                            <rect key="frame" x="150" y="25" width="333" height="16"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" lineBreakMode="clipping" title="Artist - Song" id="NIV-ea-Vp3">
                                 <font key="font" metaFont="systemSemibold" size="13"/>
@@ -50,12 +50,12 @@
                             </textFieldCell>
                         </textField>
                         <slider verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ALF-gj-qrp" customClass="ScrollableSlider" customModule="Radiola" customModuleProvider="target">
-                            <rect key="frame" x="539" y="19" width="96" height="17"/>
+                            <rect key="frame" x="539" y="21" width="96" height="17"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                             <sliderCell key="cell" controlSize="mini" alignment="left" maxValue="1" doubleValue="0.24177389705882352" tickMarkPosition="above" sliderType="linear" id="Ord-qg-Gyk"/>
                         </slider>
                         <button toolTip="Increase volume" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yv9-SH-tFx">
-                            <rect key="frame" x="639" y="16" width="23" height="23"/>
+                            <rect key="frame" x="639" y="18" width="23" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarVolumeUpTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="2Hd-3G-Z4x">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -63,7 +63,7 @@
                             </buttonCell>
                         </button>
                         <button toolTip="Play/Pause" focusRingType="exterior" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Elx-73-USL">
-                            <rect key="frame" x="102" y="6" width="42" height="42"/>
+                            <rect key="frame" x="102" y="5" width="42" height="42"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarPlayTemplate" imagePosition="only" alignment="center" focusRingType="exterior" inset="2" id="xPl-XZ-7Qc">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -75,7 +75,7 @@
                             </connections>
                         </button>
                         <button toolTip="Decrease volume" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jmR-37-Gp6">
-                            <rect key="frame" x="516" y="16" width="23" height="23"/>
+                            <rect key="frame" x="516" y="18" width="23" height="23"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                             <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarAudioOutputVolumeOffTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="p4W-wI-zAG">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -83,7 +83,7 @@
                             </buttonCell>
                         </button>
                         <button toolTip="Mute" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKI-On-IPF">
-                            <rect key="frame" x="489" y="17" width="23" height="19"/>
+                            <rect key="frame" x="489" y="19" width="23" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
                             <buttonCell key="cell" type="recessed" bezelStyle="recessed" image="NSTouchBarAudioOutputMuteTemplate" imagePosition="right" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ioD-ja-znv">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
@@ -93,14 +93,14 @@
                     </subviews>
                 </customView>
                 <scrollView fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="24" horizontalPageScroll="10" verticalLineScroll="24" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EBu-R6-IK3">
-                    <rect key="frame" x="0.0" y="36" width="682" height="285"/>
+                    <rect key="frame" x="0.0" y="36" width="682" height="288"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <clipView key="contentView" id="QIx-yV-Rlb">
-                        <rect key="frame" x="1" y="1" width="680" height="283"/>
+                        <rect key="frame" x="1" y="1" width="680" height="286"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" rowSizeStyle="automatic" viewBased="YES" indentationPerLevel="13" outlineTableColumn="VaD-y0-Xtg" id="XbJ-ce-wUi">
-                                <rect key="frame" x="0.0" y="0.0" width="680" height="283"/>
+                                <rect key="frame" x="0.0" y="0.0" width="680" height="286"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="17" height="0.0"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -168,7 +168,7 @@
                     </buttonCell>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="82.5" y="154"/>
+            <point key="canvasLocation" x="551" y="176"/>
         </customView>
     </objects>
     <resources>
