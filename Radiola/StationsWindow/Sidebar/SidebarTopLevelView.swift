@@ -13,10 +13,10 @@ class SidebarTopLevelView: NSView {
     /* ****************************************
      *
      * ****************************************/
-    init(item: SideBar.Item) {
+    init(group: SideBar.Group) {
         super.init(frame: NSRect.zero)
         _ = load(fromNIBNamed: "SidebarTopLevelView")
-        titleLabel.stringValue = item.title
+        titleLabel.stringValue = group.title
     }
 
     /* ****************************************

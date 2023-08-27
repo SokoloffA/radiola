@@ -9,6 +9,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SidebarSecondLevelView" customModule="Radiola" customModuleProvider="target">
             <connections>
+                <outlet property="iconView" destination="xjf-xA-Blq" id="v02-QZ-Bhd"/>
+                <outlet property="titleLabel" destination="whY-BC-4cz" id="wXe-lr-DJm"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
@@ -19,16 +21,16 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xjf-xA-Blq">
-                    <rect key="frame" x="0.0" y="-3" width="32" height="39"/>
+                    <rect key="frame" x="0.0" y="-2" width="32" height="37"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="0FM-Nv-Mkc"/>
                         <constraint firstAttribute="height" constant="32" id="ciP-3C-r9c"/>
                     </constraints>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="star.leadinghalf.filled" catalog="system" id="ejp-0A-hrc"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="folder" catalog="system" id="ejp-0A-hrc"/>
                     <color key="contentTintColor" name="AccentColor"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="whY-BC-4cz">
-                    <rect key="frame" x="30" y="8" width="452" height="16"/>
+                    <rect key="frame" x="29" y="11" width="452" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="q46-7u-7Jf">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -37,18 +39,18 @@
                 </textField>
             </subviews>
             <constraints>
-                <constraint firstItem="whY-BC-4cz" firstAttribute="baseline" secondItem="xjf-xA-Blq" secondAttribute="firstBaseline" constant="12" id="Hb2-UI-sTf"/>
+                <constraint firstItem="whY-BC-4cz" firstAttribute="baseline" secondItem="xjf-xA-Blq" secondAttribute="firstBaseline" constant="9" id="Hb2-UI-sTf"/>
                 <constraint firstItem="xjf-xA-Blq" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="JJG-tb-oLr"/>
                 <constraint firstItem="xjf-xA-Blq" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="caI-uP-Rxb"/>
-                <constraint firstItem="whY-BC-4cz" firstAttribute="leading" secondItem="xjf-xA-Blq" secondAttribute="trailing" id="glD-ny-geQ"/>
+                <constraint firstItem="whY-BC-4cz" firstAttribute="leading" secondItem="xjf-xA-Blq" secondAttribute="trailing" constant="-1" id="glD-ny-geQ"/>
                 <constraint firstAttribute="bottom" secondItem="xjf-xA-Blq" secondAttribute="bottom" id="oGz-21-LaX"/>
-                <constraint firstAttribute="trailing" secondItem="whY-BC-4cz" secondAttribute="trailing" id="t4b-cV-Sh7"/>
+                <constraint firstAttribute="trailing" secondItem="whY-BC-4cz" secondAttribute="trailing" constant="1" id="t4b-cV-Sh7"/>
             </constraints>
             <point key="canvasLocation" x="140" y="34"/>
         </customView>
     </objects>
     <resources>
-        <image name="star.leadinghalf.filled" catalog="system" width="17" height="16"/>
+        <image name="folder" catalog="system" width="19" height="14"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

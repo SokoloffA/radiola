@@ -42,8 +42,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         splitView.addArrangedSubview(stationsView)
         splitView.setHoldingPriority(NSLayoutConstraint.Priority(260), forSubviewAt: 0)
         splitView.autosaveName = "Stations Splitter"
-
-        stationsView.stations = stationsStore.root
     }
 
     /* ****************************************
@@ -113,5 +111,22 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      * ****************************************/
     func splitView(_ splitView: NSSplitView, canCollapseSubview subview: NSView) -> Bool {
         return subview == sideBar.view
+    }
+
+    @IBAction func sidebarChanged(_ sender: NSOutlineView) {
+        guard let item = sideBar.currentItem() else { return }
+
+        switch item.type {
+            case .local: loadLocalStations()
+            case .radioBrowser: loadRadioBrowser(item)
+        }
+    }
+
+    private func loadLocalStations() {
+        stationsView.stations = stationsStore.root
+    }
+
+    private func loadRadioBrowser(_ item: SideBar.Item) {
+        stationsView.stations = Group(name: "")
     }
 }

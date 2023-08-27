@@ -8,36 +8,54 @@
 import Cocoa
 
 class SideBar: NSViewController {
+    struct Group {
+        var title: String
+        var items: [Item]
+    }
+
     enum ItemType {
-        case top
         case local
-        case link
+        case radioBrowser
     }
 
     struct Item {
-        var type: ItemType
-        var title: String
-        var url: String = ""
-//        var items: [Item] = []
+        let type: ItemType
+        let title: String
+        let url: String
     }
 
-    var items: [Item] = [
-        Item(type: .top, title: "My lists"),
-        Item(type: .local, title: "Local stations"),
+    var groups: [Group] = [
+        Group(title: "My lists", items: [
+            Item(type: .local, title: "Local stations", url: "local://stations"),
+        ]),
 
-        Item(type: .top,  title: "RadioBrowser"),
-        Item(type: .link, title: "By genre"),
-        Item(type: .link, title: "By language"),
+        Group(title: "Radio Browser", items: [
+            Item(type: .radioBrowser, title: "By genre", url: "https://www.radio-browser.info/"),
+            Item(type: .radioBrowser, title: "By language", url: "https://www.radio-browser.info/"),
+        ]),
     ]
 
     @IBOutlet var outlineView: NSOutlineView!
 
+    /* ****************************************
+     *
+     * ****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
         outlineView.delegate = self
         outlineView.dataSource = self
-        outlineView.expandItem( nil, expandChildren: true)
+        outlineView.expandItem(nil, expandChildren: true)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    public func currentItem() -> Item? {
+        if let item = outlineView.item(atRow: outlineView.clickedRow) as? Item {
+            return item
+        }
+        return nil
     }
 }
 
@@ -46,40 +64,39 @@ extension SideBar: NSOutlineViewDataSource {
      * Returns the number of child items each item in the outline
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        // Root item
-        //print(#function)
-
-        if item == nil {
-            return items.count
+        if item != nil {
+            return 0
         }
 
-//        if let item = item as? Item {
-//            print(#function, #line, item.items.count)
-//            return item.items.count
-//        }
+        var res = 0
+        for g in groups {
+            res += 1 + g.items.count
+        }
 
-        return 0
+        return res
     }
 
     /* ****************************************
      * Returns the actual item
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        //print(#function)
-        // Root item
-        if item == nil {
-            return items[index]
+        if item != nil {
+            return item!
         }
 
-//        if let item = item as? Item {
-//            return item.items[index]
-//        }
-//        if let group = item as? Group {
-//            if index < group.nodes.count {
-//                return group.nodes[index]
-//            }
-//        }
+        var n = index
+        for g in groups {
+            if n == 0 {
+                return g
+            }
+            n -= 1
 
+            if n < g.items.count {
+                return g.items[n]
+            }
+
+            n -= g.items.count
+        }
         return item!
     }
 
@@ -88,12 +105,6 @@ extension SideBar: NSOutlineViewDataSource {
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         return false
-//        //print(#function)
-//        if let item = item as? Item {
-//            return !item.items.isEmpty
-//        }
-//
-//        return false
     }
 }
 
@@ -102,61 +113,46 @@ extension SideBar: NSOutlineViewDelegate {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-        guard let item = item as? Item else { return nil }
-
-        if item.type == .top {
-            return SidebarTopLevelView(item: item)
+        if let item = item as? Item {
+            return SidebarSecondLevelView(item: item)
         }
 
-        return SidebarSecondLevelView(item: item)
-    }
-    
-//    func outlineView(_ outlineView: NSOutlineView, shouldExpandItem: Any) -> Bool {
-//        //print(#function)
-//        return true
-////        if let item = item as? Item {
-////            return
-////        }
-//    }
-    
-//    func outlineView(_ outlineView: NSOutlineView, shouldCollapseItem: Any) -> Bool {
-//        //print(#function)
-//        return false
-////        if let item = item as? Item {
-////            return
-////        }
-//    }
-    
-    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem: Any) -> Bool {
-        //print(#function)
-        guard let item = shouldSelectItem as? Item else { return false }
+        if let group = item as? Group {
+            return SidebarTopLevelView(group: group)
+        }
 
-        return item.type != .top
-//        if let item = item as? Item {
-//            return
-//        }
+        return nil
+    }
 
-    }
-    
-    /* ****************************************
-     *  Hide the disclosure triangle
-     * ****************************************/
-    func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: Any) -> Bool {
-        print(#function)
-        return false
-    }
-    
     /* ****************************************
      * Variable Row Heights
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        guard let item = item as? Item else { return CGFloat(138.0) }
-        
-        if item.type == .top {
-            return CGFloat(38.0)
+        if item is Item {
+            return CGFloat(28.0)
         }
-        else {
-           return  CGFloat(28.0)
+
+        if let group = item as? Group {
+            if group.title == groups.first?.title {
+                return CGFloat(14)
+            }
+            return CGFloat(32.0)
         }
+
+        return 0
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func outlineView(_ outlineView: NSOutlineView, shouldSelectItem: Any) -> Bool {
+        return shouldSelectItem is Item
+    }
+
+    /* ****************************************
+     *  Hide the disclosure triangle
+     * ****************************************/
+//    func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: Any) -> Bool {
+//        return false
+//    }
 }

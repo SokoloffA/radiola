@@ -88,6 +88,9 @@
                                         </prototypeCellViews>
                                     </tableColumn>
                                 </tableColumns>
+                                <connections>
+                                    <action selector="sidebarChanged:" target="-1" id="NrG-BP-Hu5"/>
+                                </connections>
                             </outlineView>
                         </subviews>
                         <nil key="backgroundColor"/>
@@ -113,25 +116,6 @@
                 <constraint firstItem="ltb-h0-Ibs" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="skZ-GC-YkP"/>
             </constraints>
             <point key="canvasLocation" x="-237.5" y="-92.5"/>
-        </customView>
-        <customView identifier="SideBarTopItemView" id="q3a-nS-V7N" customClass="SideBarTopItemView">
-            <rect key="frame" x="0.0" y="0.0" width="340" height="16"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6G7-Yr-ShO">
-                    <rect key="frame" x="-2" y="0.0" width="344" height="16"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="5cb-JW-Ni3">
-                        <font key="font" usesAppearanceFont="YES"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-            </subviews>
-            <connections>
-                <outlet property="titleLabel" destination="6G7-Yr-ShO" id="OUM-dZ-7UU"/>
-            </connections>
-            <point key="canvasLocation" x="-115" y="-393"/>
         </customView>
     </objects>
     <resources>

@@ -8,7 +8,7 @@
 import Cocoa
 
 class SidebarSecondLevelView: NSView {
-    @IBOutlet var iconLabel: NSTextField!
+    @IBOutlet var iconView: NSImageView!
     @IBOutlet var titleLabel: NSTextField!
 
     /* ****************************************
@@ -17,9 +17,7 @@ class SidebarSecondLevelView: NSView {
     init(item: SideBar.Item) {
         super.init(frame: NSRect.zero)
         _ = load(fromNIBNamed: "SidebarSecondLevelView")
-        // titleLabel.stringValue = item.title
-        wantsLayer = true
-        layer?.backgroundColor = NSColor.red.cgColor
+        titleLabel.stringValue = item.title
     }
 
     /* ****************************************
