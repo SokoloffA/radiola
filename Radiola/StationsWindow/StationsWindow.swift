@@ -127,6 +127,49 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     }
 
     private func loadRadioBrowser(_ item: SideBar.Item) {
-        stationsView.stations = Group(name: "")
+        Task {
+            do {
+                let request = RadioBrowser.StationsRequest()
+                request.hidebroken = true
+                request.order = .votes
+
+                let res = try await request.get(bytag: "Classic Rock")
+                requestDone(res)
+
+            } catch {
+                print("Request failed with error: \(error)")
+            }
+        }
     }
+
+    private func requestDone(_ resp: [RadioBrowser.Station]) {
+        print("DONE", resp.count)
+        var root = Group(name: "")
+        for r in resp {
+            var s = Station(name: r.name, url: r.url)
+            root.append(s)
+        }
+
+        stationsView.stations = root
+    }
+//        //stationsView.stations = Group(name: "")
+//        let req = RadioBrowserTagRequest()
+//        print("SEND")
+//        req.send(){(result) in
+//            DispatchQueue.main.async {
+//                switch result {
+//                    case .success(let tags):
+//                        print("RESULT", tags)
+//                    self.stationsView.stations = Group(name: "")
+//
+//
+//                    case .failure(let error):
+//                        print("Request failed with error: \(error)")
+//                    }
+//
+//
+//            }
+//        }
+//        print("DONE")
+//    }
 }
