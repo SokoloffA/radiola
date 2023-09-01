@@ -9,20 +9,21 @@ import Foundation
 
 extension RadioBrowser {
     public struct Station: Decodable {
-        ///   A globally unique identifier for the change of the station information
+        /// A globally unique identifier for the change of the station information
         var changeuuid: String
 
-        ///  A globally unique identifier for the station
+        /// A globally unique identifier for the station
         var stationuuid: String
 
         /// The name of the station
         var name: String
 
-        ///     The stream URL provided by the user
+        /// The stream URL provided by the user
         var url: String
 
-        /**
-         An automatically "resolved" stream URL. Things resolved are playlists (M3U/PLS/ASX...), HTTP redirects (Code 301/302). This link is especially usefull if you use this API from a platform that is not able to do a resolve on its own (e.g. JavaScript in browser) or you just don't want to invest the time in decoding playlists yourself.**/
+        /// An automatically "resolved" stream URL. Things resolved are playlists (M3U/PLS/ASX...), HTTP redirects (Code 301/302).
+        /// This link is especially usefull if you use this API from a platform that is not able to do a resolve on its own
+        /// (e.g. JavaScript in browser) or you just don't want to invest the time in decoding playlists yourself.
         var url_resolved: String
 
         /// URL to the homepage of the stream, so you can direct the user to a page with more information about the stream.
@@ -34,7 +35,7 @@ extension RadioBrowser {
         /// multivalue, split by comma    Tags of the stream with more information about it
         var tags: [String]
 
-        ///     2 letters, uppercase    Official countrycodes as in ISO 3166-1 alpha-2
+        /// 2 letters, uppercase    Official countrycodes as in ISO 3166-1 alpha-2
         var countrycode: String
 
         /// Full name of the entity where the station is located inside the country
@@ -58,10 +59,10 @@ extension RadioBrowser {
         /// number, integer, bps    The bitrate of this stream recorded at the last check.
         var bitrate: Int
 
-        /// 0 or 1    Mark if this stream is using HLS distribution or non-HLS.
+        /// Mark if this stream is using HLS distribution or non-HLS.
         var hls: Bool
 
-        /// 0 or 1    The current online/offline state of this stream. This is a value calculated from multiple measure points in the internet. The test servers are located in different countries. It is a majority vote.
+        /// The current online/offline state of this stream. This is a value calculated from multiple measure points in the internet. The test servers are located in different countries. It is a majority vote.
         var lastcheckok: Bool
 
         /// The last time when any radio-browser server checked the online state of this stream

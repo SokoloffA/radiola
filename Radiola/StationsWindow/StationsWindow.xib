@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="StationsWindow" customModule="Radiola" customModuleProvider="target">
             <connections>
+                <outlet property="rightView" destination="3T4-Mu-Or0" id="KWB-zR-fX3"/>
                 <outlet property="splitView" destination="ait-XJ-lkI" id="OBF-Zk-JMe"/>
-                <outlet property="toggleSideBarItem" destination="eXH-n3-Cb0" id="uyY-WZ-zmZ"/>
-                <outlet property="toolBar" destination="r23-UB-pbU" id="plD-5F-fSa"/>
+                <outlet property="toggleSideBarItem" destination="iyL-Mv-jxL" id="gil-Oj-Kfu"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -20,33 +20,51 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="682" height="375"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
             <value key="minSize" type="size" width="500" height="200"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <splitView identifier="StationsSplit" fixedFrame="YES" arrangesAllSubviews="NO" autosaveName="StationsWindowSplitter" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ait-XJ-lkI">
+                    <splitView identifier="StationsSplit" arrangesAllSubviews="NO" autosaveName="StationsWindowSplitter" dividerStyle="thin" vertical="YES" id="ait-XJ-lkI">
                         <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <splitView fixedFrame="YES" arrangesAllSubviews="NO" dividerStyle="paneSplitter" vertical="YES" id="Gpr-ct-Jfg">
+                                <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <customView fixedFrame="YES" id="3T4-Mu-Or0">
+                                        <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </customView>
+                                </subviews>
+                                <holdingPriorities>
+                                    <real value="250"/>
+                                </holdingPriorities>
+                            </splitView>
+                        </subviews>
+                        <holdingPriorities>
+                            <real value="250"/>
+                        </holdingPriorities>
                     </splitView>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="F7631EB7-F9B5-4D5F-8D3A-8C960B6D9FF7" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="r23-UB-pbU">
+            <toolbar key="toolbar" implicitIdentifier="E603DE99-C223-49D2-AC20-617FF561695E" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="dvN-S5-4WP">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="DE9C9BBB-250D-4EE7-B079-78ABC089A248" label="" paletteLabel="Side Bar" tag="-1" image="sidebar.left" catalog="system" bordered="YES" id="eXH-n3-Cb0">
+                    <toolbarItem implicitItemIdentifier="9847B8CC-FB77-48AF-BB86-C525422033E6" label="Toggle sidebar" paletteLabel="Toggle sidebar" tag="-1" image="sidebar.left" catalog="system" bordered="YES" id="iyL-Mv-jxL">
                         <size key="minSize" width="31" height="25"/>
                         <size key="maxSize" width="31" height="25"/>
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="eXH-n3-Cb0"/>
+                    <toolbarItem reference="iyL-Mv-jxL"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
-            <point key="canvasLocation" x="241" y="21.5"/>
+            <point key="canvasLocation" x="78" y="43"/>
         </window>
     </objects>
     <resources>

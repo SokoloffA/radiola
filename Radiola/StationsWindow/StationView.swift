@@ -7,20 +7,16 @@
 
 import Cocoa
 
-
 class StationView: NSView {
     private let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
+    private var searchView: SearchView?
 
-    @IBOutlet var playButton: NSButton!
-    @IBOutlet var songLabel: NSTextField!
-    @IBOutlet var stationLabel: NSTextField!
     @IBOutlet var stationsTree: NSOutlineView!
     @IBOutlet var addStationButton: NSButton!
     @IBOutlet var removeStationButton: NSButton!
-    @IBOutlet var volumeControl: ScrollableSlider!
-    @IBOutlet var volumeDownButton: NSButton!
-    @IBOutlet var volumeUpButton: NSButton!
-    @IBOutlet var volumeMuteButton: NSButton!
+    @IBOutlet var splitView: NSSplitView!
+    @IBOutlet var bottomBar: NSView!
+    @IBOutlet var bottomBarHeight: NSLayoutConstraint!
 
     var stations: Group = Group(name: "") {
         didSet {
@@ -31,25 +27,22 @@ class StationView: NSView {
         }
     }
 
+    var item: SideBar.Item? {
+        didSet {
+            switch item?.type {
+            case nil: return
+            case .local: showLocalStations(item!)
+            case .radioBrowser: showRadioBrowserSearch(item!)
+            }
+        }
+    }
+
     /* ****************************************
      *
      * ****************************************/
     init() {
         super.init(frame: NSRect.zero)
         _ = load(fromNIBNamed: "StationView")
-
-        playButton.bezelStyle = NSButton.BezelStyle.regularSquare
-        playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
-        playButton.imagePosition = NSControl.ImagePosition.imageOnly
-        playButton.alignment = NSTextAlignment.center
-        playButton.lineBreakMode = NSLineBreakMode.byTruncatingTail
-        playButton.state = NSControl.StateValue.on
-        playButton.isBordered = false
-        playButton.imageScaling = NSImageScaling.scaleNone
-        playButton.font = NSFont.systemFont(ofSize: 24)
-        playButton.image?.isTemplate = true
-        playButton.target = player
-        playButton.action = #selector(Player.toggle)
 
         stationsTree.delegate = self
         stationsTree.dataSource = self
@@ -59,21 +52,6 @@ class StationView: NSView {
         stationsTree.doubleAction = #selector(doubleClickRow)
         stationsTree.registerForDraggedTypes([nodePasteboardType])
         stationsTree.expandItem(nil, expandChildren: true)
-
-        volumeControl.minValue = 0
-        volumeControl.maxValue = 1
-        volumeControl.doubleValue = Double(player.volume)
-        volumeControl.target = self
-        volumeControl.action = #selector(volumeChanged)
-
-        volumeMuteButton.target = self
-        volumeMuteButton.action = #selector(volumeMute)
-
-        volumeDownButton.target = self
-        volumeDownButton.action = #selector(volumeDown)
-
-        volumeUpButton.target = self
-        volumeUpButton.action = #selector(volumeUp)
 
         addStationButton.target = self
         addStationButton.action = #selector(addStation)
@@ -96,11 +74,6 @@ class StationView: NSView {
                                                name: NSOutlineView.selectionDidChangeNotification,
                                                object: nil)
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(refresh),
-                                               name: Notification.Name.PlayerVolumeChanged,
-                                               object: nil)
-
         refresh()
     }
 
@@ -115,55 +88,8 @@ class StationView: NSView {
      *
      * ****************************************/
     @objc func refresh() {
-        switch player.status {
-            case Player.Status.paused:
-                stationLabel.stringValue = player.stationName
-                songLabel.stringValue = ""
-
-            case Player.Status.connecting:
-                stationLabel.stringValue = player.stationName
-                songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
-
-            case Player.Status.playing:
-                stationLabel.stringValue = player.stationName
-                songLabel.stringValue = player.title
-        }
-
-        switch player.status {
-            case Player.Status.paused:
-                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPlayTemplate"))
-                playButton.image?.isTemplate = true
-                playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
-
-            case Player.Status.connecting:
-                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
-                playButton.image?.isTemplate = true
-                playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
-
-            case Player.Status.playing:
-                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
-                playButton.image?.isTemplate = true
-                playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
-        }
-
         let selNode = selectedNode()
         removeStationButton.isEnabled = (selNode != nil)
-
-        volumeControl.doubleValue = Double(player.volume)
-
-        if player.isMuted {
-            volumeControl.isEnabled = false
-            volumeDownButton.isEnabled = false
-            volumeUpButton.isEnabled = false
-            volumeMuteButton.state = .on
-            volumeMuteButton.toolTip = "Unmute"
-        } else {
-            volumeControl.isEnabled = true
-            volumeDownButton.isEnabled = volumeControl.doubleValue > volumeControl.minValue
-            volumeUpButton.isEnabled = volumeControl.doubleValue < volumeControl.maxValue
-            volumeMuteButton.state = .off
-            volumeMuteButton.toolTip = "Mute"
-        }
     }
 
     /* ****************************************
@@ -312,23 +238,29 @@ class StationView: NSView {
         })
     }
 
-    @objc func volumeChanged(_ sender: Any) {
-        player.volume = Float(volumeControl.doubleValue)
+    private func showLocalStations(_ item: SideBar.Item) {
+        stations = stationsStore.root
+        searchView?.view.removeFromSuperview()
+        searchView?.removeFromParent()
+        searchView = nil
     }
 
-    @objc func volumeUp(_ sender: Any) {
-        volumeControl.doubleValue += 0.05
-        volumeChanged(0)
-    }
+    private func showRadioBrowserSearch(_ item: SideBar.Item) {
+        if searchView == nil {
+            searchView = SearchView()
+            searchView?.stationsView = self
+        }
 
-    @objc func volumeDown(_ sender: Any) {
-        volumeControl.doubleValue -= 0.05
-        volumeChanged(0)
-    }
+        bottomBarHeight.constant = 0
+//        bottomBar.frame.size.height = 200
+//        bottomBar.isHidden = true
+        searchView!.item = item
+        // searchVie
+        stations = Group(name: "")
+        updateLayer()
 
-    @objc func volumeMute(_ sender: Any) {
-        player.isMuted = !player.isMuted
-        volumeChanged(0)
+        guard let view = searchView?.view else { return }
+        splitView.insertArrangedSubview(view, at: 0)
     }
 }
 

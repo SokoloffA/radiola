@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ToolbarVolumeItem" customModule="Radiola" customModuleProvider="target">
+            <connections>
+                <outlet property="downButton" destination="GPq-sR-EQw" id="8VN-bp-qsa"/>
+                <outlet property="muteButton" destination="FFR-W7-1te" id="g2i-FH-2ET"/>
+                <outlet property="slider" destination="Wtx-1r-Huf" id="sH9-hp-6a9"/>
+                <outlet property="upButton" destination="BDi-cj-Ao7" id="z70-VW-pcF"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="217" height="52"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Wtx-1r-Huf">
+                    <rect key="frame" x="70" y="16" width="100" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="96" id="1S3-Te-jmy"/>
+                    </constraints>
+                    <sliderCell key="cell" controlSize="small" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="vKB-Mk-qdH"/>
+                </slider>
+                <button toolTip="Decrease volume" translatesAutoresizingMaskIntoConstraints="NO" id="GPq-sR-EQw">
+                    <rect key="frame" x="47" y="13" width="23" height="28"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="23" id="ZmA-GG-S7F"/>
+                        <constraint firstAttribute="height" constant="23" id="z4y-Gg-vmQ"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarAudioOutputVolumeOffTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Fr9-R6-u9p">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button toolTip="Mute" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FFR-W7-1te">
+                    <rect key="frame" x="20" y="16" width="23" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="23" id="Dny-SR-cuX"/>
+                        <constraint firstAttribute="height" constant="18" id="TX7-9C-wdz"/>
+                    </constraints>
+                    <buttonCell key="cell" type="recessed" title="muteBtn" bezelStyle="recessed" image="NSTouchBarAudioOutputMuteTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4Gs-ga-Rp8">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
+                        <font key="font" metaFont="systemBold" size="12"/>
+                    </buttonCell>
+                </button>
+                <button toolTip="Increase volume" translatesAutoresizingMaskIntoConstraints="NO" id="BDi-cj-Ao7">
+                    <rect key="frame" x="174" y="12" width="23" height="29"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="JXg-7J-fO4"/>
+                        <constraint firstAttribute="width" constant="23" id="dhP-Py-Adh"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarVolumeUpTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="Q31-LB-P4F">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="BDi-cj-Ao7" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="79b-JS-pvl"/>
+                <constraint firstItem="GPq-sR-EQw" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="KIj-Mo-hAg"/>
+                <constraint firstItem="Wtx-1r-Huf" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="NNP-6b-CVG"/>
+                <constraint firstItem="Wtx-1r-Huf" firstAttribute="leading" secondItem="GPq-sR-EQw" secondAttribute="trailing" constant="2" id="R0v-bj-qZg"/>
+                <constraint firstItem="FFR-W7-1te" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="TKw-XE-SZa"/>
+                <constraint firstAttribute="trailing" secondItem="BDi-cj-Ao7" secondAttribute="trailing" constant="20" symbolic="YES" id="a5t-g5-WmQ"/>
+                <constraint firstItem="BDi-cj-Ao7" firstAttribute="leading" secondItem="Wtx-1r-Huf" secondAttribute="trailing" constant="6" id="gpi-XJ-6CE"/>
+                <constraint firstItem="FFR-W7-1te" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="r0c-fa-8uh"/>
+                <constraint firstItem="GPq-sR-EQw" firstAttribute="leading" secondItem="FFR-W7-1te" secondAttribute="trailing" constant="4" id="roD-Rk-8M9"/>
+            </constraints>
+            <point key="canvasLocation" x="38.5" y="-400"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSTouchBarAudioOutputMuteTemplate" width="16" height="18"/>
+        <image name="NSTouchBarAudioOutputVolumeOffTemplate" width="16" height="17"/>
+        <image name="NSTouchBarVolumeUpTemplate" width="26" height="18"/>
+    </resources>
+</document>

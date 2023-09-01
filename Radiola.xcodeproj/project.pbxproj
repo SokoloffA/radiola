@@ -45,6 +45,12 @@
 		3967046D2944961500012FFD /* AudioPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3967046B2944961500012FFD /* AudioPage.xib */; };
 		3987B99D2A9635930077EB03 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B99B2A9635930077EB03 /* SideBar.swift */; };
 		3987B99E2A9635930077EB03 /* SideBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B99C2A9635930077EB03 /* SideBar.xib */; };
+		3987B9A22A9E16190077EB03 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A02A9E16190077EB03 /* SearchView.swift */; };
+		3987B9A32A9E16190077EB03 /* SearchView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9A12A9E16190077EB03 /* SearchView.xib */; };
+		3987B9A72A9F81570077EB03 /* ToolbarVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */; };
+		3987B9A82A9F81570077EB03 /* ToolbarVolumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */; };
+		3987B9AB2A9F8A190077EB03 /* ToolbarPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */; };
+		3987B9AC2A9F8A190077EB03 /* ToolbarPlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */; };
 		39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44A9290D42D8008E5A30 /* GroupRowView.xib */; };
 		39BF44AD290D4367008E5A30 /* GroupRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44AC290D4367008E5A30 /* GroupRowView.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
@@ -107,6 +113,12 @@
 		3967046B2944961500012FFD /* AudioPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPage.xib; sourceTree = "<group>"; };
 		3987B99B2A9635930077EB03 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		3987B99C2A9635930077EB03 /* SideBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideBar.xib; sourceTree = "<group>"; };
+		3987B9A02A9E16190077EB03 /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		3987B9A12A9E16190077EB03 /* SearchView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchView.xib; sourceTree = "<group>"; };
+		3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarVolumeView.swift; sourceTree = "<group>"; };
+		3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolbarVolumeView.xib; sourceTree = "<group>"; };
+		3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPlayView.swift; sourceTree = "<group>"; };
+		3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolbarPlayView.xib; sourceTree = "<group>"; };
 		39BF44A9290D42D8008E5A30 /* GroupRowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupRowView.xib; sourceTree = "<group>"; };
 		39BF44AC290D4367008E5A30 /* GroupRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRowView.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
@@ -218,6 +230,8 @@
 		394F8A6528739A1D005EA7FA /* StationsWindow */ = {
 			isa = PBXGroup;
 			children = (
+				3987B9A42A9F80B90077EB03 /* Toolbar */,
+				3987B99F2A9E15F90077EB03 /* SearchPanel */,
 				394ABC8C2A97AB5900E2B6E9 /* Sidebar */,
 				394F8A6128739A15005EA7FA /* StationsWindow.swift */,
 				394F8A6228739A15005EA7FA /* StationsWindow.xib */,
@@ -233,6 +247,26 @@
 				39BF44A9290D42D8008E5A30 /* GroupRowView.xib */,
 			);
 			path = StationsWindow;
+			sourceTree = "<group>";
+		};
+		3987B99F2A9E15F90077EB03 /* SearchPanel */ = {
+			isa = PBXGroup;
+			children = (
+				3987B9A02A9E16190077EB03 /* SearchView.swift */,
+				3987B9A12A9E16190077EB03 /* SearchView.xib */,
+			);
+			path = SearchPanel;
+			sourceTree = "<group>";
+		};
+		3987B9A42A9F80B90077EB03 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */,
+				3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */,
+				3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */,
+				3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */,
+			);
+			path = Toolbar;
 			sourceTree = "<group>";
 		};
 		39F869A3288C11B600273AB0 /* Preferences */ = {
@@ -329,6 +363,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3987B9AC2A9F8A190077EB03 /* ToolbarPlayView.xib in Resources */,
 				9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */,
 				392024B02A51953600670ABD /* ControlsPage.xib in Resources */,
 				39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */,
@@ -337,6 +372,7 @@
 				390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */,
 				392024B42A519FF900670ABD /* AppearancePage.xib in Resources */,
 				39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */,
+				3987B9A32A9E16190077EB03 /* SearchView.xib in Resources */,
 				394ABC9C2A97AD9C00E2B6E9 /* SidebarSecondLevelView.xib in Resources */,
 				3967046D2944961500012FFD /* AudioPage.xib in Resources */,
 				394F8A412873933A005EA7FA /* Assets.xcassets in Resources */,
@@ -344,6 +380,7 @@
 				39E042D1293B3ACA00A2167E /* VolumeMenuItem.xib in Resources */,
 				394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */,
 				394F8A6928739A9C005EA7FA /* StationRowView.xib in Resources */,
+				3987B9A82A9F81570077EB03 /* ToolbarVolumeView.xib in Resources */,
 				39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */,
 				39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */,
 				39541B35287623F200A2A5CB /* AddStationDialog.xib in Resources */,
@@ -387,12 +424,15 @@
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,
 				394F8A51287394D0005EA7FA /* Stations.swift in Sources */,
 				393920712A922722008C0B11 /* StationView.swift in Sources */,
+				3987B9A22A9E16190077EB03 /* SearchView.swift in Sources */,
+				3987B9A72A9F81570077EB03 /* ToolbarVolumeView.swift in Sources */,
 				39F08E462A0CC582006B65D0 /* Types.swift in Sources */,
 				39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */,
 				392024AF2A51953600670ABD /* ControlsPage.swift in Sources */,
 				394ABCA92A9CA1F800E2B6E9 /* RadioBrowser.swift in Sources */,
 				39D79E632933BEAB00210D94 /* Settings.swift in Sources */,
 				394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */,
+				3987B9AB2A9F8A190077EB03 /* ToolbarPlayView.swift in Sources */,
 				39E8DFD72890839500082467 /* Updater.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
