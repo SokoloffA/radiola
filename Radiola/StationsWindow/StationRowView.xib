@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,37 +20,46 @@
             <rect key="frame" x="0.0" y="0.0" width="500" height="48"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField identifier="NameEdit" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Uoq-wb-Nh3">
+                <textField identifier="NameEdit" horizontalHuggingPriority="240" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Uoq-wb-Nh3">
                     <rect key="frame" x="0.0" y="26" width="470" height="16"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Super Radio" usesSingleLineMode="YES" id="t8S-VM-IJy">
                         <font key="font" metaFont="systemMedium" size="13"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <textField identifier="UrlEdit" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P6r-gT-G4r">
+                <textField identifier="UrlEdit" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P6r-gT-G4r">
                     <rect key="frame" x="0.0" y="8" width="494" height="14"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="https://github.com/SokoloffA/radiola" id="lcX-yD-f0I">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <box verticalHuggingPriority="750" fixedFrame="YES" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2k0-0m-GJT">
+                <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2k0-0m-GJT">
                     <rect key="frame" x="0.0" y="-2" width="500" height="5"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                 </box>
-                <button id="dBC-Jw-E96">
-                    <rect key="frame" x="476" y="25" width="16" height="16"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="dBC-Jw-E96">
+                    <rect key="frame" x="476" y="26" width="16" height="15"/>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="star-empty" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="OQ1-KT-RSx">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
             </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="dBC-Jw-E96" secondAttribute="trailing" constant="8" id="4hu-fd-AJR"/>
+                <constraint firstItem="P6r-gT-G4r" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="2" id="5PU-up-U5U"/>
+                <constraint firstItem="2k0-0m-GJT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="9zG-3w-yms"/>
+                <constraint firstItem="dBC-Jw-E96" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="7" id="D1k-z0-85f"/>
+                <constraint firstAttribute="trailing" secondItem="2k0-0m-GJT" secondAttribute="trailing" id="Fn3-Sq-KRK"/>
+                <constraint firstAttribute="trailing" secondItem="P6r-gT-G4r" secondAttribute="trailing" constant="8" id="IHA-mP-bzw"/>
+                <constraint firstAttribute="bottom" secondItem="2k0-0m-GJT" secondAttribute="bottom" id="L4N-9R-sVq"/>
+                <constraint firstItem="Uoq-wb-Nh3" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="6" id="cpt-SC-0dh"/>
+                <constraint firstItem="Uoq-wb-Nh3" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="2" id="dbO-vB-rV3"/>
+                <constraint firstItem="dBC-Jw-E96" firstAttribute="leading" secondItem="Uoq-wb-Nh3" secondAttribute="trailing" constant="8" symbolic="YES" id="pfV-wn-AIT"/>
+                <constraint firstItem="2k0-0m-GJT" firstAttribute="top" secondItem="P6r-gT-G4r" secondAttribute="bottom" constant="7" id="tF8-YB-1if"/>
+            </constraints>
             <point key="canvasLocation" x="-147" y="22"/>
         </customView>
     </objects>

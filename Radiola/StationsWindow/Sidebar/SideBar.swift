@@ -9,31 +9,36 @@ import Cocoa
 
 class SideBar: NSViewController {
     struct Group {
-        var title: String
+        let title: String
         var items: [Item]
     }
 
-    enum ItemType {
-        case local
-        case radioBrowser
-    }
-
     struct Item {
-        let type: ItemType
         let title: String
-        let url: String
+        let icon: String
+        let stations: StationList
     }
 
-    var groups: [Group] = [
-        Group(title: "My lists", items: [
-            Item(type: .local, title: "Local stations", url: "local://stations"),
-        ]),
+    private var groups: [Group] = {
+        var res = [
+            Group(title: "My lists",
+                  items: [
+                      Item(title: stationsStore.localStations.title, icon: "star", stations: stationsStore.localStations),
+                  ]),
 
-        Group(title: "Radio Browser", items: [
-            Item(type: .radioBrowser, title: "By genre", url: "https://www.radio-browser.info/"),
-            Item(type: .radioBrowser, title: "By language", url: "https://www.radio-browser.info/"),
-        ]),
-    ]
+            Group(title: "Radio Browser",
+                  items: [
+//                      Item(title: "By tag", icon: "globe", stations: localStations),
+//                      Item(title: "By genre", icon: "globe", stations: localStations),
+//                      Item(title: "By language", icon: "globe", stations: localStations),
+                  ]),
+        ]
+
+//        for it in savedRequests {
+//            res[0].items.append(Item(title: it.title, icon: "globe", source: it))
+//        }
+        return res
+    }()
 
     @IBOutlet var outlineView: NSOutlineView!
 
@@ -42,7 +47,6 @@ class SideBar: NSViewController {
      * ****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
         outlineView.delegate = self
         outlineView.dataSource = self
         outlineView.expandItem(nil, expandChildren: true)
@@ -51,9 +55,9 @@ class SideBar: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    public func currentItem() -> Item? {
+    public func currentStations() -> StationList? {
         if let item = outlineView.item(atRow: outlineView.clickedRow) as? Item {
-            return item
+            return item.stations
         }
         return nil
     }
@@ -114,11 +118,11 @@ extension SideBar: NSOutlineViewDelegate {
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         if let item = item as? Item {
-            return SidebarSecondLevelView(item: item)
+            return SidebarSecondLevelView(title: item.title, icon: item.icon)
         }
 
         if let group = item as? Group {
-            return SidebarTopLevelView(group: group)
+            return SidebarTopLevelView(title: group.title)
         }
 
         return nil
@@ -148,11 +152,4 @@ extension SideBar: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, shouldSelectItem: Any) -> Bool {
         return shouldSelectItem is Item
     }
-
-    /* ****************************************
-     *  Hide the disclosure triangle
-     * ****************************************/
-//    func outlineView(_ outlineView: NSOutlineView, shouldShowOutlineCellForItem item: Any) -> Bool {
-//        return false
-//    }
 }

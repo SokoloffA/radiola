@@ -20,30 +20,35 @@ class StationRowView: NSView {
     ]
 
     private let station: Station
+    private weak var stationView: StationView!
 
-    init(station: Station) {
+    init(station: Station, stationView: StationView) {
         self.station = station
+        self.stationView = stationView
         super.init(frame: NSRect.zero)
         _ = load(fromNIBNamed: "StationRowView")
 
-        nameEdit.stringValue = station.name
+        nameEdit.stringValue = station.title
         nameEdit.tag = station.id
         nameEdit.target = self
         nameEdit.action = #selector(nameEdited(sender:))
+        nameEdit.isEditable = stationView.isEditable
 
         urledit.stringValue = station.url
         urledit.tag = station.id
         urledit.target = self
         urledit.action = #selector(urlEdited(sender:))
+        urledit.isEditable = stationView.isEditable
 
         favoriteButton.tag = station.id
         favoriteButton.image = favoriteIcons[station.isFavorite]!
         favoriteButton.target = self
         favoriteButton.action = #selector(favClicked(sender:))
+        favoriteButton.isHidden = !stationView.isEditable
     }
 
     required init?(coder: NSCoder) {
-        station = Station(name: "", url: "")
+        station = Station(title: "", url: "")
         super.init(coder: coder)
     }
 
@@ -51,9 +56,8 @@ class StationRowView: NSView {
      *
      * ****************************************/
     @IBAction func nameEdited(sender: NSTextField) {
-        station.name = sender.stringValue
-        stationsStore.write()
-        stationsStore.emitChanged()
+        station.title = sender.stringValue
+        stationView.nodeDidChanged(node: station)
     }
 
     /* ****************************************
@@ -61,8 +65,7 @@ class StationRowView: NSView {
      * ****************************************/
     @IBAction private func urlEdited(sender: NSTextField) {
         station.url = sender.stringValue
-        stationsStore.write()
-        stationsStore.emitChanged()
+        stationView.nodeDidChanged(node: station)
     }
 
     /* ****************************************
@@ -71,7 +74,6 @@ class StationRowView: NSView {
     @IBAction private func favClicked(sender: NSButton) {
         station.isFavorite = !station.isFavorite
         sender.image = favoriteIcons[station.isFavorite]!
-        stationsStore.write()
-        stationsStore.emitChanged()
+        stationView.nodeDidChanged(node: station)
     }
 }

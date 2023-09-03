@@ -8,6 +8,9 @@
 
 import Foundation
 
+/* **********************************************
+ *
+ * **********************************************/
 extension Notification.Name {
     // Notifications
     static let StationsChanged = Notification.Name("stationsChanged")
@@ -18,4 +21,22 @@ extension Notification.Name {
 
     static let SettingsChanged = Notification.Name("SettingsChanged")
     static let AudioDeviceChanged = Notification.Name("AudioDeviceChanged")
+
+    static let ErrorOccurred = Notification.Name("ErrorOccurred")
+}
+
+/* **********************************************
+ *
+ * **********************************************/
+extension NSObject {
+    func errorOccurred(_ message: String) {
+        Radiola.errorOccurred(object: self, message: message)
+    }
+}
+
+/* **********************************************
+ *
+ * **********************************************/
+func errorOccurred(object: Any?, message: String) {
+    NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: object, userInfo: ["message": message])
 }

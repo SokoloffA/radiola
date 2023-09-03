@@ -10,30 +10,22 @@ import Cocoa
 class StationView: NSView {
     private let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
     private var searchView: SearchView?
+    private(set) var isEditable = false
 
     @IBOutlet var stationsTree: NSOutlineView!
     @IBOutlet var addStationButton: NSButton!
     @IBOutlet var removeStationButton: NSButton!
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet var bottomBar: NSView!
-    @IBOutlet var bottomBarHeight: NSLayoutConstraint!
 
-    var stations: Group = Group(name: "") {
+    var stations: StationList? {
         didSet {
+            isEditable = stations?.isEditable ?? false
             stationsTree.reloadData()
             let n = max(0, stationsTree.row(forItem: player.station))
             stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
             stationsTree.scrollRowToVisible(stationsTree.selectedRow)
-        }
-    }
-
-    var item: SideBar.Item? {
-        didSet {
-            switch item?.type {
-            case nil: return
-            case .local: showLocalStations(item!)
-            case .radioBrowser: showRadioBrowserSearch(item!)
-            }
+            refresh()
         }
     }
 
@@ -90,13 +82,22 @@ class StationView: NSView {
     @objc func refresh() {
         let selNode = selectedNode()
         removeStationButton.isEnabled = (selNode != nil)
+        addStationButton.isHidden = !isEditable
+        removeStationButton.isHidden = !isEditable
     }
 
     /* ****************************************
      *
      * ****************************************/
-    func selectedNode() -> StationsStore.Node? {
-        return stationsTree.item(atRow: stationsTree.selectedRow) as? StationsStore.Node
+    func nodeDidChanged(node: StationNode) {
+        stations?.write()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func selectedNode() -> StationNode? {
+        return stationsTree.item(atRow: stationsTree.selectedRow) as? StationNode
     }
 
     /* ****************************************
@@ -116,41 +117,43 @@ class StationView: NSView {
     /* ****************************************
      *
      * ****************************************/
-    private func addNode(newNode: StationsStore.Node) {
+    private func addNode(newNode: StationNode) {
+        guard let stations = stations else { return }
+        if !isEditable { return }
+
         let node = selectedNode()
 
         // ::::::::::::::::::::::::::::::
         // No items selected, we append to endo of top items
         if node == nil {
-            stationsStore.root.append(newNode)
+            stations.append(newNode)
         }
 
         // ::::::::::::::::::::::::::::::
         // A group is selected, we add to its end
-        if let group = node as? Group {
+        if let group = node as? StationGroup {
             group.append(newNode)
         }
 
         // ::::::::::::::::::::::::::::::
         // A station is selected, we after it
-        if let station = node as? Station, let group = station.parent() {
+        if let station = node as? Station, let group = station.parent {
             group.insert(newNode, after: station)
         }
 
-        stationsStore.emitChanged()
-        stationsStore.write()
+        stations.write()
 
-        if let index = newNode.parent()?.index(newNode)! {
+        if let index = newNode.parent?.index(newNode)! {
             stationsTree.beginUpdates()
             stationsTree.insertItems(
                 at: IndexSet(integer: index),
-                inParent: newNode.parent() !== stationsStore.root ? newNode.parent() : nil,
+                inParent: newNode.parent !== stations ? newNode.parent : nil,
                 withAnimation: .effectFade
             )
             stationsTree.endUpdates()
         }
 
-        stationsTree.expandItem(newNode.parent())
+        stationsTree.expandItem(newNode.parent)
 
         // Select new item
         let row = stationsTree.row(forItem: newNode)
@@ -169,7 +172,7 @@ class StationView: NSView {
                 return
             }
 
-            self.addNode(newNode: Station(name: dialog.title, url: dialog.url))
+            self.addNode(newNode: Station(title: dialog.title, url: dialog.url))
         })
     }
 
@@ -183,7 +186,7 @@ class StationView: NSView {
                 return
             }
 
-            self.addNode(newNode: Group(name: dialog.title))
+            self.addNode(newNode: StationGroup(title: dialog.title))
         })
     }
 
@@ -191,9 +194,12 @@ class StationView: NSView {
      *
      * ****************************************/
     @objc func removeStation(_ sender: Any) {
+        guard let stations = stations else { return }
+        if !isEditable { return }
+
         guard let wnd = window else { return }
         guard let node = selectedNode() else { return }
-        guard let parent = node.parent() else { return }
+        guard let parent = node.parent else { return }
 
         let alert = NSAlert()
         alert.informativeText = "This operation cannot be undone."
@@ -201,14 +207,14 @@ class StationView: NSView {
         alert.addButton(withTitle: "Cancel")
 
         if let station = node as? Station {
-            alert.messageText = "Are you sure you want to remove the station \"\(station.name)\"?"
+            alert.messageText = "Are you sure you want to remove the station \"\(station.title)\"?"
         }
 
-        if let group = node as? Group {
+        if let group = node as? StationGroup {
             if group.nodes.isEmpty {
-                alert.messageText = "Are you sure you want to remove the group \"\(group.name)\"?"
+                alert.messageText = "Are you sure you want to remove the group \"\(group.title)\"?"
             } else {
-                alert.messageText = "Are you sure you want to remove the group \"\(group.name)\", and all of its children?"
+                alert.messageText = "Are you sure you want to remove the group \"\(group.title)\", and all of its children?"
             }
         }
 
@@ -216,16 +222,15 @@ class StationView: NSView {
             if response == NSApplication.ModalResponse.alertFirstButtonReturn {
                 let n = parent.index(node) ?? 0
                 parent.remove(node)
-                stationsStore.emitChanged()
-                stationsStore.write()
+                stations.write()
 
                 self.stationsTree.beginUpdates()
                 self.stationsTree.removeItems(
                     at: IndexSet(integer: n),
-                    inParent: parent !== stationsStore.root ? parent : nil,
+                    inParent: parent !== stations ? parent : nil,
                     withAnimation: .effectFade)
                 self.stationsTree.endUpdates()
-                self.stationsTree.reloadItem(parent !== stationsStore.root ? parent : nil)
+                self.stationsTree.reloadItem(parent !== stations ? parent : nil)
 
                 if !parent.nodes.isEmpty {
                     let row = self.stationsTree.row(forItem: parent.nodes[min(n, parent.nodes.count - 1)])
@@ -237,31 +242,6 @@ class StationView: NSView {
             }
         })
     }
-
-    private func showLocalStations(_ item: SideBar.Item) {
-        stations = stationsStore.root
-        searchView?.view.removeFromSuperview()
-        searchView?.removeFromParent()
-        searchView = nil
-    }
-
-    private func showRadioBrowserSearch(_ item: SideBar.Item) {
-        if searchView == nil {
-            searchView = SearchView()
-            searchView?.stationsView = self
-        }
-
-        bottomBarHeight.constant = 0
-//        bottomBar.frame.size.height = 200
-//        bottomBar.isHidden = true
-        searchView!.item = item
-        // searchVie
-        stations = Group(name: "")
-        updateLayer()
-
-        guard let view = searchView?.view else { return }
-        splitView.insertArrangedSubview(view, at: 0)
-    }
 }
 
 /* ****************************************
@@ -272,12 +252,12 @@ extension StationView: NSOutlineViewDelegate {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
-        if let group = item as? Group {
-            return GroupRowView(group: group)
+        if let group = item as? StationGroup {
+            return GroupRowView(group: group, stationView: self)
         }
 
         if let station = item as? Station {
-            return StationRowView(station: station)
+            return StationRowView(station: station, stationView: self)
         }
 
         return nil
@@ -292,12 +272,14 @@ extension StationView: NSOutlineViewDataSource {
      * Returns the number of child items each item in the outline
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
+        guard let stations = stations else { return 0 }
+
         // Root item
         if item == nil {
             return stations.nodes.count
         }
 
-        if let group = item as? Group {
+        if let group = item as? StationGroup {
             return group.nodes.count
         }
 
@@ -308,12 +290,14 @@ extension StationView: NSOutlineViewDataSource {
      * Returns the actual item
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
+        guard let stations = stations else { return item! }
+
         // Root item
         if item == nil {
             return stations.nodes[index]
         }
 
-        if let group = item as? Group {
+        if let group = item as? StationGroup {
             if index < group.nodes.count {
                 return group.nodes[index]
             }
@@ -326,7 +310,7 @@ extension StationView: NSOutlineViewDataSource {
      * We must specify if a given item should be expandable or not.
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        if let group = item as? Group {
+        if let group = item as? StationGroup {
             return !group.nodes.isEmpty
         }
 
@@ -337,7 +321,7 @@ extension StationView: NSOutlineViewDataSource {
      * Variable Row Heights
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        if item is Group {
+        if item is StationGroup {
             return CGFloat(38.0)
         }
 
@@ -365,7 +349,7 @@ extension StationView: NSOutlineViewDataSource {
         let pasteboardItem: NSPasteboardItem = NSPasteboardItem()
         let index: Int = outlineView.row(forItem: item)
 
-        if item is StationsStore.Node {
+        if item is StationNode {
             pasteboardItem.setString(String(index), forType: nodePasteboardType)
         }
 
@@ -375,11 +359,11 @@ extension StationView: NSOutlineViewDataSource {
     /* ****************************************
      *
      * ****************************************/
-    private func draggedNode(info: NSDraggingInfo) -> StationsStore.Node? {
+    private func draggedNode(info: NSDraggingInfo) -> StationNode? {
         guard
             let str = info.draggingPasteboard.pasteboardItems?.first?.string(forType: nodePasteboardType),
             let row = Int(str),
-            let res = stationsTree.item(atRow: row) as? StationsStore.Node
+            let res = stationsTree.item(atRow: row) as? StationNode
         else {
             return nil
         }
@@ -390,14 +374,14 @@ extension StationView: NSOutlineViewDataSource {
     /* ****************************************
      *
      * ****************************************/
-    private func canDragAndDrop(src: StationsStore.Node, dest: StationsStore.Node) -> Bool {
-        var node: StationsStore.Node? = dest
+    private func canDragAndDrop(src: StationNode, dest: StationNode) -> Bool {
+        var node: StationNode? = dest
         while node != nil {
             if node?.id == src.id {
                 return false
             }
 
-            node = node?.parent()
+            node = node?.parent
         }
 
         return true
@@ -423,16 +407,19 @@ extension StationView: NSOutlineViewDataSource {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
-        func getDestParent() -> Group? {
+        guard let stations = stations else { return false }
+        if !isEditable { return false }
+
+        func getDestParent() -> StationGroup? {
             if item == nil { return stations }
-            if let group = item as? Group { return group }
-            if let station = item as? Station { return station.parent() }
+            if let group = item as? StationGroup { return group }
+            if let station = item as? Station { return station.parent }
             return nil
         }
 
         guard
             let srcNode = draggedNode(info: info),
-            let srcParent = srcNode.parent(),
+            let srcParent = srcNode.parent,
             let srcIndex = srcParent.index(srcNode),
 
             let destParent = getDestParent()
@@ -472,8 +459,7 @@ extension StationView: NSOutlineViewDataSource {
             destParent.nodes.insert(node, at: destIndex)
         }
 
-        // stationsStore.emitChanged()
-        // stationsStore.write()
+        stations.write()
 
         // Animate the rows .......................
         outlineView.beginUpdates()

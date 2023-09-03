@@ -235,7 +235,7 @@ class StatusBarController: NSObject {
      * ****************************************/
     private func createStationMenuItem(_ station: Station, prefix: String = "") -> NSMenuItem {
         let res = NSMenuItem(
-            title: prefix + station.name,
+            title: prefix + station.title,
             action: #selector(stationClicked(_:)),
             keyEquivalent: "")
 
@@ -251,7 +251,7 @@ class StatusBarController: NSObject {
     func buildFlatFavoritesMenu(menu: NSMenu) {
         menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
 
-        for station in stationsStore.favorites() {
+        for station in stationsStore.localStations.favorites() {
             menu.addItem(createStationMenuItem(station))
         }
     }
@@ -260,7 +260,7 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     func buildMarginFavoritesMenu(menu: NSMenu) {
-        func build(root: Group, menu: NSMenu, prefix: String = "") {
+        func build(root: StationGroup, menu: NSMenu, prefix: String = "") {
             for node in root.nodes {
                 if let station = node as? Station {
                     if station.isFavorite {
@@ -269,12 +269,12 @@ class StatusBarController: NSObject {
                     continue
                 }
 
-                if let group = node as? Group {
+                if let group = node as? StationGroup {
                     let n = menu.numberOfItems
 
                     build(root: group, menu: menu, prefix: prefix + menuPrefix + "  ")
                     if menu.numberOfItems > n {
-                        let groupItem = NSMenuItem(title: prefix + group.name, action: nil, keyEquivalent: "")
+                        let groupItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
                         menu.insertItem(groupItem, at: n)
                     }
                 }
@@ -282,14 +282,14 @@ class StatusBarController: NSObject {
         }
 
         menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
-        build(root: stationsStore.root, menu: menu, prefix: menuPrefix)
+        build(root: stationsStore.localStations, menu: menu, prefix: menuPrefix)
     }
 
     /* ****************************************
      *
      * ****************************************/
     func buildSubmenuFavoritesMenu(menu: NSMenu) {
-        func build(root: Group, menu: NSMenu, prefix: String = "") {
+        func build(root: StationGroup, menu: NSMenu, prefix: String = "") {
             for node in root.nodes {
                 if let station = node as? Station {
                     if station.isFavorite {
@@ -298,11 +298,11 @@ class StatusBarController: NSObject {
                     continue
                 }
 
-                if let group = node as? Group {
+                if let group = node as? StationGroup {
                     let subMenu = NSMenu()
                     build(root: group, menu: subMenu)
                     if subMenu.numberOfItems > 0 {
-                        let subMenuItem = NSMenuItem(title: prefix + group.name, action: nil, keyEquivalent: "")
+                        let subMenuItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
                         subMenuItem.submenu = subMenu
                         menu.addItem(subMenuItem)
                     }
@@ -311,7 +311,7 @@ class StatusBarController: NSObject {
         }
 
         menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
-        build(root: stationsStore.root, menu: menu, prefix: menuPrefix)
+        build(root: stationsStore.localStations, menu: menu, prefix: menuPrefix)
     }
 
     /* ****************************************

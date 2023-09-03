@@ -11,21 +11,31 @@ import Cocoa
 class GroupRowView: NSView {
     @IBOutlet var nameEdit: NSTextField!
 
-    private let group: Group
+    private weak var stationView: StationView!
+    private let group: StationGroup
 
-    init(group: Group) {
+    /* ****************************************
+     *
+     * ****************************************/
+    init(group: StationGroup, stationView: StationView) {
         self.group = group
+        self.stationView = stationView
         super.init(frame: NSRect.zero)
         _ = load(fromNIBNamed: "GroupRowView")
 
-        nameEdit.stringValue = group.name
+        nameEdit.stringValue = group.title
         nameEdit.tag = group.id
-        nameEdit.target = self
-        nameEdit.action = #selector(nameEdited(sender:))
+        if stationView.isEditable {
+            nameEdit.target = self
+            nameEdit.action = #selector(nameEdited(sender:))
+        }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     required init?(coder: NSCoder) {
-        group = Group(name: "")
+        group = StationGroup(title: "")
         super.init(coder: coder)
     }
 
@@ -33,8 +43,7 @@ class GroupRowView: NSView {
      *
      * ****************************************/
     @IBAction private func nameEdited(sender: NSTextField) {
-        group.name = sender.stringValue
-        stationsStore.emitChanged()
-        stationsStore.write()
+        group.title = sender.stringValue
+        stationView.nodeDidChanged(node: group)
     }
 }

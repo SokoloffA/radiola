@@ -18,7 +18,7 @@ class ToolbarPlayView: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.playButton.setContentHuggingPriority(NSLayoutConstraint.Priority(240) /*.defaultLow*/  , for: NSLayoutConstraint.Orientation.horizontal)
+        playButton.setContentHuggingPriority(NSLayoutConstraint.Priority(240) /* .defaultLow */, for: NSLayoutConstraint.Orientation.horizontal)
         playButton.bezelStyle = NSButton.BezelStyle.regularSquare
         playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
         playButton.imagePosition = NSControl.ImagePosition.imageOnly
@@ -31,9 +31,17 @@ class ToolbarPlayView: NSViewController {
         playButton.image?.isTemplate = true
         playButton.target = self
         playButton.action = #selector(togglePlay)
-        
-//        view.wantsLayer = true
-//        view.layer?.backgroundColor = NSColor.red.cgColor
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: Notification.Name.PlayerStatusChanged,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(refresh),
+                                               name: Notification.Name.PlayerMetadataChanged,
+                                               object: nil)
+
         refresh()
     }
 
@@ -42,43 +50,41 @@ class ToolbarPlayView: NSViewController {
      * ****************************************/
     @objc private func refresh() {
         switch player.status {
-        case Player.Status.paused:
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = "Super Song"
+            case Player.Status.paused:
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = "Super Song"
 
-        case Player.Status.connecting:
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
+            case Player.Status.connecting:
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
 
-        case Player.Status.playing:
-            stationLabel.stringValue = player.stationName
-            songLabel.stringValue = player.title
+            case Player.Status.playing:
+                stationLabel.stringValue = player.stationName
+                songLabel.stringValue = player.title
         }
 
         switch player.status {
-        case Player.Status.paused:
-            playButton.image = NSImage(named: NSImage.Name("NSTouchBarPlayTemplate"))
-            playButton.image?.isTemplate = true
-            playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
+            case Player.Status.paused:
+                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPlayTemplate"))
+                playButton.image?.isTemplate = true
+                playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
 
-        case Player.Status.connecting:
-            playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
-            playButton.image?.isTemplate = true
-            playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
+            case Player.Status.connecting:
+                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
+                playButton.image?.isTemplate = true
+                playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
 
-        case Player.Status.playing:
-            playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
-            playButton.image?.isTemplate = true
-            playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
+            case Player.Status.playing:
+                playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
+                playButton.image?.isTemplate = true
+                playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
         }
-     
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
     @objc private func togglePlay() {
-        print(view.frame.size)
         player.toggle()
     }
 }

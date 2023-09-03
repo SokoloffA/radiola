@@ -18,13 +18,13 @@
             <rect key="frame" x="0.0" y="0.0" width="259" height="255"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="28" horizontalPageScroll="10" verticalLineScroll="28" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltb-h0-Ibs">
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ltb-h0-Ibs">
                     <rect key="frame" x="0.0" y="0.0" width="259" height="255"/>
                     <clipView key="contentView" drawsBackground="NO" id="vB0-Pl-nTZ">
                         <rect key="frame" x="0.0" y="0.0" width="259" height="255"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" rowHeight="28" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="13" outlineTableColumn="oYS-fZ-lnG" id="bP1-77-BFY">
+                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="sourceList" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" indentationPerLevel="13" outlineTableColumn="oYS-fZ-lnG" id="bP1-77-BFY">
                                 <rect key="frame" x="0.0" y="0.0" width="259" height="255"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="0.0"/>
@@ -68,7 +68,7 @@
                                                     <imageView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iyh-Qf-E0M">
                                                         <rect key="frame" x="3" y="0.0" width="17" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <imageCell key="cell" refusesFirstResponder="YES" imageScaling="proportionallyDown" image="NSActionTemplate" catalog="system" id="wbG-bn-FLD"/>
+                                                        <imageCell key="cell" refusesFirstResponder="YES" imageScaling="proportionallyDown" image="NSActionTemplate" id="wbG-bn-FLD"/>
                                                     </imageView>
                                                     <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zme-gj-NDx">
                                                         <rect key="frame" x="25" y="0.0" width="211" height="17"/>
@@ -119,6 +119,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="NSActionTemplate" catalog="system" width="19" height="19"/>
+        <image name="NSActionTemplate" width="19" height="19"/>
     </resources>
 </document>

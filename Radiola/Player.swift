@@ -15,7 +15,7 @@ var player = Player()
 class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     var station: Station?
     public var title = String()
-    public var stationName: String { station?.name ?? "" }
+    public var stationName: String { station?.title ?? "" }
 
     public enum Status {
         case paused
@@ -248,11 +248,11 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private func addHistory() {
         guard let station = station else { return }
 
-        if history.last?.song == title && history.last?.station == station.name {
+        if history.last?.song == title && history.last?.station == station.title {
             return
         }
 
-        history.append(HistoryRecord(song: title, station: station.name, date: Date()))
+        history.append(HistoryRecord(song: title, station: station.title, date: Date()))
         if history.count > 100 {
             history.removeFirst(history.count - 100)
         }

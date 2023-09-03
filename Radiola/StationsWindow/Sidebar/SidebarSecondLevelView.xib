@@ -21,16 +21,16 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xjf-xA-Blq">
-                    <rect key="frame" x="0.0" y="-2" width="32" height="37"/>
+                    <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="32" id="0FM-Nv-Mkc"/>
                         <constraint firstAttribute="height" constant="32" id="ciP-3C-r9c"/>
                     </constraints>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="folder" catalog="system" id="ejp-0A-hrc"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="st" id="ejp-0A-hrc"/>
                     <color key="contentTintColor" name="AccentColor"/>
                 </imageView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="whY-BC-4cz">
-                    <rect key="frame" x="29" y="11" width="452" height="16"/>
+                    <rect key="frame" x="29" y="-108" width="452" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="q46-7u-7Jf">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -50,7 +50,7 @@
         </customView>
     </objects>
     <resources>
-        <image name="folder" catalog="system" width="19" height="14"/>
+        <image name="st" width="128" height="128"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

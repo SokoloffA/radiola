@@ -38,6 +38,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSApp.setActivationPolicy(.accessory)
 
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(processError),
+                                               name: Notification.Name.ErrorOccurred,
+                                               object: nil)
+
         let dirName = URL(
             fileURLWithPath: oplDirectoryName,
             relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
@@ -54,17 +59,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
-        stationsStore.load(file: fileName)
-
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(playerStatusChanged),
                                                name: Notification.Name.PlayerStatusChanged,
                                                object: nil)
 
         if let url = settings.lastStationUrl {
-            player.station = stationsStore.station(byUrl: url)
+            player.station = stationsStore.localStations.station(byUrl: url)
         } else {
-            player.station = stationsStore.favorites().first
+            player.station = stationsStore.localStations.favorites().first
         }
 
         statusBar = StatusBarController()
@@ -162,6 +165,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         NSApp.setActivationPolicy(.accessory)
         return false
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func processError(_ notification: Notification) {
+        let msg = notification.userInfo?["message"] as? String ?? ""
+
+        print("** ERROR ******************************")
+        print("* \(msg)")
+        print("* On: \(notification.object)")
+        print("*******************************************")
     }
 }
 

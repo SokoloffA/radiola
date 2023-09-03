@@ -85,7 +85,7 @@ class MediaKeysController {
      * ****************************************/
     private func switchStation(offset: Int) {
         guard let curStation = player.station else { return }
-        let favorites = stationsStore.favorites()
+        let favorites = stationsStore.localStations.favorites()
         if favorites.count <= 1 { return }
 
         var newIndex = 0

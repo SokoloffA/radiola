@@ -14,10 +14,14 @@ class SidebarSecondLevelView: NSView {
     /* ****************************************
      *
      * ****************************************/
-    init(item: SideBar.Item) {
+    init(title: String, icon: String) {
         super.init(frame: NSRect.zero)
         _ = load(fromNIBNamed: "SidebarSecondLevelView")
-        titleLabel.stringValue = item.title
+        titleLabel.stringValue = title
+
+        if !icon.isEmpty {
+            iconView.image = NSImage(systemSymbolName: NSImage.Name(icon), accessibilityDescription: "")
+        }
     }
 
     /* ****************************************

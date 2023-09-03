@@ -172,93 +172,25 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     @IBAction func sidebarChanged(_ sender: NSOutlineView) {
-//        stationsView.item = sideBar.currentItem(); return
-//
-//        guard let item = sideBar.currentItem() else { return }
-//
-//        switch item.type {
-//            case .local: showLocalItem(item)
-//            case .radioBrowser: showInternetItem(item)
-//        }
+        guard let stations = sideBar.currentStations() else { return }
+
+        switch stations.state {
+            case .searchRequired:
+                break
+            case .canLoad:
+                Task {
+                    await stations.load()
+                    showStations(stations)
+                }
+            case .loaded:
+                showStations(stations)
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
-//    private func showLocalItem(_ item: SideBar.Item) {
-//        if searchView != nil {
-//            print("DELETING. BEFORE:", searchView)
-//            searchView?.view.removeFromSuperview()
-//            searchView?.removeFromParent()
-//            searchView = nil
-//            print("DELETING. AFTER:", searchView)
-//        }
-//
-//        stationsView.stations = stationsStore.root
-//    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-//    private func showInternetItem(_ item: SideBar.Item) {
-//        if searchView == nil {
-//            searchView = SearchView()
-//        }
-//
-//        searchView!.item = item
-//        stationsView.stations = Group(name: "")
-//
-//        guard let view = searchView?.view else { return }
-//        splitView.insertArrangedSubview(view, at: 1)
-//
-//
-//    }
-
-//    private func loadRadioBrowser(_ item: SideBar.Item) {
-//        Task {
-//            do {
-//                let request = RadioBrowser.StationsRequest()
-//                request.hidebroken = true
-//                request.order = .votes
-//
-//                let res = try await request.get(bytag: "Classic Rock")
-//                requestDone(res)
-//
-//            } catch {
-//                print("Request failed with error: \(error)")
-//            }
-//        }
-//    }
-
-//    private func requestDone(_ resp: [RadioBrowser.Station]) {
-//        print("DONE", resp.count)
-//        var root = Group(name: "")
-//        for r in resp {
-//            var s = Station(name: r.name, url: r.url)
-//            root.append(s)
-//        }
-//
-//        stationsView.stations = root
-//    }
-
-//        //stationsView.stations = Group(name: "")
-//        let req = RadioBrowserTagRequest()
-//        print("SEND")
-//        req.send(){(result) in
-//            DispatchQueue.main.async {
-//                switch result {
-//                    case .success(let tags):
-//                        print("RESULT", tags)
-//                    self.stationsView.stations = Group(name: "")
-//
-//
-//                    case .failure(let error):
-//                        print("Request failed with error: \(error)")
-//                    }
-//
-//
-//            }
-//        }
-//        print("DONE")
-//    }
+    private func showStations(_ stations: StationList) {
+        stationsView.stations = stations
+    }
 }

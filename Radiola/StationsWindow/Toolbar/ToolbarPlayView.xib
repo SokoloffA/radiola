@@ -21,7 +21,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="220" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mk3-KT-01s">
-                    <rect key="frame" x="68" y="28" width="155" height="16"/>
+                    <rect key="frame" x="68" y="27" width="155" height="16"/>
                     <constraints>
                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="151" id="vMH-C6-v6s"/>
                     </constraints>
@@ -32,7 +32,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="220" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="V89-bs-lXE">
-                    <rect key="frame" x="68" y="9" width="155" height="14"/>
+                    <rect key="frame" x="68" y="10" width="155" height="14"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Syper station" id="haq-8a-ysJ">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -54,12 +54,12 @@
             </subviews>
             <constraints>
                 <constraint firstItem="ucz-hQ-b0k" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="UYA-cV-KLQ"/>
-                <constraint firstItem="Mk3-KT-01s" firstAttribute="bottom" secondItem="Hz6-mo-xeY" secondAttribute="centerY" constant="-2" id="WaY-Dd-bcy"/>
+                <constraint firstItem="Mk3-KT-01s" firstAttribute="bottom" secondItem="Hz6-mo-xeY" secondAttribute="centerY" constant="-1" id="WaY-Dd-bcy"/>
                 <constraint firstItem="Mk3-KT-01s" firstAttribute="leading" secondItem="ucz-hQ-b0k" secondAttribute="trailing" constant="8" symbolic="YES" id="gef-ca-Bb6"/>
                 <constraint firstItem="ucz-hQ-b0k" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" constant="-2" id="hrt-LV-B6A"/>
                 <constraint firstAttribute="trailing" secondItem="V89-bs-lXE" secondAttribute="trailing" constant="20" symbolic="YES" id="lRx-Lq-Rma"/>
                 <constraint firstAttribute="trailing" secondItem="Mk3-KT-01s" secondAttribute="trailing" constant="20" symbolic="YES" id="n7m-SS-HaB"/>
-                <constraint firstAttribute="centerY" secondItem="V89-bs-lXE" secondAttribute="top" constant="-3" id="rnX-G5-j0H"/>
+                <constraint firstAttribute="centerY" secondItem="V89-bs-lXE" secondAttribute="top" constant="-2" id="rnX-G5-j0H"/>
                 <constraint firstItem="V89-bs-lXE" firstAttribute="leading" secondItem="ucz-hQ-b0k" secondAttribute="trailing" constant="8" symbolic="YES" id="xzb-JE-Bg0"/>
             </constraints>
             <point key="canvasLocation" x="-8.5" y="157"/>
