@@ -14,7 +14,7 @@ class StationsStore {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
 
-    let localStations: StationList!
+    let localStations = LocalStationList(title: "Local staions")
 
     init() {
         let dirName = URL(
@@ -33,7 +33,7 @@ class StationsStore {
             }
         }
 
-        localStations = StationList(title: "Local stations", url: fileName)
+        localStations.load(file: fileName)
     }
 
     /* ****************************************
@@ -49,8 +49,7 @@ class StationsStore {
      *
      * ****************************************/
     func station(byId: Int) -> Station? {
-        var res = find(byId: byId)
-        return res as? Station
+        return find(byId: byId) as? Station
     }
 }
 

@@ -35,15 +35,21 @@ class StationNode {
     let id: Int = { lastId += 1; return lastId }()
     var title: String = ""
     weak var parent: StationGroup?
+
     /* **************************************
      *
      * **************************************/
-//        func parent() -> Group? {
-//            return root.find {
-//                guard let group = $0 as? Group else { return false }
-//                return group.nodes.contains(where: { $0.id == self.id })
-//            } as? Group
-//        }
+    func stationList() -> StationList? {
+        var p = parent
+        while p != nil {
+            if let p = p as? StationList {
+                return p
+            }
+            p = p?.parent
+        }
+
+        return nil
+    }
 }
 
 /* ******************************************
@@ -122,6 +128,20 @@ class StationGroup: StationNode {
     /* ****************************************
      *
      * ****************************************/
+    func index(_ node: StationNode) -> Int? {
+        return nodes.firstIndex { $0.id == node.id }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func contains(_ node: StationNode) -> Bool {
+        return nodes.contains(where: { $0 === node })
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func append(_ node: StationNode) {
         nodes.append(node)
     }
@@ -162,8 +182,8 @@ class StationGroup: StationNode {
     /* ****************************************
      *
      * ****************************************/
-    func index(_ node: StationNode) -> Int? {
-        return nodes.firstIndex { $0.id == node.id }
+    func removeAll() {
+        nodes.removeAll()
     }
 }
 
@@ -171,27 +191,7 @@ class StationGroup: StationNode {
  * Station List
  * **********************************************/
 class StationList: StationGroup {
-    /* ******************************************
-     *
-     * ******************************************/
-    enum State {
-        case searchRequired
-        case canLoad
-        case loaded
-    }
-
-    let url: URL
-
-    var state: State = .canLoad
-    private(set) var isEditable = false
-
-    /* ****************************************
-     *
-     * ****************************************/
-    init(title: String, url: URL) {
-        self.url = url
-        super.init(title: title)
-    }
+    var isEditable: Bool { return false }
 
     /* ****************************************
      *
@@ -226,82 +226,5 @@ class StationList: StationGroup {
      * ****************************************/
     func favorites() -> [Station] {
         return filterStations { $0.isFavorite }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func load() async {
-        if url.isFileURL {
-            loadLocal()
-            isEditable = true
-        } else {
-            loadHttp()
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func loadLocal() {
-        print(url.path)
-
-        if !FileManager().fileExists(atPath: url.path) {
-            for s in defaultStations {
-                nodes.append(s)
-            }
-            return
-        }
-
-        func getBoolAttribute(xml: XMLElement, attribute: String) -> Bool {
-            return (xml.attribute(forName: attribute)?.stringValue ?? "").uppercased() == "TRUE"
-        }
-
-        func loadOutline(xml: XMLElement, parent: StationGroup) {
-            let children = xml.elements(forName: "outline")
-
-            if getBoolAttribute(xml: xml, attribute: "group") || !children.isEmpty {
-                let group = StationGroup(title: xml.attribute(forName: "text")?.stringValue ?? "")
-
-                for outline in children {
-                    loadOutline(xml: outline, parent: group)
-                }
-                parent.nodes.append(group)
-                return
-            }
-
-            let station = Station(
-                title: xml.attribute(forName: "text")?.stringValue ?? "",
-                url: xml.attribute(forName: "url")?.stringValue ?? "",
-                isFavorite: getBoolAttribute(xml: xml, attribute: "fav")
-            )
-            parent.nodes.append(station)
-        }
-
-        do {
-            let xml = try XMLDocument(contentsOf: url)
-            guard let xmlRoot = xml.rootElement() else { return }
-            let xmlBody = xmlRoot.elements(forName: "body")
-            if xmlBody.isEmpty {
-                return
-            }
-
-            for outline in xmlBody[0].elements(forName: "outline") {
-                loadOutline(xml: outline, parent: self)
-            }
-        } catch {
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func loadHttp() {
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func write() {
     }
 }

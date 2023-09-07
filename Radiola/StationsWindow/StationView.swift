@@ -90,7 +90,8 @@ class StationView: NSView {
      *
      * ****************************************/
     func nodeDidChanged(node: StationNode) {
-        stations?.write()
+        guard let stations = stations as? LocalStationList else { return }
+        stations.save()
     }
 
     /* ****************************************
@@ -118,7 +119,7 @@ class StationView: NSView {
      *
      * ****************************************/
     private func addNode(newNode: StationNode) {
-        guard let stations = stations else { return }
+        guard let stations = stations as? LocalStationList else { return }
         if !isEditable { return }
 
         let node = selectedNode()
@@ -141,7 +142,7 @@ class StationView: NSView {
             group.insert(newNode, after: station)
         }
 
-        stations.write()
+        stations.save()
 
         if let index = newNode.parent?.index(newNode)! {
             stationsTree.beginUpdates()
@@ -194,7 +195,7 @@ class StationView: NSView {
      *
      * ****************************************/
     @objc func removeStation(_ sender: Any) {
-        guard let stations = stations else { return }
+        guard let stations = stations as? LocalStationList else { return }
         if !isEditable { return }
 
         guard let wnd = window else { return }
@@ -222,7 +223,7 @@ class StationView: NSView {
             if response == NSApplication.ModalResponse.alertFirstButtonReturn {
                 let n = parent.index(node) ?? 0
                 parent.remove(node)
-                stations.write()
+                stations.save()
 
                 self.stationsTree.beginUpdates()
                 self.stationsTree.removeItems(
@@ -407,7 +408,7 @@ extension StationView: NSOutlineViewDataSource {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
-        guard let stations = stations else { return false }
+        guard let stations = stations as? LocalStationList else { return false }
         if !isEditable { return false }
 
         func getDestParent() -> StationGroup? {
@@ -459,7 +460,7 @@ extension StationView: NSOutlineViewDataSource {
             destParent.nodes.insert(node, at: destIndex)
         }
 
-        stations.write()
+        stations.save()
 
         // Animate the rows .......................
         outlineView.beginUpdates()
@@ -475,12 +476,5 @@ extension StationView: NSOutlineViewDataSource {
 
         // stationsStore.dump()
         return true
-    }
-}
-
-class StationViewController: NSViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
     }
 }

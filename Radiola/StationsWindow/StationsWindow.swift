@@ -45,6 +45,10 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         splitView.autosaveName = "Stations Splitter"
 
         initStationsPanel()
+
+        sideBar.outlineView.target = self
+        sideBar.outlineView.action = #selector(sidebarChanged)
+        sidebarChanged()
     }
 
     /* ****************************************
@@ -171,26 +175,15 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    @IBAction func sidebarChanged(_ sender: NSOutlineView) {
-        guard let stations = sideBar.currentStations() else { return }
+    @objc private func sidebarChanged() {
+        if let stations = sideBar.currentStations() {
+            stationsView.stations = stations
+            return
+        }
 
-        switch stations.state {
-            case .searchRequired:
-                break
-            case .canLoad:
-                Task {
-                    await stations.load()
-                    showStations(stations)
-                }
-            case .loaded:
-                showStations(stations)
+        if let provider = sideBar.currentProvider() {
+            return
         }
     }
 
-    /* ****************************************
-     *
-     * ****************************************/
-    private func showStations(_ stations: StationList) {
-        stationsView.stations = stations
-    }
 }
