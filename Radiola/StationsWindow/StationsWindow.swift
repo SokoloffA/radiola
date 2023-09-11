@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate {
+class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate, StationsProviderDelegate {
     private static var instance: StationsWindow?
     var sideBar = SideBar()
     var sideBarWidth: CGFloat = 0.0
@@ -52,6 +52,13 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         sideBar.outlineView.target = self
         sideBar.outlineView.action = #selector(sidebarChanged)
+        sideBar.localStations.append(stationsStore.localStations)
+        sideBar.providers = stationsStore.providers
+
+        for var p in sideBar.providers {
+            p.delegate = self
+        }
+
         sidebarChanged()
     }
 
@@ -214,5 +221,21 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
+//    @objc private func searchDone(_ stations: Any) { // _ stations: StationList) {
+//        guard let stations = stations as? StationList else { return }
+//
+//        debug(#function)
+//        stationsView.stations = stations
+//    }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    func fetchDidFinished(sender: StationsProvider) {
+        print("fetchDidFinished ", sender.title)
+        stationsView.stations = sender.stations
+    }
 }

@@ -11,6 +11,17 @@ protocol StationsProvider {
     var title: String { get }
     var stations: StationList { get }
     var searchText: String { get set }
+    var delegate: StationsProviderDelegate? { get set }
 
     func fetch() async throws
+}
+
+protocol StationsProviderDelegate {
+    func fetchWillStarte(sender: StationsProvider)
+    func fetchDidFinished(sender: StationsProvider)
+}
+
+extension StationsProviderDelegate {
+    func fetchWillStarte(sender: StationsProvider) {}
+    func fetchDidFinished(sender: StationsProvider) {}
 }

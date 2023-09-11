@@ -11,7 +11,8 @@ class RadioBrowserProvider: StationsProvider {
     var title = ""
     var searchText = ""
     var isExactMatch = false
-    let stations = StationList(title: "")
+    private(set) var stations = StationList(title: "")
+    var delegate: StationsProviderDelegate?
 
     /* ****************************************
      *
@@ -24,26 +25,29 @@ class RadioBrowserProvider: StationsProvider {
      *
      * ****************************************/
     func fetch() async throws {
-        print(#function, #line)
         if searchText.isEmpty {
             return
         }
-        print(#function, #line)
+
+        await MainActor.run {
+            delegate?.fetchDidFinished(sender: self)
+        }
+
         let request = RadioBrowser.StationsRequest()
         request.hidebroken = true
         request.order = .votes
-        print(#function, #line)
 
-        var type: RadioBrowser.StationsRequest.RequestType = isExactMatch ? .bytagexact : .bytag
+        let type: RadioBrowser.StationsRequest.RequestType = isExactMatch ? .bytagexact : .bytag
         let resp = try await request.get(by: type, searchterm: searchText)
-        print(#function, #line, resp.count)
+
         await MainActor.run {
-            print(#function, Unmanaged.passUnretained(stations).toOpaque())
-            stations.removeAll()
+            let sts = StationList(title: self.stations.title)
             for r in resp {
-                stations.append(Station(title: r.name, url: r.url))
+                sts.append(Station(title: r.name, url: r.url))
             }
-            print(stations.nodes.count)
+            print("Provider done", sts.nodes.count)
+            self.stations = sts
+            delegate?.fetchDidFinished(sender: self)
         }
     }
 }

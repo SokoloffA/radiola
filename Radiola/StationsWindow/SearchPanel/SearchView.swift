@@ -63,6 +63,10 @@ class SearchView: NSViewController {
      *
      * ****************************************/
     @objc private func search() {
+        if searchTextView.stringValue.isEmpty {
+            return
+        }
+
         guard let provider = provider else { return }
 
         provider.searchText = searchTextView.stringValue
@@ -70,17 +74,54 @@ class SearchView: NSViewController {
 
         Task {
             do {
-                print(#function, #line)
                 try await provider.fetch()
-                print(#function, #line)
-                //        stationsView?.stations = res
-                await MainActor.run {
-                    self.stationsView?.stations = provider.stations
-                }
             } catch {
-                print(#function, #line)
-                print("Request failed with error: \(error)")
+                errorOccurred("Can't get data from radio-browser.com")
             }
         }
     }
+//    @objc private func search() {
+//        if searchTextView.stringValue.isEmpty {
+//            return
+//        }
+//
+//        delegate?.searchWillStarte()
+//
+//        struct ReqId {
+//            private static var id: Int64 = 0
+//            static var last: Int64 { return ReqId.id }
+//            static func next() -> Int64 { ReqId.id += 1; return ReqId.id }
+//        }
+//
+//        let id = ReqId.next()
+//
+//        Task {
+//            do {
+//                let res = StationList()
+//
+//                let request = RadioBrowser.StationsRequest()
+//                request.hidebroken = true
+//                request.order = .votes
+//
+//                let type: RadioBrowser.StationsRequest.RequestType = exactButton.state == .on ? .bytagexact : .bytag
+//
+//                let resp = try await request.get(by: type, searchterm: searchTextView.stringValue)
+//
+//                if id != ReqId.last {
+//                    return
+//                }
+//
+//                for r in resp {
+//                    res.append(Station(title: r.name, url: r.url))
+//                }
+//
+//                await MainActor.run {
+//                    delegate?.searchDidFinished(stations: res)
+//                }
+//
+//            } catch {
+//                errorOccurred("Can't get data from radio-browser.com")
+//            }
+//        }
+//    }
 }

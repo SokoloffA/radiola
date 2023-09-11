@@ -42,8 +42,8 @@ class StationNode {
     func stationList() -> StationList? {
         var p = parent
         while p != nil {
-            if let p = p as? StationList {
-                return p
+            if let res = p as? StationList {
+                return res
             }
             p = p?.parent
         }
