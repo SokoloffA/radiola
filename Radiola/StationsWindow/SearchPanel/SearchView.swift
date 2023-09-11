@@ -8,51 +8,79 @@
 import Cocoa
 
 class SearchView: NSViewController {
-    @IBOutlet var searchText: NSSearchField!
-    @IBOutlet var searchButton: NSButton!
-    @IBOutlet var exactCheckBox: NSButton!
+    @IBOutlet var searchTextView: NSSearchField!
+    @IBOutlet var exactButton: NSButton!
     @IBOutlet var sortComboBox: NSPopUpButton!
 
-    var stationsView: StationView?
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        searchText.target = self
-        searchText.action = #selector(search)
-
-        searchButton.target = self
-        searchButton.action = #selector(search)
+    weak var stationsView: StationView?
+    var provider: RadioBrowserProvider? {
+        didSet {
+            setProvider()
+        }
     }
 
-//    override func viewWillDisappear() {
-//        print(#function)
-//    }
+    /* ****************************************
+     *
+     * ****************************************/
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchTextView.sendsWholeSearchString = true
 
+        searchTextView.target = self
+        searchTextView.action = #selector(search)
+
+        exactButton.target = self
+        exactButton.action = #selector(exactButtonClicked)
+
+        setProvider()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func setProvider() {
+        guard let provider = provider else { return }
+        if isViewLoaded {
+            searchTextView.stringValue = provider.searchText
+            exactButton.state = provider.isExactMatch ? .on : .off
+            exactButtonClicked()
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func exactButtonClicked() {
+        if exactButton.state == .on {
+            exactButton.image = NSImage(systemSymbolName: NSImage.Name("checkmark"), accessibilityDescription: "")
+            exactButton.image?.isTemplate = true
+        } else {
+            exactButton.image = nil
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @objc private func search() {
+        guard let provider = provider else { return }
+
+        provider.searchText = searchTextView.stringValue
+        provider.isExactMatch = exactButton.state == .on
+
         Task {
             do {
-                let request = RadioBrowser.StationsRequest()
-                request.hidebroken = true
-                request.order = .votes
-
-                let res = try await request.get(bytag: searchText.stringValue)
-                requestDone(res)
-
+                print(#function, #line)
+                try await provider.fetch()
+                print(#function, #line)
+                //        stationsView?.stations = res
+                await MainActor.run {
+                    self.stationsView?.stations = provider.stations
+                }
             } catch {
+                print(#function, #line)
                 print("Request failed with error: \(error)")
             }
         }
-    }
-
-    private func requestDone(_ resp: [RadioBrowser.Station]) {
-        print("DONE", resp.count)
-        var root = StationGroup(title: "")
-        for r in resp {
-            var s = Station(title: r.name, url: r.url)
-            root.append(s)
-        }
-
-        //  stationsView?.stations = root
     }
 }

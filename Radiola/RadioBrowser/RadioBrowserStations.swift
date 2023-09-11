@@ -170,6 +170,8 @@ extension RadioBrowser {
 
 extension RadioBrowser {
     public class StationsRequest {
+        var server: String?
+
         enum OrderType: String {
             case name
             case url
@@ -249,116 +251,48 @@ extension RadioBrowser {
             return res
         }
 
+        enum RequestType: String {
+            case byuuid
+            case byname
+            case bynameexact
+            case bycodec
+            case bycodecexact
+            case bycountry
+            case bycountryexact
+            case bycountrycodeexact
+            case bystate
+            case bystateexact
+            case bylanguage
+            case bylanguageexact
+            case bytag
+            case bytagexact
+        }
+
         /* ****************************************
          *
          * ****************************************/
-        public func get(byuuid searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/byuuid/\(searchterm)"
+        public func get(by: RequestType, searchterm: String) async throws -> [RadioBrowser.Station] {
+            guard let srv = getServer() else { throw RadioBrowserError.dnsError }
+            let url = "http://\(srv)/json/stations/\(by)/\(searchterm)"
             return try await fetch(url: url)
         }
 
         /* ****************************************
          *
          * ****************************************/
-        public func get(byname searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/byname/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bynameexact searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bynameexact/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bycodec searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bycodec/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bycodecexact searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bycodecexact/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bycountry searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bycountry/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bycountryexact searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bycountryexact/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bycountrycodeexact searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bycountrycodeexact/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bystate searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bystate/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bystateexact searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bystateexact/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bylanguage searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bylanguage/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bylanguageexact searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bylanguageexact/\(searchterm)"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bytag searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bytag/\(searchterm.lowercased())"
-            return try await fetch(url: url)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(bytagexact searchterm: String) async throws -> [RadioBrowser.Station] {
-            let url = "http://at1.api.radio-browser.info/json/stations/bytagexact/\(searchterm)"
-            return try await fetch(url: url)
-        }
+        public func get(byuuid searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .byuuid, searchterm: searchterm) }
+        public func get(byname searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .byname, searchterm: searchterm) }
+        public func get(bynameexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bynameexact, searchterm: searchterm) }
+        public func get(bycodec searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycodec, searchterm: searchterm) }
+        public func get(bycodecexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycodecexact, searchterm: searchterm) }
+        public func get(bycountry searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycountry, searchterm: searchterm) }
+        public func get(bycountryexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycountryexact, searchterm: searchterm) }
+        public func get(bycountrycodeexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycountrycodeexact, searchterm: searchterm) }
+        public func get(bystate searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bystate, searchterm: searchterm) }
+        public func get(bystateexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bystateexact, searchterm: searchterm) }
+        public func get(bylanguage searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bylanguage, searchterm: searchterm) }
+        public func get(bylanguageexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bylanguageexact, searchterm: searchterm) }
+        public func get(bytag searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bytag, searchterm: searchterm) }
+        public func get(bytagexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bytagexact, searchterm: searchterm) }
     }
 }

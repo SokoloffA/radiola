@@ -47,10 +47,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             fileURLWithPath: oplDirectoryName,
             relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
 
-        let fileName = URL(
-            fileURLWithPath: oplDirectoryName + "/" + oplFileName,
-            relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
-
         if !FileManager.default.fileExists(atPath: dirName.absoluteString) {
             do {
                 try FileManager.default.createDirectory(at: dirName, withIntermediateDirectories: true)
@@ -175,7 +171,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         print("** ERROR ******************************")
         print("* \(msg)")
-        print("* On: \(notification.object)")
+        print("* On: \(notification.object ?? "nil")")
         print("*******************************************")
     }
 }

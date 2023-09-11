@@ -123,7 +123,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         asset = AVAsset(url: u!)
         playerItem = AVPlayerItem(asset: asset)
-        playerItem?.preferredForwardBufferDuration = 1
+        //playerItem?.preferredForwardBufferDuration = 1
 
         let metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
         metadataOutput.setDelegate(self, queue: DispatchQueue.main)

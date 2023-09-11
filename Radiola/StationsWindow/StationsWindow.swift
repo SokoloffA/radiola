@@ -12,13 +12,15 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     var sideBar = SideBar()
     var sideBarWidth: CGFloat = 0.0
     private let stationsView = StationView()
-    private var searchView: SearchView?
+    private var searchView = SearchView()
     private let toolbarPlayView = ToolbarPlayView()
     private let toolbarVolumeView = ToolbarVolumeView()
     private let toolbarLeftMargin = 145.0
 
+    @IBOutlet var stationToolbarPanel: NSView!
     @IBOutlet var splitView: NSSplitView!
     @IBOutlet var rightView: NSView!
+    @IBOutlet var rightSplitView: NSSplitView!
     @IBOutlet var toggleSideBarItem: NSToolbarItem!
 
     /* ****************************************
@@ -46,6 +48,8 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         initStationsPanel()
 
+        searchView.stationsView = stationsView
+
         sideBar.outlineView.target = self
         sideBar.outlineView.action = #selector(sidebarChanged)
         sidebarChanged()
@@ -55,36 +59,35 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     func initStationsPanel() {
-        let toolbarHeight = window?.contentView?.safeAreaInsets.top ?? 52
+//        let toolbarHeight = window?.contentView?.safeAreaInsets.top ?? 52
 
         let playView = toolbarPlayView.view
         let volumeView = toolbarVolumeView.view
-        rightView.addSubview(playView)
-        rightView.addSubview(volumeView)
-        rightView.addSubview(stationsView)
+        stationToolbarPanel.addSubview(playView)
+        stationToolbarPanel.addSubview(volumeView)
 
         playView.translatesAutoresizingMaskIntoConstraints = false
         volumeView.translatesAutoresizingMaskIntoConstraints = false
-        stationsView.translatesAutoresizingMaskIntoConstraints = false
+        rightSplitView.translatesAutoresizingMaskIntoConstraints = false
+        stationToolbarPanel.translatesAutoresizingMaskIntoConstraints = false
 
-        playView.topAnchor.constraint(equalTo: rightView.topAnchor).isActive = true
-        playView.bottomAnchor.constraint(equalTo: rightView.topAnchor, constant: toolbarHeight).isActive = true
+        playView.topAnchor.constraint(equalTo: stationToolbarPanel.topAnchor).isActive = true
+        playView.bottomAnchor.constraint(equalTo: stationToolbarPanel.bottomAnchor).isActive = true
         volumeView.topAnchor.constraint(equalTo: playView.topAnchor).isActive = true
         volumeView.bottomAnchor.constraint(equalTo: playView.bottomAnchor).isActive = true
 
-        let cnst = playView.leadingAnchor.constraint(equalTo: rightView.leadingAnchor)
+        let cnst = playView.leadingAnchor.constraint(equalTo: stationToolbarPanel.leadingAnchor)
         cnst.priority = NSLayoutConstraint.Priority(999)
         cnst.isActive = true
         if let contentView = window?.contentView {
             playView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: toolbarLeftMargin).isActive = true
         }
-        volumeView.leadingAnchor.constraint(equalTo: playView.trailingAnchor).isActive = true
-        volumeView.trailingAnchor.constraint(equalTo: rightView.trailingAnchor).isActive = true
 
-        stationsView.topAnchor.constraint(equalTo: playView.bottomAnchor).isActive = true
-        stationsView.bottomAnchor.constraint(equalTo: rightView.bottomAnchor).isActive = true
-        stationsView.leadingAnchor.constraint(equalTo: rightView.leadingAnchor).isActive = true
-        stationsView.trailingAnchor.constraint(equalTo: rightView.trailingAnchor).isActive = true
+        playView.trailingAnchor.constraint(equalTo: volumeView.leadingAnchor).isActive = true
+        volumeView.leadingAnchor.constraint(equalTo: playView.trailingAnchor).isActive = true
+        volumeView.trailingAnchor.constraint(equalTo: stationToolbarPanel.trailingAnchor).isActive = true
+
+        rightSplitView.addArrangedSubview(stationsView)
     }
 
     /* ****************************************
@@ -143,7 +146,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    func splitViewDidResizeSubviews(_ notification: Notification) {
+    //   func splitViewDidResizeSubviews(_ notification: Notification) {
 //        guard let window = window else { return }
 //
 //        if toolbarLeftMargin == nil {
@@ -163,7 +166,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 //        else {
 //            toolbarLeftMargin.constant = toolbarLeftMarginMin2// - pos
 //        }
-    }
+//    }
 
     /* ****************************************
      *
@@ -176,14 +179,40 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     @objc private func sidebarChanged() {
-        if let stations = sideBar.currentStations() {
-            stationsView.stations = stations
-            return
-        }
+        stationsView.stations = sideBar.currentStations()
 
         if let provider = sideBar.currentProvider() {
-            return
+            showSearchPanel(provider: provider)
+        } else {
+            hideSearchPanel()
         }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func showSearchPanel(provider: StationsProvider) {
+        guard let provider = provider as? RadioBrowserProvider else { return }
+        searchView.provider = provider
+        stationsView.stations = provider.stations
+        print(#function, Unmanaged.passUnretained(stationsView.stations!).toOpaque(), Unmanaged.passUnretained(provider.stations).toOpaque())
+
+        stationsView.splitView.insertArrangedSubview(searchView.view, at: 0)
+        stationsView.splitView.setHoldingPriority(NSLayoutConstraint.Priority(255), forSubviewAt: 0)
+        stationsView.splitView.setHoldingPriority(NSLayoutConstraint.Priority(250), forSubviewAt: 1)
+
+        searchView.searchTextView.becomeFirstResponder()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func hideSearchPanel() {
+        searchView.provider = nil
+        if searchView.isViewLoaded {
+            stationsView.splitView.removeArrangedSubview(searchView.view)
+        }
+    }
+
 
 }

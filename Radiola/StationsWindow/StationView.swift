@@ -9,7 +9,6 @@ import Cocoa
 
 class StationView: NSView {
     private let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
-    private var searchView: SearchView?
     private(set) var isEditable = false
 
     @IBOutlet var stationsTree: NSOutlineView!
@@ -347,6 +346,8 @@ extension StationView: NSOutlineViewDataSource {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
+        if !isEditable { return nil }
+
         let pasteboardItem: NSPasteboardItem = NSPasteboardItem()
         let index: Int = outlineView.row(forItem: item)
 
@@ -376,6 +377,8 @@ extension StationView: NSOutlineViewDataSource {
      *
      * ****************************************/
     private func canDragAndDrop(src: StationNode, dest: StationNode) -> Bool {
+        if !isEditable { return false }
+
         var node: StationNode? = dest
         while node != nil {
             if node?.id == src.id {

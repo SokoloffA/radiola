@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StationRowView: NSView {
+class StationRowView: NSView, NSTextFieldDelegate {
     @IBOutlet var contentView: NSView!
     @IBOutlet var nameEdit: NSTextField!
     @IBOutlet var urledit: NSTextField!
@@ -32,13 +32,13 @@ class StationRowView: NSView {
         nameEdit.tag = station.id
         nameEdit.target = self
         nameEdit.action = #selector(nameEdited(sender:))
-        nameEdit.isEditable = stationView.isEditable
+        nameEdit.delegate = self
 
         urledit.stringValue = station.url
         urledit.tag = station.id
         urledit.target = self
         urledit.action = #selector(urlEdited(sender:))
-        urledit.isEditable = stationView.isEditable
+        urledit.delegate = self
 
         favoriteButton.tag = station.id
         favoriteButton.image = favoriteIcons[station.isFavorite]!
@@ -75,5 +75,12 @@ class StationRowView: NSView {
         station.isFavorite = !station.isFavorite
         sender.image = favoriteIcons[station.isFavorite]!
         stationView.nodeDidChanged(node: station)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func control(_ control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
+        return stationView.isEditable
     }
 }

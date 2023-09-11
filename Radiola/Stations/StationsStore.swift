@@ -15,6 +15,9 @@ class StationsStore {
     private let oplFileName = "bookmarks.opml"
 
     let localStations = LocalStationList(title: "Local staions")
+    let providers: [StationsProvider] = [
+        RadioBrowserProvider(title: "By tag"),
+    ]
 
     init() {
         let dirName = URL(

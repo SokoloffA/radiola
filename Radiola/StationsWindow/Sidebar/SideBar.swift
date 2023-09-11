@@ -31,7 +31,7 @@ class SideBar: NSViewController {
         init(title: String, icon: String, provider: StationsProvider) {
             self.title = title
             self.icon = icon
-            stations = nil
+            stations = provider.stations
             self.provider = provider
         }
 
@@ -41,26 +41,23 @@ class SideBar: NSViewController {
     }
 
     private var items: [Item] = {
-        var res: [Item] = [
-            Item(title: "My lists"),
-            Item(title: "Local stations", icon: "star", stations: stationsStore.localStations),
-//            .Group(title: "My lists"),
-//            .StaionList(
-//                  items: [
-//                      Item(title: stationsStore.localStations.title, icon: "star", stations: stationsStore.localStations),
-//                  ]),
-//
-//            Group(title: "Radio Browser",
-//                  items: [
-            ////                      Item(title: "By tag", icon: "globe", stations: localStations),
-            ////                      Item(title: "By genre", icon: "globe", stations: localStations),
-            ////                      Item(title: "By language", icon: "globe", stations: localStations),
-//                  ]),
-        ]
+        var res: [Item] = []
 
-//        for it in savedRequests {
-//            res[0].items.append(Item(title: it.title, icon: "globe", source: it))
-//        }
+        res.append(Item(title: "My lists"))
+        res.append(Item(title: "Local stations", icon: "star", stations: stationsStore.localStations))
+        //        for it in savedRequests {
+        //            res[0].items.append(Item(title: it.title, icon: "globe", source: it))
+        //        }
+
+        res.append(Item(title: "Radio Browser"))
+        for p in stationsStore.providers {
+            res.append(Item(title: p.title, icon: "globe", provider: p))
+        }
+        ////                      Item(title: stations: localStations),
+        ////                      Item(title: "By genre", icon: "globe", stations: localStations),
+        ////                      Item(title: "By language", icon: "globe", stations: localStations),
+//                  ]),
+
         return res
     }()
 
@@ -72,7 +69,6 @@ class SideBar: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        print(#function, view)
         outlineView.delegate = self
         outlineView.dataSource = self
         outlineView.expandItem(nil, expandChildren: true)
@@ -88,14 +84,12 @@ class SideBar: NSViewController {
     private func findActiveIndex() -> Int {
         guard let cur = player.station else { return 1 }
 
-        for i in 0 ... items.count {
-            var stations: StationList?
-            stations = items[i].stations ?? stations
-            stations = items[i].provider?.stations ?? stations
-
-            if stations?.contains(cur) ?? false {
-                return i
+        var n = 0
+        for item in items {
+            if item.stations?.contains(cur) ?? false {
+                return n
             }
+            n += 1
         }
 
         return 1
@@ -170,14 +164,14 @@ extension SideBar: NSOutlineViewDelegate {
         guard let item = item as? Item else { return 0.0 }
 
         if item.isGroup() {
-            return CGFloat(28.0)
+            if item === items.first {
+                return CGFloat(15)
+            } else {
+                return CGFloat(30.0)
+            }
         }
 
-        if item === items.first {
-            return CGFloat(14)
-        } else {
-            return CGFloat(32.0)
-        }
+        return CGFloat(28.0)
     }
 
     /* ****************************************

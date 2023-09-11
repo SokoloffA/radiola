@@ -186,8 +186,8 @@
 			children = (
 				394ABCB12AA35A7000E2B6E9 /* StationsStore.swift */,
 				394ABCAF2AA35A0000E2B6E9 /* StationsList.swift */,
-				39FBD7A42AA79D9B007B678E /* StationsProvider.swift */,
 				39FBD7A82AA8E96A007B678E /* LocalStaionList.swift */,
+				39FBD7A42AA79D9B007B678E /* StationsProvider.swift */,
 				39FBD7AA2AA8EB65007B678E /* RadioBrowserProvider.swift */,
 			);
 			path = Stations;
@@ -251,8 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				3987B9A42A9F80B90077EB03 /* Toolbar */,
-				3987B99F2A9E15F90077EB03 /* SearchPanel */,
 				394ABC8C2A97AB5900E2B6E9 /* Sidebar */,
+				3987B99F2A9E15F90077EB03 /* SearchPanel */,
 				394F8A6128739A15005EA7FA /* StationsWindow.swift */,
 				394F8A6228739A15005EA7FA /* StationsWindow.xib */,
 				3939206F2A922722008C0B11 /* StationView.swift */,

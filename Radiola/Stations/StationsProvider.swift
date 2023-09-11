@@ -10,6 +10,7 @@ import Cocoa
 protocol StationsProvider {
     var title: String { get }
     var stations: StationList { get }
+    var searchText: String { get set }
 
     func fetch() async throws
 }
