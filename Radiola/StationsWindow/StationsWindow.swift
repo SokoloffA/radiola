@@ -185,14 +185,27 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     @objc private func sidebarChanged() {
         stationsView.stations = sideBar.currentStations()
 
-        if let provider = sideBar.currentProvider() {
+        if let provider = sideBar.currentStations() as? SearchableStationList {
             searchPanelHeightConstraint.constant = searchPanelHeight
             searchPanel.provider = provider
+            provider.fetchHandler = stationsFound
             _ = searchPanel.becomeFirstResponder()
         } else {
             searchPanelHeightConstraint.constant = 0
             searchPanel.provider = nil
             _ = stationsView.becomeFirstResponder()
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func stationsFound(stations: SearchableStationList) {
+        if stations !== sideBar.currentStations() {
+            return
+        }
+
+        stationsView.stations = stations
+        _ = stationsView.becomeFirstResponder()
     }
 }

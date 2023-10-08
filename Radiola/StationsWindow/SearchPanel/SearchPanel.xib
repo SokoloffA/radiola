@@ -26,7 +26,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchField wantsLayer="YES" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeT-AV-Zbn">
-                                <rect key="frame" x="505" y="15" width="400" height="30"/>
+                                <rect key="frame" x="488" y="15" width="400" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="400" id="LtZ-G2-5PQ"/>
                                 </constraints>
@@ -37,7 +37,7 @@
                                 </searchFieldCell>
                             </searchField>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="DQR-da-aN8">
-                                <rect key="frame" x="920" y="24" width="87" height="13"/>
+                                <rect key="frame" x="903" y="22" width="104" height="16"/>
                                 <popUpButtonCell key="cell" type="bevel" title="Sort by reting" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="ZOP-Yo-3NU" id="4CB-KS-3aj">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" usesAppearanceFont="YES"/>
@@ -51,7 +51,7 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="SI2-vs-vXE">
-                                <rect key="frame" x="411" y="24" width="86" height="13"/>
+                                <rect key="frame" x="378" y="22" width="102" height="16"/>
                                 <popUpButtonCell key="cell" type="bevel" title="matches with" bezelStyle="rounded" alignment="left" controlSize="large" lineBreakMode="truncatingTail" state="on" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="laQ-Cj-QY8" id="5EC-O9-3dS">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" usesAppearanceFont="YES"/>

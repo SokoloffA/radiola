@@ -52,7 +52,7 @@ class ToolbarPlayView: NSViewController {
         switch player.status {
             case Player.Status.paused:
                 stationLabel.stringValue = player.stationName
-                songLabel.stringValue = "Super Song"
+                songLabel.stringValue = ""
 
             case Player.Status.connecting:
                 stationLabel.stringValue = player.stationName

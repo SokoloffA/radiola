@@ -228,3 +228,32 @@ class StationList: StationGroup {
         return filterStations { $0.isFavorite }
     }
 }
+
+struct SearchOptions {
+    enum Order {
+        case byName
+        case byVotes
+        case byCountry
+        case byBitrate
+    }
+
+    let allOrderTypes: [SearchOrder]
+
+    var searchText: String = ""
+    var isExactMatch: Bool = false
+    var order: SearchOrder = .byName
+}
+
+enum SearchOrder {
+    case byName
+    case byVotes
+    case byCountry
+    case byBitrate
+}
+
+protocol SearchableStationList: StationList {
+    var searchOptions: SearchOptions { get set }
+
+    func fetch()
+    var fetchHandler: ((SearchableStationList) -> Void)? { get set }
+}

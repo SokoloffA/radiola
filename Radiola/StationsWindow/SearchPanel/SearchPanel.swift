@@ -12,8 +12,7 @@ class SearchPanel: NSViewController {
     @IBOutlet var matchTypeCombo: NSPopUpButton!
     @IBOutlet var sortCombo: NSPopUpButton!
 
-    weak var stationsView: StationView?
-    var provider: SearchProvider? {
+    var provider: SearchableStationList? {
         didSet {
             setProvider()
         }
@@ -25,6 +24,7 @@ class SearchPanel: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchTextView.sendsWholeSearchString = true
         searchTextView.target = self
         searchTextView.action = #selector(search)
 
@@ -50,46 +50,66 @@ class SearchPanel: NSViewController {
     private func setProvider() {
         guard let provider = provider else { return }
 
-        matchTypeCombo.selectItem(withTag: provider.isExactMatch ? 1 : 0)
+        matchTypeCombo.selectItem(withTag: provider.searchOptions.isExactMatch ? 1 : 0)
 
         sortCombo.removeAllItems()
-        for (i, v) in provider.allOrderTypes.enumerated() {
-            sortCombo.addItem(withTitle: v.rawValue)
+        for (i, v) in provider.searchOptions.allOrderTypes.enumerated() {
+            sortCombo.addItem(withTitle: orderTitle(forOrder: v))
             sortCombo.lastItem?.tag = i
-            if v == provider.order {
+            if v == provider.searchOptions.order {
                 sortCombo.selectItem(withTag: i)
             }
         }
 
-        searchTextView.stringValue = provider.searchText
+        searchTextView.stringValue = provider.searchOptions.searchText
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func orderTitle(forOrder: SearchOrder) -> String {
+        switch forOrder {
+            case .byName: return "sort by name"
+            case .byVotes: return "sort by votes"
+            case .byCountry: return "sort by country"
+            case .byBitrate: return "sort by bitrate"
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
     @objc private func matchTypeChanged() {
-        guard var provider = provider else { return }
-        provider.isExactMatch = matchTypeCombo.selectedItem?.tag == 1
+        guard let provider = provider else { return }
+        provider.searchOptions.isExactMatch = matchTypeCombo.selectedItem?.tag == 1
     }
 
     /* ****************************************
      *
      * ****************************************/
     @objc private func orderTypeChanged() {
-        guard var provider = provider else { return }
+        guard let provider = provider else { return }
         let n = sortCombo.selectedItem?.tag ?? 0
-        provider.order = provider.allOrderTypes[n]
+        provider.searchOptions.order = provider.searchOptions.allOrderTypes[n]
     }
 
     /* ****************************************
      *
      * ****************************************/
     @objc private func search() {
-//        guard let provider = provider else { return }
+        guard let provider = provider else { return }
 
-//        provider.searchText = searchTextView.stringValue
-//        provider.isExactMatch = exactButton.state == .on
-//
+        if searchTextView.stringValue.isEmpty {
+            return
+        }
+
+        provider.searchOptions.searchText = searchTextView.stringValue
+        provider.searchOptions.isExactMatch = matchTypeCombo.selectedItem?.tag == 1
+        let n = sortCombo.selectedItem?.tag ?? 0
+        provider.searchOptions.order = provider.searchOptions.allOrderTypes[n]
+
+        provider.fetch()
+//        provider
 //        Task {
 //            do {
 //                print(#function, #line)

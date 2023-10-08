@@ -7,47 +7,52 @@
 
 import Foundation
 
-extension SearchOrder {
-    static let byName = SearchOrder(rawValue: "sort by name")
-    static let byVotes = SearchOrder(rawValue: "sort by votes")
-}
+class RadioBrowserStations: StationList, SearchableStationList {
+    var fetchHandler: ((SearchableStationList) -> Void)?
 
-class RadioBrowserProvider: SearchProvider {
-    var title = ""
-    var searchText = ""
-    var isExactMatch = false
-    let stations = StationList(title: "")
-
-    let allOrderTypes: [SearchOrder] = [.byVotes, .byName]
-    var order = SearchOrder.byVotes
+    var searchOptions = SearchOptions(
+        allOrderTypes: [.byVotes, .byName, .byBitrate, .byCountry]
+    )
 
     /* ****************************************
      *
      * ****************************************/
-    init(title: String) {
-        self.title = title
+    private func requestOrderType() -> RadioBrowser.StationsRequest.OrderType {
+        switch searchOptions.order {
+            case .byName: return .name
+            case .byVotes: return .votes
+            case .byCountry: return .country
+            case .byBitrate: return .bitrate
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    func fetch() async throws {
-        if searchText.isEmpty {
-            return
-        }
+    func fetch() {
+        if searchOptions.searchText.isEmpty { return }
 
         let request = RadioBrowser.StationsRequest()
         request.hidebroken = true
-        request.order = .votes
+        request.order = requestOrderType()
 
-        let type: RadioBrowser.StationsRequest.RequestType = isExactMatch ? .bytagexact : .bytag
-        let resp = try await request.get(by: type, searchterm: searchText)
-        await MainActor.run {
-            stations.removeAll()
-            for r in resp {
-                stations.append(Station(title: r.name, url: r.url))
+        let type: RadioBrowser.StationsRequest.RequestType = searchOptions.isExactMatch ? .bytagexact : .bytag
+
+        Task {
+            do {
+                let resp = try await request.get(by: type, searchterm: searchOptions.searchText)
+                let res = StationList()
+
+                for r in resp {
+                    res.append(Station(title: r.name, url: r.url))
+                }
+                await MainActor.run {
+                    self.nodes = res.nodes
+                    fetchHandler?(self)
+                }
+            } catch {
+                errorOccurred(object: self, message: error.localizedDescription)
             }
-            print(stations.nodes.count)
         }
     }
 }

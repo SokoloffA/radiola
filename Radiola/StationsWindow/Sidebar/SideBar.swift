@@ -12,31 +12,21 @@ class SideBar: NSViewController {
         var title: String
         var icon: String = ""
         let stations: StationList?
-        let provider: SearchProvider?
 
         init(title: String, icon: String = "") {
             self.title = title
             self.icon = icon
             stations = nil
-            provider = nil
         }
 
         init(title: String, icon: String, stations: StationList) {
             self.title = title
             self.icon = icon
             self.stations = stations
-            provider = nil
-        }
-
-        init(title: String, icon: String, provider: SearchProvider) {
-            self.title = title
-            self.icon = icon
-            stations = provider.stations
-            self.provider = provider
         }
 
         func isGroup() -> Bool {
-            return stations == nil && provider == nil
+            return stations == nil // && provider == nil
         }
     }
 
@@ -47,8 +37,8 @@ class SideBar: NSViewController {
         res.append(Item(title: "Local stations", icon: "star", stations: stationsStore.localStations))
 
         res.append(Item(title: "Radio Browser"))
-        for p in stationsStore.providers {
-            res.append(Item(title: p.title, icon: "globe", provider: p))
+        for l in stationsStore.internetRequests {
+            res.append(Item(title: l.title, icon: "globe", stations: l))
         }
 
         return res
@@ -94,14 +84,6 @@ class SideBar: NSViewController {
     public func currentStations() -> StationList? {
         guard let item = outlineView.item(atRow: outlineView.selectedRow) as? Item else { return nil }
         return item.stations
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    public func currentProvider() -> SearchProvider? {
-        guard let item = outlineView.item(atRow: outlineView.selectedRow) as? Item else { return nil }
-        return item.provider
     }
 }
 
