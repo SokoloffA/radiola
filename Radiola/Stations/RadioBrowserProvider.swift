@@ -7,12 +7,19 @@
 
 import Foundation
 
-class RadioBrowserProvider: StationsProvider {
+extension SearchOrder {
+    static let byName = SearchOrder(rawValue: "sort by name")
+    static let byVotes = SearchOrder(rawValue: "sort by votes")
+}
+
+class RadioBrowserProvider: SearchProvider {
     var title = ""
     var searchText = ""
     var isExactMatch = false
-    private(set) var stations = StationList(title: "")
-    var delegate: StationsProviderDelegate?
+    let stations = StationList(title: "")
+
+    let allOrderTypes: [SearchOrder] = [.byVotes, .byName]
+    var order = SearchOrder.byVotes
 
     /* ****************************************
      *
@@ -29,25 +36,18 @@ class RadioBrowserProvider: StationsProvider {
             return
         }
 
-        await MainActor.run {
-            delegate?.fetchDidFinished(sender: self)
-        }
-
         let request = RadioBrowser.StationsRequest()
         request.hidebroken = true
         request.order = .votes
 
         let type: RadioBrowser.StationsRequest.RequestType = isExactMatch ? .bytagexact : .bytag
         let resp = try await request.get(by: type, searchterm: searchText)
-
         await MainActor.run {
-            let sts = StationList(title: self.stations.title)
+            stations.removeAll()
             for r in resp {
-                sts.append(Station(title: r.name, url: r.url))
+                stations.append(Station(title: r.name, url: r.url))
             }
-            print("Provider done", sts.nodes.count)
-            self.stations = sts
-            delegate?.fetchDidFinished(sender: self)
+            print(stations.nodes.count)
         }
     }
 }

@@ -123,7 +123,6 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         asset = AVAsset(url: u!)
         playerItem = AVPlayerItem(asset: asset)
-        //playerItem?.preferredForwardBufferDuration = 1
 
         let metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
         metadataOutput.setDelegate(self, queue: DispatchQueue.main)
@@ -132,6 +131,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         player.replaceCurrentItem(with: playerItem)
         statusChenged(status: AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate)
         player.play()
+        settings.lastStationUrl = station.url
 
         timer = Timer.scheduledTimer(
             timeInterval: connectDelay,

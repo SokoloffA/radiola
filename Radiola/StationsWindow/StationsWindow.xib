@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="StationsWindow" customModule="Radiola" customModuleProvider="target">
             <connections>
-                <outlet property="rightSplitView" destination="Gpr-ct-Jfg" id="p54-yn-TL2"/>
-                <outlet property="rightView" destination="3T4-Mu-Or0" id="KWB-zR-fX3"/>
+                <outlet property="playtoolbar" destination="PIo-NM-taC" id="66S-f9-cXi"/>
+                <outlet property="searchPanelHeightConstraint" destination="0tz-K3-gVT" id="R0U-eT-xiS"/>
+                <outlet property="searchViewPlace" destination="B4I-qD-d8r" id="7N4-ze-Yk7"/>
                 <outlet property="splitView" destination="ait-XJ-lkI" id="OBF-Zk-JMe"/>
-                <outlet property="stationToolbarPanel" destination="PIo-NM-taC" id="nsO-sU-waa"/>
+                <outlet property="stationToolbar" destination="dvN-S5-4WP" id="b8A-gR-D6l"/>
+                <outlet property="stationsViewPlace" destination="xEU-fK-kX4" id="gG5-4i-UKx"/>
                 <outlet property="toggleSideBarItem" destination="iyL-Mv-jxL" id="gil-Oj-Kfu"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
@@ -24,19 +26,19 @@
             <rect key="contentRect" x="196" y="240" width="682" height="375"/>
             <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1415"/>
             <value key="minSize" type="size" width="500" height="200"/>
-            <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
+            <view key="contentView" misplaced="YES" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="682" height="374"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <splitView identifier="StationsSplit" arrangesAllSubviews="NO" autosaveName="StationsWindowSplitter" dividerStyle="thin" vertical="YES" id="ait-XJ-lkI">
-                        <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
+                        <rect key="frame" x="0.0" y="0.0" width="682" height="374"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="3T4-Mu-Or0">
-                                <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
+                                <rect key="frame" x="0.0" y="0.0" width="682" height="374"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="PIo-NM-taC">
-                                        <rect key="frame" x="0.0" y="323" width="682" height="52"/>
+                                        <rect key="frame" x="0.0" y="322" width="682" height="52"/>
                                         <subviews>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2x7-gi-IyC">
                                                 <rect key="frame" x="0.0" y="-2" width="682" height="5"/>
@@ -49,18 +51,27 @@
                                             <constraint firstAttribute="trailing" secondItem="2x7-gi-IyC" secondAttribute="trailing" id="sMG-Q7-v07"/>
                                         </constraints>
                                     </customView>
-                                    <splitView arrangesAllSubviews="NO" dividerStyle="thin" vertical="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gpr-ct-Jfg">
-                                        <rect key="frame" x="0.0" y="0.0" width="682" height="323"/>
-                                    </splitView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="B4I-qD-d8r">
+                                        <rect key="frame" x="0.0" y="276" width="682" height="46"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="46" id="0tz-K3-gVT"/>
+                                        </constraints>
+                                    </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="xEU-fK-kX4">
+                                        <rect key="frame" x="0.0" y="-1" width="682" height="277"/>
+                                    </customView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="PIo-NM-taC" secondAttribute="trailing" id="ZI1-jm-RpD"/>
-                                    <constraint firstItem="PIo-NM-taC" firstAttribute="top" secondItem="3T4-Mu-Or0" secondAttribute="top" id="alk-JA-o9p"/>
-                                    <constraint firstAttribute="bottom" secondItem="Gpr-ct-Jfg" secondAttribute="bottom" id="bdH-QW-69h"/>
-                                    <constraint firstItem="PIo-NM-taC" firstAttribute="leading" secondItem="3T4-Mu-Or0" secondAttribute="leading" id="ezt-uc-tY4"/>
-                                    <constraint firstItem="Gpr-ct-Jfg" firstAttribute="top" secondItem="PIo-NM-taC" secondAttribute="bottom" id="fMh-5k-QAt"/>
-                                    <constraint firstAttribute="trailing" secondItem="Gpr-ct-Jfg" secondAttribute="trailing" id="kIn-eJ-Bpj"/>
-                                    <constraint firstItem="Gpr-ct-Jfg" firstAttribute="leading" secondItem="3T4-Mu-Or0" secondAttribute="leading" id="luU-8C-7Qf"/>
+                                    <constraint firstItem="B4I-qD-d8r" firstAttribute="top" secondItem="PIo-NM-taC" secondAttribute="bottom" id="2D4-ZP-IZ8"/>
+                                    <constraint firstItem="PIo-NM-taC" firstAttribute="top" secondItem="3T4-Mu-Or0" secondAttribute="top" id="7g9-5J-67e"/>
+                                    <constraint firstItem="PIo-NM-taC" firstAttribute="leading" secondItem="3T4-Mu-Or0" secondAttribute="leading" id="8EZ-aJ-l3s"/>
+                                    <constraint firstItem="xEU-fK-kX4" firstAttribute="leading" secondItem="3T4-Mu-Or0" secondAttribute="leading" id="Bd6-Fo-CC6"/>
+                                    <constraint firstAttribute="bottom" secondItem="xEU-fK-kX4" secondAttribute="bottom" id="FFF-yI-ML0"/>
+                                    <constraint firstAttribute="trailing" secondItem="xEU-fK-kX4" secondAttribute="trailing" id="IHe-rm-w4o"/>
+                                    <constraint firstItem="B4I-qD-d8r" firstAttribute="leading" secondItem="3T4-Mu-Or0" secondAttribute="leading" id="KFE-k8-xB0"/>
+                                    <constraint firstAttribute="trailing" secondItem="PIo-NM-taC" secondAttribute="trailing" id="PRx-fN-baJ"/>
+                                    <constraint firstAttribute="trailing" secondItem="B4I-qD-d8r" secondAttribute="trailing" id="Szp-QA-PQW"/>
+                                    <constraint firstItem="xEU-fK-kX4" firstAttribute="top" secondItem="B4I-qD-d8r" secondAttribute="bottom" id="ylb-zI-Jxk"/>
                                 </constraints>
                             </customView>
                         </subviews>

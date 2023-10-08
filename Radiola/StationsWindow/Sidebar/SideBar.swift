@@ -7,44 +7,54 @@
 
 import Cocoa
 
-fileprivate class Item {
-    var title: String
-    var icon: String = ""
-    let stations: StationList?
-    let provider: StationsProvider?
-
-    init(title: String, icon: String = "") {
-        self.title = title
-        self.icon = icon
-        stations = nil
-        provider = nil
-    }
-
-    init(title: String, icon: String, stations: StationList) {
-        self.title = title
-        self.icon = icon
-        self.stations = stations
-        provider = nil
-    }
-
-    init(title: String, icon: String, provider: StationsProvider) {
-        self.title = title
-        self.icon = icon
-        stations = provider.stations
-        self.provider = provider
-    }
-
-    func isGroup() -> Bool {
-        return stations == nil && provider == nil
-    }
-}
-
 class SideBar: NSViewController {
-    @IBOutlet var outlineView: NSOutlineView!
+    private class Item {
+        var title: String
+        var icon: String = ""
+        let stations: StationList?
+        let provider: SearchProvider?
 
-    private var items: [Item] = []
-    var localStations: [StationList] = [] { didSet { refresh() }}
-    var providers: [StationsProvider] = [] { didSet { refresh() }}
+        init(title: String, icon: String = "") {
+            self.title = title
+            self.icon = icon
+            stations = nil
+            provider = nil
+        }
+
+        init(title: String, icon: String, stations: StationList) {
+            self.title = title
+            self.icon = icon
+            self.stations = stations
+            provider = nil
+        }
+
+        init(title: String, icon: String, provider: SearchProvider) {
+            self.title = title
+            self.icon = icon
+            stations = provider.stations
+            self.provider = provider
+        }
+
+        func isGroup() -> Bool {
+            return stations == nil && provider == nil
+        }
+    }
+
+    private var items: [Item] = {
+        var res: [Item] = []
+
+        res.append(Item(title: "My lists"))
+        res.append(Item(title: "Local stations", icon: "star", stations: stationsStore.localStations))
+
+        res.append(Item(title: "Radio Browser"))
+        for p in stationsStore.providers {
+            res.append(Item(title: p.title, icon: "globe", provider: p))
+        }
+
+        return res
+    }()
+
+    @IBOutlet var outlineView: NSOutlineView!
 
     /* ****************************************
      *
@@ -55,27 +65,6 @@ class SideBar: NSViewController {
         outlineView.delegate = self
         outlineView.dataSource = self
         outlineView.expandItem(nil, expandChildren: true)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func refresh() {
-        var res: [Item] = []
-
-        res.append(Item(title: "My lists"))
-        for s in localStations {
-            res.append(Item(title: s.title, icon: "star", stations: s))
-        }
-
-        res.append(Item(title: "Radio Browser"))
-
-        for p in stationsStore.providers {
-            res.append(Item(title: p.title, icon: "globe", provider: p))
-        }
-
-        items = res
-        outlineView.reloadData()
 
         let indexSet = IndexSet(integer: findActiveIndex())
         outlineView.selectRowIndexes(indexSet, byExtendingSelection: false)
@@ -110,7 +99,7 @@ class SideBar: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    public func currentProvider() -> StationsProvider? {
+    public func currentProvider() -> SearchProvider? {
         guard let item = outlineView.item(atRow: outlineView.selectedRow) as? Item else { return nil }
         return item.provider
     }

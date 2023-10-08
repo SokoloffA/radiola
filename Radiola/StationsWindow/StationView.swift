@@ -10,20 +10,25 @@ import Cocoa
 class StationView: NSView {
     private let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
     private(set) var isEditable = false
+    private static var selectedRows: [Int: Int] = [:]
 
+    @IBOutlet var scrollView: NSScrollView!
     @IBOutlet var stationsTree: NSOutlineView!
     @IBOutlet var addStationButton: NSButton!
     @IBOutlet var removeStationButton: NSButton!
-    @IBOutlet var splitView: NSSplitView!
     @IBOutlet var bottomBar: NSView!
 
     var stations: StationList? {
         didSet {
             isEditable = stations?.isEditable ?? false
             stationsTree.reloadData()
-            let n = max(0, stationsTree.row(forItem: player.station))
-            stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
-            stationsTree.scrollRowToVisible(stationsTree.selectedRow)
+
+            if let stations = stations {
+                let n = StationView.selectedRows[stations.id] ?? max(0, stationsTree.row(forItem: player.station))
+                stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
+                stationsTree.scrollRowToVisible(stationsTree.selectedRow)
+            }
+
             refresh()
         }
     }
@@ -73,6 +78,13 @@ class StationView: NSView {
      * ****************************************/
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override func becomeFirstResponder() -> Bool {
+        return scrollView.becomeFirstResponder()
     }
 
     /* ****************************************
@@ -261,6 +273,14 @@ extension StationView: NSOutlineViewDelegate {
         }
 
         return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func outlineViewSelectionDidChange(_ notification: Notification) {
+        guard let stations = stations else { return }
+        StationView.selectedRows[stations.id] = stationsTree.selectedRowIndexes.first
     }
 }
 

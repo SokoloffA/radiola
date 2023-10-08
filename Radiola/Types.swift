@@ -5,8 +5,6 @@
 //  Created by Alex Sokolov on 11.05.2023.
 //
 
-import Cocoa
-
 enum MouseButton: Int, CaseIterable {
     case left = 0
     case right = 1
@@ -50,12 +48,4 @@ enum MouseWheelAction: Int {
 enum MediaPrevNextKeyAction: Int {
     case disable
     case switchStation
-}
-
-/* **********************************************
- *
- * **********************************************/
-func debug(_ items: Any..., separator: String = " ", terminator: String = "\n", file: String = #file, line: Int = #line, function: String = #function) {
-    print("\(Date()) [\(Thread.current.debugDescription)] ", terminator: "")
-    print(items.map {"\($0)"}.joined())
 }
