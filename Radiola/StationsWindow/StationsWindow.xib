@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -24,21 +24,21 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="682" height="375"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
             <value key="minSize" type="size" width="500" height="200"/>
-            <view key="contentView" misplaced="YES" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="682" height="374"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <splitView identifier="StationsSplit" arrangesAllSubviews="NO" autosaveName="StationsWindowSplitter" dividerStyle="thin" vertical="YES" id="ait-XJ-lkI">
-                        <rect key="frame" x="0.0" y="0.0" width="682" height="374"/>
+                        <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="3T4-Mu-Or0">
-                                <rect key="frame" x="0.0" y="0.0" width="682" height="374"/>
+                                <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
                                 <subviews>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="PIo-NM-taC">
-                                        <rect key="frame" x="0.0" y="322" width="682" height="52"/>
+                                        <rect key="frame" x="0.0" y="323" width="682" height="52"/>
                                         <subviews>
                                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="2x7-gi-IyC">
                                                 <rect key="frame" x="0.0" y="-2" width="682" height="5"/>
@@ -52,13 +52,13 @@
                                         </constraints>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="B4I-qD-d8r">
-                                        <rect key="frame" x="0.0" y="276" width="682" height="46"/>
+                                        <rect key="frame" x="0.0" y="277" width="682" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="46" id="0tz-K3-gVT"/>
                                         </constraints>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="xEU-fK-kX4">
-                                        <rect key="frame" x="0.0" y="-1" width="682" height="277"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="682" height="277"/>
                                     </customView>
                                 </subviews>
                                 <constraints>
