@@ -8,11 +8,21 @@
 import Foundation
 
 class RadioBrowserStations: StationList, SearchableStationList {
+    private let searchType: RadioBrowser.StationsRequest.RequestType
+
     var fetchHandler: ((SearchableStationList) -> Void)?
 
     var searchOptions = SearchOptions(
         allOrderTypes: [.byVotes, .byName, .byBitrate, .byCountry]
     )
+
+    /* ****************************************
+     *
+     * ****************************************/
+    init(title: String, searchType: RadioBrowser.StationsRequest.RequestType) {
+        self.searchType = searchType
+        super.init(title: title)
+    }
 
     /* ****************************************
      *
@@ -29,6 +39,22 @@ class RadioBrowserStations: StationList, SearchableStationList {
     /* ****************************************
      *
      * ****************************************/
+    private func requestType() -> RadioBrowser.StationsRequest.RequestType {
+        switch searchType {
+            case .byuuid: return .byuuid
+            case .byname, .bynameexact: return searchOptions.isExactMatch ? .bynameexact : .byname
+            case .bycodec, .bycodecexact: return searchOptions.isExactMatch ? .bycodecexact : .bycodec
+            case .bycountry, .bycountryexact: return searchOptions.isExactMatch ? .bycountryexact : .bycountry
+            case .bycountrycodeexact: return .bycountrycodeexact
+            case .bystate, .bystateexact: return searchOptions.isExactMatch ? .bystateexact : .bystate
+            case .bylanguage, .bylanguageexact: return searchOptions.isExactMatch ? .bylanguageexact : .bylanguage
+            case .bytag, .bytagexact: return searchOptions.isExactMatch ? .bytagexact : .bytag
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func fetch() {
         if searchOptions.searchText.isEmpty { return }
 
@@ -36,7 +62,7 @@ class RadioBrowserStations: StationList, SearchableStationList {
         request.hidebroken = true
         request.order = requestOrderType()
 
-        let type: RadioBrowser.StationsRequest.RequestType = searchOptions.isExactMatch ? .bytagexact : .bytag
+        let type = requestType()
 
         Task {
             do {
