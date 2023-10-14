@@ -7,6 +7,9 @@
 
 import Foundation
 
+/* ************************************************
+ * RadioBrowser.Station
+ * ************************************************/
 extension RadioBrowser {
     public struct Station: Decodable {
         /// A globally unique identifier for the change of the station information
@@ -168,11 +171,13 @@ extension RadioBrowser {
     }
 }
 
+/* ************************************************
+ * RadioBrowser.Stations
+ * ************************************************/
 extension RadioBrowser {
-    public class StationsRequest {
-        var server: String?
-
-        enum OrderType: String {
+    enum Stations {
+        /// Name of the attribute the stations result list will be sorted by
+        enum Order: String {
             case name
             case url
             case homepage
@@ -193,106 +198,247 @@ extension RadioBrowser {
             case random
         }
 
-        private static let defaultOrder = OrderType.name
-        private static let defaultLimit = 100000
-
-        var order: OrderType = defaultOrder /// name of the attribute the result list will be sorted by
-        var reverse: Bool = false /// reverse the result list if set to true
-        var offset: Int = 0 /// starting value of the result list from the database. For example, if you want to do paging on the server side.
-        var limit: Int = defaultLimit /// number of returned datarows (stations) starting with offset
-        var hidebroken: Bool = false /// do list/not list broken stations
-
-        /* ****************************************
-         *
-         * ****************************************/
-        private func httpParamsString() -> [URLQueryItem] {
-            var res = [URLQueryItem]()
-
-            res.append(URLQueryItem(name: "order", value: order.rawValue))
-
-            if reverse {
-                res.append(URLQueryItem(name: "reverse", value: "true"))
-            }
-
-            if offset > 0 {
-                res.append(URLQueryItem(name: "offset", value: "\(offset)"))
-            }
-
-            if limit != StationsRequest.defaultLimit {
-                res.append(URLQueryItem(name: "limit", value: "\(limit)"))
-            }
-
-            if hidebroken {
-                res.append(URLQueryItem(name: "hidebroken", value: "true"))
-            }
-
-            return res
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        private func fetch(url: String) async throws -> [Station] {
-            guard var url = URLComponents(string: url) else {
-                throw RadioBrowserError.invalidURL
-            }
-            url.queryItems = httpParamsString()
-
-            guard let url = url.url else {
-                throw RadioBrowserError.invalidURL
-            }
-
-            let (data, _) = try await URLSession.shared.data(from: url)
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.iso8601
-
-            let res = try decoder.decode([Station].self, from: data)
-
-            return res
-        }
-
         enum RequestType: String {
-            case byuuid
-            case byname
-            case bynameexact
-            case bycodec
-            case bycodecexact
-            case bycountry
-            case bycountryexact
-            case bycountrycodeexact
-            case bystate
-            case bystateexact
-            case bylanguage
-            case bylanguageexact
-            case bytag
-            case bytagexact
+            case byUUID
+            case byName
+            case byNameExact
+            case byCodec
+            case byCodecExact
+            case byCountry
+            case byCountryExact
+            case byCountryCodeExact
+            case byState
+            case byStateExact
+            case byLanguage
+            case byLanguageExact
+            case byTag
+            case byTagExact
+        }
+    }
+}
+
+/* ************************************************
+ * RadioBrowser.Server
+ * ************************************************/
+extension RadioBrowser.Server {
+    // ******************************************************************
+    /// A list of radio stations that match the search. The variants with "exact" will only search for perfect
+    /// matches, and others will search for the station whose attribute contains the search term.
+    /// - Parameter by: The type of search. The variants with "exact" will only search for perfect
+    ///   matches, and others will search for the station whose attribute contains the search term.
+    /// - Parameter searchTerm: Search string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(by: RadioBrowser.Stations.RequestType, searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station] {
+        var queryItems = [URLQueryItem]()
+
+        if order != .name {
+            queryItems.append(URLQueryItem(name: "order", value: order.rawValue.lowercased()))
         }
 
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(by: RequestType, searchterm: String) async throws -> [RadioBrowser.Station] {
-            guard let srv = getServer() else { throw RadioBrowserError.dnsError }
-            let url = "http://\(srv)/json/stations/\(by)/\(searchterm)"
-            return try await fetch(url: url)
+        if reverse {
+            queryItems.append(URLQueryItem(name: "reverse", value: "true"))
         }
 
-        /* ****************************************
-         *
-         * ****************************************/
-        public func get(byuuid searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .byuuid, searchterm: searchterm) }
-        public func get(byname searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .byname, searchterm: searchterm) }
-        public func get(bynameexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bynameexact, searchterm: searchterm) }
-        public func get(bycodec searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycodec, searchterm: searchterm) }
-        public func get(bycodecexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycodecexact, searchterm: searchterm) }
-        public func get(bycountry searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycountry, searchterm: searchterm) }
-        public func get(bycountryexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycountryexact, searchterm: searchterm) }
-        public func get(bycountrycodeexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bycountrycodeexact, searchterm: searchterm) }
-        public func get(bystate searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bystate, searchterm: searchterm) }
-        public func get(bystateexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bystateexact, searchterm: searchterm) }
-        public func get(bylanguage searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bylanguage, searchterm: searchterm) }
-        public func get(bylanguageexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bylanguageexact, searchterm: searchterm) }
-        public func get(bytag searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bytag, searchterm: searchterm) }
-        public func get(bytagexact searchterm: String) async throws -> [RadioBrowser.Station] { return try await get(by: .bytagexact, searchterm: searchterm) }
+        if offset != 0 {
+            queryItems.append(URLQueryItem(name: "offset", value: "\(offset)"))
+        }
+
+        if limit != 100000 {
+            queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
+        }
+
+        if hideBroken {
+            queryItems.append(URLQueryItem(name: "hidebroken", value: "true"))
+        }
+
+        let path = "/json/stations/\(by.rawValue.lowercased())/\(searchTerm)"
+
+        return try await fetch([RadioBrowser.Station].self, path: path, queryItems: queryItems)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose UUID matches the searchTerm.
+    /// - Parameter searchTerm: Search UUID string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byUUID searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byUUID, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose name contains the searchTerm.
+    /// - Parameter searchTerm: Search name string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byname searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byName, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose name matches the searchTerm.
+    /// - Parameter searchTerm: Search name string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(bynameExact searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byNameExact, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose codec contains the searchTerm.
+    /// - Parameter searchTerm: Search codec string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byCodec searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byCodec, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose codec matches the searchTerm.
+    /// - Parameter searchTerm: Search codec string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byCodecExact searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byCodecExact, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose country contains the searchTerm.
+    /// - Parameter searchTerm: Search country string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byCountry searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byCountry, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose country matches the searchTerm.
+    /// - Parameter searchTerm: Search country string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byCountryExact searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byCountryExact, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose country code matches the searchTerm.
+    /// - Parameter searchTerm: Search country code string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byCcountryCodeExact searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byCountryCodeExact, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose state contains the searchTerm.
+    /// - Parameter searchTerm: Search state string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byState searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byState, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose state matches the searchTerm.
+    /// - Parameter searchTerm: Search state string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byStateExact searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byStateExact, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose language contains the searchTerm.
+    /// - Parameter searchTerm: Search language string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byLanguage searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byLanguage, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose language matches the searchTerm.
+    /// - Parameter searchTerm: Search language string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byLanguageExact searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byLanguageExact, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose tag contains the searchTerm.
+    /// - Parameter searchTerm: Search tag string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byTag searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byTag, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
+    }
+
+    // ******************************************************************
+    /// A list of radio stations whose tag matches the searchTerm.
+    /// - Parameter searchTerm: Search tag string
+    /// - Parameter hideBroken: Do list/not list broken stations
+    /// - Parameter order: Name of the attribute the result list will be sorted by.
+    /// - Parameter reverse: Reverse the result list if set to true
+    /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
+    /// - Parameter limit: Number of returned datarows (stations) starting with offset
+    public func listStations(byTagExact searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Stations.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Station]
+    {
+        return try await listStations(by: .byTagExact, searchTerm: searchTerm, hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
     }
 }

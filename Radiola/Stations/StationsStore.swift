@@ -16,9 +16,9 @@ class StationsStore {
 
     let localStations = LocalStationList(title: "Local staions")
     let internetRequests: [StationList] = [
-        RadioBrowserStations(title: "By tag", searchType: .bytag),
-        RadioBrowserStations(title: "By name", searchType: .byname),
-        RadioBrowserStations(title: "By country", searchType: .bycountry),
+        RadioBrowserStationsByTag(title: "By tag", settingsPath: "RadioBrowser.com:byTag"),
+        RadioBrowserStationsByName(title: "By name", settingsPath: "RadioBrowser.com:byName"),
+        RadioBrowserStationsByCountry(title: "By country", settingsPath: "RadioBrowser.com:byCountry"),
     ]
 
     init() {

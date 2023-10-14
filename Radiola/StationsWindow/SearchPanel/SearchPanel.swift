@@ -67,7 +67,7 @@ class SearchPanel: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    private func orderTitle(forOrder: SearchOrder) -> String {
+    private func orderTitle(forOrder: SearchOptions.Order) -> String {
         switch forOrder {
             case .byName: return "sort by name"
             case .byVotes: return "sort by votes"

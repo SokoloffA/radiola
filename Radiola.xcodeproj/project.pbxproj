@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -61,6 +61,7 @@
 		39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */; };
 		39E042D0293B3ACA00A2167E /* VolumeMenuItemContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E042CE293B3AC900A2167E /* VolumeMenuItemContoller.swift */; };
 		39E042D1293B3ACA00A2167E /* VolumeMenuItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39E042CF293B3AC900A2167E /* VolumeMenuItem.xib */; };
+		39E70DE62AD9E1CA00BF3059 /* RadioBrowserServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */; };
 		39E8DFD5288F316A00082467 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 39E8DFD4288F316A00082467 /* Sparkle */; };
 		39E8DFD72890839500082467 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E8DFD62890839500082467 /* Updater.swift */; };
 		39F08E462A0CC582006B65D0 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F08E452A0CC582006B65D0 /* Types.swift */; };
@@ -132,6 +133,7 @@
 		39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemController.xib; sourceTree = "<group>"; };
 		39E042CE293B3AC900A2167E /* VolumeMenuItemContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMenuItemContoller.swift; sourceTree = "<group>"; };
 		39E042CF293B3AC900A2167E /* VolumeMenuItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VolumeMenuItem.xib; sourceTree = "<group>"; };
+		39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioBrowserServer.swift; sourceTree = "<group>"; };
 		39E8DFD62890839500082467 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		39F08E452A0CC582006B65D0 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				394ABCA82A9CA1F800E2B6E9 /* RadioBrowser.swift */,
+				39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */,
 				394ABCAA2A9CA25500E2B6E9 /* RadioBrowserStations.swift */,
 				394ABCA62A9BBD4E00E2B6E9 /* RadioBrowserTags.swift */,
 			);
@@ -434,6 +437,7 @@
 				396704692943AD2700012FFD /* AudioDevice.swift in Sources */,
 				39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
+				39E70DE62AD9E1CA00BF3059 /* RadioBrowserServer.swift in Sources */,
 				39BF44AD290D4367008E5A30 /* GroupRowView.swift in Sources */,
 				3987B99D2A9635930077EB03 /* SideBar.swift in Sources */,
 				394F8A3F28739339005EA7FA /* Radiola.xcdatamodeld in Sources */,

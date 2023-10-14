@@ -230,25 +230,18 @@ class StationList: StationGroup {
 }
 
 struct SearchOptions {
-    enum Order {
+    enum Order: String {
         case byName
         case byVotes
         case byCountry
         case byBitrate
     }
 
-    let allOrderTypes: [SearchOrder]
+    let allOrderTypes: [Order]
 
     var searchText: String = ""
     var isExactMatch: Bool = false
-    var order: SearchOrder = .byName
-}
-
-enum SearchOrder {
-    case byName
-    case byVotes
-    case byCountry
-    case byBitrate
+    var order: Order = .byName
 }
 
 protocol SearchableStationList: StationList {
