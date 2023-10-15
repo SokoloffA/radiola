@@ -7,6 +7,13 @@
 
 import Cocoa
 
+extension NSPopUpButton {
+    func addItem(withTitle title: String, tag: Int) {
+        addItem(withTitle: title)
+        lastItem?.tag = tag
+    }
+}
+
 class SearchPanel: NSViewController {
     @IBOutlet var searchTextView: NSSearchField!
     @IBOutlet var matchTypeCombo: NSPopUpButton!
@@ -34,6 +41,13 @@ class SearchPanel: NSViewController {
         sortCombo.target = self
         sortCombo.action = #selector(orderTypeChanged)
 
+        sortCombo.removeAllItems()
+        sortCombo.addItem(withTitle: "sort by votes", tag: SearchOptions.Order.byVotes.rawValue)
+        sortCombo.addItem(withTitle: "sort by name", tag: SearchOptions.Order.byName.rawValue)
+        sortCombo.addItem(withTitle: "sort by country", tag: SearchOptions.Order.byCountry.rawValue)
+        sortCombo.addItem(withTitle: "sort by bitrate", tag: SearchOptions.Order.byBitrate.rawValue)
+        sortCombo.selectItem(at: 0)
+
         setProvider()
     }
 
@@ -51,29 +65,9 @@ class SearchPanel: NSViewController {
         guard let provider = provider else { return }
 
         matchTypeCombo.selectItem(withTag: provider.searchOptions.isExactMatch ? 1 : 0)
-
-        sortCombo.removeAllItems()
-        for (i, v) in provider.searchOptions.allOrderTypes.enumerated() {
-            sortCombo.addItem(withTitle: orderTitle(forOrder: v))
-            sortCombo.lastItem?.tag = i
-            if v == provider.searchOptions.order {
-                sortCombo.selectItem(withTag: i)
-            }
-        }
-
         searchTextView.stringValue = provider.searchOptions.searchText
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func orderTitle(forOrder: SearchOptions.Order) -> String {
-        switch forOrder {
-            case .byName: return "sort by name"
-            case .byVotes: return "sort by votes"
-            case .byCountry: return "sort by country"
-            case .byBitrate: return "sort by bitrate"
-        }
+        print(#function, provider.searchOptions.order)
+        sortCombo.selectItem(withTag: provider.searchOptions.order.rawValue)
     }
 
     /* ****************************************
@@ -82,6 +76,7 @@ class SearchPanel: NSViewController {
     @objc private func matchTypeChanged() {
         guard let provider = provider else { return }
         provider.searchOptions.isExactMatch = matchTypeCombo.selectedItem?.tag == 1
+        search()
     }
 
     /* ****************************************
@@ -89,8 +84,9 @@ class SearchPanel: NSViewController {
      * ****************************************/
     @objc private func orderTypeChanged() {
         guard let provider = provider else { return }
-        let n = sortCombo.selectedItem?.tag ?? 0
-        provider.searchOptions.order = provider.searchOptions.allOrderTypes[n]
+        print(#function, provider.searchOptions.order, "=", SearchOptions.Order(rawValue: sortCombo.selectedTag()))
+        provider.searchOptions.order = SearchOptions.Order(rawValue: sortCombo.selectedTag()) ?? .byVotes
+        search()
     }
 
     /* ****************************************
@@ -104,25 +100,6 @@ class SearchPanel: NSViewController {
         }
 
         provider.searchOptions.searchText = searchTextView.stringValue
-        provider.searchOptions.isExactMatch = matchTypeCombo.selectedItem?.tag == 1
-        let n = sortCombo.selectedItem?.tag ?? 0
-        provider.searchOptions.order = provider.searchOptions.allOrderTypes[n]
-
         provider.fetch()
-//        provider
-//        Task {
-//            do {
-//                print(#function, #line)
-//                try await provider.fetch()
-//                print(#function, #line)
-//                //        stationsView?.stations = res
-//                await MainActor.run {
-//                    self.stationsView?.stations = provider.stations
-//                }
-//            } catch {
-//                print(#function, #line)
-//                print("Request failed with error: \(error)")
-//            }
-//        }
     }
 }

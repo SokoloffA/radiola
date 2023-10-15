@@ -60,6 +60,7 @@ class Station: StationNode {
     var isFavorite = false
     var bitrate: Bitrate?
     var votes: Int?
+    var countryCode: String?
 
     /* ****************************************
      *
@@ -232,7 +233,7 @@ class StationList: StationGroup {
 }
 
 struct SearchOptions {
-    enum Order: String {
+    enum Order: Int {
         case byName
         case byVotes
         case byCountry

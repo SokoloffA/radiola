@@ -44,13 +44,38 @@ class RadioBrowserStations: StationList, SearchableStationList {
     /* ****************************************
      *
      * ****************************************/
+    private func orderToStr(_ order: SearchOptions.Order) -> String {
+        switch order {
+            case .byName: return "byName"
+            case .byVotes: return "byVotes"
+            case .byCountry: return "byCountry"
+            case .byBitrate: return "byBitrate"
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func strToOrder(_ str: String?, default defaultValue: SearchOptions.Order) -> SearchOptions.Order {
+        switch str {
+            case "byName": return .byName
+            case "byVotes": return .byVotes
+            case "byCountry": return .byCountry
+            case "byBitrate": return .byBitrate
+            default: return defaultValue
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     private func loadSettings() {
         guard let settingsPath = settingsPath else { return }
         let data = UserDefaults.standard
 
         searchOptions.searchText = data.string(forKey: settingsPath + "/search") ?? ""
         searchOptions.isExactMatch = data.bool(forKey: settingsPath + "/exact")
-        searchOptions.order = SearchOptions.Order(rawValue: data.string(forKey: settingsPath + "/order") ?? "") ?? .byVotes
+        searchOptions.order = strToOrder(data.string(forKey: settingsPath + "/order"), default: .byVotes)
     }
 
     /* ****************************************
@@ -62,7 +87,7 @@ class RadioBrowserStations: StationList, SearchableStationList {
 
         data.set(searchOptions.searchText, forKey: settingsPath + "/search")
         data.set(searchOptions.isExactMatch, forKey: settingsPath + "/exact")
-        data.set(searchOptions.order.rawValue, forKey: settingsPath + "/order")
+        data.set(orderToStr(searchOptions.order), forKey: settingsPath + "/order")
     }
 
     /* ****************************************
@@ -121,6 +146,7 @@ class RadioBrowserStations: StationList, SearchableStationList {
                     let s = Station(title: r.name, url: r.url)
                     s.bitrate = r.bitrate * 1024
                     s.votes = r.votes
+                    s.countryCode = r.countryCode
                     res.append(s)
                 }
                 await MainActor.run {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,8 +25,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="1027" height="60"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeT-AV-Zbn">
-                                <rect key="frame" x="488" y="15" width="400" height="30"/>
+                            <searchField wantsLayer="YES" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JeT-AV-Zbn">
+                                <rect key="frame" x="490" y="15" width="400" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="400" id="LtZ-G2-5PQ"/>
                                 </constraints>
@@ -37,13 +37,13 @@
                                 </searchFieldCell>
                             </searchField>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="DQR-da-aN8">
-                                <rect key="frame" x="903" y="22" width="104" height="16"/>
-                                <popUpButtonCell key="cell" type="bevel" title="Sort by reting" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="ZOP-Yo-3NU" id="4CB-KS-3aj">
+                                <rect key="frame" x="905" y="22" width="102" height="16"/>
+                                <popUpButtonCell key="cell" type="bevel" title="Sort by votes" bezelStyle="regularSquare" alignment="left" lineBreakMode="truncatingTail" state="on" imageScaling="proportionallyDown" inset="2" selectedItem="ZOP-Yo-3NU" id="4CB-KS-3aj">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" usesAppearanceFont="YES"/>
                                     <menu key="menu" id="QJH-PC-frI">
                                         <items>
-                                            <menuItem title="Sort by reting" state="on" id="ZOP-Yo-3NU"/>
+                                            <menuItem title="Sort by votes" state="on" id="ZOP-Yo-3NU"/>
                                             <menuItem title="Sort by name" id="ydN-7c-Ftf"/>
                                             <menuItem title="sort by date" id="FVt-B6-Cwj"/>
                                         </items>
@@ -51,7 +51,7 @@
                                 </popUpButtonCell>
                             </popUpButton>
                             <popUpButton translatesAutoresizingMaskIntoConstraints="NO" id="SI2-vs-vXE">
-                                <rect key="frame" x="378" y="22" width="102" height="16"/>
+                                <rect key="frame" x="380" y="22" width="102" height="16"/>
                                 <popUpButtonCell key="cell" type="bevel" title="matches with" bezelStyle="rounded" alignment="left" controlSize="large" lineBreakMode="truncatingTail" state="on" tag="1" imageScaling="proportionallyDown" inset="2" selectedItem="laQ-Cj-QY8" id="5EC-O9-3dS">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" usesAppearanceFont="YES"/>

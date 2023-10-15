@@ -39,7 +39,7 @@ extension RadioBrowser {
         var tags: [String]
 
         /// 2 letters, uppercase    Official countrycodes as in ISO 3166-1 alpha-2
-        var countrycode: String
+        var countryCode: String
 
         /// Full name of the entity where the station is located inside the country
         var state: String
@@ -144,7 +144,7 @@ extension RadioBrowser {
             homepage = try container.decode(String.self, forKey: .homepage)
             favicon = try container.decode(String.self, forKey: .favicon)
             tags = try container.decode(String.self, forKey: .tags).split(separator: ",").map { String($0) }
-            countrycode = try container.decode(String.self, forKey: .countrycode)
+            countryCode = try container.decode(String.self, forKey: .countrycode)
             state = try container.decode(String.self, forKey: .state)
             language = try container.decode(String.self, forKey: .language).split(separator: ",").map { String($0) }
             languagecodes = try container.decode(String.self, forKey: .languagecodes).split(separator: ",").map { String($0) }

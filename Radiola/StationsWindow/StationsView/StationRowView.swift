@@ -64,32 +64,29 @@ class StationRowView: NSView, NSTextFieldDelegate {
     func control(_ control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
         return stationView.isEditable
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
     private func additionalInfo(station: Station) -> String {
         var res: [String] = []
-        
+
         if let votes = station.votes {
             switch votes {
-            case 0: res.append("no votes")
+                case 0: res.append("no votes")
                 case 0 ..< 1000: res.append("votes: \(votes)")
-                case 1000 ..< 1000_000: res.append("votes: \(votes/1000)k")
-                default: res.append("votes: \(votes/1000/1000)M")
+                case 1000 ..< 1000000: res.append("votes: \(votes / 1000)k")
+                default: res.append("votes: \(votes / 1000 / 1000)M")
             }
         }
 
-        
         if let bitrate = station.bitrate {
             switch bitrate {
-            case 0: res.append("unknown bitrate")
-            case 1 ..< 1024: res.append("bitrate: \(bitrate)b")
-                case 1024 ..< 1024 * 1024: res.append("  bitrate: \(bitrate / 1024)k")
-                default: res.append("  bitrate: \(bitrate / 1024 / 1024)M")
+                case 0: res.append("unknown bitrate")
+                case 1 ..< 1024: res.append("bitrate: \(bitrate)b")
+                default: res.append("  bitrate: \(bitrate / 1024)k")
             }
         }
-
 
         return res.joined(separator: "  ")
     }

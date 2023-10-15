@@ -250,12 +250,12 @@
 		394F8A6528739A1D005EA7FA /* StationsWindow */ = {
 			isa = PBXGroup;
 			children = (
+				394F8A6128739A15005EA7FA /* StationsWindow.swift */,
+				394F8A6228739A15005EA7FA /* StationsWindow.xib */,
 				39526E1C2AD461C400363DC1 /* StationsView */,
 				3987B9A42A9F80B90077EB03 /* Toolbar */,
 				394ABC8C2A97AB5900E2B6E9 /* Sidebar */,
 				3987B99F2A9E15F90077EB03 /* SearchPanel */,
-				394F8A6128739A15005EA7FA /* StationsWindow.swift */,
-				394F8A6228739A15005EA7FA /* StationsWindow.xib */,
 			);
 			path = StationsWindow;
 			sourceTree = "<group>";
