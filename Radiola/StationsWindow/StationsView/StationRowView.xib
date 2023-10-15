@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="StationRowView" customModule="Radiola">
             <connections>
+                <outlet property="bitrateLabel" destination="C6k-cQ-Z80" id="p0X-qh-a4K"/>
                 <outlet property="contentView" destination="c22-O7-iKe" id="4lo-oI-R22"/>
                 <outlet property="favoriteButton" destination="dBC-Jw-E96" id="YF5-Dp-PtG"/>
                 <outlet property="nameEdit" destination="Uoq-wb-Nh3" id="XH3-O4-jac"/>
@@ -29,7 +30,7 @@
                     </textFieldCell>
                 </textField>
                 <textField identifier="UrlEdit" focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P6r-gT-G4r">
-                    <rect key="frame" x="0.0" y="8" width="494" height="14"/>
+                    <rect key="frame" x="0.0" y="8" width="451" height="14"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="https://github.com/SokoloffA/radiola" id="lcX-yD-f0I">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
@@ -46,6 +47,14 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C6k-cQ-Z80">
+                    <rect key="frame" x="455" y="8" width="39" height="14"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="bitrate" id="iWo-6b-lEc">
+                        <font key="font" metaFont="smallSystem"/>
+                        <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="dBC-Jw-E96" secondAttribute="trailing" constant="8" id="4hu-fd-AJR"/>
@@ -53,12 +62,14 @@
                 <constraint firstItem="2k0-0m-GJT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="9zG-3w-yms"/>
                 <constraint firstItem="dBC-Jw-E96" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="7" id="D1k-z0-85f"/>
                 <constraint firstAttribute="trailing" secondItem="2k0-0m-GJT" secondAttribute="trailing" id="Fn3-Sq-KRK"/>
-                <constraint firstAttribute="trailing" secondItem="P6r-gT-G4r" secondAttribute="trailing" constant="8" id="IHA-mP-bzw"/>
                 <constraint firstAttribute="bottom" secondItem="2k0-0m-GJT" secondAttribute="bottom" id="L4N-9R-sVq"/>
                 <constraint firstItem="Uoq-wb-Nh3" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="6" id="cpt-SC-0dh"/>
                 <constraint firstItem="Uoq-wb-Nh3" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="2" id="dbO-vB-rV3"/>
+                <constraint firstAttribute="trailing" secondItem="C6k-cQ-Z80" secondAttribute="trailing" constant="8" id="gGI-Qg-feh"/>
                 <constraint firstItem="dBC-Jw-E96" firstAttribute="leading" secondItem="Uoq-wb-Nh3" secondAttribute="trailing" constant="8" symbolic="YES" id="pfV-wn-AIT"/>
                 <constraint firstItem="2k0-0m-GJT" firstAttribute="top" secondItem="P6r-gT-G4r" secondAttribute="bottom" constant="7" id="tF8-YB-1if"/>
+                <constraint firstItem="C6k-cQ-Z80" firstAttribute="firstBaseline" secondItem="P6r-gT-G4r" secondAttribute="firstBaseline" id="uJm-3C-2tO"/>
+                <constraint firstItem="C6k-cQ-Z80" firstAttribute="leading" secondItem="P6r-gT-G4r" secondAttribute="trailing" constant="8" symbolic="YES" id="zZy-Fs-ERd"/>
             </constraints>
             <point key="canvasLocation" x="-147" y="22"/>
         </customView>

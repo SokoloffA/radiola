@@ -105,11 +105,23 @@ class RadioBrowserStations: StationList, SearchableStationList {
         Task {
             do {
                 let server = try await RadioBrowser.getFastestServer()
-                let resp = try await server.listStations(by: type, searchTerm: searchOptions.searchText, order: requestOrderType(), limit: 1000)
+
+                var reverse = false
+                let order = requestOrderType()
+                switch order {
+                    case .bitrate: reverse = true
+                    case .votes: reverse = true
+                    default: reverse = false
+                }
+
+                let resp = try await server.listStations(by: type, searchTerm: searchOptions.searchText, order: order, reverse: reverse, limit: 1000)
                 let res = StationList()
 
                 for r in resp {
-                    res.append(Station(title: r.name, url: r.url))
+                    let s = Station(title: r.name, url: r.url)
+                    s.bitrate = r.bitrate * 1024
+                    s.votes = r.votes
+                    res.append(s)
                 }
                 await MainActor.run {
                     self.nodes = res.nodes

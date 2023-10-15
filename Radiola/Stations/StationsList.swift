@@ -58,6 +58,8 @@ class StationNode {
 class Station: StationNode {
     var url: String
     var isFavorite = false
+    var bitrate: Bitrate?
+    var votes: Int?
 
     /* ****************************************
      *

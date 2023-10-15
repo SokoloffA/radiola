@@ -8,11 +8,12 @@
 
 import Cocoa
 
-class StationRowView: NSView {
+class StationRowView: NSView, NSTextFieldDelegate {
     @IBOutlet var contentView: NSView!
     @IBOutlet var nameEdit: NSTextField!
     @IBOutlet var urledit: NSTextField!
     @IBOutlet var favoriteButton: NSButton!
+    @IBOutlet var bitrateLabel: NSTextField!
 
     private let favoriteIcons = [
         false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
@@ -32,25 +33,65 @@ class StationRowView: NSView {
         nameEdit.tag = station.id
         nameEdit.target = self
         nameEdit.action = #selector(nameEdited(sender:))
-        nameEdit.isSelectable = true
+        nameEdit.delegate = self
 
         urledit.stringValue = station.url
         urledit.tag = station.id
         urledit.target = self
         urledit.action = #selector(urlEdited(sender:))
-        urledit.isEditable = stationView.isEditable
-        urledit.isSelectable = true
+        urledit.delegate = self
 
         favoriteButton.tag = station.id
         favoriteButton.image = favoriteIcons[station.isFavorite]!
         favoriteButton.target = self
         favoriteButton.action = #selector(favClicked(sender:))
         favoriteButton.isHidden = !stationView.isEditable
+
+        bitrateLabel.stringValue = additionalInfo(station: station)
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     required init?(coder: NSCoder) {
         station = Station(title: "", url: "")
         super.init(coder: coder)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func control(_ control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
+        return stationView.isEditable
+    }
+    
+    /* ****************************************
+     *
+     * ****************************************/
+    private func additionalInfo(station: Station) -> String {
+        var res: [String] = []
+        
+        if let votes = station.votes {
+            switch votes {
+            case 0: res.append("no votes")
+                case 0 ..< 1000: res.append("votes: \(votes)")
+                case 1000 ..< 1000_000: res.append("votes: \(votes/1000)k")
+                default: res.append("votes: \(votes/1000/1000)M")
+            }
+        }
+
+        
+        if let bitrate = station.bitrate {
+            switch bitrate {
+            case 0: res.append("unknown bitrate")
+            case 1 ..< 1024: res.append("bitrate: \(bitrate)b")
+                case 1024 ..< 1024 * 1024: res.append("  bitrate: \(bitrate / 1024)k")
+                default: res.append("  bitrate: \(bitrate / 1024 / 1024)M")
+            }
+        }
+
+
+        return res.joined(separator: "  ")
     }
 
     /* ****************************************

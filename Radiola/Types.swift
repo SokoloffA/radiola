@@ -49,3 +49,5 @@ enum MediaPrevNextKeyAction: Int {
     case disable
     case switchStation
 }
+
+typealias Bitrate = Int
