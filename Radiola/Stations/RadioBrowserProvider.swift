@@ -8,22 +8,22 @@
 import Foundation
 
 class RadioBrowserStationsByName: RadioBrowserStations {
-    private var searchType: RadioBrowser.Stations.RequestType { .byName }
+    override func searchType() -> RadioBrowser.Stations.RequestType { .byName }
 }
 
 class RadioBrowserStationsByTag: RadioBrowserStations {
-    private var searchType: RadioBrowser.Stations.RequestType { .byTag }
+    override func searchType() -> RadioBrowser.Stations.RequestType { .byTag }
 }
 
 class RadioBrowserStationsByCountry: RadioBrowserStations {
-    private var searchType: RadioBrowser.Stations.RequestType { .byCountry }
+    override func searchType() -> RadioBrowser.Stations.RequestType { .byCountry }
 }
 
 /* ********************************************
  *
  * ********************************************/
 class RadioBrowserStations: StationList, SearchableStationList {
-    private var searchType: RadioBrowser.Stations.RequestType { .byTag }
+    internal func searchType() -> RadioBrowser.Stations.RequestType { .byTag }
     public let settingsPath: String?
 
     var fetchHandler: ((SearchableStationList) -> Void)?
@@ -106,7 +106,7 @@ class RadioBrowserStations: StationList, SearchableStationList {
      *
      * ****************************************/
     private func requestType() -> RadioBrowser.Stations.RequestType {
-        switch searchType {
+        switch searchType() {
             case .byUUID: return .byUUID
             case .byName, .byNameExact: return searchOptions.isExactMatch ? .byNameExact : .byName
             case .byCodec, .byCodecExact: return searchOptions.isExactMatch ? .byCodecExact : .byCodec

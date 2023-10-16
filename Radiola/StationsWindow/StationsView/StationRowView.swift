@@ -34,12 +34,14 @@ class StationRowView: NSView, NSTextFieldDelegate {
         nameEdit.target = self
         nameEdit.action = #selector(nameEdited(sender:))
         nameEdit.delegate = self
+        nameEdit.isEditable = true
 
         urledit.stringValue = station.url
         urledit.tag = station.id
         urledit.target = self
         urledit.action = #selector(urlEdited(sender:))
         urledit.delegate = self
+        urledit.isEditable = true
 
         favoriteButton.tag = station.id
         favoriteButton.image = favoriteIcons[station.isFavorite]!

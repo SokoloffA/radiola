@@ -21,6 +21,7 @@ extension RadioBrowser {
             url.path = path
             url.queryItems = queryItems
 
+            print(url)
             guard let url = url.url else {
                 throw RadioBrowser.Error.invalidURL
             }

@@ -36,10 +36,10 @@ class SearchPanel: NSViewController {
         searchTextView.action = #selector(search)
 
         matchTypeCombo.target = self
-        matchTypeCombo.action = #selector(matchTypeChanged)
+        matchTypeCombo.action = #selector(search)
 
         sortCombo.target = self
-        sortCombo.action = #selector(orderTypeChanged)
+        sortCombo.action = #selector(search)
 
         sortCombo.removeAllItems()
         sortCombo.addItem(withTitle: "sort by votes", tag: SearchOptions.Order.byVotes.rawValue)
@@ -66,27 +66,7 @@ class SearchPanel: NSViewController {
 
         matchTypeCombo.selectItem(withTag: provider.searchOptions.isExactMatch ? 1 : 0)
         searchTextView.stringValue = provider.searchOptions.searchText
-        print(#function, provider.searchOptions.order)
         sortCombo.selectItem(withTag: provider.searchOptions.order.rawValue)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func matchTypeChanged() {
-        guard let provider = provider else { return }
-        provider.searchOptions.isExactMatch = matchTypeCombo.selectedItem?.tag == 1
-        search()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func orderTypeChanged() {
-        guard let provider = provider else { return }
-        print(#function, provider.searchOptions.order, "=", SearchOptions.Order(rawValue: sortCombo.selectedTag()))
-        provider.searchOptions.order = SearchOptions.Order(rawValue: sortCombo.selectedTag()) ?? .byVotes
-        search()
     }
 
     /* ****************************************
@@ -100,6 +80,9 @@ class SearchPanel: NSViewController {
         }
 
         provider.searchOptions.searchText = searchTextView.stringValue
+        provider.searchOptions.isExactMatch = matchTypeCombo.selectedItem?.tag == 1
+        provider.searchOptions.order = SearchOptions.Order(rawValue: sortCombo.selectedTag()) ?? .byVotes
+
         provider.fetch()
     }
 }
