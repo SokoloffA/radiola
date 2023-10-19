@@ -13,7 +13,7 @@ class StationRowView: NSView, NSTextFieldDelegate {
     @IBOutlet var nameEdit: NSTextField!
     @IBOutlet var urledit: NSTextField!
     @IBOutlet var favoriteButton: NSButton!
-    @IBOutlet var bitrateLabel: NSTextField!
+    @IBOutlet var infoLabel: NSTextField!
 
     private let favoriteIcons = [
         false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
@@ -23,6 +23,9 @@ class StationRowView: NSView, NSTextFieldDelegate {
     private let station: Station
     private weak var stationView: StationView!
 
+    /* ****************************************
+     *
+     * ****************************************/
     init(station: Station, stationView: StationView) {
         self.station = station
         self.stationView = stationView
@@ -49,7 +52,7 @@ class StationRowView: NSView, NSTextFieldDelegate {
         favoriteButton.action = #selector(favClicked(sender:))
         favoriteButton.isHidden = !stationView.isEditable
 
-        bitrateLabel.stringValue = additionalInfo(station: station)
+        infoLabel.attributedStringValue = AdditionaLinfo(station: station).string()
     }
 
     /* ****************************************
@@ -65,32 +68,6 @@ class StationRowView: NSView, NSTextFieldDelegate {
      * ****************************************/
     func control(_ control: NSControl, textShouldBeginEditing fieldEditor: NSText) -> Bool {
         return stationView.isEditable
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func additionalInfo(station: Station) -> String {
-        var res: [String] = []
-
-        if let votes = station.votes {
-            switch votes {
-                case 0: res.append("no votes")
-                case 0 ..< 1000: res.append("votes: \(votes)")
-                case 1000 ..< 1000000: res.append("votes: \(votes / 1000)k")
-                default: res.append("votes: \(votes / 1000 / 1000)M")
-            }
-        }
-
-        if let bitrate = station.bitrate {
-            switch bitrate {
-                case 0: res.append("unknown bitrate")
-                case 1 ..< 1024: res.append("bitrate: \(bitrate)b")
-                default: res.append("  bitrate: \(bitrate / 1024)k")
-            }
-        }
-
-        return res.joined(separator: "  ")
     }
 
     /* ****************************************
@@ -116,5 +93,89 @@ class StationRowView: NSView, NSTextFieldDelegate {
         station.isFavorite = !station.isFavorite
         sender.image = favoriteIcons[station.isFavorite]!
         stationView.nodeDidChanged(node: station)
+    }
+}
+
+internal struct AdditionaLinfo {
+    let station: Station
+    let normalFont = NSFont.systemFont(ofSize: 11)
+    let smallFont = NSFont.systemFont(ofSize: 10)
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func string() -> NSAttributedString {
+        let res = NSMutableAttributedString()
+        for f in [votesInfo, qualityInfo] {
+            let s = f()
+            if !s.string.isEmpty {
+                if !res.string.isEmpty {
+                    res.append(NSAttributedString(string: "    "))
+                }
+                res.append(s)
+            }
+        }
+
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func qualityInfo() -> NSAttributedString {
+        let res = NSMutableAttributedString()
+
+        if let codec = station.codec {
+            res.append(format("codec: ", smallFont))
+            res.append(format(codec.lowercased(), normalFont))
+        }
+
+        if let bitrate = station.bitrate {
+            switch bitrate {
+                case 0: break
+
+                case 1 ..< 1024:
+                    res.append(format(" \(bitrate)b", normalFont))
+
+                default:
+                    res.append(format(" \(bitrate / 1024)k", normalFont))
+            }
+        }
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func votesInfo() -> NSAttributedString {
+        guard let votes = station.votes else { return NSAttributedString(string: "") }
+
+        let res = NSMutableAttributedString()
+
+        switch votes {
+            case 0:
+                res.append(format("no votes", normalFont))
+
+            case 0 ..< 1000:
+                res.append(format("votes:", smallFont))
+                res.append(format(" \(votes)", normalFont))
+
+            case 1000 ..< 1000000:
+                res.append(format("votes:", smallFont))
+                res.append(format(" \(votes / 1000)", normalFont))
+                res.append(format("k", smallFont))
+            default:
+                res.append(format("votes: ", smallFont))
+                res.append(format("\(votes / 10000000)", normalFont))
+                res.append(format("M", smallFont))
+        }
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func format(_ str: String, _ font: NSFont) -> NSAttributedString {
+        return NSAttributedString(string: str, attributes: [.font: font])
     }
 }

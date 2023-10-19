@@ -189,7 +189,12 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
             searchPanelHeightConstraint.constant = searchPanelHeight
             searchPanel.provider = provider
             provider.fetchHandler = stationsFound
-            _ = searchPanel.becomeFirstResponder()
+            if provider.nodes.isEmpty {
+                _ = searchPanel.becomeFirstResponder()
+            }
+            else {
+                _ = stationsView.becomeFirstResponder()
+            }
         } else {
             searchPanelHeightConstraint.constant = 0
             searchPanel.provider = nil

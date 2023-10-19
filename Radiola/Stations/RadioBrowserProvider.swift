@@ -144,6 +144,7 @@ class RadioBrowserStations: StationList, SearchableStationList {
 
                 for r in resp {
                     let s = Station(title: r.name, url: r.url)
+                    s.codec = r.codec
                     s.bitrate = r.bitrate * 1024
                     s.votes = r.votes
                     s.countryCode = r.countryCode

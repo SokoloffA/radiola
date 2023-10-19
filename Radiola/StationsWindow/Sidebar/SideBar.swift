@@ -153,6 +153,7 @@ extension SideBar: NSOutlineViewDelegate {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, shouldSelectItem: Any) -> Bool {
-        return shouldSelectItem is Item
+        guard let item = shouldSelectItem as? Item else { return false }
+        return !item.isGroup()
     }
 }
