@@ -19,7 +19,7 @@ class SearchPanel: NSViewController {
     @IBOutlet var matchTypeCombo: NSPopUpButton!
     @IBOutlet var sortCombo: NSPopUpButton!
 
-    var provider: SearchableStationList? {
+    var provider: InternetStationList? {
         didSet {
             setProvider()
         }

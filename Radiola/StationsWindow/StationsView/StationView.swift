@@ -7,6 +7,9 @@
 
 import Cocoa
 
+/* #############################
+ # StationView
+ ############################## */
 class StationView: NSView, NSUserInterfaceValidations {
     private let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
     private(set) var isEditable = false
@@ -17,6 +20,9 @@ class StationView: NSView, NSUserInterfaceValidations {
     @IBOutlet var addStationButton: NSButton!
     @IBOutlet var removeStationButton: NSButton!
     @IBOutlet var bottomBar: NSView!
+    @IBOutlet var stateIndicator: NSView!
+    @IBOutlet var stateIndicatorLabel: NSTextField!
+    @IBOutlet var stateIndicatorSpinner: NSProgressIndicator!
 
     var stations: StationList? { didSet { stationListDidChanged() } }
 
@@ -54,6 +60,11 @@ class StationView: NSView, NSUserInterfaceValidations {
                                                name: NSOutlineView.selectionDidChangeNotification,
                                                object: nil)
 
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(stationsStateChanged),
+                                               name: Notification.Name.StationsStateChanged,
+                                               object: nil)
+
         refresh()
     }
 
@@ -79,7 +90,7 @@ class StationView: NSView, NSUserInterfaceValidations {
             case #selector(addStation): return stations is LocalStationList
             case #selector(addGroup): return stations is LocalStationList
             case #selector(removeStation): return stations is LocalStationList
-            case #selector(addStationToLocalList): return stations is SearchableStationList
+            case #selector(addStationToLocalList): return stations is InternetStationList
             default: return true
         }
     }
@@ -96,6 +107,7 @@ class StationView: NSView, NSUserInterfaceValidations {
             stationsTree.scrollRowToVisible(stationsTree.selectedRow)
         }
 
+        updateStateIndicator()
         refresh()
     }
 
@@ -107,6 +119,47 @@ class StationView: NSView, NSUserInterfaceValidations {
         removeStationButton.isEnabled = (selNode != nil)
         addStationButton.isHidden = !isEditable
         removeStationButton.isHidden = !isEditable
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func stationsStateChanged(_ notification: Notification) {
+        if (notification.object as? StationList) !== stations { return }
+        updateStateIndicator()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateStateIndicator() {
+        guard let stations = stations else { return }
+
+        switch (stations.state, stations.isEmpty) {
+            case (.notLoaded, _):
+                stateIndicator.isHidden = true
+                stateIndicatorSpinner.stopAnimation(nil)
+
+            case (.loading, _):
+                stateIndicatorLabel.stringValue = "Loading"
+                stateIndicator.isHidden = false
+                stateIndicatorSpinner.isHidden = false
+                stateIndicatorSpinner.startAnimation(nil)
+
+            case (.error, _):
+                stateIndicator.isHidden = true
+                stateIndicatorSpinner.stopAnimation(nil)
+
+            case (.loaded, true):
+                stateIndicatorSpinner.stopAnimation(nil)
+                stateIndicatorSpinner.isHidden = true
+                stateIndicator.isHidden = false
+                stateIndicatorLabel.stringValue = "No results"
+
+            case (.loaded, false):
+                stateIndicatorSpinner.stopAnimation(nil)
+                stateIndicator.isHidden = true
+        }
     }
 
     /* ****************************************
@@ -294,9 +347,9 @@ class StationView: NSView, NSUserInterfaceValidations {
     }
 }
 
-/* ****************************************
- *
- * ****************************************/
+/* #############################
+ # StationView NSOutlineViewDelegate
+ ############################## */
 extension StationView: NSOutlineViewDelegate {
     /* ****************************************
      *
@@ -322,9 +375,9 @@ extension StationView: NSOutlineViewDelegate {
     }
 }
 
-/* ****************************************
- *
- * ****************************************/
+/* #############################
+ # StationView NSOutlineViewDataSource
+ ############################## */
 extension StationView: NSOutlineViewDataSource {
     /* ****************************************
      * Returns the number of child items each item in the outline

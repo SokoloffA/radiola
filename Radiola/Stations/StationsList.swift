@@ -197,6 +197,21 @@ class StationGroup: StationNode {
 class StationList: StationGroup {
     var isEditable: Bool { return false }
 
+    enum State {
+        case notLoaded
+        case loading
+        case error
+        case loaded
+    }
+
+    var state = State.notLoaded {
+        didSet {
+            NotificationCenter.default.post(name: Notification.Name.StationsStateChanged, object: self)
+        }
+    }
+
+    var isEmpty: Bool { nodes.isEmpty }
+
     /* ****************************************
      *
      * ****************************************/
@@ -248,9 +263,9 @@ struct SearchOptions {
     var order: Order = .byName
 }
 
-protocol SearchableStationList: StationList {
+protocol InternetStationList: StationList {
     var searchOptions: SearchOptions { get set }
 
     func fetch()
-    var fetchHandler: ((SearchableStationList) -> Void)? { get set }
+    var fetchHandler: ((InternetStationList) -> Void)? { get set }
 }

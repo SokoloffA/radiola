@@ -9,12 +9,9 @@
 import Foundation
 
 /* **********************************************
- *
+ * Notifications
  * **********************************************/
 extension Notification.Name {
-    // Notifications
-    static let StationsChanged = Notification.Name("stationsChanged")
-
     static let PlayerStatusChanged = Notification.Name("PlayerStatusChanged")
     static let PlayerMetadataChanged = Notification.Name("PlayerMetadataChanged")
     static let PlayerVolumeChanged = Notification.Name("PlayerVolumeChanged")
@@ -23,6 +20,8 @@ extension Notification.Name {
     static let AudioDeviceChanged = Notification.Name("AudioDeviceChanged")
 
     static let ErrorOccurred = Notification.Name("ErrorOccurred")
+
+    static let StationsStateChanged = Notification.Name("StationsStateChanged")
 }
 
 /* **********************************************

@@ -12,6 +12,9 @@
                 <outlet property="bottomBar" destination="FfP-BD-d6Z" id="PKn-vy-A56"/>
                 <outlet property="removeStationButton" destination="DSN-B9-usz" id="cwG-Ju-7dk"/>
                 <outlet property="scrollView" destination="6pM-n2-Rrb" id="rIX-CJ-7Tf"/>
+                <outlet property="stateIndicator" destination="LKV-rJ-HJX" id="ob9-7X-342"/>
+                <outlet property="stateIndicatorLabel" destination="eRS-2d-qyp" id="3fH-Xj-5r2"/>
+                <outlet property="stateIndicatorSpinner" destination="5AM-dZ-kqQ" id="LZX-lq-y4k"/>
                 <outlet property="stationsTree" destination="brQ-rw-7Hd" id="plm-SE-kcE"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
@@ -80,6 +83,30 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="LKV-rJ-HJX">
+                    <rect key="frame" x="297" y="172" width="89" height="80"/>
+                    <subviews>
+                        <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eRS-2d-qyp">
+                            <rect key="frame" x="18" y="44" width="53" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Loading" id="LWp-zf-LAE">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="5AM-dZ-kqQ">
+                            <rect key="frame" x="36" y="20" width="16" height="16"/>
+                        </progressIndicator>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="5AM-dZ-kqQ" firstAttribute="top" secondItem="eRS-2d-qyp" secondAttribute="bottom" constant="8" symbolic="YES" id="PcQ-ci-2hD"/>
+                        <constraint firstAttribute="trailing" secondItem="eRS-2d-qyp" secondAttribute="trailing" constant="20" symbolic="YES" id="aYX-Qg-S0v"/>
+                        <constraint firstItem="eRS-2d-qyp" firstAttribute="leading" secondItem="LKV-rJ-HJX" secondAttribute="leading" constant="20" symbolic="YES" id="dfe-IO-WTI"/>
+                        <constraint firstItem="5AM-dZ-kqQ" firstAttribute="centerX" secondItem="LKV-rJ-HJX" secondAttribute="centerX" id="rFA-HO-b3Z"/>
+                        <constraint firstAttribute="bottom" secondItem="5AM-dZ-kqQ" secondAttribute="bottom" constant="20" symbolic="YES" id="tMY-Lp-9iU"/>
+                        <constraint firstItem="eRS-2d-qyp" firstAttribute="top" secondItem="LKV-rJ-HJX" secondAttribute="top" constant="20" symbolic="YES" id="vu2-lJ-Dub"/>
+                    </constraints>
+                </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="FfP-BD-d6Z">
                     <rect key="frame" x="0.0" y="0.0" width="682" height="36"/>
                     <subviews>
@@ -111,7 +138,9 @@
                 <constraint firstAttribute="trailing" secondItem="6pM-n2-Rrb" secondAttribute="trailing" id="5he-BZ-PBN"/>
                 <constraint firstAttribute="trailing" secondItem="FfP-BD-d6Z" secondAttribute="trailing" id="5nV-OE-ghY"/>
                 <constraint firstItem="6pM-n2-Rrb" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="5x6-rH-yV5"/>
+                <constraint firstItem="LKV-rJ-HJX" firstAttribute="centerX" secondItem="6pM-n2-Rrb" secondAttribute="centerX" id="So9-HA-T1Z"/>
                 <constraint firstItem="FfP-BD-d6Z" firstAttribute="top" secondItem="6pM-n2-Rrb" secondAttribute="bottom" id="T8O-UY-UUJ"/>
+                <constraint firstItem="LKV-rJ-HJX" firstAttribute="centerY" secondItem="6pM-n2-Rrb" secondAttribute="centerY" id="cTv-I2-yrI"/>
                 <constraint firstAttribute="bottom" secondItem="FfP-BD-d6Z" secondAttribute="bottom" id="dhk-GB-zvd"/>
             </constraints>
             <point key="canvasLocation" x="551" y="175.5"/>

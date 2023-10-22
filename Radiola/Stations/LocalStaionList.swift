@@ -15,6 +15,7 @@ class LocalStationList: StationList {
      *
      * ****************************************/
     func load(file: URL, defaultStations: [Station] = []) {
+        state = .loading
         self.file = file
         // print(file.path)
 
@@ -22,6 +23,7 @@ class LocalStationList: StationList {
             for s in defaultStations {
                 append(s)
             }
+            state = .loaded
             return
         }
 
@@ -55,6 +57,7 @@ class LocalStationList: StationList {
             guard let xmlRoot = xml.rootElement() else { return }
             let xmlBody = xmlRoot.elements(forName: "body")
             if xmlBody.isEmpty {
+                state = .loaded
                 return
             }
 
@@ -63,6 +66,8 @@ class LocalStationList: StationList {
             }
         } catch {
         }
+
+        state = .loaded
     }
 
     /* ****************************************

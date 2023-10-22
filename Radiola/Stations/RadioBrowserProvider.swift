@@ -22,11 +22,11 @@ class RadioBrowserStationsByCountry: RadioBrowserStations {
 /* ********************************************
  *
  * ********************************************/
-class RadioBrowserStations: StationList, SearchableStationList {
+class RadioBrowserStations: StationList, InternetStationList {
     internal func searchType() -> RadioBrowser.Stations.RequestType { .byTag }
     public let settingsPath: String?
 
-    var fetchHandler: ((SearchableStationList) -> Void)?
+    var fetchHandler: ((InternetStationList) -> Void)?
 
     var searchOptions = SearchOptions(
         allOrderTypes: [.byVotes, .byName, .byBitrate, .byCountry]
@@ -124,6 +124,7 @@ class RadioBrowserStations: StationList, SearchableStationList {
     func fetch() {
         if searchOptions.searchText.isEmpty { return }
 
+        state = .loading
         let type = requestType()
         saveSettings()
 
@@ -153,8 +154,10 @@ class RadioBrowserStations: StationList, SearchableStationList {
                 await MainActor.run {
                     self.nodes = res.nodes
                     fetchHandler?(self)
+                    self.state = .loaded
                 }
             } catch {
+                self.state = .error
                 errorOccurred(object: self, message: error.localizedDescription)
             }
         }
