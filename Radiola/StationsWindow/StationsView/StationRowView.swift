@@ -8,12 +8,20 @@
 
 import Cocoa
 
+/* ############################
+ # StationRowView
+ ############################# */
 class StationRowView: NSView, NSTextFieldDelegate {
     @IBOutlet var contentView: NSView!
     @IBOutlet var nameEdit: NSTextField!
     @IBOutlet var urledit: NSTextField!
     @IBOutlet var favoriteButton: NSButton!
     @IBOutlet var infoLabel: NSTextField!
+
+    private let myListIcons = [
+        false: NSImage(systemSymbolName: NSImage.Name("music.house"), accessibilityDescription: "")?.tint(color: .lightGray),
+        true: NSImage(systemSymbolName: NSImage.Name("music.house.fill"), accessibilityDescription: "")?.tint(color: .systemYellow),
+    ]
 
     private let favoriteIcons = [
         false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
@@ -47,10 +55,9 @@ class StationRowView: NSView, NSTextFieldDelegate {
         urledit.isEditable = true
 
         favoriteButton.tag = station.id
-        favoriteButton.image = favoriteIcons[station.isFavorite]!
         favoriteButton.target = self
         favoriteButton.action = #selector(favClicked(sender:))
-        favoriteButton.isHidden = !stationView.isEditable
+        refreshFavoriteButton()
 
         infoLabel.attributedStringValue = AdditionaLinfo(station: station).string()
     }
@@ -90,12 +97,38 @@ class StationRowView: NSView, NSTextFieldDelegate {
      *
      * ****************************************/
     @IBAction private func favClicked(sender: NSButton) {
-        station.isFavorite = !station.isFavorite
-        sender.image = favoriteIcons[station.isFavorite]!
-        stationView.nodeDidChanged(node: station)
+        if station.stationList() is LocalStationList {
+            station.isFavorite = !station.isFavorite
+            stationView.nodeDidChanged(node: station)
+        } else {
+            let inLocal = stationsStore.localStations.station(byUrl: station.url) != nil
+            if !inLocal {
+                let s = Station(title: station.title, url: station.url)
+                stationsStore.localStations.append(s)
+                stationsStore.localStations.save()
+            }
+        }
+        refreshFavoriteButton()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func refreshFavoriteButton() {
+        if station.stationList() is LocalStationList {
+            favoriteButton.image = favoriteIcons[station.isFavorite]!
+            favoriteButton.toolTip = station.isFavorite ? "Unmark the station as a favorite" : "Mark the station as a favorite"
+        } else {
+            let inLocal = stationsStore.localStations.station(byUrl: station.url) != nil
+            favoriteButton.image = myListIcons[inLocal]!
+            favoriteButton.toolTip = inLocal ? "" : "Add the station to my stations list"
+        }
     }
 }
 
+/* #############################
+ # AdditionaLinfo
+ ############################## */
 internal struct AdditionaLinfo {
     let station: Station
     let normalFont = NSFont.systemFont(ofSize: 11)

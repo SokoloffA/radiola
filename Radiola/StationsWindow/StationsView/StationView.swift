@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class StationView: NSView {
+class StationView: NSView, NSUserInterfaceValidations {
     private let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
     private(set) var isEditable = false
     private static var selectedRows: [Int: Int] = [:]
@@ -18,20 +18,7 @@ class StationView: NSView {
     @IBOutlet var removeStationButton: NSButton!
     @IBOutlet var bottomBar: NSView!
 
-    var stations: StationList? {
-        didSet {
-            isEditable = stations?.isEditable ?? false
-            stationsTree.reloadData()
-
-            if let stations = stations {
-                let n = StationView.selectedRows[stations.id] ?? max(0, stationsTree.row(forItem: player.station))
-                stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
-                stationsTree.scrollRowToVisible(stationsTree.selectedRow)
-            }
-
-            refresh()
-        }
-    }
+    var stations: StationList? { didSet { stationListDidChanged() } }
 
     /* ****************************************
      *
@@ -49,10 +36,7 @@ class StationView: NSView {
         stationsTree.registerForDraggedTypes([nodePasteboardType])
         stationsTree.expandItem(nil, expandChildren: true)
 
-        addStationButton.target = self
         addStationButton.action = #selector(addStation)
-
-        removeStationButton.target = self
         removeStationButton.action = #selector(removeStation)
 
         NotificationCenter.default.addObserver(self,
@@ -90,6 +74,34 @@ class StationView: NSView {
     /* ****************************************
      *
      * ****************************************/
+    func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
+        switch item.action {
+            case #selector(addStation): return stations is LocalStationList
+            case #selector(addGroup): return stations is LocalStationList
+            case #selector(removeStation): return stations is LocalStationList
+            case #selector(addStationToLocalList): return stations is SearchableStationList
+            default: return true
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func stationListDidChanged() {
+        isEditable = stations?.isEditable ?? false
+        stationsTree.reloadData()
+        if let stations = stations {
+            let n = StationView.selectedRows[stations.id] ?? max(0, stationsTree.row(forItem: player.station))
+            stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
+            stationsTree.scrollRowToVisible(stationsTree.selectedRow)
+        }
+
+        refresh()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @objc func refresh() {
         let selNode = selectedNode()
         removeStationButton.isEnabled = (selNode != nil)
@@ -110,6 +122,13 @@ class StationView: NSView {
      * ****************************************/
     private func selectedNode() -> StationNode? {
         return stationsTree.item(atRow: stationsTree.selectedRow) as? StationNode
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func selectedStation() -> Station? {
+        return stationsTree.item(atRow: stationsTree.selectedRow) as? Station
     }
 
     /* ****************************************
@@ -253,6 +272,25 @@ class StationView: NSView {
                 }
             }
         })
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func addStationToLocalList(_ sender: Any) {
+        guard let src = selectedStation() else { return }
+
+        let destTitle = stationsStore.localStations.title
+
+        if stationsStore.localStations.station(byUrl: src.url) != nil {
+            NSAlert.showWarning(message: "Looks like such station is already on \"\(destTitle)\" list.")
+            return
+        }
+        let station = Station(title: src.title, url: src.url)
+        stationsStore.localStations.append(station)
+        stationsStore.localStations.save()
+
+        NSAlert.showInfo(message: "Station \"\(station.title)\" has been successfully added to the \"\(destTitle)\".")
     }
 }
 

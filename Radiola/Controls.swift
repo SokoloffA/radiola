@@ -24,8 +24,8 @@ public extension NSView {
                 view.translatesAutoresizingMaskIntoConstraints = false
                 view.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
                 view.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-               view.topAnchor.constraint(equalTo: topAnchor).isActive = true
-               view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+                view.topAnchor.constraint(equalTo: topAnchor).isActive = true
+                view.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 
                 return view
             }
@@ -126,6 +126,13 @@ public extension NSAlert {
         let alert = NSAlert()
         alert.messageText = message
         alert.alertStyle = .warning
+        alert.runModal()
+    }
+
+    static func showInfo(message: String) {
+        let alert = NSAlert()
+        alert.messageText = message
+        alert.alertStyle = .informational
         alert.runModal()
     }
 }

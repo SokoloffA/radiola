@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -76,7 +76,7 @@
                 </menuItem>
                 <menuItem title="File" identifier="file" id="dMs-cI-mzQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="File" autoenablesItems="NO" id="bib-Uj-vzu">
+                    <menu key="submenu" title="File" id="bib-Uj-vzu">
                         <items>
                             <menuItem title="New Station" tag="3" keyEquivalent="n" id="DcO-1r-sRD">
                                 <connections>
@@ -95,6 +95,11 @@ CA
 </string>
                                 <connections>
                                     <action selector="removeStation:" target="-1" id="hbe-1S-jhr"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Add Station to my stations" keyEquivalent="m" id="2eI-ve-OHp">
+                                <connections>
+                                    <action selector="addStationToLocalList:" target="-1" id="hXG-Qr-nKr"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="New" hidden="YES" keyEquivalent="n" id="Was-JA-tGl">

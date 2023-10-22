@@ -268,10 +268,10 @@
 				39BF44AC290D4367008E5A30 /* GroupRowView.swift */,
 				394F8A6828739A9C005EA7FA /* StationRowView.swift */,
 				39541B32287623F200A2A5CB /* AddStationDialog.swift */,
+				393920702A922722008C0B11 /* StationView.xib */,
 				39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */,
 				394F8A6628739A9C005EA7FA /* StationRowView.xib */,
 				39BF44A9290D42D8008E5A30 /* GroupRowView.xib */,
-				393920702A922722008C0B11 /* StationView.xib */,
 				3926FF112AD4687A0094D875 /* AddStationDialog.xib */,
 			);
 			path = StationsView;

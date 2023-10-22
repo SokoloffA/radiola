@@ -33,8 +33,8 @@ class SideBar: NSViewController {
     private var items: [Item] = {
         var res: [Item] = []
 
-        res.append(Item(title: "My lists"))
-        res.append(Item(title: "Local stations", icon: "star", stations: stationsStore.localStations))
+       res.append(Item(title: "My lists"))
+       res.append(Item(title: "My stations", icon: "music.house", stations: stationsStore.localStations))
 
         res.append(Item(title: "Radio Browser"))
         for l in stationsStore.internetRequests {

@@ -14,7 +14,7 @@ class StationsStore {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
 
-    let localStations = LocalStationList(title: "Local staions")
+    let localStations = LocalStationList(title: "My staions")
     let internetRequests: [StationList] = [
         RadioBrowserStationsByTag(title: "By tag", settingsPath: "RadioBrowser.com:byTag"),
         RadioBrowserStationsByName(title: "By name", settingsPath: "RadioBrowser.com:byName"),
