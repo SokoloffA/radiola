@@ -6,8 +6,59 @@
 //
 
 import Cocoa
+import MediaPlayer
 
-class MediaKeysController {
+// MARK: - MediaKeysController
+
+class MediaKeysController: NSObject {
+    /* ****************************************
+     *
+     * ****************************************/
+    override init() {
+        super.init()
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerStatusChanged),
+                                               name: Notification.Name.PlayerStatusChanged,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerMetadataChanged),
+                                               name: Notification.Name.PlayerMetadataChanged,
+                                               object: nil)
+
+        let remoteCommandCenter = MPRemoteCommandCenter.shared()
+        remoteCommandCenter.playCommand.addTarget(self, action: #selector(play))
+        remoteCommandCenter.pauseCommand.addTarget(self, action: #selector(stop))
+        remoteCommandCenter.stopCommand.addTarget(self, action: #selector(stop))
+        remoteCommandCenter.togglePlayPauseCommand.addTarget(self, action: #selector(toggle))
+        remoteCommandCenter.nextTrackCommand.addTarget(self, action: #selector(next))
+        remoteCommandCenter.previousTrackCommand.addTarget(self, action: #selector(previous))
+
+        playerStatusChanged()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func playerStatusChanged() {
+        switch player.status {
+            case .paused: MPNowPlayingInfoCenter.default().playbackState = .interrupted
+            case .connecting: MPNowPlayingInfoCenter.default().playbackState = .interrupted
+            case .playing: MPNowPlayingInfoCenter.default().playbackState = .playing
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func playerMetadataChanged(_ notification: Notification) {
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
+            MPMediaItemPropertyTitle: notification.userInfo?["title"] as? String ?? "",
+            MPMediaItemPropertyArtist: player.station?.title ?? "",
+        ]
+    }
+
     /* ****************************************
      *
      * ****************************************/
@@ -22,62 +73,51 @@ class MediaKeysController {
     /* ****************************************
      *
      * ****************************************/
-    public func handleEvent(_ event: NSEvent) {
-        if !needHandleMediaKey() {
-            return
+    @objc private func play(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        if needHandleMediaKey() {
+            player.play()
         }
-
-        let keyCode = ((event.data1 & 0xFFFF0000) >> 16)
-        let keyFlags = (event.data1 & 0x0000FFFF)
-        // Get the key state. 0xA is KeyDown, OxB is KeyUp
-        let pressed = ((keyFlags & 0xFF00) >> 8) == 0xA
-        let keyRepeat = (keyFlags & 0x1) != 0
-
-        if pressed {
-            switch Int32(keyCode) {
-                case NX_KEYTYPE_PLAY: playKeyPressed(keyRepeat: keyRepeat)
-                case NX_KEYTYPE_PREVIOUS: previousKeyPressed(keyRepeat: keyRepeat)
-                case NX_KEYTYPE_NEXT: nextKeyPressed(keyRepeat: keyRepeat)
-                default: break
-            }
-        }
+        return .success
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func playKeyPressed(keyRepeat: Bool) {
-        if !keyRepeat {
+    @objc private func stop(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        if needHandleMediaKey() {
+            player.stop()
+        }
+        return .success
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func toggle(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        if needHandleMediaKey() {
             player.toggle()
         }
+        return .success
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func previousKeyPressed(keyRepeat: Bool) {
-        if keyRepeat {
-            return
+    @objc private func previous(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        if needHandleMediaKey() && settings.mediaPrevNextKeyAction == .switchStation {
+            switchStation(offset: -1)
         }
-
-        switch settings.mediaPrevNextKeyAction {
-            case .disable: return;
-            case .switchStation: switchStation(offset: -1)
-        }
+        return .success
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func nextKeyPressed(keyRepeat: Bool) {
-        if keyRepeat {
-            return
+    @objc private func next(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
+        if needHandleMediaKey() && settings.mediaPrevNextKeyAction == .switchStation {
+            switchStation(offset: 1)
         }
-
-        switch settings.mediaPrevNextKeyAction {
-            case .disable: return;
-            case .switchStation: switchStation(offset: 1)
-        }
+        return .success
     }
 
     /* ****************************************

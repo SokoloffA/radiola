@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -290,8 +290,8 @@
 			isa = PBXGroup;
 			children = (
 				3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */,
-				3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */,
 				3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */,
+				3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */,
 				3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */,
 			);
 			path = Toolbar;
@@ -619,7 +619,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2020 Alex Sokolov. All rights reserved.";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
-				INFOPLIST_KEY_NSPrincipalClass = Radiola.Application;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -651,7 +650,6 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.music";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2020 Alex Sokolov. All rights reserved.";
 				INFOPLIST_KEY_NSMainNibFile = MainMenu;
-				INFOPLIST_KEY_NSPrincipalClass = Radiola.Application;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

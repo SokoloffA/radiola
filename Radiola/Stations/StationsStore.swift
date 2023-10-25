@@ -21,6 +21,8 @@ class StationsStore {
         RadioBrowserStationsByCountry(title: "By country", settingsPath: "RadioBrowser.com:byCountry"),
     ]
 
+    var stationLists: [StationList] { return [localStations] + internetRequests }
+
     init() {
         let dirName = URL(
             fileURLWithPath: oplDirectoryName,
@@ -39,6 +41,35 @@ class StationsStore {
         }
 
         localStations.load(file: fileName)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func lastStation() -> Station? {
+        let url = settings.lastStationUrl ?? ""
+
+        if !url.isEmpty {
+            for list in stationLists {
+                let res = list.station(byUrl: url)
+                if res != nil {
+                    return res
+                }
+            }
+        }
+
+        let res = localStations.favorites().first
+        if res != nil {
+            return res
+        }
+
+        for n in localStations.nodes {
+            if let s = n as? Station {
+                return s
+            }
+        }
+
+        return nil
     }
 
     /* ****************************************

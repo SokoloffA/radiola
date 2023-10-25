@@ -25,6 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
     private let audioSytstem = AudioSytstem()
+    private let mediaKeys = MediaKeysController()
 
     @IBOutlet var pauseMenuItem: NSMenuItem!
     @IBOutlet var playMenuItem: NSMenuItem!
@@ -60,11 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                name: Notification.Name.PlayerStatusChanged,
                                                object: nil)
 
-        if let url = settings.lastStationUrl {
-            player.station = stationsStore.localStations.station(byUrl: url)
-        } else {
-            player.station = stationsStore.localStations.favorites().first
-        }
+        player.station = stationsStore.lastStation()
 
         statusBar = StatusBarController()
 
@@ -173,20 +170,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         print("* \(msg)")
         print("* On: \(notification.object ?? "nil")")
         print("*******************************************")
-    }
-}
-
-class Application: NSApplication {
-    private let mediaKeys = MediaKeysController()
-
-    /* ****************************************
-     *
-     * ****************************************/
-    override func sendEvent(_ event: NSEvent) {
-        if event.type == NSEvent.EventType.systemDefined && event.subtype.rawValue == 8 {
-            mediaKeys.handleEvent(event)
-        }
-
-        super.sendEvent(event)
     }
 }

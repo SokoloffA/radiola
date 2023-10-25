@@ -208,7 +208,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
                 self.status = .connecting
                 title = ""
-                NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
+                NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": ""])
 
             case AVPlayer.TimeControlStatus.playing:
                 self.status = .playing
@@ -216,7 +216,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             default:
                 self.status = .paused
                 title = ""
-                NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["Title": ""])
+                NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": ""])
         }
 
         NotificationCenter.default.post(name: Notification.Name.PlayerStatusChanged, object: nil)
@@ -239,7 +239,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         NotificationCenter.default.post(
             name: Notification.Name.PlayerMetadataChanged,
             object: nil,
-            userInfo: ["Title": title])
+            userInfo: ["title": title])
     }
 
     /* ****************************************
