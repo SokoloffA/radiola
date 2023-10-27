@@ -1,13 +1,27 @@
 #!/bin/bash
 
-NAME=antenna
-NAME=signal
+set -e
 
+function convert() {
+    local src=$1
+    local size=$2
+    local dest=$3
 
-for size in 16 32 64 128 256 512 1024; do
-    out=${NAME}-${size}.png
-    echo "  * $out"
-    /Applications/Inkscape.app/Contents/MacOS/inkscape -o "${out}" -w ${size} -h ${size} ${NAME}.svg
-    #convert -resize ${size}x${size} ${NAME}.svg ${NAME}-${size}.png
-done
+    echo "  • ${dest}"
+    rsvg-convert -w ${size} -h ${size} "${src}" > "${dest}"
+}
 
+convert 'signal.svg'   16 'radiola-016.png'
+convert 'signal.svg'   32 'radiola-016@2.png'
+
+convert 'radiola.svg'  32 'radiola-032.png'
+convert 'radiola.svg'  64 'radiola-032@2.png'
+
+convert 'radiola.svg' 128 'radiola-128.png'
+convert 'radiola.svg' 256 'radiola-128@2.png'
+
+convert 'radiola.svg' 256 'radiola-256.png'
+convert 'radiola.svg' 512 'radiola-256@2.png'
+
+convert 'radiola.svg' 512 'radiola-512.png'
+convert 'radiola.svg' 1024 'radiola-512@2.png'
