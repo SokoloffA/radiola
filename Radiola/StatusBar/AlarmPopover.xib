@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22155" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22155"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AlarmPopover" customModule="Radiola" customModuleProvider="target">
+            <connections>
+                <outlet property="informativeTextLabel" destination="Aw8-iR-SNK" id="KAh-1G-CvS"/>
+                <outlet property="messageTextLabel" destination="GWE-BB-Zeu" id="bok-yo-fd7"/>
+                <outlet property="okButton" destination="coG-vM-koN" id="OcK-FR-26B"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="91"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="252" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zKj-fv-SY5">
+                    <rect key="frame" x="20" y="35" width="32" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="zKj-fv-SY5" secondAttribute="height" multiplier="1:1" id="T7s-id-99e"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSCaution" id="7dB-VC-miY"/>
+                </imageView>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GWE-BB-Zeu">
+                    <rect key="frame" x="66" y="67" width="396" height="16"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Title" id="6oE-wZ-Sip">
+                        <font key="font" textStyle="headline" name=".SFNS-Bold"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Aw8-iR-SNK">
+                    <rect key="frame" x="66" y="43" width="396" height="16"/>
+                    <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="ehF-X0-T1H">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="coG-vM-koN">
+                    <rect key="frame" x="419" y="8" width="53" height="32"/>
+                    <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qCO-qH-Isn">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="coG-vM-koN" secondAttribute="bottom" constant="15" id="0S3-BF-lCE"/>
+                <constraint firstItem="coG-vM-koN" firstAttribute="top" secondItem="Aw8-iR-SNK" secondAttribute="bottom" constant="8" symbolic="YES" id="BGp-Zs-BR4"/>
+                <constraint firstItem="GWE-BB-Zeu" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="8" id="CUp-Tx-dP1"/>
+                <constraint firstAttribute="trailing" secondItem="coG-vM-koN" secondAttribute="trailing" constant="15" id="aC7-1A-v6C"/>
+                <constraint firstItem="GWE-BB-Zeu" firstAttribute="leading" secondItem="zKj-fv-SY5" secondAttribute="trailing" constant="16" id="cR9-5Q-7J9"/>
+                <constraint firstItem="Aw8-iR-SNK" firstAttribute="leading" secondItem="GWE-BB-Zeu" secondAttribute="leading" id="fv1-4O-FbT"/>
+                <constraint firstItem="zKj-fv-SY5" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" constant="-5" id="hFm-Jb-oCp"/>
+                <constraint firstItem="Aw8-iR-SNK" firstAttribute="top" secondItem="GWE-BB-Zeu" secondAttribute="bottom" constant="8" symbolic="YES" id="hHH-cI-sPA"/>
+                <constraint firstAttribute="trailing" secondItem="GWE-BB-Zeu" secondAttribute="trailing" constant="20" symbolic="YES" id="kWa-g2-PKG"/>
+                <constraint firstItem="Aw8-iR-SNK" firstAttribute="trailing" secondItem="GWE-BB-Zeu" secondAttribute="trailing" id="o2u-RH-OfB"/>
+                <constraint firstItem="zKj-fv-SY5" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" symbolic="YES" id="w2K-R8-3p8"/>
+            </constraints>
+            <point key="canvasLocation" x="-40" y="53.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSCaution" width="32" height="32"/>
+    </resources>
+</document>

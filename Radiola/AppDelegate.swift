@@ -164,11 +164,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc private func processError(_ notification: Notification) {
-        let msg = notification.userInfo?["message"] as? String ?? ""
+        guard let alarm = notification.object as? Alarm else { return }
+        guard let button = statusBar.menuItem.button else { return }
 
-        print("** ERROR ******************************")
-        print("* \(msg)")
-        print("* On: \(notification.object ?? "nil")")
-        print("*******************************************")
+        let dialog = AlarmPopover()
+        dialog.messageText = alarm.title
+        dialog.informativeText = alarm.message ?? ""
+        dialog.show(of: button)
     }
 }

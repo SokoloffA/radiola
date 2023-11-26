@@ -188,6 +188,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         if let provider = sideBar.currentStations() as? InternetStationList {
             searchPanelHeightConstraint.constant = searchPanelHeight
             searchPanel.provider = provider
+            searchPanel.view.isHidden = false
             provider.fetchHandler = stationsFound
             if provider.nodes.isEmpty {
                 _ = searchPanel.becomeFirstResponder()
@@ -195,6 +196,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
                 _ = stationsView.becomeFirstResponder()
             }
         } else {
+            searchPanel.view.isHidden = true
             searchPanelHeightConstraint.constant = 0
             searchPanel.provider = nil
             _ = stationsView.becomeFirstResponder()

@@ -5,6 +5,8 @@
 //  Created by Alex Sokolov on 11.05.2023.
 //
 
+import Foundation
+
 enum MouseButton: Int, CaseIterable {
     case left = 0
     case right = 1
@@ -51,3 +53,22 @@ enum MediaPrevNextKeyAction: Int {
 }
 
 typealias Bitrate = Int
+
+struct Alarm: Error, Identifiable {
+    var id: String { title + (message ?? "") }
+
+    let title: String
+    let message: String?
+
+    static let notificationName = Notification.Name("AlarmOccurred")
+}
+
+extension Error {
+    func show() {
+        if let alarm = self as? Alarm {
+            NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: alarm)
+        } else {
+            NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: Alarm(title: "Error", message: "\(self)"))
+        }
+    }
+}

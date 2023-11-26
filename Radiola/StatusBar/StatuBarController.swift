@@ -11,7 +11,7 @@ import Cocoa
  *
  * ****************************************/
 class StatusBarController: NSObject {
-    private let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menuPrefix = "  "
     private let icon = StatusBarIcon(size: 16)
 
