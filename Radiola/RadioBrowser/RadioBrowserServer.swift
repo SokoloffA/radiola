@@ -53,9 +53,7 @@ extension RadioBrowser {
         }
 
         for addrinfo in sequence(first: results, next: { $0?.pointee.ai_next }) {
-            guard let pointee = addrinfo?.pointee else {
-                throw RadioBrowser.Error("Unable to resolve DNS name \(dnsName)", failureReason: "the addrinfo is nil")
-            }
+            guard let pointee = addrinfo?.pointee else { break }
 
             let hostname = UnsafeMutablePointer<Int8>.allocate(capacity: Int(NI_MAXHOST))
             defer {
