@@ -7,10 +7,17 @@
 
 import Foundation
 
-enum RadioBrowser {
-    public enum Error: Swift.Error {
-        case dnsError
-        case invalidURL
-        case missingData
+enum RadioBrowser {}
+
+extension RadioBrowser {
+    public struct Error: LocalizedError {
+        public var errorDescription: String?
+        public var failureReason: String?
+        public var recoverySuggestion: String?
+
+        init(_ description: String, failureReason: String? = nil) {
+            errorDescription = description
+            self.failureReason = failureReason
+        }
     }
 }

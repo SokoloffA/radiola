@@ -23,19 +23,3 @@ extension Notification.Name {
 
     static let StationsStateChanged = Notification.Name("StationsStateChanged")
 }
-
-/* **********************************************
- *
- * **********************************************/
-extension NSObject {
-    func errorOccurred(_ message: String) {
-        Radiola.errorOccurred(object: self, message: message)
-    }
-}
-
-/* **********************************************
- *
- * **********************************************/
-func errorOccurred(object: Any?, message: String) {
-    NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: object, userInfo: ["message": message])
-}

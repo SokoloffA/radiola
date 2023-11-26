@@ -61,9 +61,19 @@ struct Alarm: Error, Identifiable {
     let message: String?
 
     static let notificationName = Notification.Name("AlarmOccurred")
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func show(title: String, message: String? = nil) {
+        NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: Alarm(title: title, message: message))
+    }
 }
 
 extension Error {
+    /* ****************************************
+     *
+     * ****************************************/
     func show() {
         if let alarm = self as? Alarm {
             NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: alarm)

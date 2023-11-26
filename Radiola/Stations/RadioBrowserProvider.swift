@@ -157,8 +157,11 @@ class RadioBrowserStations: StationList, InternetStationList {
                     self.state = .loaded
                 }
             } catch {
-                self.state = .error
-                errorOccurred(object: self, message: error.localizedDescription)
+                await MainActor.run {
+                    self.state = .error
+                    print(error)
+                    Alarm.show(title: "Couldn't download the stations from radio-browser.info", message: "\(error.localizedDescription)")
+                }
             }
         }
     }

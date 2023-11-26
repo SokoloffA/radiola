@@ -21,9 +21,8 @@ extension RadioBrowser {
             url.path = path
             url.queryItems = queryItems
 
-            print(url)
             guard let url = url.url else {
-                throw RadioBrowser.Error.invalidURL
+                throw RadioBrowser.Error("Invalid URL \(url)")
             }
 
             let (data, _) = try await URLSession.shared.data(from: url)
@@ -40,25 +39,36 @@ extension RadioBrowser {
     /// Do a DNS-lookup of 'all.api.radio-browser.info'. This gives you a list of all available servers.
     public static func getAllServers() throws -> [Server] {
         let dnsName = "all.api.radio-browser.info"
-
         var res: [Server] = []
 
-        let host = CFHostCreateWithName(nil, dnsName as CFString).takeRetainedValue()
-        CFHostStartInfoResolution(host, .addresses, nil)
-        var success: DarwinBoolean = false
-        guard let addresses = CFHostGetAddressing(host, &success)?.takeUnretainedValue() as NSArray? else { return [] }
-
-        for case let addr as NSData in addresses {
-            var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
-            if getnameinfo(addr.bytes.assumingMemoryBound(to: sockaddr.self), socklen_t(addr.length), &hostname, socklen_t(hostname.count), nil, 0, NI_NUMERICHOST) == 0 {
-                if let url = URL(string: "http://" + String(cString: hostname)) {
-                    res.append(Server(url: url))
-                }
+        var results: UnsafeMutablePointer<addrinfo>?
+        defer {
+            if let results = results {
+                freeaddrinfo(results)
             }
         }
 
-        if res.isEmpty {
-            throw RadioBrowser.Error.dnsError
+        if getaddrinfo(dnsName, nil, nil, &results) != 0 {
+            throw RadioBrowser.Error("Unable to resolve DNS name \(dnsName)", failureReason: "the getaddrinfo call failed")
+        }
+
+        for addrinfo in sequence(first: results, next: { $0?.pointee.ai_next }) {
+            guard let pointee = addrinfo?.pointee else {
+                throw RadioBrowser.Error("Unable to resolve DNS name \(dnsName)", failureReason: "the addrinfo is nil")
+            }
+
+            let hostname = UnsafeMutablePointer<Int8>.allocate(capacity: Int(NI_MAXHOST))
+            defer {
+                hostname.deallocate()
+            }
+            let error = getnameinfo(pointee.ai_addr, pointee.ai_addrlen, hostname, socklen_t(NI_MAXHOST), nil, 0, 0)
+            if error != 0 {
+                continue
+            }
+
+            if let url = URL(string: "http://" + String(cString: hostname)) {
+                res.append(Server(url: url))
+            }
         }
 
         return res
@@ -101,6 +111,6 @@ extension RadioBrowser {
             }
         }
 
-        throw RadioBrowser.Error.dnsError
+        throw RadioBrowser.Error("Unable to find the fastest server")
     }
 }
