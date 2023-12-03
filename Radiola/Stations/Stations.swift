@@ -81,6 +81,7 @@ class InternetStationProvider: ObservableObject {
     let icon: String
     let help: String?
     @Published var stations: [InternetStation] = []
+    @Published var isLoading = false
 
     // search options
     let searchType: SearchType
@@ -115,9 +116,6 @@ class InternetStationProvider: ObservableObject {
      *
      * ****************************************/
     func fetch() async {
-        print("InternetStationProvider FETCH START")
-        // throw Alarm(title: "Abstract method")
-        print("InternetStationProvider FETCH END")
     }
 }
 

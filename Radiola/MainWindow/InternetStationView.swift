@@ -9,16 +9,15 @@ import Foundation
 import SwiftUI
 
 struct InternetStationsView: View {
-    @Binding var provider: InternetStationProvider
-    @State var selectedStationId: UUID?
-    @State var isLoading = false
+    @ObservedObject var provider: InternetStationProvider
+    @State private var selectedStationId: UUID?
 
     /* ****************************************
      *
      * ****************************************/
     var body: some View {
         VStack(spacing: 0) {
-            InternetStationsSearchView(provider: $provider, isLoading: $isLoading)
+            InternetStationsSearchView(provider: provider, action: fetch)
             Divider()
 
             List(selection: $selectedStationId) {
@@ -27,16 +26,25 @@ struct InternetStationsView: View {
                 }
             }
             .listStyle(.plain)
-            .overlay { LoadingIndicator(isLoading) }
+            .overlay { LoadingIndicator(provider.isLoading) }
         }
     } // body
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func fetch() {
+        Task {
+            await provider.fetch()
+        }
+    }
 }
 
 // MARK: - InternetStationsSearchView
 
 struct InternetStationsSearchView: View {
-    @Binding var provider: InternetStationProvider
-    @Binding var isLoading: Bool
+    @ObservedObject var provider: InternetStationProvider
+    var action: () -> Void
 
     /* ****************************************
      *
@@ -52,16 +60,16 @@ struct InternetStationsSearchView: View {
             .menuStyle(.borderlessButton)
             .fixedSize()
 
-            SearchView("Search", text: $provider.searchText, action: fetch)
+            SearchView("Search", text: $provider.searchText, action: action)
                 .frame(width: 400)
                 .fixedSize()
                 .padding(.trailing, 20)
 
             Menu(orderToString(provider.order)) {
-                Button(orderToString(.byVotes)) { provider.order = .byVotes; fetch() }
-                Button(orderToString(.byName)) { provider.order = .byName; fetch() }
-                Button(orderToString(.byCountry)) { provider.order = .byCountry; fetch() }
-                Button(orderToString(.byBitrate)) { provider.order = .byBitrate; fetch() }
+                Button(orderToString(.byVotes)) { provider.order = .byVotes; action() }
+                Button(orderToString(.byName)) { provider.order = .byName; action() }
+                Button(orderToString(.byCountry)) { provider.order = .byCountry; action() }
+                Button(orderToString(.byBitrate)) { provider.order = .byBitrate; action() }
             }
             .menuStyle(.borderlessButton)
             .fixedSize()
@@ -86,17 +94,6 @@ struct InternetStationsSearchView: View {
             case .byVotes: return "sort by votes"
             case .byCountry: return "sort by country"
             case .byBitrate: return "sort by bitrate"
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func fetch() {
-        Task {
-            isLoading = true
-            await provider.fetch()
-            isLoading = false
         }
     }
 }

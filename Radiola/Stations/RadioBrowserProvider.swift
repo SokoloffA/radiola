@@ -14,6 +14,9 @@ class RadioBrowserProvider: InternetStationProvider {
      *
      * ****************************************/
     @MainActor override func fetch() async {
+        isLoading = true
+        defer { isLoading = false }
+
         if searchText.isEmpty { return }
 
         let type = requestType()

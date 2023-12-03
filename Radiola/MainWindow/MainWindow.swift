@@ -18,10 +18,10 @@ struct MainWindow: View {
         NavigationView {
             SidebarView(selectedProviderId: $selectedProviderId)
 
-            if let n = appState.localStations.firstIndex(where: { $0.id == selectedProviderId }) {
-                Text("Local \(appState.localStations[n].title)")
-            } else if let n = appState.internetStations.firstIndex(where: { $0.id == selectedProviderId }) {
-                InternetStationsView(provider: $appState.internetStations[n])
+            if let provider = appState.localStations.first(where: { $0.id == selectedProviderId }) {
+                Text("Local \(provider.title)")
+            } else if let provider = appState.internetStations.first(where: { $0.id == selectedProviderId }) {
+                InternetStationsView(provider: provider)
             }
         }
         .frame(
