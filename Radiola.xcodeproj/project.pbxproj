@@ -137,13 +137,13 @@
 		394F8A3A28739339005EA7FA /* Radiola */ = {
 			isa = PBXGroup;
 			children = (
-				394A273D2B1CE2D8008DBFB1 /* MainWindow */,
 				394A27382B1CE174008DBFB1 /* Stations */,
+				394A273D2B1CE2D8008DBFB1 /* MainWindow */,
 				394A272F2B1CE0D8008DBFB1 /* Controls */,
 				394A27362B1CE16E008DBFB1 /* RadiolaApp.swift */,
 				394A27322B1CE131008DBFB1 /* AppState.swift */,
-				39F08E452A0CC582006B65D0 /* Types.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
+				39F08E452A0CC582006B65D0 /* Types.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
 				396704682943AD2700012FFD /* AudioDevice.swift */,

@@ -56,7 +56,6 @@ class LocalStationGroup {
 // MARK: - InternetStation
 
 struct InternetStation: Station, Identifiable, Hashable {
-   
     var id = UUID()
     var title: String
     var url: String
@@ -81,12 +80,19 @@ class InternetStationProvider: ObservableObject {
     let title: String
     let icon: String
     let help: String?
-    var stations: [InternetStation] = []
-    
+    @Published var stations: [InternetStation] = []
+
     // search options
+    let searchType: SearchType
     var searchText: String = ""
     var isExactMatch: Bool = false { didSet { print("isExactMatch: \(isExactMatch)") }}
     var order: Order = .byName
+
+    enum SearchType: String {
+        case byTag
+        case byName
+        case byCountry
+    }
 
     enum Order: Int {
         case byName
@@ -98,7 +104,8 @@ class InternetStationProvider: ObservableObject {
     /* ****************************************
      *
      * ****************************************/
-    init(title: String, icon: String, help: String? = nil) {
+    init(type: SearchType, title: String, icon: String, help: String? = nil) {
+        self.searchType = type
         self.title = title
         self.icon = icon
         self.help = help
@@ -107,7 +114,7 @@ class InternetStationProvider: ObservableObject {
     /* ****************************************
      *
      * ****************************************/
-    func fetch() async{
+    func fetch() async {
         print("InternetStationProvider FETCH START")
         // throw Alarm(title: "Abstract method")
         print("InternetStationProvider FETCH END")
@@ -115,19 +122,18 @@ class InternetStationProvider: ObservableObject {
 }
 
 // MARK: - LocalStationProvider
-class LocalStationProvider: ObservableObject  {
+
+class LocalStationProvider: ObservableObject {
     let id = UUID()
     let title: String
     let icon: String
     let help: String?
-    
-  //  var stations: [LocalStation] = []
-    
+
+    //  var stations: [LocalStation] = []
+
     init(title: String, icon: String, help: String?) {
         self.title = title
         self.icon = icon
         self.help = help
     }
 }
-
-

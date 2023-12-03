@@ -15,8 +15,8 @@ class AppState: ObservableObject {
     ]
 
     @Published var internetStations: [InternetStationProvider] = [
-        RadioBrowserProvider(title: "By tag", icon: "globe", help: nil),
-        RadioBrowserProvider(title: "By name", icon: "globe", help: nil),
-        RadioBrowserProvider(title: "By country", icon: "globe", help: nil),
+        RadioBrowserProvider(type: .byTag, title: "By tag", icon: "globe", help: nil),
+        RadioBrowserProvider(type: .byName, title: "By name", icon: "globe", help: nil),
+        RadioBrowserProvider(type: .byCountry, title: "By country", icon: "globe", help: nil),
     ]
 }

@@ -12,12 +12,14 @@ import SwiftUI
 struct SearchView: NSViewRepresentable {
     private var placeholder: String
     @Binding var text: String
+    private let onSearch: (() -> Void)?
 
     /* ****************************************
      *
      * ****************************************/
-    init(_ placeholder: String, text: Binding<String>) {
+    init(_ placeholder: String, text: Binding<String>, action: @escaping () -> Void) {
         self.placeholder = placeholder
+        onSearch = action
         _text = text
     }
 
@@ -60,6 +62,8 @@ struct SearchView: NSViewRepresentable {
         // layout
         searchField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
+        searchField.onSearch = onSearch
+
         return searchField
     }
 
@@ -74,6 +78,8 @@ struct SearchView: NSViewRepresentable {
      *
      * ****************************************/
     class CustomSearchField: NSSearchField {
+        var onSearch: (() -> Void)?
+
         override var controlSize: NSControl.ControlSize {
             get { return .large }
             set {}
@@ -84,8 +90,11 @@ struct SearchView: NSViewRepresentable {
          * ****************************************/
         override init(frame frameRect: NSRect) {
             super.init(frame: frameRect)
-
             cell = CustomSearchFieldCell(textCell: "")
+
+            sendsWholeSearchString = true
+            target = self
+            action = #selector(doSearch)
         }
 
         /* ****************************************
@@ -93,6 +102,13 @@ struct SearchView: NSViewRepresentable {
          * ****************************************/
         required init?(coder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
+        }
+
+        /* ****************************************
+         *
+         * ****************************************/
+        @objc func doSearch() {
+            if let onSearch = onSearch { onSearch() }
         }
     }
 

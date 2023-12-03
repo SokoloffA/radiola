@@ -11,14 +11,14 @@ import SwiftUI
 struct InternetStationsView: View {
     @Binding var provider: InternetStationProvider
     @State var selectedStationId: UUID?
-   // @State var stations: [InternetStation] = []
+    @State var isLoading = false
 
     /* ****************************************
      *
      * ****************************************/
     var body: some View {
         VStack(spacing: 0) {
-            InternetStationsSearchView(provider: $provider)
+            InternetStationsSearchView(provider: $provider, isLoading: $isLoading)
             Divider()
 
             List(selection: $selectedStationId) {
@@ -27,18 +27,15 @@ struct InternetStationsView: View {
                 }
             }
             .listStyle(.plain)
-//            .task {
-//                print("TASK \(Date())")
-//                stations = await provider.fetch()
-//            }
         }
     } // body
 }
 
-//MARK: - InternetStationsSearchView
+// MARK: - InternetStationsSearchView
 
 struct InternetStationsSearchView: View {
     @Binding var provider: InternetStationProvider
+    @Binding var isLoading: Bool
 
     /* ****************************************
      *
@@ -54,7 +51,7 @@ struct InternetStationsSearchView: View {
             .menuStyle(.borderlessButton)
             .fixedSize()
 
-            SearchView("Search", text: $provider.searchText)
+            SearchView("Search", text: $provider.searchText, action: fetch)
                 .frame(width: 400)
                 .fixedSize()
                 .padding(.trailing, 20)
@@ -70,11 +67,6 @@ struct InternetStationsSearchView: View {
         }
         .padding()
         .background(Color(NSColor.controlBackgroundColor))
-        //        .background( Color(NSColor.controlBackgroundColor).opacity(0.5))
-//        .onAppear() {
-//            print("onAppear: \(Date()): ", provider.id)
-//        }
-
     } // body
 
     /* ****************************************
@@ -95,17 +87,15 @@ struct InternetStationsSearchView: View {
             case .byBitrate: return "sort by bitrate"
         }
     }
-    
+
     /* ****************************************
      *
      * ****************************************/
-    @MainActor
     private func fetch() {
-        
         Task {
-            print("FETCH START 0")
+            isLoading = true
             await provider.fetch()
-            print("FETCH END 0")
+            isLoading = false
         }
     }
 }
