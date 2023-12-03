@@ -4,7 +4,7 @@
 //
 //  Created by Alex Sokolov on 22.07.2023.
 //
-
+/*
 import Cocoa
 import MediaPlayer
 
@@ -140,3 +140,4 @@ class MediaKeysController: NSObject {
         player.play()
     }
 }
+*/

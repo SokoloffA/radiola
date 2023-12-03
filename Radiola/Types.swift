@@ -7,6 +7,12 @@
 
 import Foundation
 
+// MARK: - Simple types
+
+typealias Bitrate = Int
+
+// MARK: - Mouse
+
 enum MouseButton: Int, CaseIterable {
     case left = 0
     case right = 1
@@ -52,7 +58,7 @@ enum MediaPrevNextKeyAction: Int {
     case switchStation
 }
 
-typealias Bitrate = Int
+// MARK: - Errors
 
 struct Alarm: Error, Identifiable {
     var id: String { title + (message ?? "") }
@@ -65,8 +71,16 @@ struct Alarm: Error, Identifiable {
     /* ****************************************
      *
      * ****************************************/
+    init(title: String, message: String? = nil) {
+        self.title = title
+        self.message = message
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     static func show(title: String, message: String? = nil) {
-        NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: Alarm(title: title, message: message))
+        NotificationCenter.default.post(name: notificationName, object: Alarm(title: title, message: message))
     }
 }
 
@@ -76,9 +90,9 @@ extension Error {
      * ****************************************/
     func show() {
         if let alarm = self as? Alarm {
-            NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: alarm)
+            NotificationCenter.default.post(name: Alarm.notificationName, object: alarm)
         } else {
-            NotificationCenter.default.post(name: Notification.Name.ErrorOccurred, object: Alarm(title: "Error", message: "\(self)"))
+            NotificationCenter.default.post(name: Alarm.notificationName, object: Alarm(title: "Error", message: "\(self)"))
         }
     }
 }

@@ -4,7 +4,7 @@
 //
 //  Created by Aleksandr Sokolov on 26.07.2022.
 //
-
+/*
 import Cocoa
 import Sparkle
 
@@ -22,3 +22,4 @@ class Updater {
         set(v) { updaterController.updater.automaticallyChecksForUpdates = v }
     }
 }
+*/

@@ -5,7 +5,7 @@
 //  Created by Alex Sokolov on 23.05.2020.
 //  Copyright © 2020 Alex Sokolov. All rights reserved.
 //
-
+/*
 import AVFoundation
 import Cocoa
 import Foundation
@@ -292,3 +292,4 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         isMuted = !isMuted
     }
 }
+*/

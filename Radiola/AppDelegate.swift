@@ -5,7 +5,7 @@
 //  Created by Alex Sokolov on 26.05.2020.
 //  Copyright © 2020 Alex Sokolov. All rights reserved.
 //
-
+/*
 import Cocoa
 
 extension String {
@@ -176,3 +176,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 }
+*/
