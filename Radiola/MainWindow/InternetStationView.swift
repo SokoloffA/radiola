@@ -27,6 +27,7 @@ struct InternetStationsView: View {
                 }
             }
             .listStyle(.plain)
+            .overlay { LoadingIndicator(isLoading) }
         }
     } // body
 }
@@ -98,4 +99,28 @@ struct InternetStationsSearchView: View {
             isLoading = false
         }
     }
+}
+
+// MARK: - LoadingIndicator
+
+struct LoadingIndicator: View {
+    var isLoading: Bool
+
+    /* ****************************************
+     *
+     * ****************************************/
+    init(_ isLoading: Bool) {
+        self.isLoading = isLoading
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var body: some View {
+        if isLoading {
+            ProgressView("Loading…")
+                .scaleEffect(0.85)
+                .progressViewStyle(.circular)
+        }
+    } // body
 }
