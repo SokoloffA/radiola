@@ -11,22 +11,30 @@ import SwiftUI
 struct InternetStationsView: View {
     @ObservedObject var provider: InternetStationProvider
     @State private var selectedStationId: UUID?
+    @EnvironmentObject var appState: AppState
 
     /* ****************************************
      *
      * ****************************************/
     var body: some View {
         VStack(spacing: 0) {
-            InternetStationsSearchView(provider: provider, action: fetch)
+            Text("CURRENT: \(provider.title): \(provider.id)")
+            TextField("\(provider.title)", text: $provider.searchText)
+            Text("\(appState.internetStations[0].title): \(appState.internetStations[0].searchText)")
+            Text("\(appState.internetStations[1].title): \(appState.internetStations[1].searchText)")
+            Text("\(appState.internetStations[2].title): \(appState.internetStations[2].searchText)")
+            SearchView(placeholder: "Search", text: $provider.searchText, action: nil, title: provider.title)
             Divider()
-
-            List(selection: $selectedStationId) {
-                ForEach(provider.stations) { station in
-                    InternetStationRow(station: station)
-                }
-            }
-            .listStyle(.plain)
-            .overlay { LoadingIndicator(provider.isLoading) }
+            // InternetStationsSearchView(provider: provider, action: fetch)
+            Divider()
+            /*
+             List(selection: $selectedStationId) {
+                 ForEach(provider.stations) { station in
+                     InternetStationRow(station: station)
+                 }
+             }
+             .listStyle(.plain)
+             .overlay { LoadingIndicator(provider.isLoading) }*/
         }
     } // body
 
@@ -35,7 +43,7 @@ struct InternetStationsView: View {
      * ****************************************/
     private func fetch() {
         Task {
-            await provider.fetch()
+            // await provider.fetch()
         }
     }
 }
@@ -45,7 +53,7 @@ struct InternetStationsView: View {
 struct InternetStationsSearchView: View {
     @ObservedObject var provider: InternetStationProvider
     var action: () -> Void
-
+    @State var text: String = "qwerty"
     /* ****************************************
      *
      * ****************************************/
@@ -60,10 +68,11 @@ struct InternetStationsSearchView: View {
             .menuStyle(.borderlessButton)
             .fixedSize()
 
-            SearchView("Search", text: $provider.searchText, action: action)
-                .frame(width: 400)
-                .fixedSize()
-                .padding(.trailing, 20)
+            TextField(provider.title, text: $provider.searchText)
+//            SearchView(placeholder: "Search", text: $provider.searchText, action: action)
+//                .frame(width: 400)
+//                .fixedSize()
+//                .padding(.trailing, 20)
 
             Menu(orderToString(provider.order)) {
                 Button(orderToString(.byVotes)) { provider.order = .byVotes; action() }

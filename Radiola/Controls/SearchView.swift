@@ -10,59 +10,27 @@ import SwiftUI
 // MARK: - SearchView
 
 struct SearchView: NSViewRepresentable {
-    private var placeholder: String
-    @Binding var text: String
-    private let onSearch: (() -> Void)?
+    var placeholder: String
+//    var text:    Binding<String>
+    @Binding var text: String { didSet {
+        print("DID SET")
+    }}
+    var action: (() -> Void)?
+    var title: String
 
     /* ****************************************
      *
      * ****************************************/
-    init(_ placeholder: String, text: Binding<String>, action: @escaping () -> Void) {
-        self.placeholder = placeholder
-        onSearch = action
-        _text = text
-    }
-
-    class Coordinator: NSObject, NSSearchFieldDelegate {
-        @Binding var text: String
-
-        /* ****************************************
-         *
-         * ****************************************/
-        init(text: Binding<String>) {
-            _text = text
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        func controlTextDidChange(_ obj: Notification) {
-            guard let searchField = obj.object as? CustomSearchField else { return }
-            text = searchField.stringValue
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func makeCoordinator() -> SearchView.Coordinator {
-        return Coordinator(text: $text)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func makeNSView(context: Context) -> CustomSearchField {
-        let searchField = CustomSearchField(frame: .zero)
-
-        // delegate
-        searchField.delegate = context.coordinator
-        // placeholder
+    func makeNSView(context: Context) -> NSSearchField {
+        let searchField = NSSearchField(frame: .zero)
         searchField.placeholderString = placeholder
-        // layout
-        searchField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
-        searchField.onSearch = onSearch
+        searchField.delegate = context.coordinator
+
+        //   searchField.target = context.coordinator
+        //   searchField.action = #selector(Coordinator.callHandler)
+
+        // searchField.sendsWholeSearchString = true
 
         return searchField
     }
@@ -70,70 +38,43 @@ struct SearchView: NSViewRepresentable {
     /* ****************************************
      *
      * ****************************************/
-    func updateNSView(_ nsView: CustomSearchField, context: Context) {
-        nsView.stringValue = text
+    func updateNSView(_ nsView: NSSearchField, context: Context) {
+        nsView.stringValue = _text.wrappedValue
+        //   nsView.controlSize = .large
+
+        print(context.transaction)
+        print("UPDATE: '\(title)' '\(text)'")
+//        context.coordinator.text = text.wrappedValue
     }
 
     /* ****************************************
      *
      * ****************************************/
-    class CustomSearchField: NSSearchField {
-        var onSearch: (() -> Void)?
-
-        override var controlSize: NSControl.ControlSize {
-            get { return .large }
-            set {}
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        override init(frame frameRect: NSRect) {
-            super.init(frame: frameRect)
-            cell = CustomSearchFieldCell(textCell: "")
-
-            sendsWholeSearchString = true
-            target = self
-            action = #selector(doSearch)
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
-
-        /* ****************************************
-         *
-         * ****************************************/
-        @objc func doSearch() {
-            if let onSearch = onSearch { onSearch() }
-        }
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(parent: self)
     }
 
     /* ****************************************
      *
      * ****************************************/
 
-    class CustomSearchFieldCell: NSSearchFieldCell {
-        override init(textCell string: String) {
-            super.init(textCell: string)
+    class Coordinator: NSObject, NSSearchFieldDelegate {
+        // @Binding var text: String
+        var parent: SearchView
 
-            controlSize = .large
-            isEditable = true
-            isBordered = true
-            drawsBackground = true
-            isBezeled = true
-            isSelectable = true
-            isScrollable = true
+        init(parent: SearchView) {
+            self.parent = parent
         }
 
-        /* ****************************************
-         *
-         * ****************************************/
-        required init(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
+        @objc func callHandler() {
+            parent.action?()
+        }
+
+        func controlTextDidChange(_ obj: Notification) {
+            guard let control = obj.object as? NSSearchField else { return }
+            print("controlTextDidChange: '\(parent.title)'")
+            parent._text.update()
+            parent._text.wrappedValue = control.stringValue
         }
     }
 }

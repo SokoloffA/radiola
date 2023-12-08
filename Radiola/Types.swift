@@ -96,3 +96,20 @@ extension Error {
         }
     }
 }
+
+
+/* ****************************************
+ *
+ * ****************************************/
+func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    print("DBG: \(Date()) ", terminator: "")
+    print( items, separator: separator, terminator: terminator)
+}
+
+/* ****************************************
+ *
+ * ****************************************/
+func warning(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    print("WARN: \(Date()) ", terminator: "")
+    print( items, separator: separator, terminator: terminator)
+}

@@ -14,11 +14,13 @@ class RadioBrowserProvider: InternetStationProvider {
      *
      * ****************************************/
     @MainActor override func fetch() async {
+        print("@@ \(title), \(searchText)")
         isLoading = true
         defer { isLoading = false }
 
         if searchText.isEmpty { return }
-
+        print(title, id)
+        print(searchType, requestType())
         let type = requestType()
 
         do {
@@ -58,10 +60,15 @@ class RadioBrowserProvider: InternetStationProvider {
      *
      * ****************************************/
     private func requestType() -> RadioBrowser.Stations.RequestType {
-        switch searchType {
-            case .byTag: isExactMatch ? .byTagExact : .byTag
-            case .byName: isExactMatch ? .byNameExact : .byName
-            case .byCountry: isExactMatch ? .byCountryExact : .byCountry
+        switch (searchType, isExactMatch) {
+            case (.byTag, true): RadioBrowser.Stations.RequestType.byTagExact
+            case (.byTag, false): RadioBrowser.Stations.RequestType.byTag
+
+            case (.byName, true): RadioBrowser.Stations.RequestType.byNameExact
+            case (.byName, false): RadioBrowser.Stations.RequestType.byName
+
+            case (.byCountry, true): RadioBrowser.Stations.RequestType.byCountryExact
+            case (.byCountry, false): RadioBrowser.Stations.RequestType.byCountry
         }
     }
 

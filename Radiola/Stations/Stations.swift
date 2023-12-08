@@ -85,9 +85,9 @@ class InternetStationProvider: ObservableObject {
 
     // search options
     let searchType: SearchType
-    var searchText: String = ""
-    var isExactMatch: Bool = false { didSet { print("isExactMatch: \(isExactMatch)") }}
-    var order: Order = .byName
+    @Published var searchText: String = ""
+    @Published var isExactMatch: Bool = false
+    @Published var order: Order = .byName
 
     enum SearchType: String {
         case byTag

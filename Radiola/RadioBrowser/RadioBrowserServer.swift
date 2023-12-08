@@ -29,6 +29,7 @@ extension RadioBrowser {
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.iso8601
 
+            debug("Fetch \(url.absoluteString)")
             return try decoder.decode(type, from: data)
         }
     }
@@ -39,7 +40,7 @@ extension RadioBrowser {
     /// Do a DNS-lookup of 'all.api.radio-browser.info'. This gives you a list of all available servers.
     public static func getAllServers() throws -> [Server] {
         let dnsName = "all.api.radio-browser.info"
-        var res: [Server] = []
+        var urls = Set<URL>()
 
         var results: UnsafeMutablePointer<addrinfo>?
         defer {
@@ -65,11 +66,11 @@ extension RadioBrowser {
             }
 
             if let url = URL(string: "http://" + String(cString: hostname)) {
-                res.append(Server(url: url))
+                urls.insert(url)
             }
         }
 
-        return res
+        return Array(urls).map { Server(url: $0) }
     }
 
     // ******************************************************************
@@ -81,7 +82,7 @@ extension RadioBrowser {
     // ******************************************************************
     /// Do a DNS-lookup of 'all.api.radio-browser.info'. This gives you a fastest server from all available servers.
     public static func getFastestServer() async throws -> Server {
-        func ping(_ servers: [Server]) -> AsyncStream<Server?> {
+        func ping(_ servers: [Server]) -> AsyncStream<(Server, Bool)> {
             var index = 0
 
             return AsyncStream {
@@ -92,20 +93,20 @@ extension RadioBrowser {
                 let server = servers[index]
                 index += 1
 
-                var request = URLRequest(url: server.url)
-                request.httpMethod = "HEAD"
-
-                if (try? await URLSession.shared.data(for: request)) != nil {
-                    return server
+                do {
+                    var stats = try await server.stats()
+                    debug("Check OK for \(server.url.absoluteString)")
+                    return (server, stats.status == Status.statusOK)
+                } catch {
+                    warning("Server check failed \(server.url.absoluteString): \(error)")
+                    return (server, false)
                 }
-
-                return nil
             }
         }
 
-        for try await server in ping(try getAllServers()) {
-            if server != nil {
-                return server!
+        for try await (server, ok) in ping(try getAllServers()) {
+            if ok {
+                return server
             }
         }
 
