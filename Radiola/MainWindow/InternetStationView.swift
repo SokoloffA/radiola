@@ -18,23 +18,19 @@ struct InternetStationsView: View {
      * ****************************************/
     var body: some View {
         VStack(spacing: 0) {
-            Text("CURRENT: \(provider.title): \(provider.id)")
-            TextField("\(provider.title)", text: $provider.searchText)
-            Text("\(appState.internetStations[0].title): \(appState.internetStations[0].searchText)")
-            Text("\(appState.internetStations[1].title): \(appState.internetStations[1].searchText)")
-            Text("\(appState.internetStations[2].title): \(appState.internetStations[2].searchText)")
-            SearchView(placeholder: "Search", text: $provider.searchText, action: nil, title: provider.title)
+            InternetStationsSearchView(provider: provider, action: fetch)
             Divider()
-            // InternetStationsSearchView(provider: provider, action: fetch)
-            Divider()
-            /*
-             List(selection: $selectedStationId) {
-                 ForEach(provider.stations) { station in
-                     InternetStationRow(station: station)
-                 }
-             }
-             .listStyle(.plain)
-             .overlay { LoadingIndicator(provider.isLoading) }*/
+
+            List(selection: $selectedStationId) {
+                ForEach(provider.stations) { station in
+                    InternetStationRow(station: station)
+                }
+            }
+            .listStyle(.plain)
+            .overlay { LoadingIndicator(provider.isLoading) }
+
+            Text("")
+                .frame(height: 36)
         }
     } // body
 
@@ -43,7 +39,7 @@ struct InternetStationsView: View {
      * ****************************************/
     private func fetch() {
         Task {
-            // await provider.fetch()
+            await provider.fetch()
         }
     }
 }
@@ -53,12 +49,16 @@ struct InternetStationsView: View {
 struct InternetStationsSearchView: View {
     @ObservedObject var provider: InternetStationProvider
     var action: () -> Void
-    @State var text: String = "qwerty"
+
     /* ****************************************
      *
      * ****************************************/
     var body: some View {
         HStack {
+//            Text("Search on radio-browser.info by tags that")
+//                .foregroundStyle(.secondary)
+//                .lineLimit(1)
+
             Spacer()
 
             Menu(exactMatchToString(provider.isExactMatch)) {
@@ -68,11 +68,10 @@ struct InternetStationsSearchView: View {
             .menuStyle(.borderlessButton)
             .fixedSize()
 
-            TextField(provider.title, text: $provider.searchText)
-//            SearchView(placeholder: "Search", text: $provider.searchText, action: action)
-//                .frame(width: 400)
-//                .fixedSize()
-//                .padding(.trailing, 20)
+            SearchView(placeholder: "Search", text: $provider.searchText, action: action)
+                .frame(width: 400)
+                .fixedSize()
+                .padding(.trailing, 20)
 
             Menu(orderToString(provider.order)) {
                 Button(orderToString(.byVotes)) { provider.order = .byVotes; action() }

@@ -11,12 +11,8 @@ import SwiftUI
 
 struct SearchView: NSViewRepresentable {
     var placeholder: String
-//    var text:    Binding<String>
-    @Binding var text: String { didSet {
-        print("DID SET")
-    }}
+    var text: Binding<String>
     var action: (() -> Void)?
-    var title: String
 
     /* ****************************************
      *
@@ -26,11 +22,10 @@ struct SearchView: NSViewRepresentable {
         searchField.placeholderString = placeholder
 
         searchField.delegate = context.coordinator
+        searchField.target = context.coordinator
+        searchField.action = #selector(Coordinator.callHandler)
 
-        //   searchField.target = context.coordinator
-        //   searchField.action = #selector(Coordinator.callHandler)
-
-        // searchField.sendsWholeSearchString = true
+        searchField.sendsWholeSearchString = true
 
         return searchField
     }
@@ -39,12 +34,10 @@ struct SearchView: NSViewRepresentable {
      *
      * ****************************************/
     func updateNSView(_ nsView: NSSearchField, context: Context) {
-        nsView.stringValue = _text.wrappedValue
-        //   nsView.controlSize = .large
+        nsView.stringValue = text.wrappedValue
+        nsView.controlSize = .large
 
-        print(context.transaction)
-        print("UPDATE: '\(title)' '\(text)'")
-//        context.coordinator.text = text.wrappedValue
+        context.coordinator.parent = self
     }
 
     /* ****************************************
@@ -57,24 +50,29 @@ struct SearchView: NSViewRepresentable {
     /* ****************************************
      *
      * ****************************************/
-
     class Coordinator: NSObject, NSSearchFieldDelegate {
-        // @Binding var text: String
         var parent: SearchView
 
+        /* ****************************************
+         *
+         * ****************************************/
         init(parent: SearchView) {
             self.parent = parent
         }
 
+        /* ****************************************
+         *
+         * ****************************************/
         @objc func callHandler() {
             parent.action?()
         }
 
+        /* ****************************************
+         *
+         * ****************************************/
         func controlTextDidChange(_ obj: Notification) {
             guard let control = obj.object as? NSSearchField else { return }
-            print("controlTextDidChange: '\(parent.title)'")
-            parent._text.update()
-            parent._text.wrappedValue = control.stringValue
+            parent.text.wrappedValue = control.stringValue
         }
     }
 }

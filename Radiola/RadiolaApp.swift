@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct RadiolaApp: App {
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject var appState = AppState()
 
     /* ****************************************
@@ -19,5 +20,8 @@ struct RadiolaApp: App {
             MainWindow()
                 .environmentObject(appState)
         }
+
+        .windowStyle(.titleBar)
+        .windowToolbarStyle(.unified(showsTitle: true))
     }
 }

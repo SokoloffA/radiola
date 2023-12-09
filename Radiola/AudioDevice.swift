@@ -7,7 +7,7 @@
 //  The code of this file is based on Nathan's Perkins project SongDetector
 //  https://github.com/gardner-lab/syllable-detector-swift
 //
-/*
+
 import AudioToolbox
 import Foundation
 
@@ -202,4 +202,3 @@ struct AudioDevice {
         }
     }
 }
-*/

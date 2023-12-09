@@ -94,7 +94,7 @@ extension RadioBrowser {
                 index += 1
 
                 do {
-                    var stats = try await server.stats()
+                    let stats = try await server.stats()
                     debug("Check OK for \(server.url.absoluteString)")
                     return (server, stats.status == Status.statusOK)
                 } catch {

@@ -106,7 +106,7 @@ class InternetStationProvider: ObservableObject {
      *
      * ****************************************/
     init(type: SearchType, title: String, icon: String, help: String? = nil) {
-        self.searchType = type
+        searchType = type
         self.title = title
         self.icon = icon
         self.help = help

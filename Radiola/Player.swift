@@ -5,7 +5,7 @@
 //  Created by Alex Sokolov on 23.05.2020.
 //  Copyright © 2020 Alex Sokolov. All rights reserved.
 //
-/*
+
 import AVFoundation
 import Cocoa
 import Foundation
@@ -117,7 +117,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         }
 
         if u == nil {
-            NSAlert.showWarning(message: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
+            Alarm.show(title: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
             return
         }
 
@@ -160,7 +160,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             return
         }
 
-        if !station.isEmpty {
+        if !station.url.isEmpty {
             play()
         }
     }
@@ -292,4 +292,3 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         isMuted = !isMuted
     }
 }
-*/

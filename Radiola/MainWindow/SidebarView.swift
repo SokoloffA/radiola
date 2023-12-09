@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SidebarView: View {
+    static let minWidth: CGFloat = 200
+
     @Binding var selectedProviderId: UUID?
     @EnvironmentObject var appState: AppState
 
@@ -15,15 +17,13 @@ struct SidebarView: View {
      *
      * ****************************************/
     var body: some View {
- 
-        
         List(selection: $selectedProviderId) {
             Section("My lists") {
                 ForEach(appState.localStations, id: \.self.id) { list in
                     Label(list.title, systemImage: list.icon).help(list.help ?? "")
                 }
             }
-            
+
             Section("Radio browser") {
                 ForEach(appState.internetStations, id: \.self.id) { list in
                     Label(list.title, systemImage: list.icon).help(list.help ?? "")
@@ -31,6 +31,7 @@ struct SidebarView: View {
             }
         }
         .listStyle(.sidebar)
+        .frame(minWidth: SidebarView.minWidth)
         .toolbar { SidearToolbar() }
     } // body
 }
@@ -50,7 +51,7 @@ struct SidearToolbar: ToolbarContent {
             Button {
                 toggleSidebar()
             } label: {
-                Label("Toggle Sidebar", systemImage: "sidebar.left")
+                Label("Toggle Sidebar", systemImage: "sidebar.left").offset(y: 1)
             }
             .help("Toggle Sidebar")
         }

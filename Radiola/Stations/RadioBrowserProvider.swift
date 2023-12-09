@@ -14,13 +14,10 @@ class RadioBrowserProvider: InternetStationProvider {
      *
      * ****************************************/
     @MainActor override func fetch() async {
-        print("@@ \(title), \(searchText)")
         isLoading = true
         defer { isLoading = false }
 
         if searchText.isEmpty { return }
-        print(title, id)
-        print(searchType, requestType())
         let type = requestType()
 
         do {
@@ -38,7 +35,12 @@ class RadioBrowserProvider: InternetStationProvider {
             var res = [InternetStation]()
 
             for r in resp {
-                var s = InternetStation(title: r.name, url: r.url)
+                let title = r.name.trimmingCharacters(in: .whitespacesAndNewlines)
+                if title == "" {
+                    break
+                }
+
+                var s = InternetStation(title: title, url: r.url)
                 s.codec = r.codec
                 s.bitrate = r.bitrate * 1024
                 s.votes = r.votes
@@ -50,7 +52,7 @@ class RadioBrowserProvider: InternetStationProvider {
 
         } catch {
             await MainActor.run {
-                print(error)
+                warning(error)
                 Alarm.show(title: "Couldn't download the stations from radio-browser.info", message: "\(error.localizedDescription)")
             }
         }
