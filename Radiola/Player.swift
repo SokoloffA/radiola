@@ -49,7 +49,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
             if player.volume != vol {
                 player.volume = vol
-                settings.volumeLevel = newValue
+                config.volumeLevel = newValue
                 NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
             }
         }
@@ -63,7 +63,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         set {
             if player.isMuted != newValue {
                 player.isMuted = newValue
-                settings.volumeIsMuted = newValue
+                config.volumeIsMuted = newValue
                 NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
             }
         }
@@ -77,7 +77,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         set {
             if player.audioOutputDeviceUniqueID != newValue {
                 player.audioOutputDeviceUniqueID = newValue
-                settings.audioDevice = newValue
+                config.audioDevice = newValue
             }
         }
     }
@@ -89,9 +89,9 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         super.init()
 
         player = AVPlayer()
-        player.volume = settings.volumeLevel
-        player.isMuted = settings.volumeIsMuted
-        player.audioOutputDeviceUniqueID = settings.audioDevice
+        player.volume = config.volumeLevel
+        player.isMuted = config.volumeIsMuted
+        player.audioOutputDeviceUniqueID = config.audioDevice
 
         player.addObserver(self,
                            forKeyPath: #keyPath(AVPlayer.timeControlStatus),
@@ -131,7 +131,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         player.replaceCurrentItem(with: playerItem)
         statusChenged(status: AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate)
         player.play()
-        settings.lastStationUrl = station.url
+        config.lastStationUrl = station.url
 
         timer = Timer.scheduledTimer(
             timeInterval: connectDelay,

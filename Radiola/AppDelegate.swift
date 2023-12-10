@@ -5,7 +5,7 @@
 //  Created by Alex Sokolov on 26.05.2020.
 //  Copyright © 2020 Alex Sokolov. All rights reserved.
 //
-/*
+
 import Cocoa
 
 extension String {
@@ -25,11 +25,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
     private let audioSytstem = AudioSytstem()
-    private let mediaKeys = MediaKeysController()
+    //  private let mediaKeys = MediaKeysController()
 
-    @IBOutlet var pauseMenuItem: NSMenuItem!
-    @IBOutlet var playMenuItem: NSMenuItem!
-    @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!
+//    @IBOutlet var pauseMenuItem: NSMenuItem!
+//    @IBOutlet var playMenuItem: NSMenuItem!
+//    @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!
 
     private var statusBar: StatusBarController!
 
@@ -61,24 +61,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                name: Notification.Name.PlayerStatusChanged,
                                                object: nil)
 
-        player.station = stationsStore.lastStation()
+        // player.station = stationsStore.lastStation()
 
         statusBar = StatusBarController()
 
-        playMenuItem.target = player
-        playMenuItem.action = #selector(Player.play)
-
-        pauseMenuItem.target = player
-        pauseMenuItem.action = #selector(Player.stop)
-
-        checkForUpdatesMenuItem.target = updater
-        checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
+//        playMenuItem.target = player
+//        playMenuItem.action = #selector(Player.play)
+//
+//        pauseMenuItem.target = player
+//        pauseMenuItem.action = #selector(Player.stop)
+//
+//        checkForUpdatesMenuItem.target = updater
+//        checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
 
         playerStatusChanged()
 
-        if settings.playLastStation {
+        if config.playLastStation {
             #if DEBUG
-                print(settings.lastStationUrl!)
+                print(config.lastStationUrl!)
             #endif
             player.play()
         }
@@ -116,40 +116,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc func playerStatusChanged() {
-        switch player.status {
-            case Player.Status.paused:
-                playMenuItem.isHidden = false
-                pauseMenuItem.isHidden = true
-
-            case Player.Status.connecting:
-                playMenuItem.isHidden = true
-                pauseMenuItem.isHidden = false
-
-            case Player.Status.playing:
-                playMenuItem.isHidden = true
-                pauseMenuItem.isHidden = false
-        }
+//        switch player.status {
+//            case Player.Status.paused:
+//                playMenuItem.isHidden = false
+//                pauseMenuItem.isHidden = true
+//
+//            case Player.Status.connecting:
+//                playMenuItem.isHidden = true
+//                pauseMenuItem.isHidden = false
+//
+//            case Player.Status.playing:
+//                playMenuItem.isHidden = true
+//                pauseMenuItem.isHidden = false
+//        }
     }
 
     /* ****************************************
      *
      * ****************************************/
     @objc func showStationView(_ sender: Any?) {
-        _ = StationsWindow.show()
+        MainWindow.show()
+        // _ = StationsWindow.show()
     }
 
     /* ****************************************
      *
      * ****************************************/
     @objc func showHistory(_ sender: Any?) {
-        _ = HistoryWindow.show()
+        // _ = HistoryWindow.show()
     }
 
     /* ****************************************
      *
      * ****************************************/
     @IBAction func showPreferences(_ sender: Any) {
-        _ = PreferencesWindow.show()
+        // _ = PreferencesWindow.show()
     }
 
     /* ****************************************
@@ -164,16 +165,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc private func processError(_ notification: Notification) {
-        guard let alarm = notification.object as? Alarm else { return }
-
-        DispatchQueue.main.async {
-            guard let button = self.statusBar.menuItem.button else { return }
-
-            let dialog = AlarmPopover()
-            dialog.messageText = alarm.title
-            dialog.informativeText = alarm.message ?? ""
-            dialog.show(of: button)
-        }
+//        guard let alarm = notification.object as? Alarm else { return }
+//
+//        DispatchQueue.main.async {
+//            guard let button = self.statusBar.menuItem.button else { return }
+//
+//            let dialog = AlarmPopover()
+//            dialog.messageText = alarm.title
+//            dialog.informativeText = alarm.message ?? ""
+//            dialog.show(of: button)
+//        }
     }
 }
-*/

@@ -10,6 +10,8 @@ import Foundation
 // MARK: - AppState
 
 class AppState: ObservableObject {
+    static let shared = AppState()
+
     @Published var localStations: [LocalStationProvider] = [
         LocalStationProvider(title: "My stations", icon: "music.house", help: nil),
     ]
@@ -19,4 +21,12 @@ class AppState: ObservableObject {
         RadioBrowserProvider(type: .byName, title: "By name", icon: "globe", help: nil),
         RadioBrowserProvider(type: .byCountry, title: "By country", icon: "globe", help: nil),
     ]
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func favoritesStations() -> [Station] {
+        return []
+        // return filterStations { $0.isFavorite }
+    }
 }

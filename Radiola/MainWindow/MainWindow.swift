@@ -7,9 +7,34 @@
 
 import SwiftUI
 
+// MARK: - MainWindow
+
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedProviderId: UUID?
+    private static var instance: NSWindowController?
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func show() {
+        if instance == nil {
+            let rootView = MainWindow()
+                .environmentObject(AppState.shared)
+
+            let hostingController = NSHostingController(rootView: rootView)
+            let window = NSWindow(contentViewController: hostingController)
+            window.styleMask = [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView]
+            window.toolbarStyle = .unified
+            window.title = ""
+
+            instance = NSWindowController(window: window)
+            instance?.windowFrameAutosaveName = "StationsWindow"
+        }
+
+        instance?.showWindow(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
 
     /* ****************************************
      *

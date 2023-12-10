@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Settings {
+class Config {
     private let data = UserDefaults.standard
 
     private let lastStationKey = "Url"
@@ -231,4 +231,4 @@ class Settings {
     }
 }
 
-let settings = Settings()
+let config = Config()
