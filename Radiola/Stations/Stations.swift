@@ -15,42 +15,10 @@ protocol Station {
     var url: String { get set }
 }
 
-// MARK: - LocalStation
-
-struct LocalStation: Station {
-    var id = UUID()
-    var title: String
-    var url: String
-    var isFavorite: Bool = false
-
-    /* ****************************************
-     *
-     * ****************************************/
-    init(title: String, url: String, isFavorite: Bool = false) {
-        self.title = title
-        self.url = url
-        self.isFavorite = isFavorite
-    }
-}
-
-// MARK: - LocalStationGroup
-
-class LocalStationGroup {
-    var title: String
-    var items: [Item] = []
-
-    enum Item {
-        case station(station: LocalStation)
-        case group(group: LocalStationGroup)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    init(title: String, items: [Item]) {
-        self.title = title
-        self.items = items
-    }
+protocol StationList: Identifiable {
+    var title: String { get }
+    var icon: String { get }
+    var help: String? { get }
 }
 
 // MARK: - InternetStation
@@ -116,22 +84,5 @@ class InternetStationProvider: ObservableObject {
      *
      * ****************************************/
     func fetch() async {
-    }
-}
-
-// MARK: - LocalStationProvider
-
-class LocalStationProvider: ObservableObject {
-    let id = UUID()
-    let title: String
-    let icon: String
-    let help: String?
-
-    //  var stations: [LocalStation] = []
-
-    init(title: String, icon: String, help: String?) {
-        self.title = title
-        self.icon = icon
-        self.help = help
     }
 }

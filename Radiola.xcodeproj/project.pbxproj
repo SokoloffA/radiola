@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		39008DD22B2596690019583D /* StatuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39008DD12B2596690019583D /* StatuBarController.swift */; };
 		39008DD42B2596970019583D /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39008DD32B2596970019583D /* StatusBarIcon.swift */; };
+		39008DD62B25E8BD0019583D /* LocalStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39008DD52B25E8BD0019583D /* LocalStations.swift */; };
+		39008DD82B25EAAC0019583D /* LocalStationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39008DD72B25EAAC0019583D /* LocalStationsView.swift */; };
+		39008DDA2B260CAD0019583D /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39008DD92B260CAD0019583D /* Controls.swift */; };
 		392C469B2A6C21BD0095DDA2 /* MediaKeysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */; };
 		394A27312B1CE114008DBFB1 /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394A27302B1CE114008DBFB1 /* SearchView.swift */; };
 		394A27332B1CE131008DBFB1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394A27322B1CE131008DBFB1 /* AppState.swift */; };
@@ -40,6 +43,9 @@
 /* Begin PBXFileReference section */
 		39008DD12B2596690019583D /* StatuBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatuBarController.swift; sourceTree = "<group>"; };
 		39008DD32B2596970019583D /* StatusBarIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
+		39008DD52B25E8BD0019583D /* LocalStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStations.swift; sourceTree = "<group>"; };
+		39008DD72B25EAAC0019583D /* LocalStationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStationsView.swift; sourceTree = "<group>"; };
+		39008DD92B260CAD0019583D /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
 		392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeysController.swift; sourceTree = "<group>"; };
 		394A27302B1CE114008DBFB1 /* SearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		394A27322B1CE131008DBFB1 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
@@ -95,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				394A27302B1CE114008DBFB1 /* SearchView.swift */,
+				39008DD92B260CAD0019583D /* Controls.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -103,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				394A273B2B1CE19B008DBFB1 /* Stations.swift */,
+				39008DD52B25E8BD0019583D /* LocalStations.swift */,
 				394A27392B1CE197008DBFB1 /* RadioBrowserProvider.swift */,
 			);
 			path = Stations;
@@ -116,6 +124,7 @@
 				394A27422B1CE2FF008DBFB1 /* RowViews.swift */,
 				394A27402B1CE2FA008DBFB1 /* MainWindow.swift */,
 				394A273E2B1CE2F5008DBFB1 /* InternetStationView.swift */,
+				39008DD72B25EAAC0019583D /* LocalStationsView.swift */,
 			);
 			path = MainWindow;
 			sourceTree = "<group>";
@@ -266,9 +275,12 @@
 				394A273F2B1CE2F5008DBFB1 /* InternetStationView.swift in Sources */,
 				394A27412B1CE2FA008DBFB1 /* MainWindow.swift in Sources */,
 				394A27472B1CE309008DBFB1 /* Toolbar.swift in Sources */,
+				39008DDA2B260CAD0019583D /* Controls.swift in Sources */,
 				394ABCA72A9BBD4E00E2B6E9 /* RadioBrowserTags.swift in Sources */,
 				39F08E462A0CC582006B65D0 /* Types.swift in Sources */,
 				39008DD42B2596970019583D /* StatusBarIcon.swift in Sources */,
+				39008DD62B25E8BD0019583D /* LocalStations.swift in Sources */,
+				39008DD82B25EAAC0019583D /* LocalStationsView.swift in Sources */,
 				394ABCA92A9CA1F800E2B6E9 /* RadioBrowser.swift in Sources */,
 				394A27312B1CE114008DBFB1 /* SearchView.swift in Sources */,
 				39D79E632933BEAB00210D94 /* Config.swift in Sources */,

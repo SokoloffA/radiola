@@ -103,25 +103,3 @@ struct InternetStationRow: View {
     }
 }
 
-// MARK: - Controls
-
-struct ImageButton: View {
-    var iconOff: String
-    var iconOn: String
-
-    @Binding var isSet: Bool
-
-    /* ****************************************
-     *
-     * ****************************************/
-    var body: some View {
-        Button {
-            isSet.toggle()
-        } label: {
-            Label("", systemImage: isSet ? iconOn : iconOff)
-                .labelStyle(.iconOnly)
-                .foregroundStyle(isSet ? .yellow : .gray)
-        }
-        .buttonStyle(.borderless)
-    } // body
-}

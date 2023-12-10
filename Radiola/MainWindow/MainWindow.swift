@@ -45,8 +45,8 @@ struct MainWindow: View {
 
             GeometryReader { geometry in
                 VStack(spacing: 0) {
-                    if let provider = appState.localStations.first(where: { $0.id == selectedProviderId }) {
-                        Text("Local \(provider.title)")
+                    if let list = appState.localStations.first(where: { $0.id == selectedProviderId }) {
+                        LocalStationsView(list: list)
                     } else if let provider = appState.internetStations.first(where: { $0.id == selectedProviderId }) {
                         InternetStationsView(provider: provider)
                     }

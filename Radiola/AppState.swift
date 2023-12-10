@@ -9,11 +9,34 @@ import Foundation
 
 // MARK: - AppState
 
+fileprivate let oplDirectoryName = "com.github.SokoloffA.Radiola/"
+fileprivate let oplFileName = "bookmarks.opml"
+
+fileprivate let defaultStations: [LocalStation] = [
+    LocalStation(
+        title: "Radio Caroline",
+        url: "http://sc3.radiocaroline.net:8030",
+        isFavorite: true
+    ),
+
+    LocalStation(
+        title: "Radio Caroline 319 Gold [ Hits from '60-'70 ]",
+        url: "http://www.rcgoldserver.eu:8192",
+        isFavorite: true
+    ),
+
+    LocalStation(
+        title: "Radio Caroline 259 Gold [ Happy Rock &amp; Album Station ]",
+        url: "http://www.rcgoldserver.eu:8253",
+        isFavorite: true
+    ),
+]
+
 class AppState: ObservableObject {
     static let shared = AppState()
 
-    @Published var localStations: [LocalStationProvider] = [
-        LocalStationProvider(title: "My stations", icon: "music.house", help: nil),
+    @Published var localStations: [LocalStationList] = [
+        LocalStationList(title: "My stations", icon: "music.house", help: nil),
     ]
 
     @Published var internetStations: [InternetStationProvider] = [
@@ -21,6 +44,29 @@ class AppState: ObservableObject {
         RadioBrowserProvider(type: .byName, title: "By name", icon: "globe", help: nil),
         RadioBrowserProvider(type: .byCountry, title: "By country", icon: "globe", help: nil),
     ]
+
+    /* ****************************************
+     *
+     * ****************************************/
+    init() {
+        let dirName = URL(
+            fileURLWithPath: oplDirectoryName,
+            relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+
+        let fileName = URL(
+            fileURLWithPath: oplDirectoryName + "/" + oplFileName,
+            relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+
+        if !FileManager.default.fileExists(atPath: dirName.absoluteString) {
+            do {
+                try FileManager.default.createDirectory(at: dirName, withIntermediateDirectories: true)
+            } catch {
+                fatalError(error.localizedDescription)
+            }
+        }
+
+        localStations[0].load(file: fileName, defaultStations: defaultStations)
+    }
 
     /* ****************************************
      *
