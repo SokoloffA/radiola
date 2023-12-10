@@ -63,14 +63,14 @@ class RadioBrowserProvider: InternetStationProvider {
      * ****************************************/
     private func requestType() -> RadioBrowser.Stations.RequestType {
         switch (searchType, isExactMatch) {
-            case (.byTag, true): RadioBrowser.Stations.RequestType.byTagExact
-            case (.byTag, false): RadioBrowser.Stations.RequestType.byTag
+            case (.byTag, true): return RadioBrowser.Stations.RequestType.byTagExact
+            case (.byTag, false): return RadioBrowser.Stations.RequestType.byTag
 
-            case (.byName, true): RadioBrowser.Stations.RequestType.byNameExact
-            case (.byName, false): RadioBrowser.Stations.RequestType.byName
+            case (.byName, true): return RadioBrowser.Stations.RequestType.byNameExact
+            case (.byName, false): return RadioBrowser.Stations.RequestType.byName
 
-            case (.byCountry, true): RadioBrowser.Stations.RequestType.byCountryExact
-            case (.byCountry, false): RadioBrowser.Stations.RequestType.byCountry
+            case (.byCountry, true): return RadioBrowser.Stations.RequestType.byCountryExact
+            case (.byCountry, false): return RadioBrowser.Stations.RequestType.byCountry
         }
     }
 
