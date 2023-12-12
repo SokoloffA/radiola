@@ -32,6 +32,7 @@ struct MainWindow: View {
             instance?.windowFrameAutosaveName = "StationsWindow"
         }
 
+        NSApp.setActivationPolicy(.regular)
         instance?.showWindow(nil)
         NSApp.activate(ignoringOtherApps: true)
     }

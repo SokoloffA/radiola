@@ -22,7 +22,7 @@ struct LocalStationsView: View {
             ForEach(list.items) { item in
                 switch item {
                     case let .station(station: station):
-                        LocalStationRow(station: station)
+                        LocalStationRow(list: list, station: station)
                     case let .group(group: group):
                         Text("GROUP")
                 }
@@ -35,13 +35,17 @@ struct LocalStationsView: View {
 // MARK: - LocalStationRow
 
 struct LocalStationRow: View {
+    @ObservedObject var list: LocalStationList
     @ObservedObject var station: LocalStation
+    @FocusState private var isFocused: Bool
 
+    /* ****************************************
+     *
+     * ****************************************/
     var body: some View {
         VStack {
             HStack {
-                Text(station.title)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("Station title", text: $station.title)
                     .font(.headline)
 
                 ImageButton(iconOff: "star", iconOn: "star.fill", isSet: $station.isFavorite)
@@ -49,17 +53,28 @@ struct LocalStationRow: View {
             .padding(EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 8))
 
             HStack {
-                Text(station.url)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                TextField("Station URL", text: $station.url)
                     .font(.caption)
-                    .foregroundColor(.secondary)
             }
         }
         .contentShape(Rectangle())
-
         .padding(EdgeInsets(top: 0, leading: 2, bottom: 1, trailing: 8))
+        .focused($isFocused)
+        .onChange(of: isFocused, perform: onTextFocusChanged)
+        .onChange(of: station.isFavorite, perform: { _ in boolValueChanged() })
     } // body
 
-    private func setFavorite(_ value: Bool) {
+    /* ****************************************
+     *
+     * ****************************************/
+    private func onTextFocusChanged(focused: Bool) {
+        if !focused { list.save() }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func boolValueChanged() {
+        list.save()
     }
 }
