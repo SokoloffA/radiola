@@ -18,13 +18,15 @@ struct LocalStationsView: View {
      *
      * ****************************************/
     var body: some View {
-        List(selection: $selectedItemId) {
-            ForEach(list.items) { item in
+        VStack {
+            List(list.items, children: \.items, selection: $selectedItemId) { item in
+
                 switch item {
                     case let .station(station: station):
-                        LocalStationRow(list: list, station: station)
+                        StationRow(list: list, station: station)
+
                     case let .group(group: group):
-                        Text("GROUP")
+                        GroupRow(list: list, group: group)
                 }
             }
         }
@@ -32,9 +34,9 @@ struct LocalStationsView: View {
     } // body
 }
 
-// MARK: - LocalStationRow
+// MARK: - StationRow
 
-struct LocalStationRow: View {
+fileprivate struct StationRow: View {
     @ObservedObject var list: LocalStationList
     @ObservedObject var station: LocalStation
     @FocusState private var isFocused: Bool
@@ -50,7 +52,7 @@ struct LocalStationRow: View {
 
                 ImageButton(iconOff: "star", iconOn: "star.fill", isSet: $station.isFavorite)
             }
-            .padding(EdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 8))
+            .padding(EdgeInsets(top: 2, leading: 0, bottom: 0, trailing: 8))
 
             HStack {
                 TextField("Station URL", text: $station.url)
@@ -76,5 +78,30 @@ struct LocalStationRow: View {
      * ****************************************/
     private func boolValueChanged() {
         list.save()
+    }
+}
+
+// MARK: - GroupRow
+
+fileprivate struct GroupRow: View {
+    @ObservedObject var list: LocalStationList
+    @ObservedObject var group: LocalStationGroup
+    @FocusState private var isFocused: Bool
+
+    var body: some View {
+        HStack {
+            TextField("Group title", text: $group.title)
+                .font(.headline)
+        }
+        .padding(EdgeInsets(top: 7, leading: 2, bottom: 7, trailing: 2))
+        .focused($isFocused)
+        .onChange(of: isFocused, perform: onTextFocusChanged)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func onTextFocusChanged(focused: Bool) {
+        if !focused { list.save() }
     }
 }

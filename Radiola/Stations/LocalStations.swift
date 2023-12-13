@@ -27,7 +27,7 @@ class LocalStation: ObservableObject, Station {
 
 // MARK: - LocalStationGroup
 
-class LocalStationGroup: Identifiable {
+class LocalStationGroup: ObservableObject {
     let id = UUID()
     var title: String
     var items: [Item] = []
@@ -81,6 +81,16 @@ extension LocalStationList {
             switch self {
                 case let .station(station: station): return station.title
                 case let .group(group: group): return group.title
+            }
+        }
+
+        /* ****************************************
+         *
+         * ****************************************/
+        var items: [Item]? {
+            switch self {
+                case .station(_: _): return nil
+                case let .group(group: group): return group.items
             }
         }
     } // Item
