@@ -119,6 +119,38 @@ class LocalStationList: ObservableObject, StationList {
     /* ****************************************
      *
      * ****************************************/
+    func favoritesStations() -> [Station] {
+        return filterStations { $0.isFavorite }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func filterStations(where match: (LocalStation) -> Bool) -> [Station] {
+        var res: [Station] = []
+        var queue: [Item] = items
+
+        while !queue.isEmpty {
+            let item = queue[0]
+            queue.removeFirst()
+
+            switch item {
+                case let .station(station: station):
+                    if match(station) {
+                        res.append(station)
+                    }
+
+                case let .group(group: group):
+                    queue.insert(contentsOf: group.items, at: 0)
+            }
+        }
+
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func load(file: URL, defaultStations: [LocalStation] = []) {
         self.file = file
         // print(file.path)

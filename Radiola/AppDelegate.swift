@@ -136,7 +136,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     @objc func showStationView(_ sender: Any?) {
         MainWindow.show()
-        // _ = StationsWindow.show()
     }
 
     /* ****************************************

@@ -72,7 +72,10 @@ class AppState: ObservableObject {
      *
      * ****************************************/
     func favoritesStations() -> [Station] {
-        return []
-        // return filterStations { $0.isFavorite }
+        var res = [Station]()
+        for list in localStations {
+            res += list.favoritesStations()
+        }
+        return res
     }
 }
