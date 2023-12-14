@@ -9,16 +9,29 @@ import SwiftUI
 
 // MARK: - MainWindow
 
+fileprivate class WindowController: NSWindowController, NSWindowDelegate {
+    /* ****************************************
+     *
+     * ****************************************/
+    func windowWillClose(_ notification: Notification) {
+        print("CLOSE")
+        MainWindow.instance = nil
+        NSApp.setActivationPolicy(.accessory)
+        // StationsWindow.instance = nil
+    }
+}
+
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedProviderId: UUID?
-    private static var instance: NSWindowController?
+    fileprivate static var instance: NSWindowController?
 
     /* ****************************************
      *
      * ****************************************/
     static func show() {
         if instance == nil {
+            print("CREATE")
             let rootView = MainWindow()
                 .environmentObject(AppState.shared)
 
@@ -28,13 +41,26 @@ struct MainWindow: View {
             window.toolbarStyle = .unified
             window.title = ""
 
-            instance = NSWindowController(window: window)
+            let controller = WindowController(window: window)
+            instance = controller
+            window.delegate = controller
             instance?.windowFrameAutosaveName = "StationsWindow"
         }
 
-        NSApp.setActivationPolicy(.regular)
         instance?.showWindow(nil)
+        instance?.window?.orderFrontRegardless()
+        instance?.window?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+        if NSApp.activationPolicy() != .regular {
+            NSApp.setActivationPolicy(.regular)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func isActie() -> Bool {
+        return instance != nil
     }
 
     /* ****************************************

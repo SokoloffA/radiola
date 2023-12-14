@@ -8,6 +8,45 @@
 import Cocoa
 import SwiftUI
 
+// MARK: - PlayItem
+
+fileprivate struct PlayItem: View {
+    var station: Station?
+
+    var body: some View {
+        HStack {
+            Image(systemName: "pause.fill")
+                .resizable()
+                .frame(width: 12, height: 16)
+                .padding(EdgeInsets(top: 0, leading: 23, bottom: 0, trailing: 13))
+                .onTapGesture(perform: clicked)
+
+            VStack {
+                Text(station?.title ?? "Alice Cooper - Old Ethyl")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.headline)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                    .truncationMode(.tail)
+                    .lineLimit(1)
+
+                Text(station?.title ?? "Radio Caroline")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.subheadline)
+                    .truncationMode(.tail)
+                    .lineLimit(1)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+            }
+        }
+    } // body
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func clicked() {
+        player.toggle()
+    }
+}
+
 /* ****************************************
  *
  * ****************************************/
@@ -176,13 +215,23 @@ class StatusBarController: NSObject {
     /* ****************************************
      *
      * ****************************************/
+    private func buildPlayMenuItem() -> NSMenuItem {
+        let item = NSMenuItem()
+        item.view = NSHostingView(rootView: PlayItem(station: player.station))
+        item.view?.frame.size = NSSize(width: 284, height: 45)
+
+        item.target = self
+        item.isEnabled = true
+        return item
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @objc func buildMenu() -> NSMenu {
         let menu = NSMenu()
 
-//        let playItem = PlayMenuItem()
-//        playItem.target = self
-//        playItem.isEnabled = true
-//        menu.addItem(playItem)
+        menu.addItem(buildPlayMenuItem())
 
 //        if settings.showVolumeInMenu {
 //            menu.addItem(NSMenuItem.separator())

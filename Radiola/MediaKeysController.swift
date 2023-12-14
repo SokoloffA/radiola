@@ -4,7 +4,7 @@
 //
 //  Created by Alex Sokolov on 22.07.2023.
 //
-/*
+
 import Cocoa
 import MediaPlayer
 
@@ -63,10 +63,10 @@ class MediaKeysController: NSObject {
      *
      * ****************************************/
     private func needHandleMediaKey() -> Bool {
-        switch settings.mediaKeysHandle {
+        switch config.mediaKeysHandle {
             case .disable: return false
             case .enable: return true
-            case .mainWindowActive: return StationsWindow.isActie()
+            case .mainWindowActive: return MainWindow.isActie()
         }
     }
 
@@ -104,7 +104,7 @@ class MediaKeysController: NSObject {
      *
      * ****************************************/
     @objc private func previous(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        if needHandleMediaKey() && settings.mediaPrevNextKeyAction == .switchStation {
+        if needHandleMediaKey() && config.mediaPrevNextKeyAction == .switchStation {
             switchStation(offset: -1)
         }
         return .success
@@ -114,7 +114,7 @@ class MediaKeysController: NSObject {
      *
      * ****************************************/
     @objc private func next(_ event: MPRemoteCommandEvent) -> MPRemoteCommandHandlerStatus {
-        if needHandleMediaKey() && settings.mediaPrevNextKeyAction == .switchStation {
+        if needHandleMediaKey() && config.mediaPrevNextKeyAction == .switchStation {
             switchStation(offset: 1)
         }
         return .success
@@ -125,7 +125,7 @@ class MediaKeysController: NSObject {
      * ****************************************/
     private func switchStation(offset: Int) {
         guard let curStation = player.station else { return }
-        let favorites = stationsStore.localStations.favorites()
+        let favorites = AppState.shared.favoritesStations()
         if favorites.count <= 1 { return }
 
         var newIndex = 0
@@ -140,4 +140,3 @@ class MediaKeysController: NSObject {
         player.play()
     }
 }
-*/
