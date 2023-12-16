@@ -25,7 +25,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
     private let audioSytstem = AudioSytstem()
-    //  private let mediaKeys = MediaKeysController()
+    private let mediaKeys = MediaKeysController()
 
 //    @IBOutlet var pauseMenuItem: NSMenuItem!
 //    @IBOutlet var playMenuItem: NSMenuItem!
@@ -56,12 +56,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(playerStatusChanged),
-                                               name: Notification.Name.PlayerStatusChanged,
-                                               object: nil)
-
-        // player.station = stationsStore.lastStation()
+        Player.shared.station = AppState.shared.lastStation()
+        debug("last station: \(Player.shared.station?.url ?? "nil")")
 
         statusBar = StatusBarController()
 
@@ -74,13 +70,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //        checkForUpdatesMenuItem.target = updater
 //        checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
 
-        playerStatusChanged()
-
         if config.playLastStation {
-            #if DEBUG
-                print(config.lastStationUrl!)
-            #endif
-            player.play()
+            Player.shared.play()
         }
     }
 
@@ -95,40 +86,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @IBAction func startPlay(_ sender: NSMenuItem) {
-        player.play()
+        Player.shared.play()
     }
 
     /* ****************************************
      *
      * ****************************************/
     @IBAction func stopPlay(_ sender: NSMenuItem) {
-        player.stop()
+        Player.shared.stop()
     }
 
     /* ****************************************
      *
      * ****************************************/
     @objc func togglePlay(_ sender: NSMenuItem) {
-        player.toggle()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc func playerStatusChanged() {
-//        switch player.status {
-//            case Player.Status.paused:
-//                playMenuItem.isHidden = false
-//                pauseMenuItem.isHidden = true
-//
-//            case Player.Status.connecting:
-//                playMenuItem.isHidden = true
-//                pauseMenuItem.isHidden = false
-//
-//            case Player.Status.playing:
-//                playMenuItem.isHidden = true
-//                pauseMenuItem.isHidden = false
-//        }
+        Player.shared.toggle()
     }
 
     /* ****************************************

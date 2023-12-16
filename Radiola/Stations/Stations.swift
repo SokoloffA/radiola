@@ -19,6 +19,17 @@ protocol StationList: Identifiable {
     var title: String { get }
     var icon: String { get }
     var help: String? { get }
+
+    func first(where: (Station) -> Bool) -> Station?
+}
+
+extension StationList {
+    /* ****************************************
+     *
+     * ****************************************/
+    func first(byUrl: String) -> Station? {
+        return first { $0.url == byUrl }
+    }
 }
 
 // MARK: - InternetStation

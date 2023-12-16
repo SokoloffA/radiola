@@ -11,6 +11,8 @@ import MediaPlayer
 // MARK: - MediaKeysController
 
 class MediaKeysController: NSObject {
+    private let player = Player.shared
+
     /* ****************************************
      *
      * ****************************************/

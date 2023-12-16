@@ -8,53 +8,129 @@
 import Cocoa
 import SwiftUI
 
+fileprivate let playItemWidth = 350.0
+fileprivate let playItemHeght = 50.0
+fileprivate let volumeItemHeght = 40.0
+
 // MARK: - PlayItem
 
-fileprivate struct PlayItem: View {
-    var station: Station?
+fileprivate class PlayItem: NSMenuItem {
+    /* ****************************************
+     *
+     * ****************************************/
+    init() {
+        super.init(title: "", action: nil, keyEquivalent: "")
 
-    var body: some View {
-        HStack {
-            Image(systemName: "pause.fill")
-                .resizable()
-                .frame(width: 12, height: 16)
-                .padding(EdgeInsets(top: 0, leading: 23, bottom: 0, trailing: 13))
-                .onTapGesture(perform: clicked)
-
-            VStack {
-                Text(station?.title ?? "Alice Cooper - Old Ethyl")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.headline)
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-                    .truncationMode(.tail)
-                    .lineLimit(1)
-
-                Text(station?.title ?? "Radio Caroline")
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.subheadline)
-                    .truncationMode(.tail)
-                    .lineLimit(1)
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
-            }
-        }
-    } // body
+        view = NSHostingView(rootView: RootView(menuItem: self))
+        view?.frame.size = NSSize(width: playItemWidth, height: playItemHeght)
+        isEnabled = true
+    }
 
     /* ****************************************
      *
      * ****************************************/
-    private func clicked() {
-        player.toggle()
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    fileprivate struct RootView: View {
+        @StateObject var player = Player.shared
+        weak var menuItem: NSMenuItem?
+
+        var body: some View {
+            HStack {
+                Image(systemName: icon())
+                    .resizable()
+                    .frame(width: 12, height: 16)
+                    .padding(EdgeInsets(top: 0, leading: 23, bottom: 0, trailing: 13))
+
+                VStack {
+                    Text(player.songTitle)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.headline)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                        .truncationMode(.tail)
+                        .lineLimit(1)
+                        .frame(minHeight: 16)
+
+                    Text(player.station?.title ?? "")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .font(.subheadline)
+                        .truncationMode(.tail)
+                        .lineLimit(1)
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 10))
+                }
+            }
+            .contentShape(Rectangle())
+            .onTapGesture(perform: clicked)
+        } // body
+
+        /* ****************************************
+         *
+         * ****************************************/
+        private func icon() -> String {
+            switch player.status {
+                case Player.Status.paused: return "play.fill"
+                case Player.Status.connecting: return "pause.fill"
+                case Player.Status.playing: return "pause.fill"
+            }
+        }
+
+        /* ****************************************
+         *
+         * ****************************************/
+        private func clicked() {
+            player.toggle()
+            menuItem?.menu?.cancelTracking()
+        }
+    } // RootView
 }
 
-/* ****************************************
- *
- * ****************************************/
+// MARK: - VolumeItem
+
+fileprivate class VolumeItem: NSMenuItem {
+    /* ****************************************
+     *
+     * ****************************************/
+    init() {
+        super.init(title: "", action: nil, keyEquivalent: "")
+
+        view = NSHostingView(rootView: RootView(menuItem: self))
+        view?.frame.size = NSSize(width: playItemWidth, height: volumeItemHeght)
+        isEnabled = true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    struct RootView: View {
+        @StateObject var player = Player.shared
+        weak var menuItem: NSMenuItem?
+
+        var body: some View {
+            Text("VOLUME")
+        }
+    } // RootView
+}
+
+// MARK: - StatusBarController
+
 class StatusBarController: NSObject {
     private let appState = AppState.shared
     let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menuPrefix = "  "
     private let icon = StatusBarIcon(size: 16)
+    private let player = Player.shared
 
     /* ****************************************
      *
@@ -63,7 +139,7 @@ class StatusBarController: NSObject {
         super.init()
         icon.statusItem = menuItem
         icon.framesPerSecond = 8
-        icon.playerStatus = player.status
+        icon.playerStatus = Player.shared.status
         icon.muted = player.isMuted
 
 //        NotificationCenter.default.addObserver(self,
@@ -215,29 +291,15 @@ class StatusBarController: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    private func buildPlayMenuItem() -> NSMenuItem {
-        let item = NSMenuItem()
-        item.view = NSHostingView(rootView: PlayItem(station: player.station))
-        item.view?.frame.size = NSSize(width: 284, height: 45)
-
-        item.target = self
-        item.isEnabled = true
-        return item
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     @objc func buildMenu() -> NSMenu {
         let menu = NSMenu()
 
-        menu.addItem(buildPlayMenuItem())
+        menu.addItem(PlayItem())
+        menu.addItem(NSMenuItem.separator())
 
-//        if settings.showVolumeInMenu {
-//            menu.addItem(NSMenuItem.separator())
-//            let volumeItem = VolumeMenuItem()
-//            menu.addItem(volumeItem)
-//        }
+        if config.showVolumeInMenu {
+            menu.addItem(VolumeItem())
+        }
 
         if config.showMuteInMenu {
             let item = NSMenuItem(
@@ -390,19 +452,19 @@ class StatusBarController: NSObject {
 
         switch player.status {
             case Player.Status.paused:
-                menuItem.button?.toolTip = player.stationName
+                menuItem.button?.toolTip = player.station?.title
 
             case Player.Status.connecting:
                 menuItem.button?.toolTip =
-                    player.stationName +
+                    (player.station?.title ?? "") +
                     "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
                     "Connecting...".tr(withComment: "Tooltip text")
 
             case Player.Status.playing:
                 menuItem.button?.toolTip =
-                    player.title +
+                    player.songTitle +
                     "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                    player.stationName
+                    (player.station?.title ?? "")
         }
     }
 

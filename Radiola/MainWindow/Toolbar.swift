@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: - ToolbarPlayItem
 
 struct ToolbarPlayItem: ToolbarContent {
-    var station: Station?
+    @StateObject var player: Player = Player.shared
     @State var windowGeometry: GeometryProxy
 
     /* ****************************************
@@ -19,7 +19,7 @@ struct ToolbarPlayItem: ToolbarContent {
     var body: some ToolbarContent {
         ToolbarItem(placement: .navigation) {
             Button(action: clicked) {
-                Image(systemName: "play.fill")
+                Image(systemName: icon())
                     .resizable()
                     .frame(width: 22, height: 22)
             }
@@ -29,14 +29,15 @@ struct ToolbarPlayItem: ToolbarContent {
             .overlay(alignment: .leading) {
                 GeometryReader { tg in
                     VStack {
-                        Text(station?.title ?? "")
+                        Text(player.songTitle)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .font(.headline)
                             .padding(EdgeInsets(top: -3, leading: 0, bottom: 1, trailing: 0))
                             .truncationMode(.tail)
                             .lineLimit(1)
+                            .frame(minHeight: 16)
 
-                        Text(station?.url ?? "")
+                        Text(player.station?.title ?? "")
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .font(.footnote)
                             .foregroundColor(.secondary)
@@ -53,8 +54,19 @@ struct ToolbarPlayItem: ToolbarContent {
     /* ****************************************
      *
      * ****************************************/
+    private func icon() -> String {
+        switch player.status {
+            case Player.Status.paused: return "play.fill"
+            case Player.Status.connecting: return "pause.fill"
+            case Player.Status.playing: return "pause.fill"
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     private func clicked() {
-        print("PLAY/PAUSE")
+        player.toggle()
     }
 }
 

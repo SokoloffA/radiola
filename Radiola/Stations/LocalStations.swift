@@ -131,8 +131,7 @@ class LocalStationList: ObservableObject, StationList {
         var queue: [Item] = items
 
         while !queue.isEmpty {
-            let item = queue[0]
-            queue.removeFirst()
+            let item = queue.removeFirst()
 
             switch item {
                 case let .station(station: station):
@@ -148,6 +147,31 @@ class LocalStationList: ObservableObject, StationList {
         return res
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    func first(where predicate: (Station) -> Bool) -> Station? {
+        var queue: [Item] = root.items
+
+        while !queue.isEmpty {
+            let item = queue.removeFirst()
+
+            switch item {
+                case let .station(station: station):
+                    if predicate(station) {
+                        return station
+                    }
+
+                case let .group(group: group):
+                    queue += group.items
+            }
+        }
+
+        return nil
+    }
+}
+
+extension LocalStationList {
     /* ****************************************
      *
      * ****************************************/

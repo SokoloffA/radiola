@@ -78,4 +78,31 @@ class AppState: ObservableObject {
         }
         return res
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func lastStation() -> Station? {
+        let url = config.lastStationUrl ?? ""
+
+        if !url.isEmpty {
+            for list in localStations {
+                if let res = list.first(byUrl: url) {
+                    return res
+                }
+            }
+        }
+
+        if let res = favoritesStations().first {
+            return res
+        }
+
+        for list in localStations {
+            if let res = list.first(where: { _ in true }) {
+                return res
+            }
+        }
+
+        return nil
+    }
 }

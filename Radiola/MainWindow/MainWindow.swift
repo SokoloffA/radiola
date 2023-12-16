@@ -80,7 +80,7 @@ struct MainWindow: View {
                 }
                 .navigationTitle("")
                 .toolbar {
-                    ToolbarPlayItem(station: LocalStation(title: "Radio Caroline 259 Gold [ Happy Rock &amp; Album Station ]", url: "http://www.rcgoldserver.eu:8253"), windowGeometry: geometry)
+                    ToolbarPlayItem(windowGeometry: geometry)
                     ToolbarVolumeItem()
                 } // toolbar
             }

@@ -10,12 +10,19 @@ import AVFoundation
 import Cocoa
 import Foundation
 
-var player = Player()
+class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate, ObservableObject {
+    static let shared = Player()
 
-class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
-    var station: Station?
-    public var title = String()
-    public var stationName: String { station?.title ?? "" }
+    @Published var station: Station?
+    @Published var songTitle = String()
+    @Published var status = Status.paused
+    @Published var volume: Float = 0.5 {
+        didSet {
+            player.volume = volume
+            config.volumeLevel = volume
+            NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
+        }
+    }
 
     public enum Status {
         case paused
@@ -29,7 +36,6 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         var date: Date = Date()
     }
 
-    public var status = Status.paused
     public var history: [HistoryRecord] = []
 
     private var playerItemContext = 0
@@ -38,22 +44,6 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private var asset: AVAsset!
     private var timer: Timer?
     private let connectDelay = 15.0
-
-    /* ****************************************
-     *
-     * ****************************************/
-    var volume: Float {
-        get { player.volume }
-        set {
-            let vol = max(0, min(1, newValue))
-
-            if player.volume != vol {
-                player.volume = vol
-                config.volumeLevel = newValue
-                NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
-            }
-        }
-    }
 
     /* ****************************************
      *
@@ -207,7 +197,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         switch status {
             case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
                 self.status = .connecting
-                title = ""
+                songTitle = ""
                 NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": ""])
 
             case AVPlayer.TimeControlStatus.playing:
@@ -215,7 +205,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
             default:
                 self.status = .paused
-                title = ""
+                songTitle = ""
                 NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": ""])
         }
 
@@ -233,13 +223,13 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             return
         }
 
-        title = "\(value)"
+        songTitle = "\(value)"
         addHistory()
 
         NotificationCenter.default.post(
             name: Notification.Name.PlayerMetadataChanged,
             object: nil,
-            userInfo: ["title": title])
+            userInfo: ["title": songTitle])
     }
 
     /* ****************************************
@@ -248,11 +238,11 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private func addHistory() {
         guard let station = station else { return }
 
-        if history.last?.song == title && history.last?.station == station.title {
+        if history.last?.song == songTitle && history.last?.station == station.title {
             return
         }
 
-        history.append(HistoryRecord(song: title, station: station.title, date: Date()))
+        history.append(HistoryRecord(song: songTitle, station: station.title, date: Date()))
         if history.count > 100 {
             history.removeFirst(history.count - 100)
         }
