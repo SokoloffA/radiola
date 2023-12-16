@@ -73,21 +73,13 @@ struct ToolbarPlayItem: ToolbarContent {
 // MARK: - ToolbarVolumeItem
 
 struct ToolbarVolumeItem: ToolbarContent {
-    @State private var volumeLevel: Float = 0.5
+    @StateObject private var player = Player.shared
+    @State private var sliderHovered = false
 
     var body: some ToolbarContent {
         ToolbarItem(placement: .primaryAction) {
-            HStack {
-                Button { print("X") } label: { Image(systemName: "speaker.slash.fill") }.padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 4))
-                Button { print("-") } label: { Image(systemName: "speaker.fill") }
-                Slider(value: $volumeLevel).frame(width: 96).offset(y: 0)
-                Button { print("+") } label: { Image(systemName: "speaker.wave.3.fill") }
-            }
-            .buttonStyle(.borderless)
+            VolumeView(showMuteButton: true)
+                .frame(width: 170)
         }
     } // body
-
-    /* ****************************************
-     *
-     * ****************************************/
 }

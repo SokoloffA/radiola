@@ -11,6 +11,12 @@ import Foundation
 
 typealias Bitrate = Int
 
+extension Comparable {
+    func clamped(to range: ClosedRange<Self>) -> Self {
+        return min(max(self, range.lowerBound), range.upperBound)
+    }
+}
+
 // MARK: - Mouse
 
 enum MouseButton: Int, CaseIterable {
@@ -97,13 +103,12 @@ extension Error {
     }
 }
 
-
 /* ****************************************
  *
  * ****************************************/
 func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") {
     print("DBG: \(Date()) ", terminator: "")
-    print( items, separator: separator, terminator: terminator)
+    print(items, separator: separator, terminator: terminator)
 }
 
 /* ****************************************
@@ -111,5 +116,5 @@ func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") 
  * ****************************************/
 func warning(_ items: Any..., separator: String = " ", terminator: String = "\n") {
     print("WARN: \(Date()) ", terminator: "")
-    print( items, separator: separator, terminator: terminator)
+    print(items, separator: separator, terminator: terminator)
 }

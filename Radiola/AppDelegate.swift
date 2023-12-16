@@ -61,25 +61,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         statusBar = StatusBarController()
 
-//        playMenuItem.target = player
-//        playMenuItem.action = #selector(Player.play)
-//
-//        pauseMenuItem.target = player
-//        pauseMenuItem.action = #selector(Player.stop)
-//
 //        checkForUpdatesMenuItem.target = updater
 //        checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
 
         if config.playLastStation {
             Player.shared.play()
         }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
     }
 
     /* ****************************************

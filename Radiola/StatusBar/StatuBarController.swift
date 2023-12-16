@@ -8,7 +8,7 @@
 import Cocoa
 import SwiftUI
 
-fileprivate let playItemWidth = 350.0
+fileprivate let playItemWidth = 300.0
 fileprivate let playItemHeght = 50.0
 fileprivate let volumeItemHeght = 40.0
 
@@ -98,7 +98,7 @@ fileprivate class VolumeItem: NSMenuItem {
     init() {
         super.init(title: "", action: nil, keyEquivalent: "")
 
-        view = NSHostingView(rootView: RootView(menuItem: self))
+        view = NSHostingView(rootView: VolumeView(showMuteButton: false).padding())
         view?.frame.size = NSSize(width: playItemWidth, height: volumeItemHeght)
         isEnabled = true
     }
@@ -109,18 +109,6 @@ fileprivate class VolumeItem: NSMenuItem {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    struct RootView: View {
-        @StateObject var player = Player.shared
-        weak var menuItem: NSMenuItem?
-
-        var body: some View {
-            Text("VOLUME")
-        }
-    } // RootView
 }
 
 // MARK: - StatusBarController

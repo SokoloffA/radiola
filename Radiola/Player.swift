@@ -16,10 +16,22 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate, ObservableObject
     @Published var station: Station?
     @Published var songTitle = String()
     @Published var status = Status.paused
-    @Published var volume: Float = 0.5 {
+    @Published var volume: Float = config.volumeLevel {
         didSet {
+            let val = volume.clamped(to: 0 ... 1)
+            if volume != val {
+                volume = volume.clamped(to: 0 ... 1)
+            }
             player.volume = volume
             config.volumeLevel = volume
+            NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
+        }
+    }
+
+    @Published var isMuted: Bool = false {
+        didSet {
+            player.isMuted = isMuted
+            config.volumeIsMuted = isMuted
             NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
         }
     }
@@ -44,20 +56,6 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate, ObservableObject
     private var asset: AVAsset!
     private var timer: Timer?
     private let connectDelay = 15.0
-
-    /* ****************************************
-     *
-     * ****************************************/
-    var isMuted: Bool {
-        get { player.isMuted }
-        set {
-            if player.isMuted != newValue {
-                player.isMuted = newValue
-                config.volumeIsMuted = newValue
-                NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
-            }
-        }
-    }
 
     /* ****************************************
      *
@@ -280,5 +278,19 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate, ObservableObject
      * ****************************************/
     @objc public func toggleMute() {
         isMuted = !isMuted
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func incVolume() {
+        volume += 0.05
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func decVolume() {
+        volume -= 0.05
     }
 }
