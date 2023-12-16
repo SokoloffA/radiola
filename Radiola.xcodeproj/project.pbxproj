@@ -33,6 +33,7 @@
 		394F8A57287394F1005EA7FA /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A56287394F1005EA7FA /* Notifications.swift */; };
 		394F8A59287394FD005EA7FA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A58287394FD005EA7FA /* Player.swift */; };
 		396704692943AD2700012FFD /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396704682943AD2700012FFD /* AudioDevice.swift */; };
+		39B4A0012B2DA6C00035F2F7 /* InternetStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B4A0002B2DA6C00035F2F7 /* InternetStations.swift */; };
 		39D79E632933BEAB00210D94 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D79E622933BEAB00210D94 /* Config.swift */; };
 		39E70DE62AD9E1CA00BF3059 /* RadioBrowserServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */; };
 		39E8DFD5288F316A00082467 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 39E8DFD4288F316A00082467 /* Sparkle */; };
@@ -70,6 +71,7 @@
 		394F8A58287394FD005EA7FA /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		394F8A6C2873A2FE005EA7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		396704682943AD2700012FFD /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
+		39B4A0002B2DA6C00035F2F7 /* InternetStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetStations.swift; sourceTree = "<group>"; };
 		39D79E622933BEAB00210D94 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioBrowserServer.swift; sourceTree = "<group>"; };
 		39E8DFD62890839500082467 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			children = (
 				394A273B2B1CE19B008DBFB1 /* Stations.swift */,
 				39008DD52B25E8BD0019583D /* LocalStations.swift */,
+				39B4A0002B2DA6C00035F2F7 /* InternetStations.swift */,
 				394A27392B1CE197008DBFB1 /* RadioBrowserProvider.swift */,
 			);
 			path = Stations;
@@ -269,6 +272,7 @@
 				394A27452B1CE304008DBFB1 /* SidebarView.swift in Sources */,
 				394A273A2B1CE197008DBFB1 /* RadioBrowserProvider.swift in Sources */,
 				394F8A3F28739339005EA7FA /* Radiola.xcdatamodeld in Sources */,
+				39B4A0012B2DA6C00035F2F7 /* InternetStations.swift in Sources */,
 				394A27332B1CE131008DBFB1 /* AppState.swift in Sources */,
 				394A27432B1CE2FF008DBFB1 /* RowViews.swift in Sources */,
 				394F8A59287394FD005EA7FA /* Player.swift in Sources */,

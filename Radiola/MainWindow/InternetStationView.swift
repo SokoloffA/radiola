@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct InternetStationsView: View {
-    @ObservedObject var provider: InternetStationProvider
+    @ObservedObject var list: InternetStationList
     @State private var selectedStationId: UUID?
     @EnvironmentObject var appState: AppState
 
@@ -18,16 +18,16 @@ struct InternetStationsView: View {
      * ****************************************/
     var body: some View {
         VStack(spacing: 0) {
-            InternetStationsSearchView(provider: provider, action: fetch)
+            InternetStationsSearchView(provider: list.provider, action: fetch)
             Divider()
 
             List(selection: $selectedStationId) {
-                ForEach(provider.stations) { station in
+                ForEach(list.stations) { station in
                     InternetStationRow(station: station)
                 }
             }
             .listStyle(.plain)
-            .overlay { LoadingIndicator(provider.isLoading) }
+            .overlay { LoadingIndicator(list.isLoading) }
 
             Text("")
                 .frame(height: 36)
@@ -39,7 +39,7 @@ struct InternetStationsView: View {
      * ****************************************/
     private func fetch() {
         Task {
-            await provider.fetch()
+            await list.fetch()
         }
     }
 }
@@ -47,7 +47,7 @@ struct InternetStationsView: View {
 // MARK: - InternetStationsSearchView
 
 struct InternetStationsSearchView: View {
-    @ObservedObject var provider: InternetStationProvider
+    @ObservedObject var provider: RadioBrowserProvider
     var action: () -> Void
 
     /* ****************************************
@@ -96,7 +96,7 @@ struct InternetStationsSearchView: View {
     /* ****************************************
      *
      * ****************************************/
-    private func orderToString(_ order: InternetStationProvider.Order) -> String {
+    private func orderToString(_ order: RadioBrowserProvider.Order) -> String {
         switch order {
             case .byName: return "sort by name"
             case .byVotes: return "sort by votes"

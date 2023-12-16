@@ -9,53 +9,75 @@ import Foundation
 
 // MARK: - RadioBrowserProvider
 
-class RadioBrowserProvider: InternetStationProvider {
+class RadioBrowserProvider: ObservableObject {
+    // search options
+    let searchType: SearchType
+    @Published var searchText: String = ""
+    @Published var isExactMatch: Bool = false
+    @Published var order: Order = .byName
+
+    enum SearchType: String {
+        case byTag
+        case byName
+        case byCountry
+    }
+
+    enum Order: Int {
+        case byName
+        case byVotes
+        case byCountry
+        case byBitrate
+    }
+
     /* ****************************************
      *
      * ****************************************/
-    @MainActor override func fetch() async {
-        isLoading = true
-        defer { isLoading = false }
+    init(_ searchType: SearchType) {
+        self.searchType = searchType
+    }
 
-        if searchText.isEmpty { return }
+    /* ****************************************
+     *
+     * ****************************************/
+    func canFetch() -> Bool {
+        return !searchText.isEmpty
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func fetch() async throws -> [InternetStation] {
+        if !canFetch() { return [] }
+
         let type = requestType()
+        let server = try await RadioBrowser.getFastestServer()
 
-        do {
-            let server = try await RadioBrowser.getFastestServer()
-
-            var reverse = false
-            let order = requestOrderType()
-            switch order {
-                case .bitrate: reverse = true
-                case .votes: reverse = true
-                default: reverse = false
-            }
-
-            let resp = try await server.listStations(by: type, searchTerm: searchText, order: order, reverse: reverse, limit: 1000)
-            var res = [InternetStation]()
-
-            for r in resp {
-                let title = r.name.trimmingCharacters(in: .whitespacesAndNewlines)
-                if title == "" {
-                    break
-                }
-
-                var s = InternetStation(title: title, url: r.url)
-                s.codec = r.codec
-                s.bitrate = r.bitrate * 1024
-                s.votes = r.votes
-                s.countryCode = r.countryCode
-                res.append(s)
-            }
-
-            stations = res
-
-        } catch {
-            await MainActor.run {
-                warning(error)
-                Alarm.show(title: "Couldn't download the stations from radio-browser.info", message: "\(error.localizedDescription)")
-            }
+        var reverse = false
+        let order = requestOrderType()
+        switch order {
+            case .bitrate: reverse = true
+            case .votes: reverse = true
+            default: reverse = false
         }
+
+        let resp = try await server.listStations(by: type, searchTerm: searchText, order: order, reverse: reverse, limit: 1000)
+        var res = [InternetStation]()
+
+        for r in resp {
+            let title = r.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            if title == "" {
+                break
+            }
+
+            var s = InternetStation(title: title, url: r.url)
+            s.codec = r.codec
+            s.bitrate = r.bitrate * 1024
+            s.votes = r.votes
+            s.countryCode = r.countryCode
+            res.append(s)
+        }
+
+        return res
     }
 
     /* ****************************************

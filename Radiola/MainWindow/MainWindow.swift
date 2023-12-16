@@ -74,8 +74,8 @@ struct MainWindow: View {
                 VStack(spacing: 0) {
                     if let list = appState.localStations.first(where: { $0.id == selectedProviderId }) {
                         LocalStationsView(list: list)
-                    } else if let provider = appState.internetStations.first(where: { $0.id == selectedProviderId }) {
-                        InternetStationsView(provider: provider)
+                    } else if let list = appState.internetStations.first(where: { $0.id == selectedProviderId }) {
+                        InternetStationsView(list: list)
                     }
                 }
                 .navigationTitle("")

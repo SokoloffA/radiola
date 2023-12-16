@@ -39,10 +39,10 @@ class AppState: ObservableObject {
         LocalStationList(title: "My stations", icon: "music.house", help: nil),
     ]
 
-    @Published var internetStations: [InternetStationProvider] = [
-        RadioBrowserProvider(type: .byTag, title: "By tag", icon: "globe", help: nil),
-        RadioBrowserProvider(type: .byName, title: "By name", icon: "globe", help: nil),
-        RadioBrowserProvider(type: .byCountry, title: "By country", icon: "globe", help: nil),
+    @Published var internetStations: [InternetStationList] = [
+        InternetStationList(title: "By tag", icon: "globe", help: nil, provider: RadioBrowserProvider(.byTag)),
+        InternetStationList(title: "By name", icon: "globe", help: nil, provider: RadioBrowserProvider(.byName)),
+        InternetStationList(title: "By country", icon: "globe", help: nil, provider: RadioBrowserProvider(.byCountry)),
     ]
 
     /* ****************************************
