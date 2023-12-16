@@ -27,8 +27,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let audioSytstem = AudioSytstem()
     private let mediaKeys = MediaKeysController()
 
-//    @IBOutlet var pauseMenuItem: NSMenuItem!
-//    @IBOutlet var playMenuItem: NSMenuItem!
 //    @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!
 
     private var statusBar: StatusBarController!
@@ -41,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(processError),
-                                               name: Notification.Name.ErrorOccurred,
+                                               name: Alarm.notificationName,
                                                object: nil)
 
         let dirName = URL(
@@ -123,15 +121,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc private func processError(_ notification: Notification) {
-//        guard let alarm = notification.object as? Alarm else { return }
-//
-//        DispatchQueue.main.async {
-//            guard let button = self.statusBar.menuItem.button else { return }
-//
-//            let dialog = AlarmPopover()
-//            dialog.messageText = alarm.title
-//            dialog.informativeText = alarm.message ?? ""
-//            dialog.show(of: button)
-//        }
+        guard let alarm = notification.object as? Alarm else { return }
+
+        DispatchQueue.main.async {
+            guard let button = self.statusBar.menuItem.button else { return }
+
+            let dialog = AlarmPopover()
+            dialog.messageText = alarm.title
+            dialog.informativeText = alarm.message
+            dialog.show(of: button)
+        }
     }
 }

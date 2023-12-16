@@ -31,7 +31,6 @@ struct MainWindow: View {
      * ****************************************/
     static func show() {
         if instance == nil {
-            print("CREATE")
             let rootView = MainWindow()
                 .environmentObject(AppState.shared)
 

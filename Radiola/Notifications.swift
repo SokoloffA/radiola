@@ -19,7 +19,5 @@ extension Notification.Name {
     static let SettingsChanged = Notification.Name("SettingsChanged")
     static let AudioDeviceChanged = Notification.Name("AudioDeviceChanged")
 
-    static let ErrorOccurred = Notification.Name("ErrorOccurred")
-
     static let StationsStateChanged = Notification.Name("StationsStateChanged")
 }
