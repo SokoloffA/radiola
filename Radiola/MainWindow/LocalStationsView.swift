@@ -29,9 +29,22 @@ struct LocalStationsView: View {
                         GroupRow(list: list, group: group)
                 }
             }
+            .modifier(PlayOnDoubleClick(handler: doubleClicked))
         }
         .listStyle(.plain)
     } // body
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func doubleClicked() {
+        guard
+            let selectedItemId = selectedItemId,
+            let station = list.first(byID: selectedItemId)
+        else { return }
+
+        MainWindow.switchStation(station: station)
+    }
 }
 
 // MARK: - StationRow
@@ -59,7 +72,6 @@ fileprivate struct StationRow: View {
                     .font(.caption)
             }
         }
-        .contentShape(Rectangle())
         .padding(EdgeInsets(top: 0, leading: 2, bottom: 1, trailing: 8))
         .focused($isFocused)
         .onChange(of: isFocused, perform: onTextFocusChanged)

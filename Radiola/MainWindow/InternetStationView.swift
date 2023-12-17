@@ -27,6 +27,7 @@ struct InternetStationsView: View {
                 }
             }
             .listStyle(.plain)
+            .modifier(PlayOnDoubleClick(handler: doubleClicked))
             .overlay { LoadingIndicator(list.isLoading) }
 
             Text("")
@@ -41,6 +42,18 @@ struct InternetStationsView: View {
         Task {
             await list.fetch()
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func doubleClicked() {
+        guard
+            let selectedStationId = selectedStationId,
+            let station = list.first(byID: selectedStationId)
+        else { return }
+
+        MainWindow.switchStation(station: station)
     }
 }
 

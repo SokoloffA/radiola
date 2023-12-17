@@ -14,16 +14,14 @@ fileprivate class WindowController: NSWindowController, NSWindowDelegate {
      *
      * ****************************************/
     func windowWillClose(_ notification: Notification) {
-        print("CLOSE")
         MainWindow.instance = nil
         NSApp.setActivationPolicy(.accessory)
-        // StationsWindow.instance = nil
     }
 }
 
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
-    @State private var selectedProviderId: UUID?
+    @State private var selectedListId: UUID?
     fileprivate static var instance: NSWindowController?
 
     /* ****************************************
@@ -67,13 +65,14 @@ struct MainWindow: View {
      * ****************************************/
     var body: some View {
         NavigationView {
-            SidebarView(selectedProviderId: $selectedProviderId)
+            SidebarView(selectedListId: $selectedListId)
 
             GeometryReader { geometry in
                 VStack(spacing: 0) {
-                    if let list = appState.localStations.first(where: { $0.id == selectedProviderId }) {
+                    if let list = appState.localStations.first(where: { $0.id == selectedListId }) {
                         LocalStationsView(list: list)
-                    } else if let list = appState.internetStations.first(where: { $0.id == selectedProviderId }) {
+
+                    } else if let list = appState.internetStations.first(where: { $0.id == selectedListId }) {
                         InternetStationsView(list: list)
                     }
                 }
@@ -95,7 +94,20 @@ struct MainWindow: View {
         )
 
         .onAppear {
-            selectedProviderId = appState.localStations[0].id
+            selectedListId = appState.localStations[0].id
         }
     } // body
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func switchStation(station: Station) {
+        let player = Player.shared
+        if player.station?.id == station.id && player.isPlaying {
+            return
+        }
+
+        player.station = station
+        player.play()
+    }
 }

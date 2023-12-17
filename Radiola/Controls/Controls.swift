@@ -153,3 +153,24 @@ class AlarmPopover {
         } // body
     } // RootView
 }
+
+struct PlayOnDoubleClick: ViewModifier {
+    var handler: () -> Void
+    @State private var eventMonitor: Any?
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func body(content: Content) -> some View {
+        content
+            .onAppear {
+                eventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown]) { event in
+                    if event.clickCount == 2 { handler() }
+                    return event
+                }
+            }
+            .onDisappear {
+                NSEvent.removeMonitor(eventMonitor)
+            }
+    } // body
+}

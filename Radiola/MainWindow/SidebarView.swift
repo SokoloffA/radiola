@@ -10,14 +10,14 @@ import SwiftUI
 struct SidebarView: View {
     static let minWidth: CGFloat = 200
 
-    @Binding var selectedProviderId: UUID?
+    @Binding var selectedListId: UUID?
     @EnvironmentObject var appState: AppState
 
     /* ****************************************
      *
      * ****************************************/
     var body: some View {
-        List(selection: $selectedProviderId) {
+        List(selection: $selectedListId) {
             Section("My lists") {
                 ForEach(appState.localStations, id: \.self.id) { list in
                     Label(list.title, systemImage: list.icon).help(list.help ?? "")

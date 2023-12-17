@@ -32,4 +32,11 @@ extension StationList {
     func first(byUrl: String) -> Station? {
         return first { $0.url == byUrl }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func first(byID: UUID) -> Station? {
+        return first { $0.id == byID }
+    }
 }
