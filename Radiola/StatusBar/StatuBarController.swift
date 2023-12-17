@@ -130,25 +130,25 @@ class StatusBarController: NSObject {
         icon.playerStatus = Player.shared.status
         icon.muted = player.isMuted
 
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(playerStatusChanged),
-//                                               name: Notification.Name.PlayerStatusChanged,
-//                                               object: nil)
-//
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(updateTooltip),
-//                                               name: Notification.Name.PlayerMetadataChanged,
-//                                               object: nil)
-//
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(playerVolumeChanged),
-//                                               name: Notification.Name.PlayerVolumeChanged,
-//                                               object: nil)
-//
-//        NotificationCenter.default.addObserver(self,
-//                                               selector: #selector(updateTooltip),
-//                                               name: Notification.Name.SettingsChanged,
-//                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerStatusChanged),
+                                               name: Notification.Name.PlayerStatusChanged,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateTooltip),
+                                               name: Notification.Name.PlayerMetadataChanged,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(playerVolumeChanged),
+                                               name: Notification.Name.PlayerVolumeChanged,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateTooltip),
+                                               name: Notification.Name.SettingsChanged,
+                                               object: nil)
 
         NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown], handler: mouseDown)
         NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp], handler: mouseUp)
@@ -459,15 +459,8 @@ class StatusBarController: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    @objc func stationClicked(_ sender: NSMenuItem) {
-//        guard let station = stationsStore.station(byId: sender.tag) else { return }
-//
-//        if player.station?.id == station.id && player.isPlaying {
-//            player.stop()
-//            return
-//        }
-//
-//        player.station = station
-//        player.play()
+    @objc private func stationClicked(_ sender: NSMenuItem) {
+        guard let station = sender.representedObject as? Station else { return }
+        player.switchStation(station: station)
     }
 }

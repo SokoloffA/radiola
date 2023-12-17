@@ -53,7 +53,7 @@ struct InternetStationsView: View {
             let station = list.first(byID: selectedStationId)
         else { return }
 
-        MainWindow.switchStation(station: station)
+        Player.shared.switchStation(station: station)
     }
 }
 

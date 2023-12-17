@@ -43,7 +43,7 @@ struct LocalStationsView: View {
             let station = list.first(byID: selectedItemId)
         else { return }
 
-        MainWindow.switchStation(station: station)
+        Player.shared.switchStation(station: station)
     }
 }
 

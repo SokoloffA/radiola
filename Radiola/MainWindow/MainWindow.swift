@@ -98,16 +98,4 @@ struct MainWindow: View {
         }
     } // body
 
-    /* ****************************************
-     *
-     * ****************************************/
-    static func switchStation(station: Station) {
-        let player = Player.shared
-        if player.station?.id == station.id && player.isPlaying {
-            return
-        }
-
-        player.station = station
-        player.play()
-    }
 }

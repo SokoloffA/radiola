@@ -156,6 +156,18 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate, ObservableObject
     /* ****************************************
      *
      * ****************************************/
+    func switchStation(station: Station) {
+        if self.station?.id == station.id && isPlaying {
+            return
+        }
+
+        self.station = station
+        self.play()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     var isPlaying: Bool {
         return status != Status.paused
     }
