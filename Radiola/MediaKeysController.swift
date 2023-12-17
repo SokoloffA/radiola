@@ -131,7 +131,7 @@ class MediaKeysController: NSObject {
         if favorites.count <= 1 { return }
 
         var newIndex = 0
-        if let curIndex = favorites.firstIndex(where: { $0.url == curStation.url }) {
+        if let curIndex = favorites.firstIndex(where: { $0.id == curStation.id }) {
             newIndex = (curIndex + offset) % favorites.count
             if newIndex < 0 {
                 newIndex += favorites.count

@@ -28,7 +28,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate, ObservableObject
         }
     }
 
-    @Published var isMuted: Bool = false {
+    @Published var isMuted: Bool = config.volumeIsMuted {
         didSet {
             player.isMuted = isMuted
             config.volumeIsMuted = isMuted
@@ -77,8 +77,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate, ObservableObject
         super.init()
 
         player = AVPlayer()
-        player.volume = config.volumeLevel
-        player.isMuted = config.volumeIsMuted
+        player.volume = volume
+        player.isMuted = isMuted
         player.audioOutputDeviceUniqueID = config.audioDevice
 
         player.addObserver(self,
@@ -162,7 +162,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate, ObservableObject
         }
 
         self.station = station
-        self.play()
+        play()
     }
 
     /* ****************************************

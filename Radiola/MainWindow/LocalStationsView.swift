@@ -53,6 +53,7 @@ fileprivate struct StationRow: View {
     @ObservedObject var list: LocalStationList
     @ObservedObject var station: LocalStation
     @FocusState private var isFocused: Bool
+    @ObservedObject private var player = Player.shared
 
     /* ****************************************
      *
@@ -72,10 +73,19 @@ fileprivate struct StationRow: View {
                     .font(.caption)
             }
         }
-        .padding(EdgeInsets(top: 0, leading: 2, bottom: 1, trailing: 8))
+        .padding(EdgeInsets(top: 0, leading: 8, bottom: 1, trailing: 8))
         .focused($isFocused)
         .onChange(of: isFocused, perform: onTextFocusChanged)
         .onChange(of: station.isFavorite, perform: { _ in boolValueChanged() })
+        .overlay(alignment: .leading) {
+            if player.station?.id == station.id {
+                Image(systemName: "waveform.path")
+                    .resizable()
+                    .frame(width: 18, height: 18)
+                    .foregroundColor(.accentColor)
+                    .offset(x: -18)
+            }
+        }
     } // body
 
     /* ****************************************
