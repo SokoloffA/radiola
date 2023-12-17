@@ -180,10 +180,9 @@ struct InternetStationRow: View {
         .padding(EdgeInsets(top: 0, leading: 24, bottom: 1, trailing: 8))
         .overlay(alignment: .leading) {
             if player.station?.id == station.id {
-                Image(systemName: "waveform.path")
-                    .resizable()
-                    .frame(width: 18, height: 18)
+                Image(systemName: "circle.inset.filled")
                     .foregroundColor(.accentColor)
+                    .opacity(0.8)
             }
         }
     } // body

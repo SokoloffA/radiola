@@ -77,13 +77,13 @@ fileprivate struct StationRow: View {
         .focused($isFocused)
         .onChange(of: isFocused, perform: onTextFocusChanged)
         .onChange(of: station.isFavorite, perform: { _ in boolValueChanged() })
+
         .overlay(alignment: .leading) {
             if player.station?.id == station.id {
-                Image(systemName: "waveform.path")
-                    .resizable()
-                    .frame(width: 18, height: 18)
+                Image(systemName: "circle.inset.filled")
                     .foregroundColor(.accentColor)
-                    .offset(x: -18)
+                    .opacity(0.8)
+                    .offset(x: -18, y: 0)
             }
         }
     } // body
