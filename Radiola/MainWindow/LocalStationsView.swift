@@ -13,12 +13,13 @@ struct LocalStationsView: View {
     @ObservedObject var list: LocalStationList
     @State private var selectedItemId: UUID?
     @EnvironmentObject var appState: AppState
+    @State var isEditMode = false
 
     /* ****************************************
      *
      * ****************************************/
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             List(list.items, children: \.items, selection: $selectedItemId) { item in
 
                 Group {
@@ -31,9 +32,11 @@ struct LocalStationsView: View {
                     }
                 }
             }
+            .modifier(PlayOnDoubleClick(handler: doubleClicked))
+            .listStyle(.inset)
+
+            EditStationsToolbar(isEditMode: $isEditMode)
         }
-        .listStyle(.inset)
-        .modifier(PlayOnDoubleClick(handler: doubleClicked))
     } // body
 
     /* ****************************************
@@ -92,5 +95,59 @@ fileprivate struct GroupRow: View {
             Spacer()
         }
         .padding(EdgeInsets(top: 7, leading: 2, bottom: 7, trailing: 2))
+    }
+}
+
+// MARK: - EditStationsToolbar
+
+fileprivate struct EditStationsToolbar: View {
+    @Binding var isEditMode: Bool
+
+    var body: some View {
+        HStack(alignment: .center) {
+            Group {
+                if isEditMode {
+                    Button("Edit stations", systemImage: "pencil.circle.fill", action: {
+                        isEditMode.toggle()
+                    })
+
+                    Divider().frame(height: 20)
+
+                    Button("Add station", systemImage: "plus.circle", action: addStation)
+
+                    Button("Add group", systemImage: "plus.circle", action: addGroup)
+
+                    Button("Remove station", systemImage: "minus.circle", action: delStation)
+
+                } else {
+                    Button("Edit stations", systemImage: "pencil.circle", action: {
+                        isEditMode = true
+                    })
+                }
+            }
+            .buttonStyle(.borderless)
+
+            Spacer()
+        }
+        .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 8))
+        .frame(maxHeight: 36)
+    } // body
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func addStation() {
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func addGroup() {
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func delStation() {
     }
 }
