@@ -105,4 +105,28 @@ class AppState: ObservableObject {
 
         return nil
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func station(byID: UUID?) -> Station? {
+        guard let byID = byID else { return nil }
+
+        var res: Station?
+        for sl in localStations {
+            res = sl.first(byID: byID)
+            if res != nil {
+                return res
+            }
+        }
+
+        for sl in internetStations {
+            res = sl.first(byID: byID)
+            if res != nil {
+                return res
+            }
+        }
+
+        return nil
+    }
 }
