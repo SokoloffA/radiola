@@ -26,7 +26,7 @@ struct InternetStationsView: View {
                     InternetStationRow(station: station)
                 }
             }
-            .listStyle(.plain)
+            .listStyle(.inset)
             .modifier(PlayOnDoubleClick(handler: doubleClicked))
             .overlay { LoadingIndicator(list.isLoading) }
 
@@ -48,12 +48,9 @@ struct InternetStationsView: View {
      *
      * ****************************************/
     private func doubleClicked() {
-        guard
-            let selectedStationId = selectedStationId,
-            let station = list.first(byID: selectedStationId)
-        else { return }
-
-        Player.shared.switchStation(station: station)
+        if let station = appState.station(byID: selectedStationId) {
+            Player.shared.switchStation(station: station)
+        }
     }
 }
 
@@ -176,14 +173,6 @@ struct InternetStationRow: View {
                 Text(qualityInfo()).foregroundColor(.secondary)
 
             }.padding(EdgeInsets(top: 0, leading: 2, bottom: 1, trailing: 8))
-        }
-        .padding(EdgeInsets(top: 0, leading: 24, bottom: 1, trailing: 8))
-        .overlay(alignment: .leading) {
-            if player.station?.id == station.id {
-                Image(systemName: "circle.inset.filled")
-                    .foregroundColor(.accentColor)
-                    .opacity(0.8)
-            }
         }
     } // body
 
