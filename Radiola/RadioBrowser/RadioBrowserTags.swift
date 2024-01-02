@@ -7,9 +7,8 @@
 
 import Cocoa
 
-/* ************************************************
- * RadioBrowser.Tag
- * ************************************************/
+// MARK: - RadioBrowser.Tag
+
 extension RadioBrowser {
     public struct Tag: Decodable {
         var name: String
@@ -43,7 +42,7 @@ extension RadioBrowser.Server {
     /// - Parameter reverse: Reverse the result list if set to true
     /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
     /// - Parameter limit: Number of returned datarows (stations) starting with offset
-    public func listTags(searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Tags.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Tag] {
+    public func listTags(searchTerm: String, hideBroken: Bool = true, order: RadioBrowser.Tags.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100_000) async throws -> [RadioBrowser.Tag] {
         var queryItems = [URLQueryItem]()
 
         if order != .name {
@@ -58,7 +57,7 @@ extension RadioBrowser.Server {
             queryItems.append(URLQueryItem(name: "offset", value: "\(offset)"))
         }
 
-        if limit != 100000 {
+        if limit != 100_000 {
             queryItems.append(URLQueryItem(name: "limit", value: "\(limit)"))
         }
 
@@ -80,7 +79,7 @@ extension RadioBrowser.Server {
     /// - Parameter reverse: Reverse the result list if set to true
     /// - Parameter offset: Starting value of the result list from the database. For example, if you want to do paging on the server side.
     /// - Parameter limit: Number of returned datarows (stations) starting with offset
-    public func listTags(hideBroken: Bool = true, order: RadioBrowser.Tags.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100000) async throws -> [RadioBrowser.Tag] {
+    public func listTags(hideBroken: Bool = true, order: RadioBrowser.Tags.Order = .name, reverse: Bool = false, offset: Int = 0, limit: Int = 100_000) async throws -> [RadioBrowser.Tag] {
         return try await listTags(searchTerm: "", hideBroken: hideBroken, order: order, reverse: reverse, offset: offset, limit: limit)
     }
 }

@@ -5,6 +5,10 @@
 //  Created by Alex Sokolov on 11.05.2023.
 //
 
+import Foundation
+
+// MARK: - Simple types
+
 enum MouseButton: Int, CaseIterable {
     case left = 0
     case right = 1
@@ -51,3 +55,19 @@ enum MediaPrevNextKeyAction: Int {
 }
 
 typealias Bitrate = Int
+
+/* ****************************************
+ *
+ * ****************************************/
+func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    print("DBG: \(Date()) ", terminator: "")
+    print(items, separator: separator, terminator: terminator)
+}
+
+/* ****************************************
+ *
+ * ****************************************/
+func warning(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    print("WARN: \(Date()) ", terminator: "")
+    print(items, separator: separator, terminator: terminator)
+}

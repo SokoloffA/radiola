@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -52,6 +52,8 @@
 		3987B9A82A9F81570077EB03 /* ToolbarVolumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */; };
 		3987B9AB2A9F8A190077EB03 /* ToolbarPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */; };
 		3987B9AC2A9F8A190077EB03 /* ToolbarPlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */; };
+		39B2E7122B434BA0003A2762 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B2E7112B434BA0003A2762 /* AppState.swift */; };
+		39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */; };
 		39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44A9290D42D8008E5A30 /* GroupRowView.xib */; };
 		39BF44AD290D4367008E5A30 /* GroupRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44AC290D4367008E5A30 /* GroupRowView.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
@@ -124,6 +126,8 @@
 		3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolbarVolumeView.xib; sourceTree = "<group>"; };
 		3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPlayView.swift; sourceTree = "<group>"; };
 		3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolbarPlayView.xib; sourceTree = "<group>"; };
+		39B2E7112B434BA0003A2762 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppState.swift; path = Radiola/AppState.swift; sourceTree = SOURCE_ROOT; };
+		39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioBrowserStatus.swift; sourceTree = "<group>"; };
 		39BF44A9290D42D8008E5A30 /* GroupRowView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GroupRowView.xib; sourceTree = "<group>"; };
 		39BF44AC290D4367008E5A30 /* GroupRowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupRowView.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
@@ -174,6 +178,7 @@
 		394ABCA52A9BBD1800E2B6E9 /* RadioBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */,
 				394ABCA82A9CA1F800E2B6E9 /* RadioBrowser.swift */,
 				39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */,
 				394ABCAA2A9CA25500E2B6E9 /* RadioBrowserStations.swift */,
@@ -189,6 +194,7 @@
 				394ABCAF2AA35A0000E2B6E9 /* StationsList.swift */,
 				39FBD7A82AA8E96A007B678E /* LocalStaionList.swift */,
 				39FBD7AA2AA8EB65007B678E /* RadioBrowserProvider.swift */,
+				39B2E7112B434BA0003A2762 /* AppState.swift */,
 			);
 			path = Stations;
 			sourceTree = "<group>";
@@ -430,6 +436,7 @@
 				394ABCAB2A9CA25500E2B6E9 /* RadioBrowserStations.swift in Sources */,
 				392024B32A519FF900670ABD /* AppearancePage.swift in Sources */,
 				390C7294287B213200E17BAE /* Controls.swift in Sources */,
+				39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */,
 				39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */,
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
 				394ABCB02AA35A0000E2B6E9 /* StationsList.swift in Sources */,
@@ -460,6 +467,7 @@
 				39F08E462A0CC582006B65D0 /* Types.swift in Sources */,
 				39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */,
 				392024AF2A51953600670ABD /* ControlsPage.swift in Sources */,
+				39B2E7122B434BA0003A2762 /* AppState.swift in Sources */,
 				394ABCA92A9CA1F800E2B6E9 /* RadioBrowser.swift in Sources */,
 				39FBD7A92AA8E96A007B678E /* LocalStaionList.swift in Sources */,
 				39D79E632933BEAB00210D94 /* Settings.swift in Sources */,

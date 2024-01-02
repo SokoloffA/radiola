@@ -21,15 +21,15 @@ extension RadioBrowser {
             url.path = path
             url.queryItems = queryItems
 
-            print(url)
             guard let url = url.url else {
-                throw RadioBrowser.Error.invalidURL
+                throw RadioBrowser.Error("Invalid URL \(url)")
             }
 
             let (data, _) = try await URLSession.shared.data(from: url)
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.iso8601
 
+            debug("Fetch \(url.absoluteString)")
             return try decoder.decode(type, from: data)
         }
     }
@@ -40,28 +40,37 @@ extension RadioBrowser {
     /// Do a DNS-lookup of 'all.api.radio-browser.info'. This gives you a list of all available servers.
     public static func getAllServers() throws -> [Server] {
         let dnsName = "all.api.radio-browser.info"
+        var urls = Set<URL>()
 
-        var res: [Server] = []
-
-        let host = CFHostCreateWithName(nil, dnsName as CFString).takeRetainedValue()
-        CFHostStartInfoResolution(host, .addresses, nil)
-        var success: DarwinBoolean = false
-        guard let addresses = CFHostGetAddressing(host, &success)?.takeUnretainedValue() as NSArray? else { return [] }
-
-        for case let addr as NSData in addresses {
-            var hostname = [CChar](repeating: 0, count: Int(NI_MAXHOST))
-            if getnameinfo(addr.bytes.assumingMemoryBound(to: sockaddr.self), socklen_t(addr.length), &hostname, socklen_t(hostname.count), nil, 0, NI_NUMERICHOST) == 0 {
-                if let url = URL(string: "http://" + String(cString: hostname)) {
-                    res.append(Server(url: url))
-                }
+        var results: UnsafeMutablePointer<addrinfo>?
+        defer {
+            if let results = results {
+                freeaddrinfo(results)
             }
         }
 
-        if res.isEmpty {
-            throw RadioBrowser.Error.dnsError
+        if getaddrinfo(dnsName, nil, nil, &results) != 0 {
+            throw RadioBrowser.Error("Unable to resolve DNS name \(dnsName)", failureReason: "the getaddrinfo call failed")
         }
 
-        return res
+        for addrinfo in sequence(first: results, next: { $0?.pointee.ai_next }) {
+            guard let pointee = addrinfo?.pointee else { break }
+
+            let hostname = UnsafeMutablePointer<Int8>.allocate(capacity: Int(NI_MAXHOST))
+            defer {
+                hostname.deallocate()
+            }
+            let error = getnameinfo(pointee.ai_addr, pointee.ai_addrlen, hostname, socklen_t(NI_MAXHOST), nil, 0, 0)
+            if error != 0 {
+                continue
+            }
+
+            if let url = URL(string: "http://" + String(cString: hostname)) {
+                urls.insert(url)
+            }
+        }
+
+        return Array(urls).map { Server(url: $0) }
     }
 
     // ******************************************************************
@@ -73,7 +82,7 @@ extension RadioBrowser {
     // ******************************************************************
     /// Do a DNS-lookup of 'all.api.radio-browser.info'. This gives you a fastest server from all available servers.
     public static func getFastestServer() async throws -> Server {
-        func ping(_ servers: [Server]) -> AsyncStream<Server?> {
+        func ping(_ servers: [Server]) -> AsyncStream<(Server, Bool)> {
             var index = 0
 
             return AsyncStream {
@@ -84,23 +93,23 @@ extension RadioBrowser {
                 let server = servers[index]
                 index += 1
 
-                var request = URLRequest(url: server.url)
-                request.httpMethod = "HEAD"
-
-                if (try? await URLSession.shared.data(for: request)) != nil {
-                    return server
+                do {
+                    let stats = try await server.stats()
+                    debug("Check OK for \(server.url.absoluteString)")
+                    return (server, stats.status == Status.statusOK)
+                } catch {
+                    warning("Server check failed \(server.url.absoluteString): \(error)")
+                    return (server, false)
                 }
-
-                return nil
             }
         }
 
-        for try await server in ping(try getAllServers()) {
-            if server != nil {
-                return server!
+        for try await (server, ok) in ping(try getAllServers()) {
+            if ok {
+                return server
             }
         }
 
-        throw RadioBrowser.Error.dnsError
+        throw RadioBrowser.Error("Unable to find the fastest server")
     }
 }
