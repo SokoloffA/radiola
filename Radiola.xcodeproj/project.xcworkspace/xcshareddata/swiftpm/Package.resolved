@@ -8,6 +8,15 @@
         "branch" : "2.x",
         "revision" : "983d19580b75feb5166254ea4b16df9b0ea49e8c"
       }
+    },
+    {
+      "identity" : "uikitplus",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/MihaelIsaev/UIKitPlus",
+      "state" : {
+        "revision" : "a7af3925f6e3b6e640bc29a445b9cddabc0fb198",
+        "version" : "2.1.3"
+      }
     }
   ],
   "version" : 2
