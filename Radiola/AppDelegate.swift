@@ -7,6 +7,13 @@
 //
 
 import Cocoa
+import UIKitPlus
+
+//class StatusItem2: StatusItem {
+//    override init(_ statusBar: NSStatusBar = .system, length: CGFloat = NSStatusItem.squareLength) {
+//
+//    }
+//}
 
 extension String {
     var tr: String {
@@ -20,23 +27,36 @@ extension String {
     }
 }
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+//@NSApplicationMain
+//class AppDelegate: NSObject, NSApplicationDelegate {
+class RadiolaApplication: App {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"
     private let oplFileName = "bookmarks.opml"
     private let audioSytstem = AudioSytstem()
     private let mediaKeys = MediaKeysController()
 
-    @IBOutlet var pauseMenuItem: NSMenuItem!
-    @IBOutlet var playMenuItem: NSMenuItem!
-    @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!
+    var pauseMenuItem: NSMenuItem?
+    var playMenuItem: NSMenuItem?
+    var checkForUpdatesMenuItem: NSMenuItem?
 
     private var statusBar: StatusBarController!
 
+    public override init() {
+        super.init()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     /* ****************************************
      *
      * ****************************************/
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    override func applicationDidFinishLaunching(_ aNotification: Notification) {
+        print(#function)
+        super.applicationDidFinishLaunching(aNotification)
+        print(#function)
+        /*
         NSApp.setActivationPolicy(.accessory)
 
         NotificationCenter.default.addObserver(self,
@@ -65,14 +85,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         statusBar = StatusBarController()
 
-        playMenuItem.target = player
-        playMenuItem.action = #selector(Player.play)
+        playMenuItem?.target = player
+        playMenuItem?.action = #selector(Player.play)
 
-        pauseMenuItem.target = player
-        pauseMenuItem.action = #selector(Player.stop)
+        pauseMenuItem?.target = player
+        pauseMenuItem?.action = #selector(Player.stop)
 
-        checkForUpdatesMenuItem.target = updater
-        checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
+        checkForUpdatesMenuItem?.target = updater
+        checkForUpdatesMenuItem?.action = #selector(Updater.checkForUpdates)
 
         playerStatusChanged()
 
@@ -82,7 +102,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             #endif
             player.play()
         }
+        print(#function)*/
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @AppBuilder override var body: AppBuilderContent {
+        StatusItem {
+            MenuItem().view {
+                UView().background(.purple).size(200, 44).edgesToSuperview()
+            }
+            MenuItem("Hey").submenu {
+                MenuItem("Hey").onAction {
+
+                }
+                MenuItem("Clay").onAction {
+
+                }
+            }
+            MenuItem("Hello").enabled(true).onAction {
+                print("Hello world")
+            }
+            MenuItem.separator()
+            MenuItem("Quit")
+                .key("q")
+                .onAction(selector: #selector(NSApplication.terminate))
+        }
+        .squareLength()
+        .tint(.blue)
+        .title("D")
+        .menuTitle("Content")
+    }
+
 
     /* ****************************************
      *
@@ -118,16 +170,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc func playerStatusChanged() {
         switch player.status {
             case Player.Status.paused:
-                playMenuItem.isHidden = false
-                pauseMenuItem.isHidden = true
+                playMenuItem?.isHidden = false
+                pauseMenuItem?.isHidden = true
 
             case Player.Status.connecting:
-                playMenuItem.isHidden = true
-                pauseMenuItem.isHidden = false
+                playMenuItem?.isHidden = true
+                pauseMenuItem?.isHidden = false
 
             case Player.Status.playing:
-                playMenuItem.isHidden = true
-                pauseMenuItem.isHidden = false
+                playMenuItem?.isHidden = true
+                pauseMenuItem?.isHidden = false
         }
     }
 

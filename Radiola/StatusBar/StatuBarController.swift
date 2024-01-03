@@ -207,25 +207,25 @@ class StatusBarController: NSObject {
 
         menu.addItem(NSMenuItem.separator())
 
-        menu.addItem(NSMenuItem(
-            title: "Open Radiola",
-            action: #selector(AppDelegate.showStationView(_:)),
-            keyEquivalent: "r"))
-
-        menu.addItem(NSMenuItem(
-            title: "History...",
-            action: #selector(AppDelegate.showHistory(_:)),
-            keyEquivalent: "y"))
-
-        menu.addItem(NSMenuItem(
-            title: "Settings...",
-            action: #selector(AppDelegate.showPreferences(_:)),
-            keyEquivalent: ","))
-
-        menu.addItem(NSMenuItem(
-            title: "Quit".tr,
-            action: #selector(NSApplication.terminate(_:)),
-            keyEquivalent: "q"))
+//        menu.addItem(NSMenuItem(
+//            title: "Open Radiola",
+//            action: #selector(RadiolaApplication.showStationView(_:)), 
+//            keyEquivalent: "r"))
+//
+//        menu.addItem(NSMenuItem(
+//            title: "History...",
+//            action: #selector(RadiolaApplication.showHistory(_:)),
+//            keyEquivalent: "y"))
+//
+//        menu.addItem(NSMenuItem(
+//            title: "Settings...",
+//            action: #selector(RadiolaApplication.showPreferences(_:)),
+//            keyEquivalent: ","))
+//
+//        menu.addItem(NSMenuItem(
+//            title: "Quit".tr,
+//            action: #selector(NSApplication.terminate(_:)),
+//            keyEquivalent: "q"))
 
         return menu
     }
