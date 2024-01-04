@@ -12,10 +12,10 @@
     {
       "identity" : "uikitplus",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/SokoloffA/UIKitPlus",
+      "location" : "https://github.com/MihaelIsaev/UIKitPlus",
       "state" : {
-        "branch" : "master",
-        "revision" : "66e4012ca49a5d7d1ab2a4df51c87b8b27f3cd7a"
+        "revision" : "daa5ffa9219ce8cbc7e8ed01abd6c1aa440a24e7",
+        "version" : "2.1.4"
       }
     }
   ],

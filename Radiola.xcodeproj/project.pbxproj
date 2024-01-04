@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3901EF3C2B46F4060027D278 /* UIKitPlus in Frameworks */ = {isa = PBXBuildFile; productRef = 3901EF3B2B46F4060027D278 /* UIKitPlus */; };
 		390C7294287B213200E17BAE /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7293287B213200E17BAE /* Controls.swift */; };
 		390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7296287B237B00E17BAE /* HistoryRow.swift */; };
 		390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 390C7297287B237B00E17BAE /* HistoryRow.xib */; };
@@ -52,7 +53,6 @@
 		3987B9A82A9F81570077EB03 /* ToolbarVolumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */; };
 		3987B9AB2A9F8A190077EB03 /* ToolbarPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */; };
 		3987B9AC2A9F8A190077EB03 /* ToolbarPlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */; };
-		39B2E7272B4562B1003A2762 /* UIKitPlus in Frameworks */ = {isa = PBXBuildFile; productRef = 39B2E7262B4562B1003A2762 /* UIKitPlus */; };
 		39BF44AA290D42D8008E5A30 /* GroupRowView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44A9290D42D8008E5A30 /* GroupRowView.xib */; };
 		39BF44AD290D4367008E5A30 /* GroupRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44AC290D4367008E5A30 /* GroupRowView.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
@@ -153,7 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39E8DFD5288F316A00082467 /* Sparkle in Frameworks */,
-				39B2E7272B4562B1003A2762 /* UIKitPlus in Frameworks */,
+				3901EF3C2B46F4060027D278 /* UIKitPlus in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,7 +348,7 @@
 			name = Radiola;
 			packageProductDependencies = (
 				39E8DFD4288F316A00082467 /* Sparkle */,
-				39B2E7262B4562B1003A2762 /* UIKitPlus */,
+				3901EF3B2B46F4060027D278 /* UIKitPlus */,
 			);
 			productName = Radiola;
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
@@ -380,7 +380,7 @@
 			mainGroup = 394F8A2F28739339005EA7FA;
 			packageReferences = (
 				39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */,
-				39B2E7252B4562B1003A2762 /* XCRemoteSwiftPackageReference "UIKitPlus" */,
+				3901EF3A2B46F4060027D278 /* XCRemoteSwiftPackageReference "UIKitPlus" */,
 			);
 			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
@@ -695,12 +695,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		39B2E7252B4562B1003A2762 /* XCRemoteSwiftPackageReference "UIKitPlus" */ = {
+		3901EF3A2B46F4060027D278 /* XCRemoteSwiftPackageReference "UIKitPlus" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SokoloffA/UIKitPlus";
+			repositoryURL = "https://github.com/MihaelIsaev/UIKitPlus";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.4;
 			};
 		};
 		39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
@@ -714,9 +714,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		39B2E7262B4562B1003A2762 /* UIKitPlus */ = {
+		3901EF3B2B46F4060027D278 /* UIKitPlus */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 39B2E7252B4562B1003A2762 /* XCRemoteSwiftPackageReference "UIKitPlus" */;
+			package = 3901EF3A2B46F4060027D278 /* XCRemoteSwiftPackageReference "UIKitPlus" */;
 			productName = UIKitPlus;
 		};
 		39E8DFD4288F316A00082467 /* Sparkle */ = {
