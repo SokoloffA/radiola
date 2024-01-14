@@ -2,164 +2,109 @@
 //  RadioBrowserProvider.swift
 //  Radiola
 //
-//  Created by Aleksandr Sokolov on 06.09.2023.
+//  Created by Aleksandr Sokolov on 01.12.2023.
 //
 
 import Foundation
 
-class RadioBrowserStationsByName: RadioBrowserStations {
-    override func searchType() -> RadioBrowser.Stations.RequestType { .byName }
-}
+// MARK: - RadioBrowserProvider
 
-class RadioBrowserStationsByTag: RadioBrowserStations {
-    override func searchType() -> RadioBrowser.Stations.RequestType { .byTag }
-}
+class RadioBrowserProvider: ObservableObject {
+    // search options
+    let searchType: SearchType
+    @Published var searchText: String = ""
+    @Published var isExactMatch: Bool = false
+    @Published var order: Order = .byName
 
-class RadioBrowserStationsByCountry: RadioBrowserStations {
-    override func searchType() -> RadioBrowser.Stations.RequestType { .byCountry }
-}
+    enum SearchType: String {
+        case byTag
+        case byName
+        case byCountry
+    }
 
-/* ********************************************
- *
- * ********************************************/
-class RadioBrowserStations: StationList, InternetStationList {
-    internal func searchType() -> RadioBrowser.Stations.RequestType { .byTag }
-    public let settingsPath: String?
-
-    var fetchHandler: ((InternetStationList) -> Void)?
-
-    var searchOptions = SearchOptions(
-        allOrderTypes: [.byVotes, .byName, .byBitrate, .byCountry]
-    )
-
-    /* ****************************************
-     *
-     * ****************************************/
-    init(title: String, settingsPath: String?) {
-        self.settingsPath = settingsPath
-        super.init(title: title)
-        loadSettings()
+    enum Order: Int {
+        case byName
+        case byVotes
+        case byCountry
+        case byBitrate
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func orderToStr(_ order: SearchOptions.Order) -> String {
+    init(_ searchType: SearchType) {
+        self.searchType = searchType
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func canFetch() -> Bool {
+        return !searchText.isEmpty
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func fetch() async throws -> [InternetStation] {
+        if !canFetch() { return [] }
+
+        let type = requestType()
+        let server = try await RadioBrowser.getFastestServer()
+
+        var reverse = false
+        let order = requestOrderType()
         switch order {
-            case .byName: return "byName"
-            case .byVotes: return "byVotes"
-            case .byCountry: return "byCountry"
-            case .byBitrate: return "byBitrate"
+            case .bitrate: reverse = true
+            case .votes: reverse = true
+            default: reverse = false
         }
-    }
 
-    /* ****************************************
-     *
-     * ****************************************/
-    private func strToOrder(_ str: String?, default defaultValue: SearchOptions.Order) -> SearchOptions.Order {
-        switch str {
-            case "byName": return .byName
-            case "byVotes": return .byVotes
-            case "byCountry": return .byCountry
-            case "byBitrate": return .byBitrate
-            default: return defaultValue
+        let resp = try await server.listStations(by: type, searchTerm: searchText, order: order, reverse: reverse, limit: 1000)
+        var res = [InternetStation]()
+
+        for r in resp {
+            let title = r.name.trimmingCharacters(in: .whitespacesAndNewlines)
+            if title == "" {
+                break
+            }
+
+            var s = InternetStation(title: title, url: r.url)
+            s.codec = r.codec
+            s.bitrate = r.bitrate * 1024
+            s.votes = r.votes
+            s.countryCode = r.countryCode
+            res.append(s)
         }
-    }
 
-    /* ****************************************
-     *
-     * ****************************************/
-    private func loadSettings() {
-        guard let settingsPath = settingsPath else { return }
-        let data = UserDefaults.standard
-
-        searchOptions.searchText = data.string(forKey: settingsPath + "/search") ?? ""
-        searchOptions.isExactMatch = data.bool(forKey: settingsPath + "/exact")
-        searchOptions.order = strToOrder(data.string(forKey: settingsPath + "/order"), default: .byVotes)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func saveSettings() {
-        guard let settingsPath = settingsPath else { return }
-        let data = UserDefaults.standard
-
-        data.set(searchOptions.searchText, forKey: settingsPath + "/search")
-        data.set(searchOptions.isExactMatch, forKey: settingsPath + "/exact")
-        data.set(orderToStr(searchOptions.order), forKey: settingsPath + "/order")
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func requestOrderType() -> RadioBrowser.Stations.Order {
-        switch searchOptions.order {
-            case .byName: return .name
-            case .byVotes: return .votes
-            case .byCountry: return .country
-            case .byBitrate: return .bitrate
-        }
+        return res
     }
 
     /* ****************************************
      *
      * ****************************************/
     private func requestType() -> RadioBrowser.Stations.RequestType {
-        switch searchType() {
-            case .byUUID: return .byUUID
-            case .byName, .byNameExact: return searchOptions.isExactMatch ? .byNameExact : .byName
-            case .byCodec, .byCodecExact: return searchOptions.isExactMatch ? .byCodecExact : .byCodec
-            case .byCountry, .byCountryExact: return searchOptions.isExactMatch ? .byCountryExact : .byCountry
-            case .byCountryCodeExact: return .byCountryCodeExact
-            case .byState, .byStateExact: return searchOptions.isExactMatch ? .byStateExact : .byState
-            case .byLanguage, .byLanguageExact: return searchOptions.isExactMatch ? .byLanguageExact : .byLanguage
-            case .byTag, .byTagExact: return searchOptions.isExactMatch ? .byTagExact : .byTag
+        switch (searchType, isExactMatch) {
+            case (.byTag, true): return RadioBrowser.Stations.RequestType.byTagExact
+            case (.byTag, false): return RadioBrowser.Stations.RequestType.byTag
+
+            case (.byName, true): return RadioBrowser.Stations.RequestType.byNameExact
+            case (.byName, false): return RadioBrowser.Stations.RequestType.byName
+
+            case (.byCountry, true): return RadioBrowser.Stations.RequestType.byCountryExact
+            case (.byCountry, false): return RadioBrowser.Stations.RequestType.byCountry
         }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    func fetch() {
-        if searchOptions.searchText.isEmpty { return }
-
-        state = .loading
-        let type = requestType()
-        saveSettings()
-
-        Task {
-            do {
-                let server = try await RadioBrowser.getFastestServer()
-
-                var reverse = false
-                let order = requestOrderType()
-                switch order {
-                    case .bitrate: reverse = true
-                    case .votes: reverse = true
-                    default: reverse = false
-                }
-
-                let resp = try await server.listStations(by: type, searchTerm: searchOptions.searchText, order: order, reverse: reverse, limit: 1000)
-                let res = StationList()
-
-                for r in resp {
-                    let s = Station(title: r.name, url: r.url)
-                    s.codec = r.codec
-                    s.bitrate = r.bitrate * 1024
-                    s.votes = r.votes
-                    s.countryCode = r.countryCode
-                    res.append(s)
-                }
-                await MainActor.run {
-                    self.nodes = res.nodes
-                    fetchHandler?(self)
-                    self.state = .loaded
-                }
-            } catch {
-                self.state = .error
-                errorOccurred(object: self, message: error.localizedDescription)
-            }
+    private func requestOrderType() -> RadioBrowser.Stations.Order {
+        switch order {
+            case .byName: return .name
+            case .byVotes: return .votes
+            case .byCountry: return .country
+            case .byBitrate: return .bitrate
         }
     }
 }

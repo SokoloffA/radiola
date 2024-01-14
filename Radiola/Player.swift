@@ -14,7 +14,7 @@ var player = Player()
 
 class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     var station: Station?
-    public var title = String()
+    public var songTitle = String()
     public var stationName: String { station?.title ?? "" }
 
     public enum Status {
@@ -117,7 +117,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         }
 
         if u == nil {
-            NSAlert.showWarning(message: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
+            Alarm.show(title: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
             return
         }
 
@@ -160,9 +160,21 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             return
         }
 
-        if !station.isEmpty {
+        if !station.url.isEmpty {
             play()
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func switchStation(station: Station) {
+        if self.station?.id == station.id && isPlaying {
+            return
+        }
+
+        self.station = station
+        play()
     }
 
     /* ****************************************
@@ -207,7 +219,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         switch status {
             case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
                 self.status = .connecting
-                title = ""
+                songTitle = ""
                 NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": ""])
 
             case AVPlayer.TimeControlStatus.playing:
@@ -215,7 +227,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
             default:
                 self.status = .paused
-                title = ""
+                songTitle = ""
                 NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": ""])
         }
 
@@ -233,13 +245,13 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             return
         }
 
-        title = "\(value)"
+        songTitle = "\(value)"
         addHistory()
 
         NotificationCenter.default.post(
             name: Notification.Name.PlayerMetadataChanged,
             object: nil,
-            userInfo: ["title": title])
+            userInfo: ["title": songTitle])
     }
 
     /* ****************************************
@@ -248,11 +260,11 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     private func addHistory() {
         guard let station = station else { return }
 
-        if history.last?.song == title && history.last?.station == station.title {
+        if history.last?.song == songTitle && history.last?.station == station.title {
             return
         }
 
-        history.append(HistoryRecord(song: title, station: station.title, date: Date()))
+        history.append(HistoryRecord(song: songTitle, station: station.title, date: Date()))
         if history.count > 100 {
             history.removeFirst(history.count - 100)
         }
@@ -290,5 +302,19 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     @objc public func toggleMute() {
         isMuted = !isMuted
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func incVolume() {
+        volume += 0.05
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func decVolume() {
+        volume -= 0.05
     }
 }

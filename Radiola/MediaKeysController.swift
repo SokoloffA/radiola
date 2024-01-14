@@ -125,7 +125,7 @@ class MediaKeysController: NSObject {
      * ****************************************/
     private func switchStation(offset: Int) {
         guard let curStation = player.station else { return }
-        let favorites = stationsStore.localStations.favorites()
+        let favorites = AppState.shared.favoritesStations()
         if favorites.count <= 1 { return }
 
         var newIndex = 0

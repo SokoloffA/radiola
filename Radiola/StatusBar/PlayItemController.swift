@@ -129,7 +129,7 @@ class PlayItemController: NSViewController {
                 playIcon.image = NSImage(named: NSImage.Name("PauseMenu"))
                 playIcon.image?.isTemplate = true
                 stationLabel.stringValue = player.stationName
-                songLabel.stringValue = player.title
+                songLabel.stringValue = player.songTitle
         }
     }
 }

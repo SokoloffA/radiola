@@ -136,3 +136,51 @@ public extension NSAlert {
         alert.runModal()
     }
 }
+
+// MARK: - Separator
+
+class Separator: NSBox {
+    init() {
+        super.init(frame: NSRect())
+        boxType = .separator
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func alignBottom(of supreView: NSView) {
+        leadingAnchor.constraint(equalTo: supreView.leadingAnchor).isActive = true
+        trailingAnchor.constraint(equalTo: supreView.trailingAnchor).isActive = true
+        bottomAnchor.constraint(equalTo: supreView.bottomAnchor).isActive = true
+    }
+}
+
+// MARK: - TextField
+
+class TextField: NSTextField {
+    init() {
+        super.init(frame: NSRect())
+        isBordered = false
+        drawsBackground = false
+        translatesAutoresizingMaskIntoConstraints = false
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+class ImageButton: NSButton {
+    init() {
+        super.init(frame: NSRect())
+        bezelStyle = .shadowlessSquare
+        isBordered = false
+        setButtonType(.momentaryPushIn)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

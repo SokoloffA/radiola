@@ -11,6 +11,7 @@ import Cocoa
  *
  * ****************************************/
 class StatusBarController: NSObject {
+    private let appState = AppState.shared
     private let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menuPrefix = "  "
     private let icon = StatusBarIcon(size: 16)
@@ -240,7 +241,7 @@ class StatusBarController: NSObject {
             keyEquivalent: "")
 
         res.target = self
-        res.tag = station.id
+        res.representedObject = station
 
         return res
     }
@@ -251,7 +252,7 @@ class StatusBarController: NSObject {
     func buildFlatFavoritesMenu(menu: NSMenu) {
         menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
 
-        for station in stationsStore.localStations.favorites() {
+        for station in appState.favoritesStations() {
             menu.addItem(createStationMenuItem(station))
         }
     }
@@ -260,58 +261,60 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     func buildMarginFavoritesMenu(menu: NSMenu) {
-        func build(root: StationGroup, menu: NSMenu, prefix: String = "") {
-            for node in root.nodes {
-                if let station = node as? Station {
-                    if station.isFavorite {
-                        menu.addItem(createStationMenuItem(station, prefix: prefix))
-                    }
-                    continue
-                }
+        func build(items: [LocalStationList.Item], menu: NSMenu, prefix: String = "") {
+            for item in items {
+                switch item {
+                    case let .station(station: station):
+                        if station.isFavorite {
+                            menu.addItem(createStationMenuItem(station, prefix: prefix))
+                        }
 
-                if let group = node as? StationGroup {
-                    let n = menu.numberOfItems
+                    case let .group(group: group):
+                        let n = menu.numberOfItems
 
-                    build(root: group, menu: menu, prefix: prefix + menuPrefix + "  ")
-                    if menu.numberOfItems > n {
-                        let groupItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
-                        menu.insertItem(groupItem, at: n)
-                    }
+                        build(items: group.items, menu: menu, prefix: prefix + menuPrefix + "  ")
+                        if menu.numberOfItems > n {
+                            let groupItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
+                            menu.insertItem(groupItem, at: n)
+                        }
                 }
             }
         }
 
         menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
-        build(root: stationsStore.localStations, menu: menu, prefix: menuPrefix)
+        for list in AppState.shared.localStations {
+            build(items: list.items, menu: menu, prefix: menuPrefix)
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
     func buildSubmenuFavoritesMenu(menu: NSMenu) {
-        func build(root: StationGroup, menu: NSMenu, prefix: String = "") {
-            for node in root.nodes {
-                if let station = node as? Station {
-                    if station.isFavorite {
-                        menu.addItem(createStationMenuItem(station, prefix: prefix))
-                    }
-                    continue
-                }
+        func build(items: [LocalStationList.Item], menu: NSMenu, prefix: String = "") {
+            for item in items {
+                switch item {
+                    case let .station(station: station):
+                        if station.isFavorite {
+                            menu.addItem(createStationMenuItem(station, prefix: prefix))
+                        }
 
-                if let group = node as? StationGroup {
-                    let subMenu = NSMenu()
-                    build(root: group, menu: subMenu)
-                    if subMenu.numberOfItems > 0 {
-                        let subMenuItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
-                        subMenuItem.submenu = subMenu
-                        menu.addItem(subMenuItem)
-                    }
+                    case let .group(group: group):
+                        let subMenu = NSMenu()
+                        build(items: group.items, menu: subMenu)
+                        if subMenu.numberOfItems > 0 {
+                            let subMenuItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
+                            subMenuItem.submenu = subMenu
+                            menu.addItem(subMenuItem)
+                        }
                 }
             }
         }
 
         menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
-        build(root: stationsStore.localStations, menu: menu, prefix: menuPrefix)
+        for list in AppState.shared.localStations {
+            build(items: list.items, menu: menu, prefix: menuPrefix)
+        }
     }
 
     /* ****************************************
@@ -347,7 +350,7 @@ class StatusBarController: NSObject {
 
             case Player.Status.playing:
                 menuItem.button?.toolTip =
-                    player.title +
+                    player.songTitle +
                     "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
                     player.stationName
         }
@@ -357,14 +360,7 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     @objc func stationClicked(_ sender: NSMenuItem) {
-        guard let station = stationsStore.station(byId: sender.tag) else { return }
-
-        if player.station?.id == station.id && player.isPlaying {
-            player.stop()
-            return
-        }
-
-        player.station = station
-        player.play()
+        guard let station = sender.representedObject as? Station else { return }
+        player.switchStation(station: station)
     }
 }

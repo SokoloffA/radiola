@@ -56,6 +56,45 @@ enum MediaPrevNextKeyAction: Int {
 
 typealias Bitrate = Int
 
+// MARK: - Errors
+
+struct Alarm: Error, Identifiable {
+    var id: String { title + (message ?? "") }
+
+    let title: String
+    let message: String?
+
+    static let notificationName = Notification.Name("AlarmOccurred")
+
+    /* ****************************************
+     *
+     * ****************************************/
+    init(title: String, message: String? = nil) {
+        self.title = title
+        self.message = message
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func show(title: String, message: String? = nil) {
+        NotificationCenter.default.post(name: notificationName, object: Alarm(title: title, message: message))
+    }
+}
+
+extension Error {
+    /* ****************************************
+     *
+     * ****************************************/
+    func show() {
+        if let alarm = self as? Alarm {
+            NotificationCenter.default.post(name: Alarm.notificationName, object: alarm)
+        } else {
+            NotificationCenter.default.post(name: Alarm.notificationName, object: Alarm(title: "Error", message: "\(self)"))
+        }
+    }
+}
+
 /* ****************************************
  *
  * ****************************************/

@@ -6,7 +6,7 @@
 //
 
 import Cocoa
-
+#if false
 extension NSPopUpButton {
     func addItem(withTitle title: String, tag: Int) {
         addItem(withTitle: title)
@@ -19,7 +19,7 @@ class SearchPanel: NSViewController {
     @IBOutlet var matchTypeCombo: NSPopUpButton!
     @IBOutlet var sortCombo: NSPopUpButton!
 
-    var provider: InternetStationList? {
+    var provider: InternetStationList_OLD? {
         didSet {
             setProvider()
         }
@@ -86,3 +86,4 @@ class SearchPanel: NSViewController {
         provider.fetch()
     }
 }
+#endif

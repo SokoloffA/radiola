@@ -60,7 +60,7 @@ class ToolbarPlayView: NSViewController {
 
             case Player.Status.playing:
                 stationLabel.stringValue = player.stationName
-                songLabel.stringValue = player.title
+                songLabel.stringValue = player.songTitle
         }
 
         switch player.status {

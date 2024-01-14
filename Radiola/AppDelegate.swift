@@ -61,7 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                                                name: Notification.Name.PlayerStatusChanged,
                                                object: nil)
 
-        player.station = stationsStore.lastStation()
+        player.station = AppState.shared.lastStation()
 
         statusBar = StatusBarController()
 
@@ -77,9 +77,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         playerStatusChanged()
 
         if settings.playLastStation {
-            #if DEBUG
-                print(settings.lastStationUrl!)
-            #endif
+            debug("Auto play \(settings.lastStationUrl ?? "nil")")
             player.play()
         }
     }

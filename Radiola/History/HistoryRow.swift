@@ -53,7 +53,7 @@ class HistoryRow: NSView {
      *
      * ****************************************/
     @objc private func refreshDate() {
-        if player.isPlaying && player.stationName == record.station && player.title == record.song {
+        if player.isPlaying && player.stationName == record.station && player.songTitle == record.song {
             dateLabel.stringValue = "playing now"
             dateLabel.sizeToFit()
             return

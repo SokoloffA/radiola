@@ -7,44 +7,39 @@
 
 import Cocoa
 
+// MARK: - SideBar
+
 class SideBar: NSViewController {
-    private class Item {
-        var title: String
-        var icon: String = ""
-        let stations: StationList?
-
-        init(title: String, icon: String = "") {
-            self.title = title
-            self.icon = icon
-            stations = nil
-        }
-
-        init(title: String, icon: String, stations: StationList) {
-            self.title = title
-            self.icon = icon
-            self.stations = stations
-        }
-
-        func isGroup() -> Bool {
-            return stations == nil // && provider == nil
-        }
+    private var initListId: UUID?
+    var selectedListId: UUID? {
+        get { getSelectedListId() }
+        set { setSelectedListId(newValue) }
     }
 
-    private var items: [Item] = {
-        var res: [Item] = []
+    struct Item {
+        let id: UUID
+        var title: String
+        var icon: String = ""
+        let isGroup: Bool
+    }
 
-       res.append(Item(title: "My lists"))
-       res.append(Item(title: "My stations", icon: "music.house", stations: stationsStore.localStations))
-
-        res.append(Item(title: "Radio Browser"))
-        for l in stationsStore.internetRequests {
-            res.append(Item(title: l.title, icon: "globe", stations: l))
-        }
-
-        return res
-    }()
+    var items = [Item]()
 
     @IBOutlet var outlineView: NSOutlineView!
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func addGroup(title: String, icon: String = "") {
+        items.append(Item(id: UUID(), title: title, icon: icon, isGroup: true))
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func addItem(id: UUID, title: String, icon: String = "") {
+        items.append(Item(id: id, title: title, icon: icon, isGroup: false))
+    }
 
     /* ****************************************
      *
@@ -56,34 +51,36 @@ class SideBar: NSViewController {
         outlineView.dataSource = self
         outlineView.expandItem(nil, expandChildren: true)
 
-        let indexSet = IndexSet(integer: findActiveIndex())
-        outlineView.selectRowIndexes(indexSet, byExtendingSelection: false)
-        outlineView.scrollRowToVisible(outlineView.selectedRow)
+        setSelectedListId(initListId)
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func findActiveIndex() -> Int {
-        guard let cur = player.station else { return 1 }
-
-        var n = 0
-        for item in items {
-            if item.stations?.contains(cur) ?? false {
-                return n
-            }
-            n += 1
+    private func getSelectedListId() -> UUID? {
+        if outlineView == nil {
+            return initListId
         }
 
-        return 1
+        return items[outlineView.selectedRow].id
     }
 
     /* ****************************************
      *
      * ****************************************/
-    public func currentStations() -> StationList? {
-        guard let item = outlineView.item(atRow: outlineView.selectedRow) as? Item else { return nil }
-        return item.stations
+    private func setSelectedListId(_ id: UUID?) {
+        if outlineView == nil {
+            initListId = id
+            return
+        }
+
+        for (i, item) in items.enumerated() {
+            if !item.isGroup && item.id == id {
+                let indexSet = IndexSet(integer: i)
+                outlineView.selectRowIndexes(indexSet, byExtendingSelection: false)
+                outlineView.scrollRowToVisible(outlineView.selectedRow)
+            }
+        }
     }
 }
 
@@ -125,7 +122,7 @@ extension SideBar: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         guard let item = item as? Item else { return nil }
 
-        if item.isGroup() {
+        if item.isGroup {
             return SidebarTopLevelView(title: item.title)
         } else {
             return SidebarSecondLevelView(title: item.title, icon: item.icon)
@@ -138,8 +135,8 @@ extension SideBar: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
         guard let item = item as? Item else { return 0.0 }
 
-        if item.isGroup() {
-            if item === items.first {
+        if item.isGroup {
+            if item.id == items.first?.id {
                 return CGFloat(15)
             } else {
                 return CGFloat(30.0)
@@ -154,6 +151,6 @@ extension SideBar: NSOutlineViewDelegate {
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, shouldSelectItem: Any) -> Bool {
         guard let item = shouldSelectItem as? Item else { return false }
-        return !item.isGroup()
+        return !item.isGroup
     }
 }
