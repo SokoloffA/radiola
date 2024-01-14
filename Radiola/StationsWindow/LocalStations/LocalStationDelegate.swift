@@ -319,4 +319,57 @@ extension LocalStationDelegate {
             outlineView.scrollRowToVisible(row)
         }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func getParentGroup(item: Any) -> LocalStationGroup? {
+        if let station = item as? LocalStation {
+            return station.parent
+        }
+
+        if let group = item as? LocalStationGroup {
+            return group.parent
+        }
+
+        return nil
+    }
+
+    private func row(forItem: Any) -> Int {
+        if let item = forItem as? LocalStationList.Item {
+            switch item {
+                case let .station(station: station): return outlineView.row(forItem: station)
+                case let .group(group: group): return outlineView.row(forItem: group)
+            }
+        }
+
+        return outlineView.row(forItem: forItem)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func remove(item: Any) {
+        guard
+            let list = list,
+            let parent = getParentGroup(item: item)
+        else {
+            return
+        }
+        let index = outlineView.childIndex(forItem: item)
+
+        parent.items.remove(at: index)
+        list.save()
+
+        outlineView.beginUpdates()
+        outlineView.removeItems(
+            at: IndexSet(integer: index),
+            inParent: parent !== list.root ? parent : nil,
+            withAnimation: .effectFade)
+        outlineView.endUpdates()
+
+        let row = parent.items.isEmpty ? row(forItem: parent) : row(forItem: parent.items[min(index, parent.items.count - 1)])
+        outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+        outlineView.scrollRowToVisible(row)
+    }
 }

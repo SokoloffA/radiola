@@ -10,8 +10,8 @@ import Cocoa
 // MARK: - LocalStationToolBox
 
 class LocalStationToolBox: NSView {
-    private let addButton = NSButton()
-    private let delButton = NSButton()
+    let addButton = NSButton()
+    let delButton = NSButton()
 
     private var list: LocalStationList?
 
@@ -23,8 +23,15 @@ class LocalStationToolBox: NSView {
         addSubview(addButton)
         addSubview(delButton)
 
-        addButton.title = "+"
-        delButton.title = "-"
+        addButton.bezelStyle = .smallSquare
+        addButton.setButtonType(.momentaryPushIn)
+        addButton.image = NSImage(named: NSImage.addTemplateName)
+        addButton.image?.isTemplate = true
+
+        delButton.bezelStyle = .smallSquare
+        delButton.setButtonType(.momentaryPushIn)
+        delButton.image = NSImage(named: NSImage.removeTemplateName)
+        delButton.image?.isTemplate = true
 
         addButton.translatesAutoresizingMaskIntoConstraints = false
         delButton.translatesAutoresizingMaskIntoConstraints = false
@@ -47,12 +54,5 @@ class LocalStationToolBox: NSView {
      * ****************************************/
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc func addStation(_ sender: Any) {
-        print("ADDDDDDD")
     }
 }

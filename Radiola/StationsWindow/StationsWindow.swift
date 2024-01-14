@@ -240,26 +240,12 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
             toolBox = nil
             return
         }
-//        stationsView.stations = sideBar.currentStations()
-//
-//        if let provider = sideBar.currentStations() as? InternetStationList_OLD {
-//            stationsTree.delegate = nil
-//            stationsTree.dataSource = nil
-        ////            searchPanelHeightConstraint.constant = searchPanelHeight
-        ////            searchPanel.provider = provider
-        ////            provider.fetchHandler = stationsFound
-        ////            if provider.nodes.isEmpty {
-        ////                _ = searchPanel.becomeFirstResponder()
-        ////            } else {
-        ////                _ = stationsView.becomeFirstResponder()
-        ////            }
-//        } else {
-//            setLocalStationList(list: sideBar.currentStations()!)
-//        }
-//
-//        let n = selectedRows[list.id] ?? max(0, stationsTree.row(forItem: player.station))
-//        stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
-//        stationsTree.scrollRowToVisible(stationsTree.selectedRow)
+
+        // Move focus to stationsTree
+        let n = selectedRows[listId] ?? max(0, stationsTree.row(forItem: player.station))
+        stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
+        stationsTree.scrollRowToVisible(stationsTree.selectedRow)
+        stationsTree.superview?.becomeFirstResponder()
     }
 
     /* ****************************************
@@ -274,30 +260,16 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         searchViewPlace.isHidden = true
         searchPanelHeightConstraint.constant = 0
-//            searchPanel.provider = nil
-//        stationsTree.registerForDraggedTypes([localStationsDelegate.nodePasteboardType])
-//        stationsTree.selectionHighlightStyle = .regular
 
-        // stationsTree.superview?.becomeFirstResponder()
+        let toolBox = LocalStationToolBox()
+        toolBox.addButton.target = self
+        toolBox.addButton.action = #selector(addStation)
 
-        toolBox = LocalStationToolBox()
+        toolBox.delButton.target = self
+        toolBox.delButton.action = #selector(removeStation)
 
-        // localStationToolBox.nextResponder = toolBoxPlace
-//        print(toolBoxPlace.nextResponder, toolBoxPlace.superview)
-        // self.nextResponder = localStationToolBox
+        self.toolBox = toolBox
     }
-
-    /* ****************************************
-     *
-     * ****************************************/
-//    private func stationsFound(stations: InternetStationList_OLD) {
-//        if stations !== sideBar.currentStations() {
-//            return
-//        }
-//
-    ////        stationsView.stations = stations
-    ////        _ = stationsView.becomeFirstResponder()
-//    }
 
     /* ****************************************
      *
@@ -311,6 +283,21 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         player.station = station
         player.play()
+    }
+}
+
+extension StationsWindow: NSUserInterfaceValidations {
+    /* ****************************************
+     *
+     * ****************************************/
+    func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
+        switch item.action {
+            case #selector(addStation): return stationsTree.delegate is LocalStationDelegate
+            case #selector(addGroup): return stationsTree.delegate is LocalStationDelegate
+            case #selector(removeStation): return stationsTree.delegate is LocalStationDelegate
+            //      case #selector(addStationToLocalList): return stationsTree.delegate is LocalStationDelegate
+            default: return true
+        }
     }
 
     /* ****************************************
@@ -349,88 +336,34 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     @objc func removeStation(_ sender: Any) {
-        /*
-         guard let stations = stations as? LocalStationList else { return }
-         if !isEditable { return }
-
-         guard let wnd = window else { return }
-         guard let node = selectedNode() else { return }
-         guard let parent = node.parent else { return }
-
-         let alert = NSAlert()
-         alert.informativeText = "This operation cannot be undone."
-         alert.addButton(withTitle: "Yes")
-         alert.addButton(withTitle: "Cancel")
-
-         if let station = node as? Station {
-             alert.messageText = "Are you sure you want to remove the station \"\(station.title)\"?"
-         }
-
-         if let group = node as? StationGroup {
-             if group.nodes.isEmpty {
-                 alert.messageText = "Are you sure you want to remove the group \"\(group.title)\"?"
-             } else {
-                 alert.messageText = "Are you sure you want to remove the group \"\(group.title)\", and all of its children?"
-             }
-         }
-
-         alert.beginSheetModal(for: wnd, completionHandler: { response in
-             if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-                 let n = parent.index(node) ?? 0
-                 parent.remove(node)
-                 stations.save()
-
-                 self.stationsTree.beginUpdates()
-                 self.stationsTree.removeItems(
-                     at: IndexSet(integer: n),
-                     inParent: parent !== stations ? parent : nil,
-                     withAnimation: .effectFade)
-                 self.stationsTree.endUpdates()
-                 self.stationsTree.reloadItem(parent !== stations ? parent : nil)
-
-                 if !parent.nodes.isEmpty {
-                     let row = self.stationsTree.row(forItem: parent.nodes[min(n, parent.nodes.count - 1)])
-                     self.stationsTree.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
-                 } else {
-                     let row = self.stationsTree.row(forItem: parent)
-                     self.stationsTree.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
-                 }
-             }
-         })
-          */
-    }
-}
-
-extension StationsWindow: NSUserInterfaceValidations {
-    /* ****************************************
-     *
-     * ****************************************/
-    func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
-        switch item.action {
-            case #selector(addStation): return stationsTree.delegate is LocalStationDelegate
-            case #selector(addGroup): return stationsTree.delegate is LocalStationDelegate
-            case #selector(removeStation): return stationsTree.delegate is LocalStationDelegate
-            //      case #selector(addStationToLocalList): return stationsTree.delegate is LocalStationDelegate
-            default: return true
+        guard
+            let delegate = stationsTree.delegate as? LocalStationDelegate,
+            let window = window,
+            let item = stationsTree.item(atRow: stationsTree.selectedRow)
+        else {
+            return
         }
-    }
 
-    /* ****************************************
-     *
-     * ****************************************/
-//    @objc func addStationToLocalList(_ sender: Any) {
-//        guard let src = selectedStation() else { return }
-//
-//        let destTitle = stationsStore.localStations.title
-//
-//        if stationsStore.localStations.station(byUrl: src.url) != nil {
-//            NSAlert.showWarning(message: "Looks like such station is already on \"\(destTitle)\" list.")
-//            return
-//        }
-//        let station = Station(title: src.title, url: src.url)
-//        stationsStore.localStations.append(station)
-//        stationsStore.localStations.save()
-//
-//        NSAlert.showInfo(message: "Station \"\(station.title)\" has been successfully added to the \"\(destTitle)\".")
-//    }
+        var messageText = ""
+        if let station = item as? LocalStation {
+            messageText = "Are you sure you want to remove the station \"\(station.title)\"?"
+        } else if let group = item as? LocalStationGroup {
+            if group.items.isEmpty {
+                messageText = "Are you sure you want to remove the group \"\(group.title)\"?"
+            } else {
+                messageText = "Are you sure you want to remove the group \"\(group.title)\", and all of its children?"
+            }
+        }
+
+        let alert = NSAlert()
+        alert.informativeText = "This operation cannot be undone."
+        alert.addButton(withTitle: "Yes")
+        alert.addButton(withTitle: "Cancel")
+        alert.messageText = messageText
+        alert.beginSheetModal(for: window, completionHandler: { response in
+            if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+                delegate.remove(item: item)
+            }
+        })
+    }
 }
