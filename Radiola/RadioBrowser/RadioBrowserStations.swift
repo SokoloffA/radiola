@@ -78,7 +78,7 @@ extension RadioBrowser {
         var lastlocalchecktime: Date?
 
         /// datetime, YYYY-MM-DD HH:mm:ss    The time of the last click recorded for this stream
-        var clicktimestamp: Date
+        var clicktimestamp: Date?
 
         /// number, integer    Clicks within the last 24 hours
         var clickcount: Int
@@ -160,7 +160,7 @@ extension RadioBrowser {
             if s != nil && !s!.isEmpty {
                 lastlocalchecktime = try container.decode(Date.self, forKey: .lastlocalchecktime_iso8601)
             }
-            clicktimestamp = try container.decode(Date.self, forKey: .clicktimestamp_iso8601)
+            clicktimestamp = try container.decode(Date?.self, forKey: .clicktimestamp_iso8601)
             clickcount = try container.decode(Int.self, forKey: .clickcount)
             clicktrend = try container.decode(Int.self, forKey: .clicktrend)
             ssl_error = try container.decode(Int.self, forKey: .ssl_error) > 0

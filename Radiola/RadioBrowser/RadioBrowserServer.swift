@@ -30,7 +30,13 @@ extension RadioBrowser {
             decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.iso8601
 
             debug("Fetch \(url.absoluteString)")
-            return try decoder.decode(type, from: data)
+            do {
+                return try decoder.decode(type, from: data)
+            }
+            catch let error {
+                warning(error)
+                throw error
+            }
         }
     }
 }
