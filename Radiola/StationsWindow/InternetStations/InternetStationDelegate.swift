@@ -22,10 +22,12 @@ class InternetStationDelegate: NSObject {
         list = nil
     }
 
+    @MainActor
     @objc func search() {
         guard let list = list else { return }
         Task {
             await list.fetch()
+            outlineView.reloadData()
         }
     }
 }

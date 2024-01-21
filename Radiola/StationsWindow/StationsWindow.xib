@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22155" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22155"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,7 +26,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="682" height="375"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1175"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1415"/>
             <value key="minSize" type="size" width="500" height="200"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
@@ -53,14 +53,14 @@
                                             <constraint firstAttribute="trailing" secondItem="2x7-gi-IyC" secondAttribute="trailing" id="sMG-Q7-v07"/>
                                         </constraints>
                                     </customView>
-                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="B4I-qD-d8r" userLabel="SearchBox">
-                                        <rect key="frame" x="0.0" y="277" width="682" height="46"/>
+                                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B4I-qD-d8r" userLabel="SearchBox">
+                                        <rect key="frame" x="0.0" y="273" width="682" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="46" id="0tz-K3-gVT"/>
                                         </constraints>
                                     </customView>
-                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="xEU-fK-kX4" userLabel="StationsBox">
-                                        <rect key="frame" x="0.0" y="36" width="682" height="241"/>
+                                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xEU-fK-kX4" userLabel="StationsBox">
+                                        <rect key="frame" x="0.0" y="36" width="682" height="238"/>
                                         <subviews>
                                             <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="17" horizontalPageScroll="10" verticalLineScroll="17" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kxv-Ea-47F">
                                                 <rect key="frame" x="0.0" y="0.0" width="682" height="241"/>
