@@ -15,7 +15,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     var sideBar = SideBar()
     var sideBarWidth: CGFloat = 0.0
     private var searchPanelHeight: CGFloat = 0.0
-    // private var searchPanel = SearchPanel()
     private let toolbarPlayView = ToolbarPlayView()
     private let toolbarVolumeView = ToolbarVolumeView()
     private let toolbarLeftMargin = 145.0
@@ -31,7 +30,10 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     @IBOutlet var toolBoxPlace: NSView!
 
     private var localStationsDelegate: LocalStationDelegate!
+    private var internetStationsDelegate: InternetStationDelegate!
+
     private var toolBox: NSView? { didSet { placeToolbox() } }
+    private var searchPanel: NSView? { didSet { placeSearchPanel() }}
 
     /* ****************************************
      *
@@ -48,9 +50,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         window?.delegate = self
 
         localStationsDelegate = LocalStationDelegate(outlineView: stationsTree)
-
-        // localStationsDelegate
-        //
+        internetStationsDelegate = InternetStationDelegate(outlineView: stationsTree)
 
         stationsTree.doubleAction = #selector(doubleClickRow)
         NotificationCenter.default.addObserver(self,
@@ -62,7 +62,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         initSideBar()
         initPlaytoolbar()
-        initSearchPanel()
+        searchPanelHeight = searchViewPlace.frame.height
 
         sidebarChanged()
     }
@@ -128,18 +128,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    private func initSearchPanel() {
-        searchPanelHeight = searchViewPlace.frame.height
-//        searchViewPlace.addSubview(searchPanel.view)
-//        searchPanel.view.topAnchor.constraint(equalTo: searchViewPlace.topAnchor).isActive = true
-//        searchPanel.view.bottomAnchor.constraint(equalTo: searchViewPlace.bottomAnchor).isActive = true
-//        searchPanel.view.leadingAnchor.constraint(equalTo: searchViewPlace.leadingAnchor).isActive = true
-//        searchPanel.view.trailingAnchor.constraint(equalTo: searchViewPlace.trailingAnchor).isActive = true
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     private func placeToolbox() {
         for v in toolBoxPlace.subviews {
             v.removeFromSuperview()
@@ -150,6 +138,32 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
             toolBox.frame = toolBoxPlace.frame
             toolBox.autoresizingMask = [.height, .width]
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func placeSearchPanel() {
+        for v in searchViewPlace.subviews {
+            v.removeFromSuperview()
+        }
+
+        guard let searchPanel = searchPanel else {
+            searchViewPlace.isHidden = true
+            searchPanelHeightConstraint.constant = 0
+            return
+        }
+
+        searchViewPlace.addSubview(searchPanel)
+
+        searchPanel.translatesAutoresizingMaskIntoConstraints = false
+        searchPanel.leadingAnchor.constraint(equalTo: searchViewPlace.leadingAnchor).isActive = true
+        searchPanel.trailingAnchor.constraint(equalTo: searchViewPlace.trailingAnchor).isActive = true
+        searchPanel.topAnchor.constraint(equalTo: searchViewPlace.topAnchor).isActive = true
+        searchPanel.bottomAnchor.constraint(equalTo: searchViewPlace.bottomAnchor).isActive = true
+
+        searchViewPlace.isHidden = false
+        searchPanelHeightConstraint.constant = searchPanelHeight
     }
 
     /* ****************************************
@@ -224,6 +238,24 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
+    private func setFocus(listId: UUID, toTree: Bool) {
+        if toTree {
+            // Move focus to stationsTree
+            let n = selectedRows[listId] ?? max(0, stationsTree.row(forItem: player.station))
+            stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
+            stationsTree.scrollRowToVisible(stationsTree.selectedRow)
+            stationsTree.superview?.becomeFirstResponder()
+            return
+        }
+
+        if let searchPanel = searchPanel {
+            searchPanel.becomeFirstResponder()
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @objc private func sidebarChanged() {
         selectedListId = sideBar.selectedListId
         stationsTree.delegate = nil
@@ -236,16 +268,11 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         if let list = AppState.shared.localStations.find(byId: listId) {
             setLocalStationList(list: list)
-        } else {
-            toolBox = nil
-            return
+            setFocus(listId: listId, toTree: true)
+        } else if let list = AppState.shared.internetStations.find(byId: listId) {
+            setInternetStationList(list: list)
+            setFocus(listId: listId, toTree: !list.items.isEmpty)
         }
-
-        // Move focus to stationsTree
-        let n = selectedRows[listId] ?? max(0, stationsTree.row(forItem: player.station))
-        stationsTree.selectRowIndexes(IndexSet(arrayLiteral: n), byExtendingSelection: true)
-        stationsTree.scrollRowToVisible(stationsTree.selectedRow)
-        stationsTree.superview?.becomeFirstResponder()
     }
 
     /* ****************************************
@@ -255,11 +282,11 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         stationsTree.delegate = localStationsDelegate
         stationsTree.dataSource = localStationsDelegate
         localStationsDelegate.list = list
+
         stationsTree.reloadItem(nil, reloadChildren: true)
         stationsTree.expandItem(nil, expandChildren: true)
 
-        searchViewPlace.isHidden = true
-        searchPanelHeightConstraint.constant = 0
+        searchPanel = nil
 
         let toolBox = LocalStationToolBox()
         toolBox.addButton.target = self
@@ -269,6 +296,23 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         toolBox.delButton.action = #selector(removeStation)
 
         self.toolBox = toolBox
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func setInternetStationList(list: InternetStationList) {
+        stationsTree.delegate = internetStationsDelegate
+        stationsTree.dataSource = internetStationsDelegate
+        internetStationsDelegate.list = list
+
+        stationsTree.reloadItem(nil, reloadChildren: true)
+
+        let searchPanel = InternetStationSearchPanel(provider: list.provider)
+        searchPanel.target = internetStationsDelegate
+        searchPanel.action = #selector(internetStationsDelegate.search)
+
+        self.searchPanel = searchPanel
     }
 
     /* ****************************************

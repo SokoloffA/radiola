@@ -172,6 +172,26 @@ class TextField: NSTextField {
     }
 }
 
+// MARK: - TextField
+
+class Label: NSTextField {
+    init() {
+        super.init(frame: NSRect.zero)
+        isEditable = false
+        backgroundColor = NSColor.clear
+        isBordered = false
+        focusRingType = .none
+        setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 250), for: .horizontal)
+        setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 750), for: .vertical)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - ImageButton
+
 class ImageButton: NSButton {
     init() {
         super.init(frame: NSRect())
@@ -182,5 +202,13 @@ class ImageButton: NSButton {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension NSControl {
+    func setFontWeight(_ weight: NSFont.Weight) {
+        if let font = font {
+            self.font = NSFont.systemFont(ofSize: font.pointSize, weight: .bold)
+        }
     }
 }

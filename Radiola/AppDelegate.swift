@@ -41,7 +41,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(processError),
-                                               name: Notification.Name.ErrorOccurred,
+                                               name: Alarm.notificationName,
                                                object: nil)
 
         let dirName = URL(
@@ -162,11 +162,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @objc private func processError(_ notification: Notification) {
-        let msg = notification.userInfo?["message"] as? String ?? ""
+        guard let alarm = notification.object as? Alarm else { return }
 
-        print("** ERROR ******************************")
-        print("* \(msg)")
-        print("* On: \(notification.object ?? "nil")")
-        print("*******************************************")
+        DispatchQueue.main.async {
+            guard let button = self.statusBar.menuItem.button else { return }
+
+            let dialog = AlarmPopover()
+            dialog.messageText = alarm.title
+            dialog.informativeText = alarm.message ?? ""
+            dialog.show(of: button)
+        }
     }
 }

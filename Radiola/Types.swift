@@ -99,7 +99,7 @@ extension Error {
  *
  * ****************************************/
 func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    print("DBG: \(Date()) ", terminator: "")
+    print("Debug: \(Date()) ", terminator: "")
     print(items, separator: separator, terminator: terminator)
 }
 
@@ -107,6 +107,6 @@ func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") 
  *
  * ****************************************/
 func warning(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    print("WARN: \(Date()) ", terminator: "")
+    print("Warning: \(Date()) ", terminator: "")
     print(items, separator: separator, terminator: terminator)
 }

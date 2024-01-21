@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - InternetStation
 
-struct InternetStation: Station, Identifiable, Hashable {
+class InternetStation: Station, Identifiable {
     var id = UUID()
     var title: String
     var url: String
@@ -35,7 +35,7 @@ class InternetStationList: ObservableObject, StationList {
     let icon: String
     let help: String?
 
-    @Published var stations = [InternetStation]()
+    @Published var items = [InternetStation]()
 
     @Published var isLoading = false
 
@@ -55,7 +55,7 @@ class InternetStationList: ObservableObject, StationList {
      *
      * ****************************************/
     func first(where predicate: (Station) -> Bool) -> Station? {
-        return stations.first(where: predicate)
+        return items.first(where: predicate)
     }
 
     /* ****************************************
@@ -68,12 +68,18 @@ class InternetStationList: ObservableObject, StationList {
         if !provider.canFetch() { return }
 
         do {
-            stations = try await provider.fetch()
+            items = try await provider.fetch()
         } catch {
             await MainActor.run {
                 warning(error)
                 Alarm.show(title: "Couldn't download the stations from radio-browser.info", message: "\(error.localizedDescription)")
             }
         }
+    }
+}
+
+extension [InternetStationList] {
+    func find(byId: UUID) -> InternetStationList? {
+        return first { $0.id == byId }
     }
 }

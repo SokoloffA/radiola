@@ -14,7 +14,7 @@ class RadioBrowserProvider: ObservableObject {
     let searchType: SearchType
     @Published var searchText: String = ""
     @Published var isExactMatch: Bool = false
-    @Published var order: Order = .byName
+    @Published var order: Order = .byVotes
 
     enum SearchType: String {
         case byTag
@@ -69,7 +69,7 @@ class RadioBrowserProvider: ObservableObject {
                 break
             }
 
-            var s = InternetStation(title: title, url: r.url)
+            let s = InternetStation(title: title, url: r.url)
             s.codec = r.codec
             s.bitrate = r.bitrate * 1024
             s.votes = r.votes
