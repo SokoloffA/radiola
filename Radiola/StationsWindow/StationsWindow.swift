@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Combine
 
 fileprivate var selectedListId: UUID? = AppState.shared.localStations.first?.id
 fileprivate var selectedRows: [UUID: Int] = [:]
@@ -28,12 +29,17 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     @IBOutlet var toggleSideBarItem: NSToolbarItem!
     @IBOutlet var searchPanelHeightConstraint: NSLayoutConstraint!
     @IBOutlet var toolBoxPlace: NSView!
+    @IBOutlet var stateIndicator: NSView!
+    @IBOutlet var stateIndicatorText: NSTextField!
+    @IBOutlet var stateIndicatorSpinner: NSProgressIndicator!
 
     private var localStationsDelegate: LocalStationDelegate!
     private var internetStationsDelegate: InternetStationDelegate!
 
     private var toolBox: NSView? { didSet { placeToolbox() } }
     private var searchPanel: NSView? { didSet { placeSearchPanel() }}
+
+    private var listStateSink: AnyCancellable?
 
     /* ****************************************
      *
@@ -312,7 +318,50 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         searchPanel.target = internetStationsDelegate
         searchPanel.action = #selector(internetStationsDelegate.search)
 
+        listStateSink?.cancel()
+        listStateSink = list.$state.sink(receiveValue: updateStateIndicator)
+
         self.searchPanel = searchPanel
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateStateIndicator(state: InternetStationList.State) {
+        guard
+            let delegate = stationsTree.delegate as? InternetStationDelegate,
+            let list = delegate.list
+        else {
+            stateIndicator.isHidden = true
+            stateIndicatorSpinner.stopAnimation(nil)
+            return
+        }
+
+        switch (state, list.items.isEmpty) {
+            case (.notLoaded, _):
+                stateIndicator.isHidden = true
+                stateIndicatorSpinner.stopAnimation(nil)
+
+            case (.loading, _):
+                stateIndicatorText.stringValue = "Loading"
+                stateIndicator.isHidden = false
+                stateIndicatorSpinner.isHidden = false
+                stateIndicatorSpinner.startAnimation(nil)
+
+            case (.error, _):
+                stateIndicator.isHidden = true
+                stateIndicatorSpinner.stopAnimation(nil)
+
+            case (.loaded, true):
+                stateIndicatorSpinner.stopAnimation(nil)
+                stateIndicatorSpinner.isHidden = true
+                stateIndicator.isHidden = false
+                stateIndicatorText.stringValue = "No results"
+
+            case (.loaded, false):
+                stateIndicatorSpinner.stopAnimation(nil)
+                stateIndicator.isHidden = true
+        }
     }
 
     /* ****************************************

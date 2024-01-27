@@ -12,6 +12,9 @@
                 <outlet property="searchPanelHeightConstraint" destination="0tz-K3-gVT" id="R0U-eT-xiS"/>
                 <outlet property="searchViewPlace" destination="B4I-qD-d8r" id="7N4-ze-Yk7"/>
                 <outlet property="splitView" destination="ait-XJ-lkI" id="OBF-Zk-JMe"/>
+                <outlet property="stateIndicator" destination="Oq3-4l-d6M" id="IJ1-n6-fhp"/>
+                <outlet property="stateIndicatorSpinner" destination="aBa-WI-6bB" id="N3w-37-rbk"/>
+                <outlet property="stateIndicatorText" destination="gpM-kz-DXL" id="F9E-cz-Ho5"/>
                 <outlet property="stationToolbar" destination="dvN-S5-4WP" id="b8A-gR-D6l"/>
                 <outlet property="stationsTree" destination="Jkm-Wt-8op" id="0cj-eJ-Zi4"/>
                 <outlet property="stationsViewPlace" destination="xEU-fK-kX4" id="gG5-4i-UKx"/>
@@ -128,6 +131,30 @@
                                             <constraint firstAttribute="bottom" secondItem="kxv-Ea-47F" secondAttribute="bottom" id="y5C-nm-hfa"/>
                                         </constraints>
                                     </customView>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="Oq3-4l-d6M" userLabel="stateIndicator">
+                                        <rect key="frame" x="297" y="117" width="89" height="80"/>
+                                        <subviews>
+                                            <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gpM-kz-DXL" userLabel="stateIndicatorText">
+                                                <rect key="frame" x="18" y="44" width="53" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Loading" id="3G7-2F-cwo">
+                                                    <font key="font" usesAppearanceFont="YES"/>
+                                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                </textFieldCell>
+                                            </textField>
+                                            <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="aBa-WI-6bB" userLabel="stateIndicatorSpinner">
+                                                <rect key="frame" x="36" y="20" width="16" height="16"/>
+                                            </progressIndicator>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="aBa-WI-6bB" firstAttribute="top" secondItem="gpM-kz-DXL" secondAttribute="bottom" constant="8" symbolic="YES" id="6iK-KO-07l"/>
+                                            <constraint firstAttribute="bottom" secondItem="aBa-WI-6bB" secondAttribute="bottom" constant="20" symbolic="YES" id="GW8-XA-mlt"/>
+                                            <constraint firstItem="gpM-kz-DXL" firstAttribute="top" secondItem="Oq3-4l-d6M" secondAttribute="top" constant="20" symbolic="YES" id="Uo2-yA-lD9"/>
+                                            <constraint firstItem="aBa-WI-6bB" firstAttribute="centerX" secondItem="Oq3-4l-d6M" secondAttribute="centerX" id="boe-bL-N3s"/>
+                                            <constraint firstItem="gpM-kz-DXL" firstAttribute="leading" secondItem="Oq3-4l-d6M" secondAttribute="leading" constant="20" symbolic="YES" id="rQY-gW-uQW"/>
+                                            <constraint firstAttribute="trailing" secondItem="gpM-kz-DXL" secondAttribute="trailing" constant="20" symbolic="YES" id="yN6-3L-O4D"/>
+                                        </constraints>
+                                    </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Htk-em-wcF" userLabel="ToolBox">
                                         <rect key="frame" x="0.0" y="0.0" width="682" height="36"/>
                                         <constraints>
@@ -142,9 +169,11 @@
                                     <constraint firstItem="xEU-fK-kX4" firstAttribute="leading" secondItem="3T4-Mu-Or0" secondAttribute="leading" id="Bd6-Fo-CC6"/>
                                     <constraint firstAttribute="trailing" secondItem="xEU-fK-kX4" secondAttribute="trailing" id="IHe-rm-w4o"/>
                                     <constraint firstItem="B4I-qD-d8r" firstAttribute="leading" secondItem="3T4-Mu-Or0" secondAttribute="leading" id="KFE-k8-xB0"/>
+                                    <constraint firstItem="Oq3-4l-d6M" firstAttribute="centerY" secondItem="xEU-fK-kX4" secondAttribute="centerY" id="KSi-bm-hT2"/>
                                     <constraint firstAttribute="bottom" secondItem="Htk-em-wcF" secondAttribute="bottom" id="MGU-Xe-UhS"/>
                                     <constraint firstAttribute="trailing" secondItem="Htk-em-wcF" secondAttribute="trailing" id="Mh9-Zy-nuG"/>
                                     <constraint firstAttribute="trailing" secondItem="PIo-NM-taC" secondAttribute="trailing" id="PRx-fN-baJ"/>
+                                    <constraint firstItem="Oq3-4l-d6M" firstAttribute="centerX" secondItem="xEU-fK-kX4" secondAttribute="centerX" id="Rcx-nO-REG"/>
                                     <constraint firstAttribute="trailing" secondItem="B4I-qD-d8r" secondAttribute="trailing" id="Szp-QA-PQW"/>
                                     <constraint firstItem="Htk-em-wcF" firstAttribute="leading" secondItem="3T4-Mu-Or0" secondAttribute="leading" id="eVb-95-pP6"/>
                                     <constraint firstItem="Htk-em-wcF" firstAttribute="top" secondItem="xEU-fK-kX4" secondAttribute="bottom" id="fFb-qL-rtp"/>

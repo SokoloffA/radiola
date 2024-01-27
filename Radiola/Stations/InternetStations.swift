@@ -37,7 +37,14 @@ class InternetStationList: ObservableObject, StationList {
 
     @Published var items = [InternetStation]()
 
-    @Published var isLoading = false
+    enum State {
+        case notLoaded
+        case loading
+        case error
+        case loaded
+    }
+
+    @Published var state = State.notLoaded
 
     let provider: RadioBrowserProvider
 
@@ -62,14 +69,15 @@ class InternetStationList: ObservableObject, StationList {
      *
      * ****************************************/
     @MainActor func fetch() async {
-        isLoading = true
-        defer { isLoading = false }
+        state = .loading
 
         if !provider.canFetch() { return }
 
         do {
             items = try await provider.fetch()
+            state = .loaded
         } catch {
+            state = .error
             await MainActor.run {
                 warning(error)
                 Alarm.show(title: "Couldn't download the stations from radio-browser.info", message: "\(error.localizedDescription)")
