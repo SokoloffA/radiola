@@ -8,7 +8,6 @@
 import Cocoa
 
 class AudioPage: NSViewController {
-    private var deviceUIDs: [String?] = []
     @IBOutlet var deviceCombobox: NSPopUpButton!
 
     /* ****************************************
@@ -28,31 +27,16 @@ class AudioPage: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    private func selectedDeviceUID() -> String? {
-        let n = deviceCombobox.indexOfSelectedItem
-        if n > -1 && n < deviceUIDs.count {
-            return deviceUIDs[n]
-        }
-
-        return nil
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     @objc private func refreshDeviceCombo() {
         let sel = player.audioDeviceUID // selectedDeviceUID()
 
         deviceCombobox.removeAllItems()
-        deviceUIDs.removeAll()
-
-        deviceUIDs.append(nil)
         deviceCombobox.addItem(withTitle: "System Default Device")
 
         let devices = AudioSytstem.devices()
         for d in devices {
-            deviceUIDs.append(d.UID)
             deviceCombobox.addItem(withTitle: d.name)
+            deviceCombobox.lastItem?.representedObject = d
 
             if d.UID == sel {
                 deviceCombobox.select(deviceCombobox.lastItem)
@@ -68,6 +52,7 @@ class AudioPage: NSViewController {
      *
      * ****************************************/
     @IBAction func deviceChanged(_ sender: Any) {
-        player.audioDeviceUID = selectedDeviceUID()
+        let device = deviceCombobox.selectedItem?.representedObject as? AudioDevice
+        player.audioDeviceUID = device?.UID ?? nil
     }
 }
