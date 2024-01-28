@@ -275,9 +275,11 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         if let list = AppState.shared.localStations.find(byId: listId) {
             setLocalStationList(list: list)
             setFocus(listId: listId, toTree: true)
+            updateStateIndicator(state: .notLoaded)
         } else if let list = AppState.shared.internetStations.find(byId: listId) {
             setInternetStationList(list: list)
             setFocus(listId: listId, toTree: !list.items.isEmpty)
+            updateStateIndicator(state: list.state)
         }
     }
 

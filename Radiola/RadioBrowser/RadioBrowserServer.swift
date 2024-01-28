@@ -18,6 +18,7 @@ extension RadioBrowser {
             var url = URLComponents()
             url.scheme = self.url.scheme
             url.host = self.url.host
+            url.port = self.url.port
             url.path = path
             url.queryItems = queryItems
 

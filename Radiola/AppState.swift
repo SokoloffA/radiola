@@ -90,7 +90,7 @@ class AppState: ObservableObject {
 
         if !url.isEmpty {
             for list in localStations {
-                if let res = list.first(byUrl: url) {
+                if let res = list.first(byURL: url) {
                     return res
                 }
             }
@@ -125,6 +125,38 @@ class AppState: ObservableObject {
 
         for sl in internetStations {
             res = sl.first(byID: byID)
+            if res != nil {
+                return res
+            }
+        }
+
+        return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func localStation(byID: UUID?) -> Station? {
+        guard let byID = byID else { return nil }
+
+        var res: Station?
+        for sl in localStations {
+            res = sl.first(byID: byID)
+            if res != nil {
+                return res
+            }
+        }
+
+        return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func localStation(byURL: String) -> Station? {
+        var res: Station?
+        for sl in localStations {
+            res = sl.first(byURL: byURL)
             if res != nil {
                 return res
             }

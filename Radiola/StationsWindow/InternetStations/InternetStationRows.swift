@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import Foundation
 
 // MARK: - InternetStationRow
 
@@ -15,13 +16,18 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
     var nameEdit = TextField()
     var urlEdit = TextField()
-    var favoriteButton = ImageButton()
+    var qualityText = Label()
+    var voteText = Label()
+    var actionButton = ImageButton()
     let separator = Separator()
 
-    private let favoriteIcons = [
-        false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
-        true: NSImage(named: NSImage.Name("star-filled"))?.tint(color: .systemYellow),
+    private let actionButtonIcons = [
+        false: NSImage(systemSymbolName: NSImage.Name("music.house"), accessibilityDescription: "")?.tint(color: .lightGray),
+        true: NSImage(systemSymbolName: NSImage.Name("music.house.fill"), accessibilityDescription: "")?.tint(color: .systemYellow),
     ]
+
+    let normalFont = NSFont.systemFont(ofSize: 11)
+    let smallFont = NSFont.systemFont(ofSize: 10)
 
     /* ****************************************
      *
@@ -32,9 +38,11 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         super.init(frame: NSRect())
         addSubview(nameEdit)
-        addSubview(favoriteButton)
+        addSubview(actionButton)
         addSubview(urlEdit)
         addSubview(separator)
+        addSubview(qualityText)
+        addSubview(voteText)
 
         nameEdit.placeholderString = "Station name"
         nameEdit.isBordered = false
@@ -51,30 +59,46 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         urlEdit.font = NSFont.systemFont(ofSize: 11)
         urlEdit.delegate = self
         urlEdit.isEditable = false
-
-        favoriteButton.target = self
-        favoriteButton.action = #selector(favClicked(sender:))
-
-        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
-        favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
-        favoriteButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
-        favoriteButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
-
-        nameEdit.translatesAutoresizingMaskIntoConstraints = false
-        nameEdit.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        nameEdit.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -8).isActive = true
-        nameEdit.topAnchor.constraint(equalTo: topAnchor, constant: 6.0).isActive = true
-
-        urlEdit.translatesAutoresizingMaskIntoConstraints = false
-        urlEdit.leadingAnchor.constraint(equalTo: nameEdit.leadingAnchor).isActive = true
-        urlEdit.trailingAnchor.constraint(equalTo: nameEdit.trailingAnchor).isActive = true
-        urlEdit.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0).isActive = true
         urlEdit.textColor = .secondaryLabelColor
+
+        actionButton.target = self
+        actionButton.action = #selector(favClicked(sender:))
+
+        qualityText.attributedStringValue = qualityInfo()
+        qualityText.textColor = .secondaryLabelColor
+
+        voteText.attributedStringValue = votesInfo()
+        voteText.textColor = .secondaryLabelColor
+
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        nameEdit.translatesAutoresizingMaskIntoConstraints = false
+        urlEdit.translatesAutoresizingMaskIntoConstraints = false
+        qualityText.translatesAutoresizingMaskIntoConstraints = false
+        voteText.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            actionButton.widthAnchor.constraint(equalToConstant: 16),
+            nameEdit.leadingAnchor.constraint(equalTo: leadingAnchor),
+            nameEdit.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -8),
+
+            urlEdit.leadingAnchor.constraint(equalTo: nameEdit.leadingAnchor),
+            voteText.leadingAnchor.constraint(equalTo: urlEdit.trailingAnchor, constant: 8),
+            qualityText.leadingAnchor.constraint(equalTo: voteText.trailingAnchor, constant: 8),
+            qualityText.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor),
+
+            actionButton.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            actionButton.heightAnchor.constraint(equalToConstant: 16),
+            nameEdit.topAnchor.constraint(equalTo: topAnchor, constant: 6.0),
+            urlEdit.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0),
+            voteText.lastBaselineAnchor.constraint(equalTo: urlEdit.lastBaselineAnchor),
+            qualityText.lastBaselineAnchor.constraint(equalTo: urlEdit.lastBaselineAnchor),
+
+        ])
 
         separator.alignBottom(of: self)
 
-        refreshFavoriteButton()
+        refreshActionButton()
     }
 
     /* ****************************************
@@ -105,9 +129,10 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     /* ****************************************
      *
      * ****************************************/
-    private func refreshFavoriteButton() {
-        //    favoriteButton.image = favoriteIcons[station.isFavorite]!
-        //    favoriteButton.toolTip = station.isFavorite ? "Unmark the station as a favorite" : "Mark the station as a favorite"
+    private func refreshActionButton() {
+        let inLocal = AppState.shared.localStation(byURL: station.url) != nil
+        actionButton.image = actionButtonIcons[inLocal]!
+        actionButton.toolTip = inLocal ? "" : "Add the station to my stations list"
     }
 
     /* ****************************************
@@ -116,5 +141,65 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
         update()
         return true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func format(_ str: String, _ font: NSFont) -> NSAttributedString {
+        return NSAttributedString(string: str, attributes: [.font: font])
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func votesInfo() -> NSAttributedString {
+        guard let votes = station.votes else { return NSAttributedString(string: "") }
+
+        let res = NSMutableAttributedString()
+
+        switch votes {
+            case 0:
+                res.append(format("no votes", normalFont))
+
+            case 0 ..< 1000:
+                res.append(format("votes:", smallFont))
+                res.append(format(" \(votes)", normalFont))
+
+            case 1000 ..< 1_000_000:
+                res.append(format("votes:", smallFont))
+                res.append(format(" \(votes / 1000)", normalFont))
+                res.append(format("k", smallFont))
+            default:
+                res.append(format("votes: ", smallFont))
+                res.append(format("\(votes / 10_000_000)", normalFont))
+                res.append(format("M", smallFont))
+        }
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func qualityInfo() -> NSAttributedString {
+        let res = NSMutableAttributedString()
+
+        if let codec = station.codec {
+            res.append(format("codec: ", smallFont))
+            res.append(format(codec.lowercased(), normalFont))
+        }
+
+        if let bitrate = station.bitrate {
+            switch bitrate {
+                case 0: break
+
+                case 1 ..< 1024:
+                    res.append(format(" \(bitrate)b", normalFont))
+
+                default:
+                    res.append(format(" \(bitrate / 1024)k", normalFont))
+            }
+        }
+        return res
     }
 }
