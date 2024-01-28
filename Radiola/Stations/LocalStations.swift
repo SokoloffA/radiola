@@ -267,6 +267,20 @@ class LocalStationList: ObservableObject, StationList {
 
         return nil
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func append(_ station: LocalStation) {
+        root.append(station)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func append(_ group: LocalStationGroup) {
+        root.append(group)
+    }
 }
 
 extension [LocalStationList] {

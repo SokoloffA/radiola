@@ -62,7 +62,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         urlEdit.textColor = .secondaryLabelColor
 
         actionButton.target = self
-        actionButton.action = #selector(favClicked(sender:))
+        actionButton.action = #selector(actionButtonClicked)
 
         qualityText.attributedStringValue = qualityInfo()
         qualityText.textColor = .secondaryLabelColor
@@ -111,19 +111,16 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     /* ****************************************
      *
      * ****************************************/
-    @objc private func update() {
-        station.title = nameEdit.stringValue
-        station.url = urlEdit.stringValue
-        //      list.save()
-    }
+    @objc private func actionButtonClicked(sender: NSButton) {
+        guard let list = AppState.shared.localStations.first else { return }
+        let inLocal = list.first(byURL: station.url) != nil
 
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func favClicked(sender: NSButton) {
-        // station.isFavorite = !station.isFavorite
-//        list.save()
-//        refreshFavoriteButton()
+        if !inLocal {
+            let s = LocalStation(title: station.title, url: station.url)
+            list.append(s)
+            list.save()
+            refreshActionButton()
+        }
     }
 
     /* ****************************************
@@ -133,14 +130,6 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         let inLocal = AppState.shared.localStation(byURL: station.url) != nil
         actionButton.image = actionButtonIcons[inLocal]!
         actionButton.toolTip = inLocal ? "" : "Add the station to my stations list"
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
-        update()
-        return true
     }
 
     /* ****************************************
