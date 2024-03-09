@@ -126,7 +126,13 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             return
         }
 
-        asset = AVAsset(url: u!)
+        guard let u = u else {
+            return
+        }
+
+        debug("Play \(station.url) \(u)")
+
+        asset = AVAsset(url: u)
         playerItem = AVPlayerItem(asset: asset)
 
         let metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
@@ -221,6 +227,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     private func statusChenged(status: AVPlayer.TimeControlStatus) {
+        debug("Player status changed \(status) for \(station?.url ?? "nil")")
         switch status {
             case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
                 self.status = .connecting
