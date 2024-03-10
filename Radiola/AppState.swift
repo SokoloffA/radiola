@@ -37,7 +37,6 @@ class AppState: ObservableObject {
 
     @Published var localStations: [LocalStationList] = [
         LocalStationList(title: "My stations", icon: "music.house", help: nil),
-        LocalStationList(title: "My stations2", icon: "music.house", help: nil),
     ]
 
     @Published var internetStations: [InternetStationList] = [
@@ -67,8 +66,6 @@ class AppState: ObservableObject {
         }
 
         localStations[0].load(file: fileName, defaultStations: defaultStations)
-        localStations[1].load(file: fileName, defaultStations: defaultStations)
-//        localStations[1].items.re
     }
 
     /* ****************************************
