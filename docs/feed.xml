@@ -5,6 +5,14 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 6.0.1</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Remove the 2nd item of local stations, which is needed only for tests.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sun, 10 Mar 2024 08:27:33 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v6.0.1/Radiola-6.0.1.dmg" sparkle:version="6.0.1" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 6.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;You can search and listen to stations from radio-browser.info.&lt;/li&gt;
