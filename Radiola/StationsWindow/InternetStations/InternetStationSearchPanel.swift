@@ -63,6 +63,8 @@ class InternetStationSearchPanel: NSControl {
             sortCombo.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
             searchTextView.widthAnchor.constraint(equalToConstant: 400),
+
+            matchTypeCombo.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 20),
         ])
 
         separator.alignBottom(of: self)
@@ -138,16 +140,9 @@ class InternetStationSearchPanel: NSControl {
             let target = target,
             let action = action
         else {
-            print("SKIP")
             return
         }
-        print("SEARCH")
+
         NSApp.sendAction(action, to: target, from: self)
-
-//        provider.searchOptions.searchText = searchTextView.stringValue
-//        provider.searchOptions.isExactMatch = matchTypeCombo.selectedItem?.tag == 1
-//        provider.searchOptions.order = SearchOptions.Order(rawValue: sortCombo.selectedTag()) ?? .byVotes
-
-        //      provider.fetch()
     }
 }
