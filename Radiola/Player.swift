@@ -75,7 +75,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     var audioDeviceUID: String? {
         get { player.audioOutputDeviceUniqueID }
         set {
-            if player.audioOutputDeviceUniqueID == newValue {
+            if player.audioOutputDeviceUniqueID != newValue {
                 player.audioOutputDeviceUniqueID = newValue
                 settings.audioDevice = newValue
 
