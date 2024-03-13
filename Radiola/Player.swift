@@ -34,8 +34,6 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
     private var playerItemContext = 0
     private var player: AVPlayer!
-    private var playerItem: AVPlayerItem?
-    private var asset: AVAsset!
     private var timer: Timer?
     private let connectDelay = 15.0
 
@@ -132,12 +130,12 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         debug("Play \(station.url) \(u)")
 
-        asset = AVAsset(url: u)
-        playerItem = AVPlayerItem(asset: asset)
+        let asset = AVAsset(url: u)
+        let playerItem = AVPlayerItem(asset: asset)
 
         let metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
         metadataOutput.setDelegate(self, queue: DispatchQueue.main)
-        playerItem?.add(metadataOutput)
+        playerItem.add(metadataOutput)
 
         player.replaceCurrentItem(with: playerItem)
         statusChenged(status: AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate)
@@ -157,7 +155,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     @objc func stop() {
         player.pause()
-        playerItem = nil
+        player.replaceCurrentItem(with: nil)
     }
 
     /* ****************************************
