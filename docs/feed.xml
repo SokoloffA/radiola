@@ -5,6 +5,17 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 6.1.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fix: The search bar was partially displayed at small window width.&lt;/li&gt;
+&lt;li&gt;Fix: Due to a bug it was not possible to change the output audio device.&lt;/li&gt;
+&lt;li&gt;In paused state the program does not consume network traffic.&lt;/li&gt;
+&lt;li&gt;Links to the home page and issue tracker have been added to the &quot;About Radiola&quot; dialog.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Thu, 14 Mar 2024 20:08:58 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v6.1.0/Radiola-6.1.0.dmg" sparkle:version="6.1.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 6.0.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Remove the 2nd item of local stations, which is needed only for tests.&lt;/li&gt;
