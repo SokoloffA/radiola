@@ -10,6 +10,17 @@ import AVFoundation
 import Cocoa
 import Foundation
 
+extension AVPlayer.TimeControlStatus {
+    var description: String {
+        switch self {
+            case .paused: return "paused"
+            case .waitingToPlayAtSpecifiedRate: return "waitingToPlayAtSpecifiedRate"
+            case .playing: return "playing"
+            @unknown default: return "unknown"
+        }
+    }
+}
+
 var player = Player()
 
 class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
@@ -225,7 +236,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     private func statusChenged(status: AVPlayer.TimeControlStatus) {
-        debug("Player status changed \(status) for \(station?.url ?? "nil")")
+        debug("Player status changed \(status.description) for \(station?.url ?? "nil")")
+
         switch status {
             case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
                 self.status = .connecting
