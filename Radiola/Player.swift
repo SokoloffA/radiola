@@ -141,6 +141,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         debug("Play \(station.url) \(u)")
 
+        stop()
+
         let asset = AVAsset(url: u)
         let playerItem = AVPlayerItem(asset: asset)
 
