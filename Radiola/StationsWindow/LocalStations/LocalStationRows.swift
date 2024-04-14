@@ -75,8 +75,8 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
     let separator = Separator()
 
     private let favoriteIcons = [
-        false: NSImage(named: NSImage.Name("star-empty"))?.tint(color: .lightGray),
-        true: NSImage(named: NSImage.Name("star-filled"))?.tint(color: .systemYellow),
+        false: NSImage(systemSymbolName: NSImage.Name("star"), accessibilityDescription: "Favorite")?.tint(color: .lightGray),
+        true: NSImage(systemSymbolName: NSImage.Name("star.fill"), accessibilityDescription: "Favorite")?.tint(color: .systemYellow),
     ]
 
     /* ****************************************

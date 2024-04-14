@@ -61,13 +61,12 @@
 		39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */; };
 		39D27F532BA36B2D00D5857A /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 39D27F522BA36B2D00D5857A /* Credits.html */; };
 		39D79E632933BEAB00210D94 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D79E622933BEAB00210D94 /* Settings.swift */; };
-		39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */; };
-		39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */; };
 		39E042D0293B3ACA00A2167E /* VolumeMenuItemContoller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E042CE293B3AC900A2167E /* VolumeMenuItemContoller.swift */; };
 		39E042D1293B3ACA00A2167E /* VolumeMenuItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39E042CF293B3AC900A2167E /* VolumeMenuItem.xib */; };
 		39E70DE62AD9E1CA00BF3059 /* RadioBrowserServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */; };
 		39E8DFD5288F316A00082467 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 39E8DFD4288F316A00082467 /* Sparkle */; };
 		39E8DFD72890839500082467 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E8DFD62890839500082467 /* Updater.swift */; };
+		39EF8B9E2BCC151A00733571 /* PlayMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EF8B9D2BCC151A00733571 /* PlayMenuItem.swift */; };
 		39F08E462A0CC582006B65D0 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F08E452A0CC582006B65D0 /* Types.swift */; };
 		39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */; };
 		39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BA288C56C300273AB0 /* UpdatePanel.swift */; };
@@ -135,12 +134,11 @@
 		39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupDialog.swift; sourceTree = "<group>"; };
 		39D27F522BA36B2D00D5857A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		39D79E622933BEAB00210D94 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayItemController.swift; sourceTree = "<group>"; };
-		39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayItemController.xib; sourceTree = "<group>"; };
 		39E042CE293B3AC900A2167E /* VolumeMenuItemContoller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMenuItemContoller.swift; sourceTree = "<group>"; };
 		39E042CF293B3AC900A2167E /* VolumeMenuItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VolumeMenuItem.xib; sourceTree = "<group>"; };
 		39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioBrowserServer.swift; sourceTree = "<group>"; };
 		39E8DFD62890839500082467 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
+		39EF8B9D2BCC151A00733571 /* PlayMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayMenuItem.swift; sourceTree = "<group>"; };
 		39F08E452A0CC582006B65D0 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		39F869BA288C56C300273AB0 /* UpdatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePanel.swift; sourceTree = "<group>"; };
@@ -326,10 +324,9 @@
 				39FF07722933A59900751A03 /* StatuBarController.swift */,
 				39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */,
 				39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */,
-				39D87A2C2882B20A00DFAA2D /* PlayItemController.swift */,
+				39EF8B9D2BCC151A00733571 /* PlayMenuItem.swift */,
 				39E042CE293B3AC900A2167E /* VolumeMenuItemContoller.swift */,
 				39E042CF293B3AC900A2167E /* VolumeMenuItem.xib */,
-				39D87A2D2882B20A00DFAA2D /* PlayItemController.xib */,
 			);
 			path = StatusBar;
 			sourceTree = "<group>";
@@ -414,7 +411,6 @@
 				394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */,
 				3987B9A82A9F81570077EB03 /* ToolbarVolumeView.xib in Resources */,
 				3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */,
-				39D87A2F2882B20A00DFAA2D /* PlayItemController.xib in Resources */,
 				39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */,
 				394F8A442873933A005EA7FA /* MainMenu.xib in Resources */,
 			);
@@ -445,6 +441,7 @@
 				396433962B502AE9009BE1CE /* LocalStationToolBox.swift in Sources */,
 				39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
+				39EF8B9E2BCC151A00733571 /* PlayMenuItem.swift in Sources */,
 				39A7940A2B4B646D000D9875 /* InternetStations.swift in Sources */,
 				39E70DE62AD9E1CA00BF3059 /* RadioBrowserServer.swift in Sources */,
 				39A7940E2B4B647E000D9875 /* RadioBrowserProvider.swift in Sources */,
@@ -465,7 +462,6 @@
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,
 				3987B9A72A9F81570077EB03 /* ToolbarVolumeView.swift in Sources */,
 				39F08E462A0CC582006B65D0 /* Types.swift in Sources */,
-				39D87A2E2882B20A00DFAA2D /* PlayItemController.swift in Sources */,
 				39A794122B4B65AF000D9875 /* AppState.swift in Sources */,
 				392024AF2A51953600670ABD /* ControlsPage.swift in Sources */,
 				39A794082B4B5381000D9875 /* LocalStationRows.swift in Sources */,
