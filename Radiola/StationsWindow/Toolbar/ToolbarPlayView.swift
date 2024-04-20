@@ -31,6 +31,8 @@ class ToolbarPlayView: NSViewController {
         playButton.image?.isTemplate = true
         playButton.target = self
         playButton.action = #selector(togglePlay)
+        playButton.keyEquivalent = " "
+        playButton.keyEquivalentModifierMask = []
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refresh),

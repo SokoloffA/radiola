@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22154" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -384,8 +384,12 @@ CA
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Control" id="orG-FP-eYf">
                         <items>
-                            <menuItem title="Play" tag="1" keyEquivalent="p" id="pkP-Vg-BQh"/>
-                            <menuItem title="Pause" tag="2" keyEquivalent="p" id="ZaX-dn-1ol"/>
+                            <menuItem title="Play" tag="1" id="pkP-Vg-BQh">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="Pause" tag="2" id="ZaX-dn-1ol">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
