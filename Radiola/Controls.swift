@@ -7,6 +7,29 @@
 
 import Cocoa
 
+// MARK: - NSWindow
+
+public extension NSWindow {
+    public func show() {
+        makeKeyAndOrderFront(nil)
+        NSApp.setActivationPolicy(.regular)
+        NSApp.activate(ignoringOtherApps: true)
+
+        // Workaround for window activation issues:  toggle focus away from the app and back.
+        // https://ar.al/2018/09/17/workaround-for-unclickable-app-menu-bug-with-window.makekeyandorderfront-and-nsapp.activate-on-macos/
+        if (NSRunningApplication.runningApplications(withBundleIdentifier: "com.apple.dock").first?.activate(options: []))!
+        {
+            let deadlineTime = DispatchTime.now() + .milliseconds(200)
+            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+                NSApp.setActivationPolicy(.regular)
+                NSApp.activate(ignoringOtherApps: true)
+            }
+        }
+    }
+}
+
+// MARK: - NSView
+
 public extension NSView {
     func load(fromNIBNamed nibName: String) -> NSView? {
         var nibObjects: NSArray?
@@ -34,6 +57,8 @@ public extension NSView {
         return nil
     }
 }
+
+// MARK: - NSImage
 
 public extension NSImage {
     func tint(color: NSColor) -> NSImage {
@@ -70,6 +95,8 @@ public extension NSImage {
         }
     }
 }
+
+// MARK: - ScrollableSlider
 
 class ScrollableSlider: NSSlider {
     override func scrollWheel(with event: NSEvent) {

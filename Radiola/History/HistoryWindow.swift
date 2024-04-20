@@ -52,10 +52,7 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
             instance = HistoryWindow()
         }
 
-        NSApp.setActivationPolicy(.regular)
-        instance?.window?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
-
+        instance?.window?.show()
         return instance!
     }
 

@@ -194,10 +194,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
             instance = StationsWindow()
         }
 
-        NSApp.setActivationPolicy(.regular)
-        instance?.window?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
-
+        instance?.window?.show()
         return instance!
     }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22689"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -41,15 +41,15 @@
                 </textField>
                 <button toolTip="Play/Pause" focusRingType="exterior" translatesAutoresizingMaskIntoConstraints="NO" id="ucz-hQ-b0k">
                     <rect key="frame" x="20" y="9" width="42" height="38"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="38" id="CFY-3r-4CJ"/>
-                        <constraint firstAttribute="width" constant="42" id="TH5-G9-dd4"/>
-                    </constraints>
                     <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSTouchBarPlayTemplate" imagePosition="only" alignment="center" borderStyle="border" focusRingType="exterior" inset="2" id="Atr-JX-5aq">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <color key="contentTintColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="38" id="CFY-3r-4CJ"/>
+                        <constraint firstAttribute="width" constant="42" id="TH5-G9-dd4"/>
+                    </constraints>
                 </button>
             </subviews>
             <constraints>

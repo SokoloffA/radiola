@@ -75,10 +75,7 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
             instance = PreferencesWindow()
         }
 
-        NSApp.setActivationPolicy(.regular)
-        instance?.window?.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
-
+        instance?.window?.show()
         return instance!
     }
 }
