@@ -41,6 +41,7 @@
 		396704692943AD2700012FFD /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396704682943AD2700012FFD /* AudioDevice.swift */; };
 		3967046C2944961500012FFD /* AudioPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3967046A2944961500012FFD /* AudioPage.swift */; };
 		3967046D2944961500012FFD /* AudioPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3967046B2944961500012FFD /* AudioPage.xib */; };
+		39698E882BD5BD0A00721029 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 39698E872BD5BD0A00721029 /* KeyboardShortcuts */; };
 		3987B99D2A9635930077EB03 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B99B2A9635930077EB03 /* SideBar.swift */; };
 		3987B99E2A9635930077EB03 /* SideBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B99C2A9635930077EB03 /* SideBar.xib */; };
 		3987B9A72A9F81570077EB03 /* ToolbarVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */; };
@@ -154,6 +155,7 @@
 			files = (
 				39E8DFD5288F316A00082467 /* Sparkle in Frameworks */,
 				39A0FA4C2BD5964800823793 /* KeyboardShortcuts in Frameworks */,
+				39698E882BD5BD0A00721029 /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,6 +351,7 @@
 			packageProductDependencies = (
 				39E8DFD4288F316A00082467 /* Sparkle */,
 				39A0FA4B2BD5964800823793 /* KeyboardShortcuts */,
+				39698E872BD5BD0A00721029 /* KeyboardShortcuts */,
 			);
 			productName = Radiola;
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
@@ -379,7 +382,7 @@
 			mainGroup = 394F8A2F28739339005EA7FA;
 			packageReferences = (
 				39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */,
-				39A0FA4A2BD5964800823793 /* XCLocalSwiftPackageReference "KeyboardShortcuts" */,
+				39698E862BD5BD0A00721029 /* XCLocalSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
@@ -690,7 +693,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		39A0FA4A2BD5964800823793 /* XCLocalSwiftPackageReference "KeyboardShortcuts" */ = {
+		39698E862BD5BD0A00721029 /* XCLocalSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = KeyboardShortcuts;
 		};
@@ -708,6 +711,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		39698E872BD5BD0A00721029 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = KeyboardShortcuts;
+		};
 		39A0FA4B2BD5964800823793 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = KeyboardShortcuts;
