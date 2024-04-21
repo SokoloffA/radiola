@@ -8,18 +8,30 @@
 import Cocoa
 
 class ControlsPage: NSViewController {
-    @IBOutlet var leftMouseButtonCbx: NSPopUpButton!
-    @IBOutlet var middleMouseButtonCbx: NSPopUpButton!
-    @IBOutlet var rightMouseButtonCbx: NSPopUpButton!
-    @IBOutlet var wheellMouseCbx: NSPopUpButton!
+    private var leftMouseButtonLbl = Label()
+    private var middleMouseButtonLbl = Label()
+    private var rightMouseButtonLbl = Label()
+    private var wheellMouseLbl = Label()
 
-    @IBOutlet var mediaKeysHandlingCbx: NSPopUpButton!
-    @IBOutlet var mediaPrevNextButtonCbx: NSPopUpButton!
-    @IBOutlet var mediaPrevNextButtonLabel: NSPopUpButton!
+    private var leftMouseButtonCbx = NSPopUpButton()
+    private var middleMouseButtonCbx = NSPopUpButton()
+    private var rightMouseButtonCbx = NSPopUpButton()
+    private var wheellMouseCbx = NSPopUpButton()
 
+    private var ctrlMouseHelp = Label()
+
+    private var mediaKeysHandlingLbl = Label()
+    private var mediaKeysHandlingCbx = NSPopUpButton()
+
+    private var mediaPrevNextButtonLbl = Label()
+    private var mediaPrevNextButtonCbx = NSPopUpButton()
+
+    /* ****************************************
+     *
+     * ****************************************/
     override func viewDidLoad() {
-        super.viewDidLoad()
         title = "Controls"
+        view = createView()
 
         initButtonCbx(leftMouseButtonCbx, button: .left)
         initButtonCbx(middleMouseButtonCbx, button: .middle)
@@ -29,6 +41,86 @@ class ControlsPage: NSViewController {
 
         initMediaKeysCbx()
         initMediaPrevNextButtonCbx()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func createView() -> NSView {
+        var res = NSView()
+
+        res.addSubview(leftMouseButtonLbl)
+        res.addSubview(leftMouseButtonCbx)
+        res.addSubview(middleMouseButtonLbl)
+        res.addSubview(middleMouseButtonCbx)
+        res.addSubview(rightMouseButtonLbl)
+        res.addSubview(rightMouseButtonCbx)
+        res.addSubview(wheellMouseLbl)
+        res.addSubview(wheellMouseCbx)
+        res.addSubview(ctrlMouseHelp)
+        res.addSubview(mediaKeysHandlingLbl)
+        res.addSubview(mediaKeysHandlingCbx)
+        res.addSubview(mediaPrevNextButtonLbl)
+        res.addSubview(mediaPrevNextButtonCbx)
+
+        leftMouseButtonLbl.stringValue = "Left mouse button:"
+        leftMouseButtonLbl.alignment = .right
+        leftMouseButtonLbl.translatesAutoresizingMaskIntoConstraints = false
+        leftMouseButtonCbx.translatesAutoresizingMaskIntoConstraints = false
+        leftMouseButtonCbx.topAnchor.constraint(equalTo: res.topAnchor, constant: 20).isActive = true
+        leftMouseButtonLbl.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 16).isActive = true
+        leftMouseButtonCbx.leadingAnchor.constraint(equalTo: leftMouseButtonLbl.trailingAnchor, constant: 20).isActive = true
+        leftMouseButtonLbl.centerYAnchor.constraint(equalTo: leftMouseButtonCbx.centerYAnchor).isActive = true
+
+        middleMouseButtonLbl.stringValue = "Middle mouse button:"
+        alignRow(lbl: middleMouseButtonLbl, cbx: middleMouseButtonCbx, prev: leftMouseButtonCbx)
+
+        rightMouseButtonLbl.stringValue = "Right mouse button:"
+        alignRow(lbl: rightMouseButtonLbl, cbx: rightMouseButtonCbx, prev: middleMouseButtonCbx)
+
+        ctrlMouseHelp.stringValue = "You can always open the menu with Control+Mouse Click"
+        ctrlMouseHelp.textColor = .secondaryLabelColor
+        ctrlMouseHelp.translatesAutoresizingMaskIntoConstraints = false
+        ctrlMouseHelp.topAnchor.constraint(equalTo: rightMouseButtonCbx.bottomAnchor, constant: 14).isActive = true
+        ctrlMouseHelp.leadingAnchor.constraint(equalTo: rightMouseButtonCbx.leadingAnchor).isActive = true
+        ctrlMouseHelp.trailingAnchor.constraint(equalTo: rightMouseButtonCbx.trailingAnchor).isActive = true
+
+        wheellMouseLbl.stringValue = "Mouse wheel:"
+        alignRow(lbl: wheellMouseLbl, cbx: wheellMouseCbx, prev: ctrlMouseHelp, margin: 24)
+
+        var separator = Separator()
+        res.addSubview(separator)
+        separator.topAnchor.constraint(equalTo: wheellMouseCbx.bottomAnchor, constant: 24).isActive = true
+        separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
+        separator.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
+
+        mediaKeysHandlingLbl.stringValue = "Media key handling:"
+        alignRow(lbl: mediaKeysHandlingLbl, cbx: mediaKeysHandlingCbx, prev: separator, margin: 20)
+
+        mediaPrevNextButtonLbl.stringValue = "Previous and next track buttons:"
+        alignRow(lbl: mediaPrevNextButtonLbl, cbx: mediaPrevNextButtonCbx, prev: mediaKeysHandlingCbx)
+
+        res.bottomAnchor.constraint(equalTo: mediaPrevNextButtonCbx.bottomAnchor, constant: 32).isActive = true
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func alignRow(lbl: Label, cbx: NSView, prev: NSView, margin: CGFloat = 10) {
+        lbl.alignment = .right
+
+        lbl.translatesAutoresizingMaskIntoConstraints = false
+        cbx.translatesAutoresizingMaskIntoConstraints = false
+
+        cbx.topAnchor.constraint(equalTo: prev.bottomAnchor, constant: margin).isActive = true
+        cbx.centerYAnchor.constraint(equalTo: lbl.centerYAnchor).isActive = true
+
+        lbl.leadingAnchor.constraint(equalTo: leftMouseButtonLbl.leadingAnchor).isActive = true
+        lbl.trailingAnchor.constraint(equalTo: leftMouseButtonLbl.trailingAnchor).isActive = true
+
+        cbx.leadingAnchor.constraint(equalTo: leftMouseButtonCbx.leadingAnchor).isActive = true
+        cbx.trailingAnchor.constraint(equalTo: leftMouseButtonCbx.trailingAnchor).isActive = true
     }
 
     /* ****************************************
@@ -62,7 +154,7 @@ class ControlsPage: NSViewController {
      *
      * ****************************************/
     private func initMouseWheelCbx() {
-        guard let cbx = wheellMouseCbx else { return }
+        let cbx = wheellMouseCbx
 
         cbx.removeAllItems()
 
@@ -81,7 +173,7 @@ class ControlsPage: NSViewController {
      *
      * ****************************************/
     private func initMediaKeysCbx() {
-        guard let cbx = mediaKeysHandlingCbx else { return }
+        let cbx = mediaKeysHandlingCbx
 
         cbx.removeAllItems()
 
@@ -123,7 +215,7 @@ class ControlsPage: NSViewController {
      * ****************************************/
     private func refresh() {
         mediaPrevNextButtonCbx.isEnabled = settings.mediaKeysHandle != .disable
-        mediaPrevNextButtonLabel.isEnabled = mediaPrevNextButtonCbx.isEnabled
+        mediaPrevNextButtonLbl.isEnabled = mediaPrevNextButtonCbx.isEnabled
     }
 
     /* ****************************************

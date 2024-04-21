@@ -12,7 +12,6 @@
 		390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 390C7297287B237B00E17BAE /* HistoryRow.xib */; };
 		39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */; };
 		392024AF2A51953600670ABD /* ControlsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024AD2A51953600670ABD /* ControlsPage.swift */; };
-		392024B02A51953600670ABD /* ControlsPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 392024AE2A51953600670ABD /* ControlsPage.xib */; };
 		392024B32A519FF900670ABD /* AppearancePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024B12A519FF900670ABD /* AppearancePage.swift */; };
 		392024B42A519FF900670ABD /* AppearancePage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 392024B22A519FF900670ABD /* AppearancePage.xib */; };
 		3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3926FF112AD4687A0094D875 /* AddStationDialog.xib */; };
@@ -82,7 +81,6 @@
 		390C7297287B237B00E17BAE /* HistoryRow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryRow.xib; sourceTree = "<group>"; };
 		39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
 		392024AD2A51953600670ABD /* ControlsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsPage.swift; sourceTree = "<group>"; };
-		392024AE2A51953600670ABD /* ControlsPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ControlsPage.xib; sourceTree = "<group>"; };
 		392024B12A519FF900670ABD /* AppearancePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePage.swift; sourceTree = "<group>"; };
 		392024B22A519FF900670ABD /* AppearancePage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AppearancePage.xib; sourceTree = "<group>"; };
 		3926FF112AD4687A0094D875 /* AddStationDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
@@ -310,7 +308,6 @@
 				3967046A2944961500012FFD /* AudioPage.swift */,
 				9D1D31C92A06448200F0BA44 /* StartupPage.swift */,
 				392024B22A519FF900670ABD /* AppearancePage.xib */,
-				392024AE2A51953600670ABD /* ControlsPage.xib */,
 				9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */,
 				3967046B2944961500012FFD /* AudioPage.xib */,
 				39F869BB288C56C300273AB0 /* UpdatePanel.xib */,
@@ -396,7 +393,6 @@
 			files = (
 				3987B9AC2A9F8A190077EB03 /* ToolbarPlayView.xib in Resources */,
 				9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */,
-				392024B02A51953600670ABD /* ControlsPage.xib in Resources */,
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
 				3987B99E2A9635930077EB03 /* SideBar.xib in Resources */,
 				390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */,
