@@ -56,6 +56,18 @@ enum MediaPrevNextKeyAction: Int {
 
 typealias Bitrate = Int
 
+// MARK: - String
+
+extension String {
+    var tr: String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+    }
+
+    func tr(withComment: String) -> String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: withComment)
+    }
+}
+
 // MARK: - Errors
 
 struct Alarm: Error, Identifiable {

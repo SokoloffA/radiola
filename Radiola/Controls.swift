@@ -10,7 +10,7 @@ import Cocoa
 // MARK: - NSWindow
 
 public extension NSWindow {
-    public func show() {
+    func show() {
         makeKeyAndOrderFront(nil)
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
@@ -210,6 +210,11 @@ class Label: NSTextField {
         focusRingType = .none
         setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 250), for: .horizontal)
         setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 750), for: .vertical)
+    }
+
+    convenience init(_ text: String) {
+        self.init()
+        stringValue = text
     }
 
     required init?(coder: NSCoder) {
