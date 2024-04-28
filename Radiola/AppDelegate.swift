@@ -7,13 +7,13 @@
 //
 
 import Cocoa
-import KeyboardShortcuts
+//import KeyboardShortcuts
 
-extension KeyboardShortcuts.Name {
-    static let showMainWindow = Self("showMainWindow")
-    static let showHistoryWindow = Self("showHistoryWindow")
-    static let showPreferencesWindow = Self("showPreferencesWindow")
-}
+//extension KeyboardShortcuts.Name {
+//    static let showMainWindow = Self("showMainWindow")
+//    static let showHistoryWindow = Self("showHistoryWindow")
+//    static let showPreferencesWindow = Self("showPreferencesWindow")
+//}
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -76,8 +76,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             player.play()
         }
 
-        KeyboardShortcuts.onKeyUp(for: .showMainWindow) { [self] in showStationView(nil) }
-        KeyboardShortcuts.onKeyUp(for: .showHistoryWindow) { [self] in showHistory(nil) }
+//        KeyboardShortcuts.onKeyUp(for: .showMainWindow) { [self] in showStationView(nil) }
+//        KeyboardShortcuts.onKeyUp(for: .showHistoryWindow) { [self] in showHistory(nil) }
     }
 
     /* ****************************************

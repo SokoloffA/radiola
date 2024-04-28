@@ -6,7 +6,7 @@
 //
 
 import Cocoa
-import KeyboardShortcuts
+// import KeyboardShortcuts
 
 class ControlsPage: NSViewController {
     private var leftMouseButtonLbl = Label()
@@ -28,10 +28,12 @@ class ControlsPage: NSViewController {
     private var mediaPrevNextButtonCbx = NSPopUpButton()
 
     private var globalKeyShowMainWindowLbl = Label("Global shortcut to show stations")
-    private var globalKeyShowMainWindowCtrl = KeyboardShortcuts.RecorderCocoa(for: .showMainWindow)
+//    private var globalKeyShowMainWindowCtrl = KeyboardShortcuts.RecorderCocoa(for: .showMainWindow)
+    private var globalKeyShowMainWindowCtrl = NSPopUpButton()
 
     private var globalKeyShowHistoryLbl = Label("Global shortcut to show history")
-    private var globalKeyShowHistoryCtrl = KeyboardShortcuts.RecorderCocoa(for: .showHistoryWindow)
+//    private var globalKeyShowHistoryCtrl = KeyboardShortcuts.RecorderCocoa(for: .showHistoryWindow)
+    private var globalKeyShowHistoryCtrl = NSPopUpButton()
 
     /* ****************************************
      *

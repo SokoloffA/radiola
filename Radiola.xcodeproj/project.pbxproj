@@ -41,13 +41,13 @@
 		396704692943AD2700012FFD /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396704682943AD2700012FFD /* AudioDevice.swift */; };
 		3967046C2944961500012FFD /* AudioPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3967046A2944961500012FFD /* AudioPage.swift */; };
 		3967046D2944961500012FFD /* AudioPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3967046B2944961500012FFD /* AudioPage.xib */; };
+		39698E972BDEBBD000721029 /* HotKey in Frameworks */ = {isa = PBXBuildFile; productRef = 39698E962BDEBBD000721029 /* HotKey */; };
 		3987B99D2A9635930077EB03 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B99B2A9635930077EB03 /* SideBar.swift */; };
 		3987B99E2A9635930077EB03 /* SideBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B99C2A9635930077EB03 /* SideBar.xib */; };
 		3987B9A72A9F81570077EB03 /* ToolbarVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */; };
 		3987B9A82A9F81570077EB03 /* ToolbarVolumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */; };
 		3987B9AB2A9F8A190077EB03 /* ToolbarPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */; };
 		3987B9AC2A9F8A190077EB03 /* ToolbarPlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */; };
-		39A0FA492BD50DDB00823793 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 39A0FA482BD50DDB00823793 /* KeyboardShortcuts */; };
 		39A794052B4B33F1000D9875 /* LocalStationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A794042B4B33F1000D9875 /* LocalStationDelegate.swift */; };
 		39A794082B4B5381000D9875 /* LocalStationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A794072B4B5381000D9875 /* LocalStationRows.swift */; };
 		39A7940A2B4B646D000D9875 /* InternetStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A794092B4B646D000D9875 /* InternetStations.swift */; };
@@ -152,8 +152,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				39698E972BDEBBD000721029 /* HotKey in Frameworks */,
 				39E8DFD5288F316A00082467 /* Sparkle in Frameworks */,
-				39A0FA492BD50DDB00823793 /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,7 +348,7 @@
 			name = Radiola;
 			packageProductDependencies = (
 				39E8DFD4288F316A00082467 /* Sparkle */,
-				39A0FA482BD50DDB00823793 /* KeyboardShortcuts */,
+				39698E962BDEBBD000721029 /* HotKey */,
 			);
 			productName = Radiola;
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
@@ -360,8 +360,9 @@
 		394F8A3028739339005EA7FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1320;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					394F8A3728739339005EA7FA = {
 						CreatedOnToolsVersion = 13.2.1;
@@ -379,7 +380,7 @@
 			mainGroup = 394F8A2F28739339005EA7FA;
 			packageReferences = (
 				39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */,
-				39A0FA472BD50DDB00823793 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				39698E952BDEBBD000721029 /* XCRemoteSwiftPackageReference "HotKey" */,
 			);
 			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
@@ -491,6 +492,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -525,6 +527,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -553,6 +556,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -587,6 +591,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -690,12 +695,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		39A0FA472BD50DDB00823793 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+		39698E952BDEBBD000721029 /* XCRemoteSwiftPackageReference "HotKey" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			repositoryURL = "https://github.com/soffes/HotKey";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
+				branch = main;
+				kind = branch;
 			};
 		};
 		39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
@@ -709,10 +714,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		39A0FA482BD50DDB00823793 /* KeyboardShortcuts */ = {
+		39698E962BDEBBD000721029 /* HotKey */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 39A0FA472BD50DDB00823793 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
-			productName = KeyboardShortcuts;
+			package = 39698E952BDEBBD000721029 /* XCRemoteSwiftPackageReference "HotKey" */;
+			productName = HotKey;
 		};
 		39E8DFD4288F316A00082467 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
