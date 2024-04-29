@@ -6,7 +6,6 @@
 //
 
 import Cocoa
-import KeyboardShortcuts
 
 class ControlsPage: NSViewController {
     private var leftMouseButtonLbl = Label()
@@ -26,12 +25,6 @@ class ControlsPage: NSViewController {
 
     private var mediaPrevNextButtonLbl = Label()
     private var mediaPrevNextButtonCbx = NSPopUpButton()
-
-    private var globalKeyShowMainWindowLbl = Label("Global shortcut to show stations")
-    private var globalKeyShowMainWindowCtrl = KeyboardShortcuts.RecorderCocoa(for: .showMainWindow)
-
-    private var globalKeyShowHistoryLbl = Label("Global shortcut to show history")
-    private var globalKeyShowHistoryCtrl = KeyboardShortcuts.RecorderCocoa(for: .showHistoryWindow)
 
     /* ****************************************
      *
@@ -54,7 +47,7 @@ class ControlsPage: NSViewController {
      *
      * ****************************************/
     private func createView() -> NSView {
-        let res = NSView()
+        var res = NSView()
 
         res.addSubview(leftMouseButtonLbl)
         res.addSubview(leftMouseButtonCbx)
@@ -69,10 +62,6 @@ class ControlsPage: NSViewController {
         res.addSubview(mediaKeysHandlingCbx)
         res.addSubview(mediaPrevNextButtonLbl)
         res.addSubview(mediaPrevNextButtonCbx)
-        res.addSubview(globalKeyShowMainWindowLbl)
-        res.addSubview(globalKeyShowMainWindowCtrl)
-        res.addSubview(globalKeyShowHistoryLbl)
-        res.addSubview(globalKeyShowHistoryCtrl)
 
         leftMouseButtonLbl.stringValue = "Left mouse button:"
         leftMouseButtonLbl.alignment = .right
@@ -90,17 +79,16 @@ class ControlsPage: NSViewController {
         alignRow(lbl: rightMouseButtonLbl, cbx: rightMouseButtonCbx, prev: middleMouseButtonCbx)
 
         ctrlMouseHelp.stringValue = "You can always open the menu with Control+Mouse Click"
-        ctrlMouseHelp.alignment = .right
         ctrlMouseHelp.textColor = .secondaryLabelColor
         ctrlMouseHelp.translatesAutoresizingMaskIntoConstraints = false
         ctrlMouseHelp.topAnchor.constraint(equalTo: rightMouseButtonCbx.bottomAnchor, constant: 14).isActive = true
         ctrlMouseHelp.leadingAnchor.constraint(equalTo: rightMouseButtonCbx.leadingAnchor).isActive = true
-        ctrlMouseHelp.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -16).isActive = true
+        ctrlMouseHelp.trailingAnchor.constraint(equalTo: rightMouseButtonCbx.trailingAnchor).isActive = true
 
         wheellMouseLbl.stringValue = "Mouse wheel:"
         alignRow(lbl: wheellMouseLbl, cbx: wheellMouseCbx, prev: ctrlMouseHelp, margin: 24)
 
-        let separator = Separator()
+        var separator = Separator()
         res.addSubview(separator)
         separator.topAnchor.constraint(equalTo: wheellMouseCbx.bottomAnchor, constant: 24).isActive = true
         separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
@@ -112,14 +100,7 @@ class ControlsPage: NSViewController {
         mediaPrevNextButtonLbl.stringValue = "Previous and next track buttons:"
         alignRow(lbl: mediaPrevNextButtonLbl, cbx: mediaPrevNextButtonCbx, prev: mediaKeysHandlingCbx)
 
-        alignRow(lbl: mediaKeysHandlingLbl, cbx: mediaKeysHandlingCbx, prev: separator, margin: 20)
-        alignRow(lbl: mediaPrevNextButtonLbl, cbx: mediaPrevNextButtonCbx, prev: mediaKeysHandlingCbx)
-
-        alignRow(lbl: globalKeyShowMainWindowLbl, cbx: globalKeyShowMainWindowCtrl, prev: mediaPrevNextButtonCbx)
-        alignRow(lbl: globalKeyShowHistoryLbl, cbx: globalKeyShowHistoryCtrl, prev: globalKeyShowMainWindowCtrl)
-
-        res.bottomAnchor.constraint(equalTo: globalKeyShowHistoryCtrl.bottomAnchor, constant: 32).isActive = true
-
+        res.bottomAnchor.constraint(equalTo: mediaPrevNextButtonCbx.bottomAnchor, constant: 32).isActive = true
         return res
     }
 
@@ -138,11 +119,8 @@ class ControlsPage: NSViewController {
         lbl.leadingAnchor.constraint(equalTo: leftMouseButtonLbl.leadingAnchor).isActive = true
         lbl.trailingAnchor.constraint(equalTo: leftMouseButtonLbl.trailingAnchor).isActive = true
 
-//        lbl.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 251), for: .horizontal)
-        cbx.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 249), for: .horizontal)
         cbx.leadingAnchor.constraint(equalTo: leftMouseButtonCbx.leadingAnchor).isActive = true
         cbx.trailingAnchor.constraint(equalTo: leftMouseButtonCbx.trailingAnchor).isActive = true
-        cbx.trailingAnchor.constraint(equalTo: cbx.superview!.trailingAnchor, constant: -16).isActive = true
     }
 
     /* ****************************************

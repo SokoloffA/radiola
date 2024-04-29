@@ -7,12 +7,17 @@
 //
 
 import Cocoa
-import KeyboardShortcuts
 
-extension KeyboardShortcuts.Name {
-    static let showMainWindow = Self("showMainWindow")
-    static let showHistoryWindow = Self("showHistoryWindow")
-    static let showPreferencesWindow = Self("showPreferencesWindow")
+extension String {
+    var tr: String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
+    }
+}
+
+extension String {
+    func tr(withComment: String) -> String {
+        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: withComment)
+    }
 }
 
 @NSApplicationMain
@@ -75,9 +80,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             debug("Auto play \(settings.lastStationUrl ?? "nil")")
             player.play()
         }
-
-        KeyboardShortcuts.onKeyUp(for: .showMainWindow) { [self] in showStationView(nil) }
-        KeyboardShortcuts.onKeyUp(for: .showHistoryWindow) { [self] in showHistory(nil) }
     }
 
     /* ****************************************

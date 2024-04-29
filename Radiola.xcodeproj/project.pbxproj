@@ -47,7 +47,6 @@
 		3987B9A82A9F81570077EB03 /* ToolbarVolumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9A62A9F81570077EB03 /* ToolbarVolumeView.xib */; };
 		3987B9AB2A9F8A190077EB03 /* ToolbarPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */; };
 		3987B9AC2A9F8A190077EB03 /* ToolbarPlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B9AA2A9F8A190077EB03 /* ToolbarPlayView.xib */; };
-		39A0FA492BD50DDB00823793 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 39A0FA482BD50DDB00823793 /* KeyboardShortcuts */; };
 		39A794052B4B33F1000D9875 /* LocalStationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A794042B4B33F1000D9875 /* LocalStationDelegate.swift */; };
 		39A794082B4B5381000D9875 /* LocalStationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A794072B4B5381000D9875 /* LocalStationRows.swift */; };
 		39A7940A2B4B646D000D9875 /* InternetStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A794092B4B646D000D9875 /* InternetStations.swift */; };
@@ -153,7 +152,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				39E8DFD5288F316A00082467 /* Sparkle in Frameworks */,
-				39A0FA492BD50DDB00823793 /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -348,7 +346,6 @@
 			name = Radiola;
 			packageProductDependencies = (
 				39E8DFD4288F316A00082467 /* Sparkle */,
-				39A0FA482BD50DDB00823793 /* KeyboardShortcuts */,
 			);
 			productName = Radiola;
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
@@ -379,7 +376,6 @@
 			mainGroup = 394F8A2F28739339005EA7FA;
 			packageReferences = (
 				39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */,
-				39A0FA472BD50DDB00823793 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
@@ -690,14 +686,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		39A0FA472BD50DDB00823793 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -709,11 +697,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		39A0FA482BD50DDB00823793 /* KeyboardShortcuts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 39A0FA472BD50DDB00823793 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
-			productName = KeyboardShortcuts;
-		};
 		39E8DFD4288F316A00082467 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */;
