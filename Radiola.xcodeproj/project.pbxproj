@@ -42,7 +42,7 @@
 		3967046C2944961500012FFD /* AudioPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3967046A2944961500012FFD /* AudioPage.swift */; };
 		3967046D2944961500012FFD /* AudioPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3967046B2944961500012FFD /* AudioPage.xib */; };
 		39698E882BD5BD0A00721029 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 39698E872BD5BD0A00721029 /* KeyboardShortcuts */; };
-		39698E8E2BD5C2F400721029 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 39698E8D2BD5C2F400721029 /* KeyboardShortcuts */; };
+		39698E8B2BD5BE4800721029 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 39698E8A2BD5BE4800721029 /* KeyboardShortcuts */; };
 		3987B99D2A9635930077EB03 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B99B2A9635930077EB03 /* SideBar.swift */; };
 		3987B99E2A9635930077EB03 /* SideBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B99C2A9635930077EB03 /* SideBar.xib */; };
 		3987B9A72A9F81570077EB03 /* ToolbarVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */; };
@@ -155,7 +155,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39E8DFD5288F316A00082467 /* Sparkle in Frameworks */,
-				39698E8E2BD5C2F400721029 /* KeyboardShortcuts in Frameworks */,
+				39698E8B2BD5BE4800721029 /* KeyboardShortcuts in Frameworks */,
 				39A0FA4C2BD5964800823793 /* KeyboardShortcuts in Frameworks */,
 				39698E882BD5BD0A00721029 /* KeyboardShortcuts in Frameworks */,
 			);
@@ -354,7 +354,7 @@
 				39E8DFD4288F316A00082467 /* Sparkle */,
 				39A0FA4B2BD5964800823793 /* KeyboardShortcuts */,
 				39698E872BD5BD0A00721029 /* KeyboardShortcuts */,
-				39698E8D2BD5C2F400721029 /* KeyboardShortcuts */,
+				39698E8A2BD5BE4800721029 /* KeyboardShortcuts */,
 			);
 			productName = Radiola;
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
@@ -385,7 +385,7 @@
 			mainGroup = 394F8A2F28739339005EA7FA;
 			packageReferences = (
 				39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */,
-				39698E8C2BD5C2F400721029 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				39698E892BD5BE4800721029 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
@@ -696,7 +696,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		39698E8C2BD5C2F400721029 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+		39698E892BD5BE4800721029 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
 			requirement = {
@@ -719,9 +719,9 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = KeyboardShortcuts;
 		};
-		39698E8D2BD5C2F400721029 /* KeyboardShortcuts */ = {
+		39698E8A2BD5BE4800721029 /* KeyboardShortcuts */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 39698E8C2BD5C2F400721029 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			package = 39698E892BD5BE4800721029 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
 		};
 		39A0FA4B2BD5964800823793 /* KeyboardShortcuts */ = {
