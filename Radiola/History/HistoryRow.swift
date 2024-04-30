@@ -8,21 +8,65 @@
 import Cocoa
 
 class HistoryRow: NSView {
-    @IBOutlet var songLabel: NSTextField!
-    @IBOutlet var stationLabel: NSTextField!
-    @IBOutlet var dateLabel: NSTextField!
-    var mainView: NSView?
+    private var songLabel = Label()
+    private var stationLabel = Label()
+    private var dateLabel = Label()
+    private let favoriteSong = IconView(
+        onImage: NSImage(systemSymbolName: NSImage.Name("heart.fill"), accessibilityDescription: "Current song is favorite"),
+        offImage: nil
+    )
+    let separator = Separator()
 
-    let record: Player.HistoryRecord!
+    let record: HistoryRecord
     var timer: Timer?
 
     /* ****************************************
      *
      * ****************************************/
-    init(history: Player.HistoryRecord) {
+    init(history: HistoryRecord) {
         record = history
         super.init(frame: NSRect.zero)
-        _ = load(fromNIBNamed: "HistoryRow")
+
+        addSubview(songLabel)
+        addSubview(stationLabel)
+        addSubview(dateLabel)
+        addSubview(favoriteSong)
+        addSubview(separator)
+
+        songLabel.setFontWeight(.medium)
+
+        favoriteSong.toolTip = "The current song has been marked as a favorite."
+
+        stationLabel.font = NSFont.systemFont(ofSize: 11)
+        stationLabel.textColor = .secondaryLabelColor
+
+        dateLabel.font = NSFont.systemFont(ofSize: 12)
+        dateLabel.textColor = .secondaryLabelColor
+
+        songLabel.translatesAutoresizingMaskIntoConstraints = false
+        stationLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        favoriteSong.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            songLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            songLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -36),
+
+            favoriteSong.centerYAnchor.constraint(equalTo: songLabel.centerYAnchor),
+            favoriteSong.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+
+            stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor),
+            dateLabel.leadingAnchor.constraint(equalTo: stationLabel.trailingAnchor, constant: 8),
+            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+
+            songLabel.topAnchor.constraint(equalTo: topAnchor, constant: 7.0),
+            stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 4),
+            stationLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0),
+
+            dateLabel.lastBaselineAnchor.constraint(equalTo: stationLabel.lastBaselineAnchor),
+        ])
+
+        separator.alignBottom(of: self)
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refreshDate),
@@ -37,6 +81,7 @@ class HistoryRow: NSView {
         songLabel.stringValue = record.song
         stationLabel.stringValue = record.station
         dateLabel.toolTip = dateAndTime()
+        favoriteSong.state = record.favorite ? .on : .off
 
         refreshDate()
     }
@@ -45,8 +90,7 @@ class HistoryRow: NSView {
      *
      * ****************************************/
     required init?(coder: NSCoder) {
-        record = Player.HistoryRecord()
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     /* ****************************************

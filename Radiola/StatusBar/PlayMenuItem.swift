@@ -43,6 +43,7 @@ fileprivate class PlayItemController: NSViewController {
     var playIcon = PlayButtonImage()
     var songLabel = Label()
     var stationLabel = Label()
+    var favoriteButton = ImageButton()
 
     var menuItem: NSMenuItem?
 
@@ -69,14 +70,20 @@ fileprivate class PlayItemController: NSViewController {
      *
      * ****************************************/
     private func createView() -> NSView {
-        let res = NSView(frame: NSRect(x: 0, y: 0, width: 300, height: 45))
+        let res = NSView(frame: NSRect(x: 0, y: 0, width: 360, height: 45))
 
         playIcon.imageScaling = .scaleProportionallyUpOrDown
+
+        favoriteButton.image = NSImage(systemSymbolName: NSImage.Name("heart"), accessibilityDescription: "Mark current song as favorite")
+        favoriteButton.alternateImage = NSImage(systemSymbolName: NSImage.Name("heart.fill"), accessibilityDescription: "Unmark current song as favorite")
+        favoriteButton.target = self
+        favoriteButton.action = #selector(markAsFavoriteSong)
+        favoriteButton.toolTip = "Mark current song as favorite"
 
         songLabel.textColor = .labelColor
         songLabel.lineBreakMode = .byClipping
         stationLabel.font = NSFont.systemFont(ofSize: 13)
-        songLabel.setFontWeight(.medium)
+        songLabel.setFontWeight(.semibold)
 
         stationLabel.textColor = .labelColor
         stationLabel.lineBreakMode = .byClipping
@@ -85,10 +92,12 @@ fileprivate class PlayItemController: NSViewController {
         res.addSubview(playIcon)
         res.addSubview(songLabel)
         res.addSubview(stationLabel)
+        res.addSubview(favoriteButton)
 
         playIcon.translatesAutoresizingMaskIntoConstraints = false
         songLabel.translatesAutoresizingMaskIntoConstraints = false
         stationLabel.translatesAutoresizingMaskIntoConstraints = false
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
 
         playIcon.heightAnchor.constraint(equalToConstant: 18).isActive = true
         playIcon.widthAnchor.constraint(equalTo: playIcon.heightAnchor).isActive = true
@@ -97,7 +106,11 @@ fileprivate class PlayItemController: NSViewController {
         playIcon.centerYAnchor.constraint(equalTo: res.centerYAnchor).isActive = true
 
         songLabel.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 53).isActive = true
-        songLabel.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
+        songLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -10).isActive = true
+
+        favoriteButton.centerYAnchor.constraint(equalTo: songLabel.centerYAnchor).isActive = true
+        favoriteButton.widthAnchor.constraint(equalTo: favoriteButton.heightAnchor).isActive = true
+        favoriteButton.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
 
         stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor).isActive = true
         stationLabel.trailingAnchor.constraint(equalTo: songLabel.trailingAnchor).isActive = true
@@ -153,5 +166,16 @@ fileprivate class PlayItemController: NSViewController {
                 stationLabel.stringValue = player.stationName
                 songLabel.stringValue = player.songTitle
         }
+
+        favoriteButton.state = player.isFavoriteSong ? .on : .off
+        favoriteButton.isEnabled = player.status == .playing
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func markAsFavoriteSong() {
+        player.isFavoriteSong = !player.isFavoriteSong
+        refresh()
     }
 }

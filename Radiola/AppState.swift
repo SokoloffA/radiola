@@ -45,6 +45,9 @@ class AppState: ObservableObject {
         InternetStationList(title: "By country", icon: "globe", help: nil, provider: RadioBrowserProvider(.byCountry)),
     ]
 
+
+    public var history = History()
+
     /* ****************************************
      *
      * ****************************************/

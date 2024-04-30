@@ -47,7 +47,7 @@ class ControlsPage: NSViewController {
      *
      * ****************************************/
     private func createView() -> NSView {
-        var res = NSView()
+        let res = NSView()
 
         res.addSubview(leftMouseButtonLbl)
         res.addSubview(leftMouseButtonCbx)
@@ -88,7 +88,7 @@ class ControlsPage: NSViewController {
         wheellMouseLbl.stringValue = "Mouse wheel:"
         alignRow(lbl: wheellMouseLbl, cbx: wheellMouseCbx, prev: ctrlMouseHelp, margin: 24)
 
-        var separator = Separator()
+        let separator = Separator()
         res.addSubview(separator)
         separator.topAnchor.constraint(equalTo: wheellMouseCbx.bottomAnchor, constant: 24).isActive = true
         separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true

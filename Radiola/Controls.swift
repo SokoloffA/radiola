@@ -10,7 +10,7 @@ import Cocoa
 // MARK: - NSWindow
 
 public extension NSWindow {
-    public func show() {
+    func show() {
         makeKeyAndOrderFront(nil)
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
@@ -55,6 +55,11 @@ public extension NSView {
         }
 
         return nil
+    }
+
+    func setBackgroundColor(_ color: NSColor) {
+        wantsLayer = true
+        layer?.backgroundColor = color.cgColor
     }
 }
 
@@ -199,7 +204,7 @@ class TextField: NSTextField {
     }
 }
 
-// MARK: - TextField
+// MARK: - Label
 
 class Label: NSTextField {
     init() {
@@ -210,6 +215,25 @@ class Label: NSTextField {
         focusRingType = .none
         setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 250), for: .horizontal)
         setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 750), for: .vertical)
+    }
+
+    convenience init(text: String) {
+        self.init()
+        stringValue = text
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+// MARK: - SecondaryLabel
+
+class SecondaryLabel: Label {
+    override init() {
+        super.init()
+        font = NSFont.systemFont(ofSize: 12)
+        textColor = .secondaryLabelColor
     }
 
     required init?(coder: NSCoder) {
@@ -224,7 +248,7 @@ class ImageButton: NSButton {
         super.init(frame: NSRect())
         bezelStyle = .shadowlessSquare
         isBordered = false
-        setButtonType(.momentaryPushIn)
+        setButtonType(.toggle)
     }
 
     required init?(coder: NSCoder) {
@@ -235,7 +259,38 @@ class ImageButton: NSButton {
 extension NSControl {
     func setFontWeight(_ weight: NSFont.Weight) {
         if let font = font {
-            self.font = NSFont.systemFont(ofSize: font.pointSize, weight: .bold)
+            self.font = NSFont.systemFont(ofSize: font.pointSize, weight: weight)
+        }
+    }
+}
+
+// MARK: - IconView
+
+class IconView: NSImageView {
+    var onImage: NSImage? { didSet { updateImage() }}
+    var offImage: NSImage? { didSet { updateImage() }}
+    var state = NSControl.StateValue.off { didSet { updateImage() }}
+
+    init() {
+        super.init(frame: NSRect.zero)
+    }
+
+    convenience init(onImage: NSImage?, offImage: NSImage?) {
+        self.init()
+        self.onImage = onImage
+        self.offImage = offImage
+        updateImage()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func updateImage() {
+        switch state {
+            case .off: image = offImage
+            case .on: image = onImage
+            default: image = offImage
         }
     }
 }

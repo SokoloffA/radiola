@@ -21,12 +21,18 @@ extension AVPlayer.TimeControlStatus {
     }
 }
 
+// MARK: - Player
+
 var player = Player()
 
 class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     var station: Station?
     public var songTitle = String()
     public var stationName: String { station?.title ?? "" }
+    public var isFavoriteSong: Bool {
+        get { getIsFavoriteSong() }
+        set { setIsFavoriteSong(newValue) }
+    }
 
     public enum Status {
         case paused
@@ -34,15 +40,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         case playing
     }
 
-    struct HistoryRecord {
-        var song: String = ""
-        var station: String = ""
-        var date: Date = Date()
-    }
-
     public var status = Status.paused
-    public var history: [HistoryRecord] = []
-
     private var playerItemContext = 0
     private var player: AVPlayer!
     private var timer: Timer?
@@ -283,15 +281,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     private func addHistory() {
         guard let station = station else { return }
-
-        if history.last?.song == songTitle && history.last?.station == station.title {
-            return
-        }
-
-        history.append(HistoryRecord(song: songTitle, station: station.title, date: Date()))
-        if history.count > 100 {
-            history.removeFirst(history.count - 100)
-        }
+        AppState.shared.history.add(station: station, songTitle: songTitle)
     }
 
     /* ****************************************
@@ -340,5 +330,36 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     func decVolume() {
         volume -= 0.05
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func getIsFavoriteSong() -> Bool {
+        if status != .playing {
+            return false
+        }
+        guard let station = station else { return false }
+        guard let rec = AppState.shared.history.last else { return false }
+
+        if rec.station == station.title && rec.song == songTitle {
+            return rec.favorite
+        }
+
+        return false
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func setIsFavoriteSong(_ favorite: Bool) {
+        if status != .playing {
+            return
+        }
+
+        guard let rec = AppState.shared.history.last else { return }
+
+        rec.favorite = favorite
+        NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": songTitle])
     }
 }

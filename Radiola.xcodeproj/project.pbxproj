@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		390C7294287B213200E17BAE /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7293287B213200E17BAE /* Controls.swift */; };
 		390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7296287B237B00E17BAE /* HistoryRow.swift */; };
-		390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 390C7297287B237B00E17BAE /* HistoryRow.xib */; };
 		39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */; };
 		392024AF2A51953600670ABD /* ControlsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024AD2A51953600670ABD /* ControlsPage.swift */; };
 		392024B32A519FF900670ABD /* AppearancePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024B12A519FF900670ABD /* AppearancePage.swift */; };
@@ -34,6 +33,7 @@
 		394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A6128739A15005EA7FA /* StationsWindow.swift */; };
 		394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A6228739A15005EA7FA /* StationsWindow.xib */; };
 		39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39541B32287623F200A2A5CB /* AddStationDialog.swift */; };
+		3962D02A2BE0E39F0014BCFB /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0292BE0E39F0014BCFB /* History.swift */; };
 		396433962B502AE9009BE1CE /* LocalStationToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396433952B502AE9009BE1CE /* LocalStationToolBox.swift */; };
 		396433992B55A189009BE1CE /* InternetStationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396433982B55A189009BE1CE /* InternetStationDelegate.swift */; };
 		3964339B2B55A293009BE1CE /* InternetStationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3964339A2B55A293009BE1CE /* InternetStationRows.swift */; };
@@ -78,7 +78,6 @@
 /* Begin PBXFileReference section */
 		390C7293287B213200E17BAE /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
 		390C7296287B237B00E17BAE /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
-		390C7297287B237B00E17BAE /* HistoryRow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryRow.xib; sourceTree = "<group>"; };
 		39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
 		392024AD2A51953600670ABD /* ControlsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsPage.swift; sourceTree = "<group>"; };
 		392024B12A519FF900670ABD /* AppearancePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePage.swift; sourceTree = "<group>"; };
@@ -106,6 +105,7 @@
 		394F8A6228739A15005EA7FA /* StationsWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationsWindow.xib; sourceTree = "<group>"; };
 		394F8A6C2873A2FE005EA7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		39541B32287623F200A2A5CB /* AddStationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationDialog.swift; sourceTree = "<group>"; };
+		3962D0292BE0E39F0014BCFB /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		396433952B502AE9009BE1CE /* LocalStationToolBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStationToolBox.swift; sourceTree = "<group>"; };
 		396433982B55A189009BE1CE /* InternetStationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetStationDelegate.swift; sourceTree = "<group>"; };
 		3964339A2B55A293009BE1CE /* InternetStationRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetStationRows.swift; sourceTree = "<group>"; };
@@ -219,6 +219,7 @@
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
+				3962D0292BE0E39F0014BCFB /* History.swift */,
 				39D27F522BA36B2D00D5857A /* Credits.html */,
 				396704682943AD2700012FFD /* AudioDevice.swift */,
 				390C7293287B213200E17BAE /* Controls.swift */,
@@ -245,7 +246,6 @@
 				394F8A4B2873937F005EA7FA /* HistoryWindow.swift */,
 				390C7296287B237B00E17BAE /* HistoryRow.swift */,
 				394F8A4C2873937F005EA7FA /* HistoryWindow.xib */,
-				390C7297287B237B00E17BAE /* HistoryRow.xib */,
 			);
 			path = History;
 			sourceTree = "<group>";
@@ -395,7 +395,6 @@
 				9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */,
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
 				3987B99E2A9635930077EB03 /* SideBar.xib in Resources */,
-				390C7299287B237B00E17BAE /* HistoryRow.xib in Resources */,
 				392024B42A519FF900670ABD /* AppearancePage.xib in Resources */,
 				39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */,
 				394ABC9C2A97AD9C00E2B6E9 /* SidebarSecondLevelView.xib in Resources */,
@@ -461,6 +460,7 @@
 				39A794122B4B65AF000D9875 /* AppState.swift in Sources */,
 				392024AF2A51953600670ABD /* ControlsPage.swift in Sources */,
 				39A794082B4B5381000D9875 /* LocalStationRows.swift in Sources */,
+				3962D02A2BE0E39F0014BCFB /* History.swift in Sources */,
 				394ABCA92A9CA1F800E2B6E9 /* RadioBrowser.swift in Sources */,
 				39D79E632933BEAB00210D94 /* Settings.swift in Sources */,
 				394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */,
