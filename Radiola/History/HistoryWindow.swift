@@ -10,6 +10,7 @@ import Cocoa
 class HistoryWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet var tableView: NSTableView!
     @IBOutlet var placeholderLabel: NSTextField!
+    @IBOutlet var onlyFavoriteCheckbox: NSButton!
 
     /* ****************************************
      *
@@ -32,6 +33,9 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
             selector: #selector(refresh),
             name: Notification.Name.PlayerMetadataChanged,
             object: nil)
+
+        onlyFavoriteCheckbox.target = self
+        onlyFavoriteCheckbox.action = #selector(refresh)
 
         refresh()
     }
@@ -79,7 +83,15 @@ extension HistoryWindow: NSTableViewDelegate {
      *
      * ****************************************/
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        return HistoryRow(history: AppState.shared.history[AppState.shared.history.count - row - 1])
+        let list = onlyFavoriteCheckbox.state == .on ?
+            AppState.shared.history.favorites() :
+            AppState.shared.history
+
+        if row >= list.count {
+            return nil
+        }
+
+        return HistoryRow(history: list[list.count - row - 1])
     }
 }
 
@@ -88,6 +100,8 @@ extension HistoryWindow: NSTableViewDataSource {
      *
      * ****************************************/
     func numberOfRows(in tableView: NSTableView) -> Int {
-        return AppState.shared.history.count
+        return onlyFavoriteCheckbox.state == .on ?
+            AppState.shared.history.favorites().count :
+            AppState.shared.history.count
     }
 }

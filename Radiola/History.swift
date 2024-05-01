@@ -53,4 +53,12 @@ extension History {
             }
         }
     }
+
+    func favorites() -> [HistoryRecord] {
+        return self.filter{$0.favorite}
+    }
+
+    func favoritesCount() -> Int {
+        return self.reduce(0, { res, y in y.favorite ? res + 1 : res })
+    }
 }
