@@ -8,6 +8,12 @@
 
 import Cocoa
 
+extension KeyboardShortcuts.Name {
+    static let showMainWindow = Self("showMainWindow")
+    static let showHistoryWindow = Self("showHistoryWindow")
+    static let showPreferencesWindow = Self("showPreferencesWindow")
+}
+
 extension String {
     var tr: String {
         return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
