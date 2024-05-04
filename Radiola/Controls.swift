@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import AppKit
 
 // MARK: - NSWindow
 

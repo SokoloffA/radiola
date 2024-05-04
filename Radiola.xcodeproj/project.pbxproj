@@ -217,8 +217,8 @@
 		394F8A2F28739339005EA7FA = {
 			isa = PBXGroup;
 			children = (
-				3962D0322BE687EB0014BCFB /* KeyboardShortcuts */,
 				394F8A3A28739339005EA7FA /* Radiola */,
+				3962D0322BE687EB0014BCFB /* KeyboardShortcuts */,
 				394F8A3928739339005EA7FA /* Products */,
 			);
 			sourceTree = "<group>";

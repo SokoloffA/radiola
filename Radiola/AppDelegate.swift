@@ -11,7 +11,6 @@ import Cocoa
 extension KeyboardShortcuts.Name {
     static let showMainWindow = Self("showMainWindow")
     static let showHistoryWindow = Self("showHistoryWindow")
-    static let showPreferencesWindow = Self("showPreferencesWindow")
 }
 
 extension String {
@@ -79,6 +78,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         checkForUpdatesMenuItem.target = updater
         checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
+
+        KeyboardShortcuts.onKeyUp(for: .showMainWindow) { [self] in showStationView(nil) }
+        KeyboardShortcuts.onKeyUp(for: .showHistoryWindow) { [self] in showHistory(nil) }
 
         playerStatusChanged()
 

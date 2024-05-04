@@ -26,6 +26,12 @@ class ControlsPage: NSViewController {
     private var mediaPrevNextButtonLbl = Label()
     private var mediaPrevNextButtonCbx = NSPopUpButton()
 
+    private var globalKeyShowMainWindowLbl = Label(text: "Global shortcut to show stations")
+    private var globalKeyShowMainWindowCtrl = KeyboardShortcuts.RecorderCocoa(for: .showMainWindow)
+
+    private var globalKeyShowHistoryLbl = Label(text: "Global shortcut to show history")
+    private var globalKeyShowHistoryCtrl = KeyboardShortcuts.RecorderCocoa(for: .showHistoryWindow)
+
     /* ****************************************
      *
      * ****************************************/
@@ -62,6 +68,10 @@ class ControlsPage: NSViewController {
         res.addSubview(mediaKeysHandlingCbx)
         res.addSubview(mediaPrevNextButtonLbl)
         res.addSubview(mediaPrevNextButtonCbx)
+        res.addSubview(globalKeyShowMainWindowLbl)
+        res.addSubview(globalKeyShowMainWindowCtrl)
+        res.addSubview(globalKeyShowHistoryLbl)
+        res.addSubview(globalKeyShowHistoryCtrl)
 
         leftMouseButtonLbl.stringValue = "Left mouse button:"
         leftMouseButtonLbl.alignment = .right
@@ -100,7 +110,10 @@ class ControlsPage: NSViewController {
         mediaPrevNextButtonLbl.stringValue = "Previous and next track buttons:"
         alignRow(lbl: mediaPrevNextButtonLbl, cbx: mediaPrevNextButtonCbx, prev: mediaKeysHandlingCbx)
 
-        res.bottomAnchor.constraint(equalTo: mediaPrevNextButtonCbx.bottomAnchor, constant: 32).isActive = true
+        alignRow(lbl: globalKeyShowMainWindowLbl, cbx: globalKeyShowMainWindowCtrl, prev: mediaPrevNextButtonCbx)
+        alignRow(lbl: globalKeyShowHistoryLbl, cbx: globalKeyShowHistoryCtrl, prev: globalKeyShowMainWindowCtrl)
+
+        res.bottomAnchor.constraint(equalTo: globalKeyShowHistoryCtrl.bottomAnchor, constant: 32).isActive = true
         return res
     }
 
