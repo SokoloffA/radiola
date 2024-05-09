@@ -2,7 +2,7 @@
 # v 0.1
 
 APP_NAME=Radiola
-MAKE_DMG=1
+MAKE_DMG=true
 CERT_IDENTITY="Developer ID Application: Alex Sokolov (635H9TYSZJ)"
 
 #--------------------
@@ -31,6 +31,10 @@ echo "* Version ${VERSION}"
 echo "* DMG     ${MAKE_DMG}"
 echo "***********************************"
 
+echo "Remove quarantine flag ........................"
+xattr -r -d com.apple.quarantine "${BUNDLE_PATH}"
+echo "  OK"
+
 echo "Sign and verify ..............................."
 codesign --force --deep --verify --sign  "${CERT_IDENTITY}" "${BUNDLE_PATH}"
 codesign --all-architectures -v --strict --deep --verbose=1 "${BUNDLE_PATH}"
@@ -44,6 +48,8 @@ spctl --assess --type execute "${BUNDLE_PATH}"
 echo "  OK"
 echo ""
 
-if [[ MAKE_DMG ]]; then
+if [[ "$MAKE_DMG" == "true" ]]; then
+    echo "Create DMG file .............................."
     dmgbuild -s dmg_settings.json "${BUNDLE_PATH}" "${DMG_NAME}"
+    echo "  OK"
 fi
