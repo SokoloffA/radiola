@@ -458,4 +458,36 @@ extension StationsWindow: NSUserInterfaceValidations {
             }
         })
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func exportStations(_ sender: Any) {
+        guard let window = window else { return }
+        guard let stations = AppState.shared.localStations.first else { return }
+
+        let dlg = NSSavePanel()
+        dlg.allowedFileTypes = ["opml"]
+        dlg.allowsOtherFileTypes = true
+        dlg.canCreateDirectories = true
+        dlg.isExtensionHidden = false
+
+        dlg.nameFieldStringValue = "RadiolaStations"
+
+        dlg.beginSheetModal(for: window) { result in
+            guard result == .OK, let url = dlg.url else { return }
+
+            stations.saveAs(file: url)
+        }
+    }
+
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func importStations(_ sender: Any) {
+        print(#function)
+    }
+
+
 }

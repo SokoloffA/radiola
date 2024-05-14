@@ -348,7 +348,13 @@ extension LocalStationList {
      * ****************************************/
     func save() {
         guard let file = file else { return }
+        saveAs(file: file)
+    }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    func saveAs(file: URL) {
         func writeOutline(parent: XMLElement, item: Item) {
             let outline = XMLElement(name: "outline")
             outline.addAttribute(XMLNode.attribute(withName: "text", stringValue: item.title) as! XMLNode)

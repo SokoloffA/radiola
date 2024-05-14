@@ -126,6 +126,19 @@ CA
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
+                            <menuItem title="Export stations to a file…" id="vU5-0L-qOr">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportStations:" target="-1" id="Kvp-XI-7LA"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Import stations from a file…" id="u4i-pF-Vz5">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="importStations:" target="-1" id="uN6-Gj-Yws"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="agl-e5-wrm"/>
                             <menuItem title="Save…" hidden="YES" keyEquivalent="s" id="pxx-59-PXV">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="teZ-XB-qJY"/>
