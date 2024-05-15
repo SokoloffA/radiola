@@ -466,28 +466,53 @@ extension StationsWindow: NSUserInterfaceValidations {
         guard let window = window else { return }
         guard let stations = AppState.shared.localStations.first else { return }
 
-        let dlg = NSSavePanel()
-        dlg.allowedFileTypes = ["opml"]
-        dlg.allowsOtherFileTypes = true
-        dlg.canCreateDirectories = true
-        dlg.isExtensionHidden = false
+        let dialog = NSSavePanel()
+        dialog.allowedFileTypes = ["opml"]
+        dialog.allowsOtherFileTypes = true
+        dialog.canCreateDirectories = true
+        dialog.isExtensionHidden = false
+        dialog.nameFieldStringValue = "RadiolaStations"
 
-        dlg.nameFieldStringValue = "RadiolaStations"
-
-        dlg.beginSheetModal(for: window) { result in
-            guard result == .OK, let url = dlg.url else { return }
+        dialog.beginSheetModal(for: window) { result in
+            guard result == .OK, let url = dialog.url else { return }
 
             stations.saveAs(file: url)
         }
     }
 
-
     /* ****************************************
      *
      * ****************************************/
     @objc func importStations(_ sender: Any) {
-        print(#function)
+        guard let window = window else { return }
+        guard let stations = AppState.shared.localStations.first else { return }
+
+        let dialog = NSOpenPanel()
+        dialog.allowedFileTypes = ["opml"]
+        dialog.allowsOtherFileTypes = true
+        dialog.isExtensionHidden = false
+        dialog.nameFieldStringValue = "RadiolaStations"
+
+        dialog.allowsMultipleSelection = false
+        dialog.canChooseDirectories = false
+        dialog.canChooseFiles = true
+
+        dialog.beginSheetModal(for: window) { result in
+            guard result == .OK, let url = dialog.url else { return }
+
+            self.doImportStations(url: url, current: stations)
+        }
     }
 
-
+    /* ****************************************
+     *
+     * ****************************************/
+    private func doImportStations(url: URL, current: LocalStationList) {
+        let new = LocalStationList(title: "", icon: "")
+        do {
+            try new.load(file: url)
+        } catch {
+            error.show()
+        }
+    }
 }

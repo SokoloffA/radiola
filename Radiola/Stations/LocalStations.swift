@@ -293,15 +293,11 @@ extension LocalStationList {
     /* ****************************************
      *
      * ****************************************/
-    func load(file: URL, defaultStations: [LocalStation] = []) {
+    func load(file: URL, defaultStations: [LocalStation] = []) throws {
         self.file = file
-        // print(file.path)
 
         if !FileManager().fileExists(atPath: file.path) {
-            for s in defaultStations {
-                root.append(s)
-            }
-            return
+            throw Alarm(title: "Can't read the stations file", message: "File doesn't exist")
         }
 
         func getBoolAttribute(xml: XMLElement, attribute: String) -> Bool {
@@ -340,6 +336,7 @@ extension LocalStationList {
                 loadOutline(xml: outline, parent: root)
             }
         } catch {
+            throw Alarm(title: "Can't read the stations file", message: "The file is corrupted or has an incorrect format", parentError: error)
         }
     }
 

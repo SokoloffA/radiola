@@ -63,15 +63,17 @@ struct Alarm: Error, Identifiable {
 
     let title: String
     let message: String?
+    let parentError: Error?
 
     static let notificationName = Notification.Name("AlarmOccurred")
 
     /* ****************************************
      *
      * ****************************************/
-    init(title: String, message: String? = nil) {
+    init(title: String, message: String? = nil, parentError: Error? = nil) {
         self.title = title
         self.message = message
+        self.parentError = parentError
     }
 
     /* ****************************************
@@ -88,6 +90,11 @@ extension Error {
      * ****************************************/
     func show() {
         if let alarm = self as? Alarm {
+            if let parentError = alarm.parentError {
+                warning("Error: \(alarm.title), \(alarm.message ?? ""). Parent error: \(parentError)")
+            } else {
+                warning("Error: \(alarm.title), \(alarm.message ?? "")")
+            }
             NotificationCenter.default.post(name: Alarm.notificationName, object: alarm)
         } else {
             NotificationCenter.default.post(name: Alarm.notificationName, object: Alarm(title: "Error", message: "\(self)"))
