@@ -73,17 +73,11 @@ extension LocalStationDelegate: NSOutlineViewDataSource {
 
         // Root item
         if item == nil {
-            switch list.items[index] {
-                case let .station(station: station): return station
-                case let .group(group: group): return group
-            }
+            return list.items[index]
         }
 
         if let group = item as? LocalStationGroup {
-            switch group.items[index] {
-                case let .station(station: station): return station
-                case let .group(group: group): return group
-            }
+            return group.items[index]
         }
 
         return item!
@@ -152,7 +146,7 @@ extension LocalStationDelegate {
     /* ****************************************
      *
      * ****************************************/
-    private func canDragAndDrop(src: LocalStationList.Item, dest: LocalStationGroup) -> Bool {
+    private func canDragAndDrop(src: LocalStationItem, dest: LocalStationGroup) -> Bool {
         var node: LocalStationGroup? = dest
         while node != nil {
             if node?.id == src.id {
@@ -253,22 +247,20 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     func addStation(title: String, url: String) {
-        let item = LocalStationList.Item.station(station: LocalStation(title: title, url: url))
-        addItem(newItem: item)
+        addItem(newItem: LocalStation(title: title, url: url))
     }
 
     /* ****************************************
      *
      * ****************************************/
     func addGroup(title: String) {
-        let item = LocalStationList.Item.group(group: LocalStationGroup(title: title))
-        addItem(newItem: item)
+        addItem(newItem: LocalStationGroup(title: title))
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func addItem(newItem: LocalStationList.Item) {
+    private func addItem(newItem: LocalStationItem) {
         guard let list = list else { return }
 
         let destItem = outlineView.item(atRow: outlineView.selectedRow)
@@ -307,13 +299,8 @@ extension LocalStationDelegate {
         outlineView.expandItem(newItem.parent)
 
         // Select new item
-        var row = -1
-        switch newItem {
-            case let .station(station: station): row = outlineView.row(forItem: station)
-            case let .group(group: group): row = outlineView.row(forItem: group)
-        }
+        var row = outlineView.row(forItem: newItem)
 
-        print("\(#file):\(#line) : ", row, newItem)
         if row > -1 {
             outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
             outlineView.scrollRowToVisible(row)
@@ -333,17 +320,6 @@ extension LocalStationDelegate {
         }
 
         return nil
-    }
-
-    private func row(forItem: Any) -> Int {
-        if let item = forItem as? LocalStationList.Item {
-            switch item {
-                case let .station(station: station): return outlineView.row(forItem: station)
-                case let .group(group: group): return outlineView.row(forItem: group)
-            }
-        }
-
-        return outlineView.row(forItem: forItem)
     }
 
     /* ****************************************
@@ -368,7 +344,7 @@ extension LocalStationDelegate {
             withAnimation: .effectFade)
         outlineView.endUpdates()
 
-        let row = parent.items.isEmpty ? row(forItem: parent) : row(forItem: parent.items[min(index, parent.items.count - 1)])
+        let row = parent.items.isEmpty ? outlineView.row(forItem: parent) : outlineView.row(forItem: parent.items[min(index, parent.items.count - 1)])
         outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
         outlineView.scrollRowToVisible(row)
     }

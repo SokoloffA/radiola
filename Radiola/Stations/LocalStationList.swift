@@ -16,7 +16,7 @@ class LocalStationList: ObservableObject, StationList {
     let help: String?
     private(set) var file: URL?
     let root = LocalStationGroup(title: "")
-    var items: [Item] { return root.items }
+    var items: [LocalStationItem] { return root.items }
 
     /* ****************************************
      *
@@ -39,19 +39,19 @@ class LocalStationList: ObservableObject, StationList {
      * ****************************************/
     private func filterStations(where match: (LocalStation) -> Bool) -> [Station] {
         var res: [Station] = []
-        var queue: [Item] = items
+        var queue = items
 
         while !queue.isEmpty {
             let item = queue.removeFirst()
 
-            switch item {
-                case let .station(station: station):
-                    if match(station) {
-                        res.append(station)
-                    }
+            if let station = item as? LocalStation {
+                if match(station) {
+                    res.append(station)
+                }
+            }
 
-                case let .group(group: group):
-                    queue.insert(contentsOf: group.items, at: 0)
+            if let group = item as? LocalStationGroup {
+                queue.insert(contentsOf: group.items, at: 0)
             }
         }
 
@@ -62,19 +62,19 @@ class LocalStationList: ObservableObject, StationList {
      *
      * ****************************************/
     func first(where predicate: (Station) -> Bool) -> Station? {
-        var queue: [Item] = root.items
+        var queue = root.items
 
         while !queue.isEmpty {
             let item = queue.removeFirst()
 
-            switch item {
-                case let .station(station: station):
-                    if predicate(station) {
-                        return station
-                    }
+            if let station = item as? LocalStation {
+                if predicate(station) {
+                    return station
+                }
+            }
 
-                case let .group(group: group):
-                    queue += group.items
+            if let group = item as? LocalStationGroup {
+                queue += group.items
             }
         }
 
@@ -84,18 +84,18 @@ class LocalStationList: ObservableObject, StationList {
     /* ****************************************
      *
      * ****************************************/
-    func item(byID: UUID) -> Item? {
-        var queue: [Item] = root.items
+    func item(byID: UUID) -> LocalStationItem? {
+        var queue = root.items
 
         while !queue.isEmpty {
             let item = queue.removeFirst()
+
             if item.id == byID {
                 return item
             }
 
-            switch item {
-                case let .group(group: group): queue += group.items
-                default: break
+            if let group = item as? LocalStationGroup {
+                queue += group.items
             }
         }
 
@@ -186,22 +186,22 @@ extension LocalStationList {
      *
      * ****************************************/
     func saveAs(file: URL) {
-        func writeOutline(parent: XMLElement, item: Item) {
+        func writeOutline(parent: XMLElement, item: LocalStationItem) {
             let outline = XMLElement(name: "outline")
             outline.addAttribute(XMLNode.attribute(withName: "text", stringValue: item.title) as! XMLNode)
 
-            switch item {
-                case let .station(station: station):
-                    outline.addAttribute(XMLNode.attribute(withName: "url", stringValue: station.url) as! XMLNode)
-                    if station.isFavorite {
-                        outline.addAttribute(XMLNode.attribute(withName: "fav", stringValue: "true") as! XMLNode)
-                    }
+            if let station = item as? LocalStation {
+                outline.addAttribute(XMLNode.attribute(withName: "url", stringValue: station.url) as! XMLNode)
+                if station.isFavorite {
+                    outline.addAttribute(XMLNode.attribute(withName: "fav", stringValue: "true") as! XMLNode)
+                }
+            }
 
-                case let .group(group: group):
-                    outline.addAttribute(XMLNode.attribute(withName: "group", stringValue: "true") as! XMLNode)
-                    for it in group.items {
-                        writeOutline(parent: outline, item: it)
-                    }
+            if let group = item as? LocalStationGroup {
+                outline.addAttribute(XMLNode.attribute(withName: "group", stringValue: "true") as! XMLNode)
+                for it in group.items {
+                    writeOutline(parent: outline, item: it)
+                }
             }
 
             parent.addChild(outline)
@@ -229,18 +229,18 @@ extension LocalStationList {
      *
      * ****************************************/
     func dump() {
-        func dump(_ item: Item, indent: String) {
-            switch item {
-                case let .station(station: station):
-                    print("\(indent)○ [\(station.id)] \(station.title) \(station.url)")
-                    return
+        func dump(_ item: LocalStationItem, indent: String) {
+            if let station = item as? LocalStation {
+                print("\(indent)○ [\(station.id)] \(station.title) \(station.url)")
+                return
+            }
 
-                case let .group(group: group):
-                    print("\(indent)▼ [\(group.id)] \(group.title)")
+            if let group = item as? LocalStationGroup {
+                print("\(indent)▼ [\(group.id)] \(group.title)")
 
-                    for item in group.items {
-                        dump(item, indent: "  " + indent)
-                    }
+                for item in group.items {
+                    dump(item, indent: "  " + indent)
+                }
             }
         }
 

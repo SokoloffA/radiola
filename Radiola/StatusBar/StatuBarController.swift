@@ -261,22 +261,22 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     func buildMarginFavoritesMenu(menu: NSMenu) {
-        func build(items: [LocalStationList.Item], menu: NSMenu, prefix: String = "") {
+        func build(items: [LocalStationItem], menu: NSMenu, prefix: String = "") {
             for item in items {
-                switch item {
-                    case let .station(station: station):
-                        if station.isFavorite {
-                            menu.addItem(createStationMenuItem(station, prefix: prefix))
-                        }
+                if let station = item as? LocalStation {
+                    if station.isFavorite {
+                        menu.addItem(createStationMenuItem(station, prefix: prefix))
+                    }
+                }
 
-                    case let .group(group: group):
-                        let n = menu.numberOfItems
+                if let group = item as? LocalStationGroup {
+                    let n = menu.numberOfItems
 
-                        build(items: group.items, menu: menu, prefix: prefix + menuPrefix + "  ")
-                        if menu.numberOfItems > n {
-                            let groupItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
-                            menu.insertItem(groupItem, at: n)
-                        }
+                    build(items: group.items, menu: menu, prefix: prefix + menuPrefix + "  ")
+                    if menu.numberOfItems > n {
+                        let groupItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
+                        menu.insertItem(groupItem, at: n)
+                    }
                 }
             }
         }
@@ -291,22 +291,22 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     func buildSubmenuFavoritesMenu(menu: NSMenu) {
-        func build(items: [LocalStationList.Item], menu: NSMenu, prefix: String = "") {
+        func build(items: [LocalStationItem], menu: NSMenu, prefix: String = "") {
             for item in items {
-                switch item {
-                    case let .station(station: station):
-                        if station.isFavorite {
-                            menu.addItem(createStationMenuItem(station, prefix: prefix))
-                        }
+                if let station = item as? LocalStation {
+                    if station.isFavorite {
+                        menu.addItem(createStationMenuItem(station, prefix: prefix))
+                    }
+                }
 
-                    case let .group(group: group):
-                        let subMenu = NSMenu()
-                        build(items: group.items, menu: subMenu)
-                        if subMenu.numberOfItems > 0 {
-                            let subMenuItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
-                            subMenuItem.submenu = subMenu
-                            menu.addItem(subMenuItem)
-                        }
+                if let group = item as? LocalStationGroup {
+                    let subMenu = NSMenu()
+                    build(items: group.items, menu: subMenu)
+                    if subMenu.numberOfItems > 0 {
+                        let subMenuItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
+                        subMenuItem.submenu = subMenu
+                        menu.addItem(subMenuItem)
+                    }
                 }
             }
         }
