@@ -33,6 +33,7 @@
 		394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A6128739A15005EA7FA /* StationsWindow.swift */; };
 		394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A6228739A15005EA7FA /* StationsWindow.xib */; };
 		39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39541B32287623F200A2A5CB /* AddStationDialog.swift */; };
+		3959DBA12BFCDB2B0032A1BA /* LocalStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBA02BFCDB2B0032A1BA /* LocalStationList.swift */; };
 		3962D02A2BE0E39F0014BCFB /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0292BE0E39F0014BCFB /* History.swift */; };
 		3962D0342BE688130014BCFB /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0332BE688130014BCFB /* Name.swift */; };
 		3962D0362BE688440014BCFB /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0352BE688440014BCFB /* KeyboardShortcuts.swift */; };
@@ -115,6 +116,7 @@
 		394F8A6228739A15005EA7FA /* StationsWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StationsWindow.xib; sourceTree = "<group>"; };
 		394F8A6C2873A2FE005EA7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		39541B32287623F200A2A5CB /* AddStationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationDialog.swift; sourceTree = "<group>"; };
+		3959DBA02BFCDB2B0032A1BA /* LocalStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStationList.swift; sourceTree = "<group>"; };
 		3962D0292BE0E39F0014BCFB /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		3962D0332BE688130014BCFB /* Name.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Name.swift; sourceTree = "<group>"; };
 		3962D0352BE688440014BCFB /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
@@ -209,6 +211,7 @@
 				39A7940F2B4B6483000D9875 /* Stations.swift */,
 				39A7940D2B4B647E000D9875 /* RadioBrowserProvider.swift */,
 				39A7940B2B4B6478000D9875 /* LocalStations.swift */,
+				3959DBA02BFCDB2B0032A1BA /* LocalStationList.swift */,
 				39A794092B4B646D000D9875 /* InternetStations.swift */,
 			);
 			path = Stations;
@@ -505,6 +508,7 @@
 				39A794122B4B65AF000D9875 /* AppState.swift in Sources */,
 				392024AF2A51953600670ABD /* ControlsPage.swift in Sources */,
 				39A794082B4B5381000D9875 /* LocalStationRows.swift in Sources */,
+				3959DBA12BFCDB2B0032A1BA /* LocalStationList.swift in Sources */,
 				3962D0422BE689130014BCFB /* Recorder.swift in Sources */,
 				3962D0382BE6885A0014BCFB /* Shortcut.swift in Sources */,
 				3962D02A2BE0E39F0014BCFB /* History.swift in Sources */,
