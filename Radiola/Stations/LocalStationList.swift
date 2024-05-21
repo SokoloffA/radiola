@@ -186,6 +186,18 @@ extension LocalStationList {
      *
      * ****************************************/
     func saveAs(file: URL) {
+        do {
+            let document = asXML()
+            let xmlData = document.xmlData(options: .nodePrettyPrint)
+            try xmlData.write(to: file)
+        } catch {
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func asXML() -> XMLDocument {
         func writeOutline(parent: XMLElement, item: LocalStationItem) {
             let outline = XMLElement(name: "outline")
             outline.addAttribute(XMLNode.attribute(withName: "text", stringValue: item.title) as! XMLNode)
@@ -217,12 +229,7 @@ extension LocalStationList {
             writeOutline(parent: body, item: item)
         }
 
-        do {
-            let document = XMLDocument(rootElement: ompl)
-            let xmlData = document.xmlData(options: .nodePrettyPrint)
-            try xmlData.write(to: file)
-        } catch {
-        }
+        return XMLDocument(rootElement: ompl)
     }
 
     /* ****************************************
