@@ -1,0 +1,8 @@
+
+<ompl version="2.0">
+    <head></head>
+    <body>
+        <outline text="OLD station 1" url="http://old.station.com" fav="true"></outline>
+        <outline text="New station 1" url="http://new_station:8080"></outline>
+    </body>
+</ompl>

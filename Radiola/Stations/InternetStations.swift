@@ -61,7 +61,7 @@ class InternetStationList: ObservableObject, StationList {
     /* ****************************************
      *
      * ****************************************/
-    func first(where predicate: (Station) -> Bool) -> Station? {
+    func firstStation(where predicate: (Station) -> Bool) -> Station? {
         return items.first(where: predicate)
     }
 

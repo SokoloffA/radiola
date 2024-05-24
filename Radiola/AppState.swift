@@ -45,7 +45,6 @@ class AppState: ObservableObject {
         InternetStationList(title: "By country", icon: "globe", help: nil, provider: RadioBrowserProvider(.byCountry)),
     ]
 
-
     public var history = History()
 
     /* ****************************************
@@ -73,12 +72,10 @@ class AppState: ObservableObject {
             debug("Load stations from: \(fileName.path)")
             do {
                 try localStations[0].load(file: fileName)
+            } catch {
+                error.show()
             }
-            catch {
-                error.show();
-            }
-        }
-        else {
+        } else {
             debug("Use default stations")
             for s in defaultStations {
                 localStations[0].append(s)
@@ -116,7 +113,7 @@ class AppState: ObservableObject {
         }
 
         for list in localStations {
-            if let res = list.first(where: { _ in true }) {
+            if let res = list.firstStation(where: { _ in true }) {
                 return res
             }
         }

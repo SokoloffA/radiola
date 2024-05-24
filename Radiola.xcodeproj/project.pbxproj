@@ -34,6 +34,9 @@
 		394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A6228739A15005EA7FA /* StationsWindow.xib */; };
 		39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39541B32287623F200A2A5CB /* AddStationDialog.swift */; };
 		3959DBA12BFCDB2B0032A1BA /* LocalStationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBA02BFCDB2B0032A1BA /* LocalStationList.swift */; };
+		3959DBA92BFCE6A50032A1BA /* RadiolaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBA82BFCE6A50032A1BA /* RadiolaTests.swift */; };
+		3959DBB02BFCE6C30032A1BA /* TestStationMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBAF2BFCE6C30032A1BA /* TestStationMerger.swift */; };
+		3959DBB22BFCE7580032A1BA /* LocalStationsMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBB12BFCE7580032A1BA /* LocalStationsMerger.swift */; };
 		3962D02A2BE0E39F0014BCFB /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0292BE0E39F0014BCFB /* History.swift */; };
 		3962D0342BE688130014BCFB /* Name.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0332BE688130014BCFB /* Name.swift */; };
 		3962D0362BE688440014BCFB /* KeyboardShortcuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0352BE688440014BCFB /* KeyboardShortcuts.swift */; };
@@ -86,6 +89,16 @@
 		9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3959DBAA2BFCE6A50032A1BA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 394F8A3028739339005EA7FA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 394F8A3728739339005EA7FA;
+			remoteInfo = Radiola;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		390C7293287B213200E17BAE /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
 		390C7296287B237B00E17BAE /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
@@ -117,6 +130,10 @@
 		394F8A6C2873A2FE005EA7FA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		39541B32287623F200A2A5CB /* AddStationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationDialog.swift; sourceTree = "<group>"; };
 		3959DBA02BFCDB2B0032A1BA /* LocalStationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStationList.swift; sourceTree = "<group>"; };
+		3959DBA62BFCE6A50032A1BA /* RadiolaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RadiolaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3959DBA82BFCE6A50032A1BA /* RadiolaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiolaTests.swift; sourceTree = "<group>"; };
+		3959DBAF2BFCE6C30032A1BA /* TestStationMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStationMerger.swift; sourceTree = "<group>"; };
+		3959DBB12BFCE7580032A1BA /* LocalStationsMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStationsMerger.swift; sourceTree = "<group>"; };
 		3962D0292BE0E39F0014BCFB /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		3962D0332BE688130014BCFB /* Name.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Name.swift; sourceTree = "<group>"; };
 		3962D0352BE688440014BCFB /* KeyboardShortcuts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardShortcuts.swift; sourceTree = "<group>"; };
@@ -177,6 +194,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3959DBA32BFCE6A50032A1BA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -212,6 +236,7 @@
 				39A7940D2B4B647E000D9875 /* RadioBrowserProvider.swift */,
 				39A7940B2B4B6478000D9875 /* LocalStations.swift */,
 				3959DBA02BFCDB2B0032A1BA /* LocalStationList.swift */,
+				3959DBB12BFCE7580032A1BA /* LocalStationsMerger.swift */,
 				39A794092B4B646D000D9875 /* InternetStations.swift */,
 			);
 			path = Stations;
@@ -222,6 +247,7 @@
 			children = (
 				394F8A3A28739339005EA7FA /* Radiola */,
 				3962D0322BE687EB0014BCFB /* KeyboardShortcuts */,
+				3959DBA72BFCE6A50032A1BA /* RadiolaTests */,
 				394F8A3928739339005EA7FA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -230,6 +256,7 @@
 			isa = PBXGroup;
 			children = (
 				394F8A3828739339005EA7FA /* Radiola.app */,
+				3959DBA62BFCE6A50032A1BA /* RadiolaTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -285,6 +312,15 @@
 				394ABC8C2A97AB5900E2B6E9 /* Sidebar */,
 			);
 			path = StationsWindow;
+			sourceTree = "<group>";
+		};
+		3959DBA72BFCE6A50032A1BA /* RadiolaTests */ = {
+			isa = PBXGroup;
+			children = (
+				3959DBA82BFCE6A50032A1BA /* RadiolaTests.swift */,
+				3959DBAF2BFCE6C30032A1BA /* TestStationMerger.swift */,
+			);
+			path = RadiolaTests;
 			sourceTree = "<group>";
 		};
 		3962D0322BE687EB0014BCFB /* KeyboardShortcuts */ = {
@@ -392,17 +428,39 @@
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3959DBA52BFCE6A50032A1BA /* RadiolaTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3959DBAC2BFCE6A50032A1BA /* Build configuration list for PBXNativeTarget "RadiolaTests" */;
+			buildPhases = (
+				3959DBA22BFCE6A50032A1BA /* Sources */,
+				3959DBA32BFCE6A50032A1BA /* Frameworks */,
+				3959DBA42BFCE6A50032A1BA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3959DBAB2BFCE6A50032A1BA /* PBXTargetDependency */,
+			);
+			name = RadiolaTests;
+			productName = RadiolaTests;
+			productReference = 3959DBA62BFCE6A50032A1BA /* RadiolaTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		394F8A3028739339005EA7FA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1320;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
 					394F8A3728739339005EA7FA = {
 						CreatedOnToolsVersion = 13.2.1;
+					};
+					3959DBA52BFCE6A50032A1BA = {
+						CreatedOnToolsVersion = 15.4;
+						TestTargetID = 394F8A3728739339005EA7FA;
 					};
 				};
 			};
@@ -423,6 +481,7 @@
 			projectRoot = "";
 			targets = (
 				394F8A3728739339005EA7FA /* Radiola */,
+				3959DBA52BFCE6A50032A1BA /* RadiolaTests */,
 			);
 		};
 /* End PBXProject section */
@@ -449,6 +508,13 @@
 				3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */,
 				39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */,
 				394F8A442873933A005EA7FA /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3959DBA42BFCE6A50032A1BA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,6 +567,7 @@
 				394ABC972A97AC9B00E2B6E9 /* SidebarTopLevelView.swift in Sources */,
 				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
 				3967046C2944961500012FFD /* AudioPage.swift in Sources */,
+				3959DBB22BFCE7580032A1BA /* LocalStationsMerger.swift in Sources */,
 				394ABCA72A9BBD4E00E2B6E9 /* RadioBrowserTags.swift in Sources */,
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,
 				3987B9A72A9F81570077EB03 /* ToolbarVolumeView.swift in Sources */,
@@ -521,7 +588,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3959DBA22BFCE6A50032A1BA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3959DBB02BFCE6C30032A1BA /* TestStationMerger.swift in Sources */,
+				3959DBA92BFCE6A50032A1BA /* RadiolaTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3959DBAB2BFCE6A50032A1BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 394F8A3728739339005EA7FA /* Radiola */;
+			targetProxy = 3959DBAA2BFCE6A50032A1BA /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		394F8A422873933A005EA7FA /* MainMenu.xib */ = {
@@ -714,6 +798,53 @@
 			};
 			name = Release;
 		};
+		3959DBAD2BFCE6A50032A1BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 635H9TYSZJ;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sokoloff.RadiolaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Radiola.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Radiola";
+			};
+			name = Debug;
+		};
+		3959DBAE2BFCE6A50032A1BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 635H9TYSZJ;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sokoloff.RadiolaTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Radiola.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Radiola";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -731,6 +862,15 @@
 			buildConfigurations = (
 				394F8A492873933A005EA7FA /* Debug */,
 				394F8A4A2873933A005EA7FA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3959DBAC2BFCE6A50032A1BA /* Build configuration list for PBXNativeTarget "RadiolaTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3959DBAD2BFCE6A50032A1BA /* Debug */,
+				3959DBAE2BFCE6A50032A1BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

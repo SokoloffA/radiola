@@ -22,7 +22,7 @@ protocol StationList: Identifiable {
     var icon: String { get }
     var help: String? { get }
 
-    func first(where: (Station) -> Bool) -> Station?
+    func firstStation(where: (Station) -> Bool) -> Station?
 }
 
 extension StationList {
@@ -30,13 +30,13 @@ extension StationList {
      *
      * ****************************************/
     func first(byURL: String) -> Station? {
-        return first { $0.url == byURL }
+        return firstStation { $0.url == byURL }
     }
 
     /* ****************************************
      *
      * ****************************************/
     func first(byID: UUID) -> Station? {
-        return first { $0.id == byID }
+        return firstStation { $0.id == byID }
     }
 }

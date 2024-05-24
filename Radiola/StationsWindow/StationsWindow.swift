@@ -475,8 +475,11 @@ extension StationsWindow: NSUserInterfaceValidations {
 
         dialog.beginSheetModal(for: window) { result in
             guard result == .OK, let url = dialog.url else { return }
-
-            stations.saveAs(file: url)
+            do {
+                try stations.saveAs(file: url)
+            } catch {
+                error.show()
+            }
         }
     }
 

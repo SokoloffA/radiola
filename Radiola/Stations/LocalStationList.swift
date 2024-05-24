@@ -61,7 +61,28 @@ class LocalStationList: ObservableObject, StationList {
     /* ****************************************
      *
      * ****************************************/
-    func first(where predicate: (Station) -> Bool) -> Station? {
+    func firstItem(where predicate: (LocalStationItem) -> Bool) -> LocalStationItem? {
+        var queue = root.items
+
+        while !queue.isEmpty {
+            let item = queue.removeFirst()
+
+             if predicate(item) {
+                  return item
+              }
+
+            if let group = item as? LocalStationGroup {
+                queue += group.items
+            }
+        }
+
+        return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func firstStation(where predicate: (Station) -> Bool) -> Station? {
         var queue = root.items
 
         while !queue.isEmpty {
@@ -74,6 +95,29 @@ class LocalStationList: ObservableObject, StationList {
             }
 
             if let group = item as? LocalStationGroup {
+                queue += group.items
+            }
+        }
+
+        return nil
+    }
+
+
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func firstGroup(where predicate: (LocalStationGroup) -> Bool) -> LocalStationGroup? {
+        var queue = root.items
+
+        while !queue.isEmpty {
+            let item = queue.removeFirst()
+
+            if let group = item as? LocalStationGroup {
+                if predicate(group) {
+                     return group
+                 }
+
                 queue += group.items
             }
         }
@@ -115,13 +159,27 @@ class LocalStationList: ObservableObject, StationList {
     func append(_ group: LocalStationGroup) {
         root.append(group)
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func walk(handler: (LocalStationItem) -> Void) {
+        var queue = root.items
+
+        while !queue.isEmpty {
+            let item = queue.removeFirst()
+
+            handler(item)
+
+            if let group = item as? LocalStationGroup {
+                queue += group.items
+            }
+        }
+    }
+
 }
 
-extension [LocalStationList] {
-    func find(byId: UUID) -> LocalStationList? {
-        return first { $0.id == byId }
-    }
-}
+
 
 extension LocalStationList {
     /* ****************************************
@@ -178,19 +236,23 @@ extension LocalStationList {
      *
      * ****************************************/
     func save() {
-        guard let file = file else { return }
-        saveAs(file: file)
+        do {
+            guard let file = file else { return }
+            try saveAs(file: file)
+        } catch {
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    func saveAs(file: URL) {
+    func saveAs(file: URL) throws {
         do {
             let document = asXML()
             let xmlData = document.xmlData(options: .nodePrettyPrint)
             try xmlData.write(to: file)
         } catch {
+            throw Alarm(title: "Can't write the stations file '\(file.absoluteString)'", message: "The file is corrupted or has an incorrect format", parentError: error)
         }
     }
 
@@ -254,5 +316,13 @@ extension LocalStationList {
         for item in root.items {
             dump(item, indent: "")
         }
+    }
+}
+
+//MARK: - extension [LocalStationList]
+
+extension [LocalStationList] {
+    func find(byId: UUID) -> LocalStationList? {
+        return first { $0.id == byId }
     }
 }

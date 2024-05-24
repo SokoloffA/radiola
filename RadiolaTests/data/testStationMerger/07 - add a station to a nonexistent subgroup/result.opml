@@ -1,0 +1,11 @@
+
+<ompl version="2.0">
+    <head></head>
+    <body>
+        <outline text="Group" group="true">
+            <outline text="Radio Caroline 259 Gold [ Happy Rock &amp; Album Station ]" url="http://www.rcgoldserver.com:8253"></outline>
+        </outline>
+        <outline text="Radio Caroline" url="http://sc2.radiocaroline.net:8040/" fav="true"></outline>
+        <outline text="Radio Caroline 319 Gold [ Hits from '60-'70 ]" url="http://www.rcgoldserver.com:8253"></outline>
+    </body>
+</ompl>

@@ -1,0 +1,10 @@
+
+<ompl version="2.0">
+    <head></head>
+    <body>
+        <outline text="Group" group="true">
+            <outline text="OLD station 1" url="http://old.station.com" fav="true"></outline>
+            <outline text="OLD station 2" url="http://old.station.com:2"></outline>
+        </outline>
+    </body>
+</ompl>
