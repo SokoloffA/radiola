@@ -42,49 +42,36 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
     public var status = Status.paused
     private var playerItemContext = 0
-    private var player: AVPlayer!
+    private var player: AVPlayer?
     private var timer: Timer?
     private let connectDelay = 15.0
 
     /* ****************************************
      *
      * ****************************************/
-    var volume: Float {
-        get { player.volume }
-        set {
-            let vol = max(0, min(1, newValue))
-
-            if player.volume != vol {
-                player.volume = vol
-                settings.volumeLevel = newValue
-                NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
-            }
-        }
-    }
+    var volume: Float { didSet {
+        player?.volume = max(0, min(1, volume))
+        settings.volumeLevel = volume
+        NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
+    }}
 
     /* ****************************************
      *
      * ****************************************/
-    var isMuted: Bool {
-        get { player.isMuted }
-        set {
-            if player.isMuted != newValue {
-                player.isMuted = newValue
-                settings.volumeIsMuted = newValue
-                NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
-            }
-        }
-    }
+    var isMuted: Bool { didSet {
+        player?.isMuted = isMuted
+        settings.volumeIsMuted = isMuted
+        NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
+    }}
 
     /* ****************************************
      *
      * ****************************************/
-    var audioDeviceUID: String? {
-        get { player.audioOutputDeviceUniqueID }
-        set {
-            if player.audioOutputDeviceUniqueID != newValue {
-                player.audioOutputDeviceUniqueID = newValue
-                settings.audioDevice = newValue
+    var audioDeviceUID: String? { didSet {
+        settings.audioDevice = audioDeviceUID
+        if let player = player {
+            if player.audioOutputDeviceUniqueID != audioDeviceUID {
+                player.audioOutputDeviceUniqueID = audioDeviceUID
 
                 if isPlaying {
                     stop()
@@ -92,18 +79,49 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
                 }
             }
         }
-    }
+    }}
 
     /* ****************************************
      *
      * ****************************************/
     override init() {
-        super.init()
+        self.volume = settings.volumeLevel
+        self.isMuted = settings.volumeIsMuted
+        self.audioDeviceUID = settings.audioDevice
 
-        player = AVPlayer()
-        player.volume = settings.volumeLevel
-        player.isMuted = settings.volumeIsMuted
-        player.audioOutputDeviceUniqueID = settings.audioDevice
+        super.init()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func play() {
+        guard let station = station else { return }
+
+        var url = URL(string: station.url)
+
+        if url == nil {
+            url = URL(string: station.url.replacingOccurrences(of: " ", with: "%20"))
+        }
+
+        if url == nil {
+            Alarm.show(title: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
+            return
+        }
+
+        guard let url = url else {
+            debug("Incorrect URL:", station.url)
+            return
+        }
+
+        debug("Play \(station.url) \(url)")
+
+        stop()
+
+        let player = AVPlayer()
+        player.volume = self.volume
+        player.isMuted = self.isMuted
+        player.audioOutputDeviceUniqueID = self.audioDeviceUID
 
         player.addObserver(self,
                            forKeyPath: #keyPath(AVPlayer.timeControlStatus),
@@ -114,41 +132,15 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
                                                selector: #selector(updateAudioDevice),
                                                name: Notification.Name.AudioDeviceChanged,
                                                object: nil)
-    }
+        self.player = player
 
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc func play() {
-        guard let station = station else { return }
-
-        var u = URL(string: station.url)
-
-        if u == nil {
-            u = URL(string: station.url.replacingOccurrences(of: " ", with: "%20"))
-        }
-
-        if u == nil {
-            Alarm.show(title: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
-            return
-        }
-
-        guard let u = u else {
-            return
-        }
-
-        debug("Play \(station.url) \(u)")
-
-        stop()
-
-        let asset = AVAsset(url: u)
-        let playerItem = AVPlayerItem(asset: asset)
+        let playerItem = AVPlayerItem(url: url)
 
         let metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
         metadataOutput.setDelegate(self, queue: DispatchQueue.main)
         playerItem.add(metadataOutput)
-
         player.replaceCurrentItem(with: playerItem)
+
         statusChenged(status: AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate)
         player.play()
         settings.lastStationUrl = station.url
@@ -165,8 +157,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     @objc func stop() {
-        player.pause()
-        player.replaceCurrentItem(with: nil)
+        player?.pause()
+        player = nil
     }
 
     /* ****************************************
@@ -288,7 +280,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     @objc private func updateAudioDevice() {
-        let uid = player.audioOutputDeviceUniqueID
+        let uid = player?.audioOutputDeviceUniqueID
 
         if uid == nil {
             return
