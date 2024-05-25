@@ -27,9 +27,10 @@ extension RadiolaTests {
             let merger = LocalStationsMerger(currentStations: cur, newStations: new)
             merger.run()
 
-//            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-//            merger.currentStations.dump()
-//            print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+            // print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+            // print("INS: \(merger.statisics)")
+            // merger.currentStations.dump()
+            // print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
             XCTAssertEqual(cur.asXML(), expected.asXML(), "\nFAILED TEST \(dir.path().removingPercentEncoding ?? "")\n")
         }
     }

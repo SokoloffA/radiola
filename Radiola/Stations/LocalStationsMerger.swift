@@ -12,6 +12,13 @@ import Foundation
 class LocalStationsMerger {
     let currentStations: LocalStationList
     let newStations: LocalStationList
+    private(set) var statistics = Statistics()
+
+    struct Statistics {
+        var insertedStations = 0
+        var updatedStations = 0
+        var insertedGroups = 0
+    }
 
     /* ****************************************
      *
@@ -19,6 +26,50 @@ class LocalStationsMerger {
     init(currentStations: LocalStationList, newStations: LocalStationList) {
         self.currentStations = currentStations
         self.newStations = newStations
+        statGroup(srcGroup: newStations.root, destGroup: currentStations.root)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func statGroup(srcGroup: LocalStationGroup, destGroup: LocalStationGroup?) {
+        for item in srcGroup.items {
+            if let station = item as? LocalStation {
+                statStation(src: station, srcParent: srcGroup, destParent: destGroup)
+                continue
+            }
+
+            if let group = item as? LocalStationGroup {
+                statGroup(src: group, srcParent: srcGroup, destParent: destGroup)
+                continue
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func statGroup(src: LocalStationGroup, srcParent: LocalStationGroup, destParent: LocalStationGroup?) {
+        let group = destParent?.findGroup(src: src)
+        if group == nil {
+            statistics.insertedGroups += 1
+        }
+
+        statGroup(srcGroup: src, destGroup: group)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func statStation(src: LocalStation, srcParent: LocalStationGroup, destParent: LocalStationGroup?) {
+        if let station = destParent?.findStation(src: src) {
+            if station.title != src.title || station.isFavorite != src.isFavorite {
+                statistics.updatedStations += 1
+            }
+            return
+        }
+
+        statistics.insertedStations += 1
     }
 
     /* ****************************************
@@ -107,6 +158,9 @@ class LocalStationsMerger {
 
 fileprivate extension LocalStationGroup {
     func findStation(src: LocalStation) -> LocalStation? {
+        let res = items.first { ($0 as? LocalStation)?.url == src.url && ($0 as? LocalStation)?.title == src.title } as? LocalStation
+        if res != nil { return res }
+
         return items.first { ($0 as? LocalStation)?.url == src.url } as? LocalStation
     }
 

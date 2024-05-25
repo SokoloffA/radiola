@@ -1,0 +1,36 @@
+
+<ompl version="2.0">
+    <head></head>
+    <body>
+        <outline text="NEW Group" group="true">
+            <outline text="New station 1.1" url="http://new_station:1.1"></outline>
+            
+            <outline text="NEW Group" group="true">
+                <outline text="New station 2.1" url="http://new_station:2.1"></outline>
+                <outline text="New station 2.2" url="http://new_station:2.2"></outline>
+
+                <outline text="NEW Group" group="true">
+                    
+                    <outline text="New station 3.1" url="http://new_station:3.1"></outline>
+                    <outline text="NEW Group" group="true">
+                        <outline text="NEW Group" group="true">
+                            <outline text="New station 5.1" url="http://new_station:5.1"></outline>
+                            <outline text="New station 5.2" url="http://new_station:5.2"></outline>
+                            <outline text="New station 5.3" url="http://new_station:5.3"></outline>
+                            <outline text="New station 5.4" url="http://new_station:5.4"></outline>
+                        </outline>
+                    </outline>
+
+                    <outline text="New station 3.2" url="http://new_station:3.2"></outline>
+                </outline>
+            </outline>    
+            
+            <outline text="New station 1.2" url="http://new_station:1.2"></outline>
+        </outline>
+
+        <outline text="OLD Group" group="true">
+            <outline text="OLD station 1" url="http://old.station.com" fav="true"></outline>
+            <outline text="OLD station 2" url="http://old.station.com:2"></outline>
+        </outline>        
+    </body>
+</ompl>

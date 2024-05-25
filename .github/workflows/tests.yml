@@ -1,4 +1,4 @@
-name: Tests MacOs
+name: Run unit tests
 
 on: [push]
 
