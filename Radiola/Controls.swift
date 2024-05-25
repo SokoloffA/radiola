@@ -5,8 +5,8 @@
 //  Created by Alex Sokolov on 10.07.2022.
 //
 
-import Cocoa
 import AppKit
+import Cocoa
 
 // MARK: - NSWindow
 
@@ -155,16 +155,18 @@ class ScrollableSlider: NSSlider {
 }
 
 public extension NSAlert {
-    static func showWarning(message: String) {
+    static func showWarning(message: String, informativeText: String = "") {
         let alert = NSAlert()
         alert.messageText = message
+        alert.informativeText = informativeText
         alert.alertStyle = .warning
         alert.runModal()
     }
 
-    static func showInfo(message: String) {
+    static func showInfo(message: String, informativeText: String = "") {
         let alert = NSAlert()
         alert.messageText = message
+        alert.informativeText = informativeText
         alert.alertStyle = .informational
         alert.runModal()
     }

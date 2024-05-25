@@ -387,7 +387,9 @@ extension StationsWindow: NSUserInterfaceValidations {
             case #selector(addStation): return stationsTree.delegate is LocalStationDelegate
             case #selector(addGroup): return stationsTree.delegate is LocalStationDelegate
             case #selector(removeStation): return stationsTree.delegate is LocalStationDelegate
-            //      case #selector(addStationToLocalList): return stationsTree.delegate is LocalStationDelegate
+            case #selector(exportStations): return stationsTree.delegate is LocalStationDelegate
+            case #selector(importStations): return stationsTree.delegate is LocalStationDelegate
+
             default: return true
         }
     }
@@ -503,6 +505,7 @@ extension StationsWindow: NSUserInterfaceValidations {
         dialog.beginSheetModal(for: window) { result in
             guard result == .OK, let url = dialog.url else { return }
 
+            dialog.close()
             self.doImportStations(url: url, current: stations)
         }
     }
@@ -511,11 +514,43 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     private func doImportStations(url: URL, current: LocalStationList) {
+        guard let window = window else { return }
+
         let new = LocalStationList(title: "", icon: "")
         do {
             try new.load(file: url)
         } catch {
             error.show()
+            return
         }
+
+        let merger = LocalStationsMerger(currentStations: current, newStations: new)
+        if merger.statistics.isEmpty {
+            NSAlert.showInfo(message: "The file does not contain any new or changed radio stations.", informativeText: "You may have already exported it before.")
+            return
+        }
+
+        var message = ""
+        if merger.statistics.insertedStations != 0 && merger.statistics.updatedStations != 0 {
+            message = String(format: "%d stations will be added and %d stations will be updated.", merger.statistics.insertedStations, merger.statistics.updatedStations)
+        } else if merger.statistics.insertedStations != 0 {
+            message = String(format: "%d stations will be added.", merger.statistics.insertedStations)
+        } else if merger.statistics.updatedStations != 0 {
+            message = String(format: "%d stations will be updated.", merger.statistics.updatedStations)
+        }
+
+        let alert = NSAlert()
+        alert.informativeText = message
+        alert.addButton(withTitle: "Yes")
+        alert.addButton(withTitle: "Cancel")
+        alert.messageText = "Are you sure you want to continue?"
+        alert.beginSheetModal(for: window, completionHandler: { response in
+            if response != NSApplication.ModalResponse.alertFirstButtonReturn {
+                return
+            }
+            merger.run()
+            current.save()
+            self.stationsTree.reloadData()
+        })
     }
 }

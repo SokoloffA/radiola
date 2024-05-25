@@ -18,6 +18,13 @@ class LocalStationsMerger {
         var insertedStations = 0
         var updatedStations = 0
         var insertedGroups = 0
+
+        var isEmpty: Bool {
+            return
+                insertedStations == 0 &&
+                updatedStations == 0 &&
+                insertedGroups == 0
+        }
     }
 
     /* ****************************************
