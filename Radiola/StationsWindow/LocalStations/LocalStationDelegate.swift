@@ -299,7 +299,7 @@ extension LocalStationDelegate {
         outlineView.expandItem(newItem.parent)
 
         // Select new item
-        var row = outlineView.row(forItem: newItem)
+        let row = outlineView.row(forItem: newItem)
 
         if row > -1 {
             outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)

@@ -15,6 +15,7 @@ class LocalGroupRow: NSView {
 
     private var nameEdit = TextField()
     private let separator = Separator()
+    let menuButton = MenuButton()
 
     /* ****************************************
      *
@@ -26,6 +27,7 @@ class LocalGroupRow: NSView {
         super.init(frame: NSRect())
         addSubview(nameEdit)
         addSubview(separator)
+        addSubview(menuButton)
 
         nameEdit.placeholderString = "Group name"
         nameEdit.isBordered = false
@@ -41,10 +43,18 @@ class LocalGroupRow: NSView {
 
         nameEdit.translatesAutoresizingMaskIntoConstraints = false
         nameEdit.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        nameEdit.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
+        nameEdit.trailingAnchor.constraint(equalTo: menuButton.leadingAnchor, constant: -8).isActive = true
         nameEdit.topAnchor.constraint(equalTo: topAnchor, constant: 10.0).isActive = true
 
+        menuButton.translatesAutoresizingMaskIntoConstraints = false
+        menuButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        menuButton.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
+        menuButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        menuButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
+
         separator.alignBottom(of: self)
+
+        menuButton.menu?.addItem(withTitle: "Copy group title", action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
     }
 
     /* ****************************************
@@ -61,6 +71,15 @@ class LocalGroupRow: NSView {
         group.title = sender.stringValue
         list.save()
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copyTitleToClipboard() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(group.title, forType: .string)
+    }
 }
 
 // MARK: - LocalStationRow
@@ -72,7 +91,10 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
     var nameEdit = TextField()
     var urlEdit = TextField()
     var favoriteButton = ImageButton()
+    let menuButton = MenuButton()
     let separator = Separator()
+
+    private let contextMenu = NSMenu(title: "Context")
 
     private let favoriteIcons = [
         false: NSImage(systemSymbolName: NSImage.Name("star"), accessibilityDescription: "Favorite")?.tint(color: .lightGray),
@@ -89,6 +111,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
         super.init(frame: NSRect())
         addSubview(nameEdit)
         addSubview(favoriteButton)
+        addSubview(menuButton)
         addSubview(urlEdit)
         addSubview(separator)
 
@@ -112,10 +135,16 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
         favoriteButton.action = #selector(favClicked(sender:))
 
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
-        favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
         favoriteButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
         favoriteButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
+
+        menuButton.translatesAutoresizingMaskIntoConstraints = false
+        menuButton.leadingAnchor.constraint(equalTo: favoriteButton.trailingAnchor, constant: 8).isActive = true
+        menuButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        menuButton.centerYAnchor.constraint(equalTo: favoriteButton.centerYAnchor).isActive = true
+        menuButton.widthAnchor.constraint(equalTo: favoriteButton.widthAnchor).isActive = true
+        menuButton.heightAnchor.constraint(equalTo: favoriteButton.heightAnchor).isActive = true
 
         nameEdit.translatesAutoresizingMaskIntoConstraints = false
         nameEdit.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
@@ -131,6 +160,9 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
         separator.alignBottom(of: self)
 
         refreshFavoriteButton()
+
+        menuButton.menu?.addItem(withTitle: "Copy station title", action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
+        menuButton.menu?.addItem(withTitle: "Copy station URL", action: #selector(copyUrlToClipboard), keyEquivalent: "").target = self
     }
 
     /* ****************************************
@@ -172,5 +204,23 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
         update()
         return true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copyTitleToClipboard() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(station.title, forType: .string)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copyUrlToClipboard() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(station.url, forType: .string)
     }
 }

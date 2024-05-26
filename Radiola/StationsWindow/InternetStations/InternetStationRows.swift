@@ -19,6 +19,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     var qualityText = Label()
     var voteText = Label()
     var actionButton = ImageButton()
+    let menuButton = MenuButton()
     let separator = Separator()
 
     private let actionButtonIcons = [
@@ -39,6 +40,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         super.init(frame: NSRect())
         addSubview(nameEdit)
         addSubview(actionButton)
+        addSubview(menuButton)
         addSubview(urlEdit)
         addSubview(separator)
         addSubview(qualityText)
@@ -75,12 +77,18 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         urlEdit.translatesAutoresizingMaskIntoConstraints = false
         qualityText.translatesAutoresizingMaskIntoConstraints = false
         voteText.translatesAutoresizingMaskIntoConstraints = false
+        menuButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             actionButton.widthAnchor.constraint(equalToConstant: 16),
             nameEdit.leadingAnchor.constraint(equalTo: leadingAnchor),
             nameEdit.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -8),
+
+            menuButton.leadingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 8),
+            menuButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            menuButton.widthAnchor.constraint(equalTo: actionButton.widthAnchor),
+            menuButton.heightAnchor.constraint(equalTo: actionButton.heightAnchor),
+            menuButton.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
 
             urlEdit.leadingAnchor.constraint(equalTo: nameEdit.leadingAnchor),
             voteText.leadingAnchor.constraint(equalTo: urlEdit.trailingAnchor, constant: 8),
@@ -99,6 +107,9 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         separator.alignBottom(of: self)
 
         refreshActionButton()
+
+        menuButton.menu?.addItem(withTitle: "Copy station title", action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
+        menuButton.menu?.addItem(withTitle: "Copy station URL", action: #selector(copyUrlToClipboard), keyEquivalent: "").target = self
     }
 
     /* ****************************************
@@ -190,5 +201,23 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
             }
         }
         return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copyTitleToClipboard() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(station.title, forType: .string)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copyUrlToClipboard() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(station.url, forType: .string)
     }
 }
