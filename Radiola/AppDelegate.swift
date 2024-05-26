@@ -182,3 +182,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 }
+
+// MARK: - [MainMenu] AppDelegate: NSUserInterfaceValidations
+
+extension AppDelegate: NSUserInterfaceValidations {
+    func validateUserInterfaceItem(_ item: any NSValidatedUserInterfaceItem) -> Bool {
+        switch item.action {
+            case #selector(copySongToClipboard): return player.songTitle != ""
+
+            default: return true
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func copySongToClipboard(_ sender: Any) {
+        if player.songTitle != "" {
+            let pasteboard = NSPasteboard.general
+            pasteboard.declareTypes([.string], owner: nil)
+            pasteboard.setString(player.songTitle, forType: .string)
+        }
+    }
+}

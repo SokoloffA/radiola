@@ -297,3 +297,38 @@ class IconView: NSImageView {
         }
     }
 }
+
+// MARK: - Checkbox
+
+class Checkbox: NSButton {
+    /* ****************************************
+     *
+     * ****************************************/
+    init() {
+        super.init(frame: NSRect())
+
+        setButtonType(.switch)
+        bezelStyle = .regularSquare
+
+        setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 250), for: .horizontal)
+        setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 750), for: .vertical)
+
+        setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 750), for: .horizontal)
+        setContentCompressionResistancePriority(NSLayoutConstraint.Priority(rawValue: 750), for: .vertical)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    convenience init(title: String = "") {
+        self.init()
+        self.title = title
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

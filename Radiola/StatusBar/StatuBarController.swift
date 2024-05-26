@@ -206,6 +206,15 @@ class StatusBarController: NSObject {
             case .submenu: buildSubmenuFavoritesMenu(menu: menu)
         }
 
+        if settings.showCopyToClipboardInMenu {
+            menu.addItem(NSMenuItem.separator())
+
+            menu.addItem(NSMenuItem(
+                title: "Copy song title and artist",
+                action: #selector(AppDelegate.copySongToClipboard(_:)),
+                keyEquivalent: "c"))
+        }
+
         menu.addItem(NSMenuItem.separator())
 
         menu.addItem(NSMenuItem(
@@ -325,6 +334,9 @@ class StatusBarController: NSObject {
         updateTooltip()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     @objc func playerVolumeChanged() {
         icon.muted = player.isMuted
     }

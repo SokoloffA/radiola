@@ -22,6 +22,7 @@ class Settings {
     private let mouseWheelActionKey = "MouseWheelAction"
     private let showMuteInMenuKey = "ShowMuteInMenu"
     private let showTooltipKey = "ShowTooltip"
+    private let showCopyToClipboardInMenuKey = "ShowCopyToClipboardInMenu"
 
     private var mouseActs: [MouseButton: MouseButtonAction] = [:]
 
@@ -48,6 +49,7 @@ class Settings {
             playLastStationKey: false,
             showMuteInMenuKey: false,
             showTooltipKey: true,
+            showCopyToClipboardInMenuKey: false,
         ]
         data.register(defaults: defaults)
     }
@@ -228,6 +230,14 @@ class Settings {
     var showTooltip: Bool {
         get { data.bool(forKey: showTooltipKey) }
         set { data.set(newValue, forKey: showTooltipKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var showCopyToClipboardInMenu: Bool {
+        get { data.bool(forKey: showCopyToClipboardInMenuKey) }
+        set { data.set(newValue, forKey: showCopyToClipboardInMenuKey) }
     }
 }
 

@@ -54,6 +54,7 @@ class ControlsPage: NSViewController {
      * ****************************************/
     private func createView() -> NSView {
         let res = NSView()
+        res.autoresizingMask = [.maxXMargin, .minYMargin]
 
         res.addSubview(leftMouseButtonLbl)
         res.addSubview(leftMouseButtonCbx)
@@ -114,6 +115,11 @@ class ControlsPage: NSViewController {
         alignRow(lbl: globalKeyShowHistoryLbl, cbx: globalKeyShowHistoryCtrl, prev: globalKeyShowMainWindowCtrl)
 
         res.bottomAnchor.constraint(equalTo: globalKeyShowHistoryCtrl.bottomAnchor, constant: 32).isActive = true
+
+        for v in res.subviews {
+            res.trailingAnchor.constraint(greaterThanOrEqualTo: v.trailingAnchor, constant: 20).isActive = true
+        }
+
         return res
     }
 

@@ -389,6 +389,7 @@ extension StationsWindow: NSUserInterfaceValidations {
             case #selector(removeStation): return stationsTree.delegate is LocalStationDelegate
             case #selector(exportStations): return stationsTree.delegate is LocalStationDelegate
             case #selector(importStations): return stationsTree.delegate is LocalStationDelegate
+           // case #selector(copySongToClipboard): return player.songTitle != ""
 
             default: return true
         }
