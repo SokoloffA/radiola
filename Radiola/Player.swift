@@ -259,7 +259,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             return
         }
 
-        songTitle = "\(value)"
+        songTitle = cleanTrackMetadata(raw: "\(value)")
         addHistory()
 
         NotificationCenter.default.post(
