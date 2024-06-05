@@ -38,7 +38,7 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
 
         tab = NSTabViewItem(viewController: StartupPage())
         tab.label = "Startup"
-        tab.image = NSImage(systemSymbolName: "autostartstop", accessibilityDescription: "")
+        tab.image = NSImage(systemSymbolName: NSImage.Name(""), accessibilityDescription: "Startup page")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
 
