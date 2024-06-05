@@ -7,25 +7,15 @@
 
 import Cocoa
 
-class PlayButtonImage: NSImageView {
-    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
-        return true
-    }
-}
+// MARK: - PlayMenuItem
 
-/* ****************************************
- *
- * ****************************************/
 class PlayMenuItem: NSMenuItem {
-    private var controller = PlayItemController()
-
     /* ****************************************
      *
      * ****************************************/
     init() {
         super.init(title: "", action: nil, keyEquivalent: "")
-        controller.menuItem = self
-        view = controller.view
+        view = PlayItemView(menuItem: self)
     }
 
     /* ****************************************
@@ -36,22 +26,23 @@ class PlayMenuItem: NSMenuItem {
     }
 }
 
-/* ****************************************
- *
- * ****************************************/
-fileprivate class PlayItemController: NSViewController {
+// MARK: - PlayItemView
+
+fileprivate class PlayItemView: NSView {
     var playIcon = PlayButtonImage()
     var songLabel = Label()
     var stationLabel = Label()
-    var favoriteButton = ImageButton()
+    var favoriteButton = FavButton()
 
-    var menuItem: NSMenuItem?
+    var menuItem: NSMenuItem
 
     /* ****************************************
      *
      * ****************************************/
-    override func viewDidLoad() {
-        view = createView()
+    init(menuItem: NSMenuItem) {
+        self.menuItem = menuItem
+        super.init(frame: NSRect(x: 0, y: 0, width: 360, height: 45))
+        createView()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refresh),
@@ -69,8 +60,20 @@ fileprivate class PlayItemController: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    private func createView() -> NSView {
-        let res = NSView(frame: NSRect(x: 0, y: 0, width: 360, height: 45))
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func createView() {
+        autoresizingMask = [.height, .width]
+
+        addSubview(playIcon)
+        addSubview(songLabel)
+        addSubview(stationLabel)
+        addSubview(favoriteButton)
 
         playIcon.imageScaling = .scaleProportionallyUpOrDown
 
@@ -89,11 +92,6 @@ fileprivate class PlayItemController: NSViewController {
         stationLabel.lineBreakMode = .byClipping
         stationLabel.font = NSFont.systemFont(ofSize: 11)
 
-        res.addSubview(playIcon)
-        res.addSubview(songLabel)
-        res.addSubview(stationLabel)
-        res.addSubview(favoriteButton)
-
         playIcon.translatesAutoresizingMaskIntoConstraints = false
         songLabel.translatesAutoresizingMaskIntoConstraints = false
         stationLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -102,23 +100,21 @@ fileprivate class PlayItemController: NSViewController {
         playIcon.heightAnchor.constraint(equalToConstant: 18).isActive = true
         playIcon.widthAnchor.constraint(equalTo: playIcon.heightAnchor).isActive = true
 
-        playIcon.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
-        playIcon.centerYAnchor.constraint(equalTo: res.centerYAnchor).isActive = true
+        playIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20).isActive = true
+        playIcon.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
-        songLabel.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 53).isActive = true
+        songLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 53).isActive = true
         songLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -10).isActive = true
 
         favoriteButton.centerYAnchor.constraint(equalTo: songLabel.centerYAnchor).isActive = true
         favoriteButton.widthAnchor.constraint(equalTo: favoriteButton.heightAnchor).isActive = true
-        favoriteButton.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
+        trailingAnchor.constraint(equalToSystemSpacingAfter: favoriteButton.trailingAnchor, multiplier: 1.0).isActive = true
 
         stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor).isActive = true
         stationLabel.trailingAnchor.constraint(equalTo: songLabel.trailingAnchor).isActive = true
 
-        songLabel.topAnchor.constraint(equalTo: res.topAnchor, constant: 7).isActive = true
+        songLabel.topAnchor.constraint(equalTo: topAnchor, constant: 7).isActive = true
         stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 4).isActive = true
-
-        return res
     }
 
     /* ****************************************
@@ -126,13 +122,13 @@ fileprivate class PlayItemController: NSViewController {
      * ****************************************/
     @objc func toggle() {
         player.toggle()
-        menuItem?.menu?.cancelTracking()
+        menuItem.menu?.cancelTracking()
     }
 
     /* ****************************************
      *
      * ****************************************/
-    override func mouseUp(with theEvent: NSEvent) {
+    override func mouseUp(with event: NSEvent) {
         toggle()
     }
 
@@ -177,5 +173,25 @@ fileprivate class PlayItemController: NSViewController {
     @objc func markAsFavoriteSong() {
         player.isFavoriteSong = !player.isFavoriteSong
         refresh()
+    }
+}
+
+// MARK: - PlayButtonImage
+
+fileprivate class PlayButtonImage: NSImageView {
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
+        return true
+    }
+}
+
+// MARK: - FavButton
+
+fileprivate class FavButton: ImageButton {
+    override func mouseUp(with event: NSEvent) {
+        // Block the passing of mouse clicks to the parent even for the disabled state.
+    }
+
+    override func rightMouseUp(with event: NSEvent) {
+        // Block the passing of mouse clicks to the parent even for the disabled state.
     }
 }
