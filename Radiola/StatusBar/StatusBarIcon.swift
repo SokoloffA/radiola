@@ -10,7 +10,7 @@ import Cocoa
 class StatusBarIcon {
     var framesPerSecond = 8 { didSet { update() } }
     let size: Int
-    var statusItem: NSStatusItem? { didSet { update(force: true) } }
+    weak var statusItem: NSStatusItem? { didSet { update(force: true) } }
     var playerStatus: Player.Status = .paused { didSet { update() } }
     var muted: Bool = false { didSet { update() } }
 

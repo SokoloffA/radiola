@@ -16,6 +16,10 @@ class StatusBarController: NSObject {
     private let menuPrefix = "  "
     private let icon = StatusBarIcon(size: 16)
 
+    private var mouseDownMonitor: Any?
+    private var mouseUpMonitor: Any?
+    private var scrollWheelMonitor: Any?
+
     /* ****************************************
      *
      * ****************************************/
@@ -46,11 +50,20 @@ class StatusBarController: NSObject {
                                                name: Notification.Name.SettingsChanged,
                                                object: nil)
 
-        NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown], handler: mouseDown)
-        NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp], handler: mouseUp)
-        NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel], handler: scrollWheel)
+        mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown], handler: mouseDown)
+        mouseUpMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp], handler: mouseUp)
+        scrollWheelMonitor = NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel], handler: scrollWheel)
 
         playerStatusChanged()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    deinit {
+        if let monitor = mouseDownMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = mouseUpMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = scrollWheelMonitor { NSEvent.removeMonitor(monitor) }
     }
 
     /* ****************************************
