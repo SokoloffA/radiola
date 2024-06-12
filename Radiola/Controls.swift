@@ -356,3 +356,36 @@ class Checkbox: NSButton {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
+// MARK: - ContextMenu
+
+class ContextMenu: NSMenu {
+    private weak var view: NSTextField!
+
+    /* ****************************************
+     *
+     * ****************************************/
+    init(textField: NSTextField) {
+        view = textField
+        super.init(title: "")
+
+        addItem(withTitle: "Copy", action: #selector(doCopy), keyEquivalent: "").target = self
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func doCopy() {
+        print(view.stringValue)
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(view.stringValue, forType: .string)
+    }
+}

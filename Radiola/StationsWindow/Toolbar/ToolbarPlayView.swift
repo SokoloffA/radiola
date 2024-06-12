@@ -21,10 +21,12 @@ class ToolbarPlayView: NSViewController {
         songLabel.lineBreakMode = .byTruncatingMiddle
         songLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         songLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        songLabel.menu = ContextMenu(textField: songLabel)
 
         stationLabel.lineBreakMode = .byTruncatingMiddle
         stationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         stationLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        stationLabel.menu = ContextMenu(textField: stationLabel)
 
         playButton.setContentHuggingPriority(NSLayoutConstraint.Priority(240) /* .defaultLow */, for: NSLayoutConstraint.Orientation.horizontal)
         playButton.bezelStyle = NSButton.BezelStyle.regularSquare
@@ -72,6 +74,9 @@ class ToolbarPlayView: NSViewController {
                 stationLabel.stringValue = player.stationName
                 songLabel.stringValue = player.songTitle
         }
+
+        stationLabel.toolTip = stationLabel.stringValue
+        songLabel.toolTip = songLabel.stringValue
 
         switch player.status {
             case Player.Status.paused:
