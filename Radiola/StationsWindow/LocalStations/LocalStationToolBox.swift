@@ -10,7 +10,8 @@ import Cocoa
 // MARK: - LocalStationToolBox
 
 class LocalStationToolBox: NSView {
-    let addButton = NSButton()
+    let addStationButton = NSButton()
+    let addGroupButton = NSButton()
     let delButton = NSButton()
 
     private var list: LocalStationList?
@@ -20,16 +21,25 @@ class LocalStationToolBox: NSView {
      * ****************************************/
     init() {
         super.init(frame: NSRect.zero)
-        addSubview(addButton)
+        addSubview(addStationButton)
+        addSubview(addGroupButton)
         addSubview(delButton)
 
-        addButton.bezelStyle = .smallSquare
-        addButton.setButtonType(.momentaryPushIn)
-        addButton.image = NSImage(systemSymbolName: NSImage.Name("plus.circle"), accessibilityDescription: "Add station")
-        addButton.title = "Add station"
-        addButton.imagePosition = .imageLeft
-        addButton.image?.isTemplate = true
-        addButton.isBordered = false
+        addStationButton.bezelStyle = .smallSquare
+        addStationButton.setButtonType(.momentaryPushIn)
+        addStationButton.image = NSImage(systemSymbolName: NSImage.Name("plus.circle"), accessibilityDescription: "Add station")
+        addStationButton.title = "Add station"
+        addStationButton.imagePosition = .imageLeft
+        addStationButton.image?.isTemplate = true
+        addStationButton.isBordered = false
+
+        addGroupButton.bezelStyle = .smallSquare
+        addGroupButton.setButtonType(.momentaryPushIn)
+        addGroupButton.image = NSImage(systemSymbolName: NSImage.Name("plus.circle"), accessibilityDescription: "Add group")
+        addGroupButton.title = "Add group"
+        addGroupButton.imagePosition = .imageLeft
+        addGroupButton.image?.isTemplate = true
+        addGroupButton.isBordered = false
 
         delButton.bezelStyle = .smallSquare
         delButton.setButtonType(.momentaryPushIn)
@@ -39,17 +49,21 @@ class LocalStationToolBox: NSView {
         delButton.image?.isTemplate = true
         delButton.isBordered = false
 
-        addButton.translatesAutoresizingMaskIntoConstraints = false
+        addStationButton.translatesAutoresizingMaskIntoConstraints = false
+        addGroupButton.translatesAutoresizingMaskIntoConstraints = false
         delButton.translatesAutoresizingMaskIntoConstraints = false
 
-        addButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        delButton.heightAnchor.constraint(equalTo: addButton.heightAnchor).isActive = true
+        addStationButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        addGroupButton.heightAnchor.constraint(equalTo: addStationButton.heightAnchor).isActive = true
+        delButton.heightAnchor.constraint(equalTo: addStationButton.heightAnchor).isActive = true
 
-        addButton.topAnchor.constraint(equalTo: topAnchor, constant: 6).isActive = true
-        delButton.topAnchor.constraint(equalTo: addButton.topAnchor).isActive = true
+        addStationButton.topAnchor.constraint(equalTo: topAnchor, constant: 6).isActive = true
+        addGroupButton.topAnchor.constraint(equalTo: addStationButton.topAnchor).isActive = true
+        delButton.topAnchor.constraint(equalTo: addStationButton.topAnchor).isActive = true
 
-        addButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
-        delButton.leadingAnchor.constraint(equalToSystemSpacingAfter: addButton.trailingAnchor, multiplier: 1).isActive = true
+        addStationButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
+        addGroupButton.leadingAnchor.constraint(equalToSystemSpacingAfter: addStationButton.trailingAnchor, multiplier: 1).isActive = true
+        delButton.leadingAnchor.constraint(equalToSystemSpacingAfter: addGroupButton.trailingAnchor, multiplier: 3).isActive = true
     }
 
     /* ****************************************

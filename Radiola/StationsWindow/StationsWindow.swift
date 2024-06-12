@@ -296,8 +296,11 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         searchPanel = nil
 
         let toolBox = LocalStationToolBox()
-        toolBox.addButton.target = self
-        toolBox.addButton.action = #selector(addStation)
+        toolBox.addStationButton.target = self
+        toolBox.addStationButton.action = #selector(addStation)
+
+        toolBox.addGroupButton.target = self
+        toolBox.addGroupButton.action = #selector(addGroup)
 
         toolBox.delButton.target = self
         toolBox.delButton.action = #selector(removeStation)
