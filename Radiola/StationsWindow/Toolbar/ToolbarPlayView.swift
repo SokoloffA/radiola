@@ -18,6 +18,14 @@ class ToolbarPlayView: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        songLabel.lineBreakMode = .byTruncatingMiddle
+        songLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        songLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        stationLabel.lineBreakMode = .byTruncatingMiddle
+        stationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        stationLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
         playButton.setContentHuggingPriority(NSLayoutConstraint.Priority(240) /* .defaultLow */, for: NSLayoutConstraint.Orientation.horizontal)
         playButton.bezelStyle = NSButton.BezelStyle.regularSquare
         playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
