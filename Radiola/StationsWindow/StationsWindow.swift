@@ -55,6 +55,8 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         super.windowDidLoad()
         window?.delegate = self
 
+        window?.toolbar?.allowsUserCustomization = false
+
         localStationsDelegate = LocalStationDelegate(outlineView: stationsTree)
         internetStationsDelegate = InternetStationDelegate(outlineView: stationsTree)
 
