@@ -9,10 +9,10 @@ from xml.dom import minidom
 SOURCE_SVG = "source.svg"
 
 OUT_IMAGES = {
-    "StatusBarPause.svg":     ["Stick", "Unmute Left", "Pause Right"],
-    "StatusBarPlay.svg":      ["Unmute Left", "Play Right"],
-    "StatusBarPauseMute.svg": ["Stick", "Mute Left", "Pause Right"],
-    "StatusBarPlayMute.svg":  ["Mute Left", "Play Right"],
+    "../Radiola/Assets.xcassets/StatusBar/StatusBarPause.imageset/StatusBarPause.svg":         ["Stick", "Unmute Left", "Pause Right"],
+    "../Radiola/Assets.xcassets/StatusBar/StatusBarPlay.imageset/StatusBarPlay.svg":           ["Unmute Left", "Play Right"],
+    "../Radiola/Assets.xcassets/StatusBar/StatusBarPauseMute.imageset/StatusBarPauseMute.svg": ["Stick", "Mute Left", "Pause Right"],
+    "../Radiola/Assets.xcassets/StatusBar/StatusBarPlayMute.imageset/StatusBarPlayMute.svg":   ["Mute Left", "Play Right"],
 }
 
 #######################################
@@ -21,8 +21,10 @@ class Error(Exception):
     pass
 
 def create_svg(in_file, out_file, layers):
+    print(f"  •  {out_file}")
+
     xml = minidom.parse(in_file)
-    
+
     unused = layers
 
     svg=xml.getElementsByTagName('svg')[0]
@@ -39,7 +41,7 @@ def create_svg(in_file, out_file, layers):
 
         if "display:none" in style:
             style.remove("display:none")
-        
+
         if style == []:
             g.removeAttribute("style")
         else:
