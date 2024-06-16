@@ -5,6 +5,21 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 7.0.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Added buttons for copying station title and URL.&lt;/li&gt;
+&lt;li&gt;You can start/stop playback by pressing the spacebar.&lt;/li&gt;
+&lt;li&gt;When a song you really like is playing, you can tag it and quickly find it in your history.&lt;/li&gt;
+&lt;li&gt;Some stations transmit metadata in JSON format, now the song title and artist are displayed correctly (at least for some stations).&lt;/li&gt;
+&lt;li&gt;Added global hotkeys to show main window, history and settings.&lt;/li&gt;
+&lt;li&gt;Added the ability to export programs to XML file and import from it.&lt;/li&gt;
+&lt;li&gt;Fix: Sometimes after an unsuccessful attempt to connect to one station, the program could not connect to any other station.&lt;/li&gt;
+&lt;li&gt;Minor improvements in the appearance and behavior of the program.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sun, 16 Jun 2024 20:18:49 +0000</pubDate>
+      <enclosure length="0" sparkle:version="7.0.0" type="application/octet-stream" url="https://github.com/SokoloffA/radiola/releases/download/v7.0.0/Radiola-7.0.0.dmg"/>
+    </item>
+    <item>
       <title>Radiola 6.1.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Fix: The search bar was partially displayed at small window width.&lt;/li&gt;
