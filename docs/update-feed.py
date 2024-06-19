@@ -20,6 +20,7 @@ import json
 import re
 from xml.dom import minidom
 import datetime
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)) + '/libs/')
 import markdown
 
 
@@ -49,7 +50,7 @@ class Release:
     def extractVersion(self, tag):
         s = tag
 
-        res = re.search("-beta\d+", s)
+        res = re.search(r"-beta\d+", s)
         if res:
             s = s[:res.start()]
 
@@ -64,7 +65,7 @@ class Release:
                 s = s[len(p):]
                 break
 
-        if (re.match("[\d\.]+$", s)):
+        if (re.match(r"[\d\.]+$", s)):
             return s
 
         raise Error(f"Can't extract version from '{tag}' tag")
