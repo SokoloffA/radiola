@@ -5,6 +5,14 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 7.0.1</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;The program did not save the station list when the application was first started.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Wed, 19 Jun 2024 17:34:49 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v7.0.1/Radiola-7.0.1.dmg" sparkle:version="7.0.1" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 7.0.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Added buttons for copying station title and URL.&lt;/li&gt;
@@ -17,7 +25,7 @@
 &lt;li&gt;Minor improvements in the appearance and behavior of the program.&lt;/li&gt;
 &lt;/ul&gt;</description>
       <pubDate>Sun, 16 Jun 2024 20:18:49 +0000</pubDate>
-      <enclosure length="0" sparkle:version="7.0.0" type="application/octet-stream" url="https://github.com/SokoloffA/radiola/releases/download/v7.0.0/Radiola-7.0.0.dmg"/>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v7.0.0/Radiola-7.0.0.dmg" sparkle:version="7.0.0" length="0" type="application/octet-stream"/>
     </item>
     <item>
       <title>Radiola 6.1.0</title>
