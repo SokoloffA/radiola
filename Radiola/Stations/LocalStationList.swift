@@ -182,10 +182,28 @@ class LocalStationList: ObservableObject, StationList {
 
 
 extension LocalStationList {
+
+
     /* ****************************************
      *
      * ****************************************/
-    func load(file: URL, defaultStations: [LocalStation] = []) throws {
+    func load(file: URL, defaultStations: [LocalStation] = []) {
+        self.file = file
+
+        do {
+            try load(file: file)
+        }
+        catch {
+            for s in defaultStations {
+                append(s)
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func load(file: URL) throws {
         self.file = file
 
         if !FileManager().fileExists(atPath: file.path) {

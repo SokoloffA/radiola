@@ -68,19 +68,8 @@ class AppState: ObservableObject {
         }
 
         // Read local stations .................................
-        if FileManager().fileExists(atPath: fileName.path) {
-            debug("Load stations from: \(fileName.path)")
-            do {
-                try localStations[0].load(file: fileName)
-            } catch {
-                error.show()
-            }
-        } else {
-            debug("Use default stations")
-            for s in defaultStations {
-                localStations[0].append(s)
-            }
-        }
+        debug("Load stations from: \(fileName.path)")
+        localStations[0].load(file: fileName, defaultStations: defaultStations)
     }
 
     /* ****************************************
