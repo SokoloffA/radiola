@@ -64,8 +64,6 @@ class AppearancePage: NSViewController {
         res.addSubview(showCopyToClipboardCheckBox)
         res.addSubview(showToolTipCheckBox)
 
-        let secondColAnchor = favoritesMenuGroupTypeCbx.leadingAnchor
-
         favoritesMenuGroupTypeLabel.alignment = .right
         favoritesMenuGroupTypeLabel.translatesAutoresizingMaskIntoConstraints = false
         favoritesMenuGroupTypeCbx.translatesAutoresizingMaskIntoConstraints = false
