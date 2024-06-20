@@ -35,7 +35,9 @@ class ControlsPage: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    override func viewDidLoad() {
+    init() {
+        super.init(nibName: nil, bundle: nil)
+
         title = "Controls"
         view = createView()
 
@@ -47,6 +49,13 @@ class ControlsPage: NSViewController {
 
         initMediaKeysCbx()
         initMediaPrevNextButtonCbx()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     /* ****************************************

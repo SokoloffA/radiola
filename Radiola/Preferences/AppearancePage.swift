@@ -15,7 +15,12 @@ class AppearancePage: NSViewController {
     private let showCopyToClipboardCheckBox = Checkbox(title: "Show the \"Copy song title and artist\" item in the menu")
     private let showToolTipCheckBox = Checkbox(title: "Show a tooltip with the radiostation and song")
 
-    override func viewDidLoad() {
+    /* ****************************************
+     *
+     * ****************************************/
+    init() {
+        super.init(nibName: nil, bundle: nil)
+
         title = "Appearance"
         view = createView()
 
@@ -36,6 +41,13 @@ class AppearancePage: NSViewController {
         showCopyToClipboardCheckBox.state = settings.showCopyToClipboardInMenu ? .on : .off
         showCopyToClipboardCheckBox.target = self
         showCopyToClipboardCheckBox.action = #selector(showCopyToClipboardChanged)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     /* ****************************************
