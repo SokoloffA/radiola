@@ -5,6 +5,14 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 7.0.2</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Bug fixed. Settings window was not showing on older versions of macOS.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Thu, 20 Jun 2024 21:18:46 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v7.0.2/Radiola-7.0.2.dmg" sparkle:version="7.0.2" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 7.0.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;The program did not save the station list when the application was first started.&lt;/li&gt;
