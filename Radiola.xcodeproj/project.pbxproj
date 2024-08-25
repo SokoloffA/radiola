@@ -33,7 +33,7 @@
 		39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39541B32287623F200A2A5CB /* AddStationDialog.swift */; };
 		3959DBA92BFCE6A50032A1BA /* RadiolaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBA82BFCE6A50032A1BA /* RadiolaTests.swift */; };
 		3959DBB02BFCE6C30032A1BA /* TestStationMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBAF2BFCE6C30032A1BA /* TestStationMerger.swift */; };
-		3959DBB22BFCE7580032A1BA /* LocalStationsMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBB12BFCE7580032A1BA /* LocalStationsMerger.swift */; };
+		3959DBB22BFCE7580032A1BA /* StationsMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBB12BFCE7580032A1BA /* StationsMerger.swift */; };
 		3959DBB42C03327A0032A1BA /* TrackMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBB32C03327A0032A1BA /* TrackMetadata.swift */; };
 		3959DBB62C03335C0032A1BA /* TestTrackMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBB52C03335C0032A1BA /* TestTrackMetadata.swift */; };
 		3962D02A2BE0E39F0014BCFB /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0292BE0E39F0014BCFB /* History.swift */; };
@@ -130,7 +130,7 @@
 		3959DBA62BFCE6A50032A1BA /* RadiolaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RadiolaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3959DBA82BFCE6A50032A1BA /* RadiolaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiolaTests.swift; sourceTree = "<group>"; };
 		3959DBAF2BFCE6C30032A1BA /* TestStationMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStationMerger.swift; sourceTree = "<group>"; };
-		3959DBB12BFCE7580032A1BA /* LocalStationsMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStationsMerger.swift; sourceTree = "<group>"; };
+		3959DBB12BFCE7580032A1BA /* StationsMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsMerger.swift; sourceTree = "<group>"; };
 		3959DBB32C03327A0032A1BA /* TrackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackMetadata.swift; sourceTree = "<group>"; };
 		3959DBB52C03335C0032A1BA /* TestTrackMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTrackMetadata.swift; sourceTree = "<group>"; };
 		3962D0292BE0E39F0014BCFB /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
@@ -234,9 +234,9 @@
 			children = (
 				39A7940F2B4B6483000D9875 /* Stations.swift */,
 				39950B9E2C7B327600C37952 /* StationList.swift */,
+				3959DBB12BFCE7580032A1BA /* StationsMerger.swift */,
 				39950B9C2C7B2C4300C37952 /* OpmlStations.swift */,
 				39A7940D2B4B647E000D9875 /* RadioBrowserProvider.swift */,
-				3959DBB12BFCE7580032A1BA /* LocalStationsMerger.swift */,
 				39A794092B4B646D000D9875 /* InternetStations.swift */,
 			);
 			path = Stations;
@@ -566,7 +566,7 @@
 				394ABC972A97AC9B00E2B6E9 /* SidebarTopLevelView.swift in Sources */,
 				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
 				3967046C2944961500012FFD /* AudioPage.swift in Sources */,
-				3959DBB22BFCE7580032A1BA /* LocalStationsMerger.swift in Sources */,
+				3959DBB22BFCE7580032A1BA /* StationsMerger.swift in Sources */,
 				394ABCA72A9BBD4E00E2B6E9 /* RadioBrowserTags.swift in Sources */,
 				3959DBB42C03327A0032A1BA /* TrackMetadata.swift in Sources */,
 				394F8A4D2873937F005EA7FA /* HistoryWindow.swift in Sources */,

@@ -15,16 +15,16 @@ extension RadiolaTests {
     func testStationMerger() throws {
         try walkDataDir(testName: #function) { dir in
 
-            let cur = LocalStationList(title: "CUR", icon: "")
+            let cur = OpmlStations(title: "CUR", icon: "")
             try cur.load(file: dir.appendingPathComponent("current.opml"))
 
-            let new = LocalStationList(title: "NEW", icon: "")
+            let new = OpmlStations(title: "NEW", icon: "")
             try new.load(file: dir.appendingPathComponent("new.opml"))
 
-            let expected = LocalStationList(title: "Expected", icon: "")
+            let expected = OpmlStations(title: "Expected", icon: "")
             try expected.load(file: dir.appendingPathComponent("result.opml"))
 
-            let merger = LocalStationsMerger(currentStations: cur, newStations: new)
+            let merger = StationsMerger(currentStations: cur, newStations: new)
             merger.run()
 
             // print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")

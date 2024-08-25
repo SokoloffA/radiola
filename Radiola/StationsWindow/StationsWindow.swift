@@ -520,10 +520,9 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     private func doImportStations(url: URL, current: StationList) {
-        /*
         guard let window = window else { return }
 
-        let new = StationList(title: "", icon: "")
+        let new = OpmlStations(title: "", icon: "")
         do {
             try new.load(file: url)
         } catch {
@@ -531,7 +530,7 @@ extension StationsWindow: NSUserInterfaceValidations {
             return
         }
 
-        let merger = LocalStationsMerger(currentStations: current, newStations: new)
+        let merger = StationsMerger(currentStations: current, newStations: new)
         if merger.statistics.isEmpty {
             NSAlert.showInfo(message: "The file does not contain any new or changed radio stations.", informativeText: "You may have already exported it before.")
             return
@@ -559,6 +558,5 @@ extension StationsWindow: NSUserInterfaceValidations {
             current.save()
             self.stationsTree.reloadData()
         })
-         */
     }
 }
