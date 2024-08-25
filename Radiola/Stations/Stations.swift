@@ -12,7 +12,6 @@ import Foundation
 protocol StationItem: AnyObject {
     var id: UUID { get }
     var title: String { get set }
-    var parent: StationGroup? { get }
 }
 
 // MARK: - Station

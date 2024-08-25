@@ -9,9 +9,8 @@ import Foundation
 
 // MARK: - StationList
 
-protocol StationList: AnyObject {
+protocol StationList: StationGroup {
     var id: UUID {get}
-    var title: String { get }
     var icon: String { get }
     var help: String? { get }
     var items: [StationItem] { get set }
@@ -97,6 +96,27 @@ extension StationList {
 
            return res
        }
+
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func itemParent(item: StationItem) -> StationGroup? {
+        func run(_ group: StationGroup) -> StationGroup? {
+            for it in group.items {
+                if it.id == item.id {
+                    return group
+                }
+
+                if let g = it as? StationGroup {
+                    if let res = run(g) { return res }
+                }
+            }
+            return nil
+        }
+
+        return run(self)
+    }
 
     /* ****************************************
      *

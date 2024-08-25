@@ -12,7 +12,6 @@ fileprivate class DefaultStation: Station {
     var title: String
     var url: String
     var isFavorite: Bool
-    var parent: (any StationGroup)? = nil
 
     init(title: String, url: String, isFavorite: Bool) {
         self.title = title

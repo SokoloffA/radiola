@@ -147,15 +147,18 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     private func canDragAndDrop(src: StationItem, dest: StationGroup) -> Bool {
-        var node: StationGroup? = dest
-        while node != nil {
-            if node?.id == src.id {
-                return false
-            }
-            node = node?.parent
-        }
+        return false
+        /*
+         var node: StationGroup? = dest
+         while node != nil {
+             if node?.id == src.id {
+                 return false
+             }
+             node = node?.parent
+         }
 
-        return true
+         return true
+          */
     }
 
     /* ****************************************
@@ -180,66 +183,66 @@ extension LocalStationDelegate {
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         return false
         /*
-        guard
-            let list = list,
-            let srcId = UUID(uuidString: info.draggingPasteboard.pasteboardItems?.first?.string(forType: nodePasteboardType) ?? ""),
-            let srcItem = list.item(byID: srcId),
-            let srcParent = srcItem.parent,
-            let srcIndex = srcParent.items.firstIndex(where: { $0.id == srcId }),
-            let destGroup = item == nil ? list.root : item as? StationGroup
-        else {
-            return false
-        }
+         guard
+             let list = list,
+             let srcId = UUID(uuidString: info.draggingPasteboard.pasteboardItems?.first?.string(forType: nodePasteboardType) ?? ""),
+             let srcItem = list.item(byID: srcId),
+             let srcParent = srcItem.parent,
+             let srcIndex = srcParent.items.firstIndex(where: { $0.id == srcId }),
+             let destGroup = item == nil ? list.root : item as? StationGroup
+         else {
+             return false
+         }
 
-        if !canDragAndDrop(src: srcItem, dest: destGroup) {
-            return false
-        }
+         if !canDragAndDrop(src: srcItem, dest: destGroup) {
+             return false
+         }
 
-        var destIndex = index
-        if srcParent !== destGroup {
-            let node = srcParent.items.remove(at: srcIndex)
+         var destIndex = index
+         if srcParent !== destGroup {
+             let node = srcParent.items.remove(at: srcIndex)
 
-            if index > -1 && index < destGroup.items.count {
-                destGroup.items.insert(node, at: index)
-            } else {
-                destGroup.items.append(node)
-                destIndex = destGroup.items.count - 1
-            }
-        } else {
-            if destIndex == NSOutlineViewDropOnItemIndex {
-                return false
-            }
+             if index > -1 && index < destGroup.items.count {
+                 destGroup.items.insert(node, at: index)
+             } else {
+                 destGroup.items.append(node)
+                 destIndex = destGroup.items.count - 1
+             }
+         } else {
+             if destIndex == NSOutlineViewDropOnItemIndex {
+                 return false
+             }
 
-            // When you drag an item downwards, the "new row" index is actually --1. Remember dragging operation is `.above`.
-            if srcIndex < destIndex {
-                destIndex -= 1
-            }
+             // When you drag an item downwards, the "new row" index is actually --1. Remember dragging operation is `.above`.
+             if srcIndex < destIndex {
+                 destIndex -= 1
+             }
 
-            if destIndex == srcIndex {
-                return false
-            }
+             if destIndex == srcIndex {
+                 return false
+             }
 
-            let node = srcParent.items.remove(at: srcIndex)
-            destGroup.items.insert(node, at: destIndex)
-        }
+             let node = srcParent.items.remove(at: srcIndex)
+             destGroup.items.insert(node, at: destIndex)
+         }
 
-        list.save()
+         list.save()
 
-        // Animate the rows .......................
-        outlineView.beginUpdates()
-        outlineView.moveItem(
-            at: srcIndex,
-            inParent: srcParent === list.root ? nil : srcParent,
-            to: destIndex,
-            inParent: destGroup === list.root ? nil : destGroup
-        )
-        outlineView.endUpdates()
-        outlineView.reloadItem(destGroup)
-        outlineView.expandItem(destGroup)
+         // Animate the rows .......................
+         outlineView.beginUpdates()
+         outlineView.moveItem(
+             at: srcIndex,
+             inParent: srcParent === list.root ? nil : srcParent,
+             to: destIndex,
+             inParent: destGroup === list.root ? nil : destGroup
+         )
+         outlineView.endUpdates()
+         outlineView.reloadItem(destGroup)
+         outlineView.expandItem(destGroup)
 
-        // stationsStore.dump()
-        return true
-         */
+         // stationsStore.dump()
+         return true
+          */
     }
 }
 
@@ -268,7 +271,6 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     private func addItem(_ newItem: StationItem) {
-        /*
         guard let list = list else { return }
 
         let destItem = outlineView.item(atRow: outlineView.selectedRow)
@@ -288,23 +290,26 @@ extension LocalStationDelegate {
 
         // ::::::::::::::::::::::::::::::
         // A station is selected, we after it
-        if let station = destItem as? Station, let group = station.parent {
+        if let station = destItem as? Station {
+            let group = list.itemParent(item: station) ?? list
             group.insert(newItem, afterId: station.id)
         }
 
         list.save()
 
-        if let index = newItem.parent?.index(newItem.id) {
+        let newItemParent = list.itemParent(item: newItem)
+
+        if let index = newItemParent?.index(newItem.id) {
             outlineView.beginUpdates()
             outlineView.insertItems(
                 at: IndexSet(integer: index),
-                inParent: newItem.parent !== list.root ? newItem.parent : nil,
+                inParent: newItemParent !== list ? newItemParent : nil,
                 withAnimation: .effectFade
             )
             outlineView.endUpdates()
         }
 
-        outlineView.expandItem(newItem.parent)
+        outlineView.expandItem(newItemParent)
 
         // Select new item
         let row = outlineView.row(forItem: newItem)
@@ -313,32 +318,16 @@ extension LocalStationDelegate {
             outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
             outlineView.scrollRowToVisible(row)
         }
-         */
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func getParentGroup(item: Any) -> StationGroup? {
-        if let station = item as? Station {
-            return station.parent
-        }
-
-        if let group = item as? StationGroup {
-            return group.parent
-        }
-
-        return nil
     }
 
     /* ****************************************
      *
      * ****************************************/
     func remove(item: Any) {
-        /*
         guard
             let list = list,
-            let parent = getParentGroup(item: item)
+            let item = item as? StationItem,
+            let parent = list.itemParent(item: item)
         else {
             return
         }
@@ -350,13 +339,12 @@ extension LocalStationDelegate {
         outlineView.beginUpdates()
         outlineView.removeItems(
             at: IndexSet(integer: index),
-            inParent: parent !== list.root ? parent : nil,
+            inParent: parent !== list ? parent : nil,
             withAnimation: .effectFade)
         outlineView.endUpdates()
 
         let row = parent.items.isEmpty ? outlineView.row(forItem: parent) : outlineView.row(forItem: parent.items[min(index, parent.items.count - 1)])
         outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
         outlineView.scrollRowToVisible(row)
-         */
     }
 }

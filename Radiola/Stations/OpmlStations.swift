@@ -16,7 +16,6 @@ class OpmlStation: Station {
     var title: String
     var url: String
     var isFavorite: Bool
-    weak var parent: (any StationGroup)?
 
     init(title: String, url: String, isFavorite: Bool = false) {
         self.title = title
@@ -31,7 +30,6 @@ class OpmlGroup: StationGroup {
     var id: UUID = UUID()
     var title: String
     var items: [any StationItem] = []
-    var parent: (any StationGroup)?
 
     init(title: String) {
         self.title = title
