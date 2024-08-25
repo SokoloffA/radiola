@@ -142,6 +142,26 @@ extension StationList {
         }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    func item(byID: UUID) -> StationItem? {
+        var queue = items
+
+        while !queue.isEmpty {
+            let item = queue.removeFirst()
+
+            if item.id == byID {
+                return item
+            }
+
+            if let group = item as? StationGroup {
+                queue += group.items
+            }
+        }
+
+        return nil
+    }
 }
 
 //MARK: - extension [StationList]

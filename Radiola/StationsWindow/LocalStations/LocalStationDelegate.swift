@@ -147,18 +147,15 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     private func canDragAndDrop(src: StationItem, dest: StationGroup) -> Bool {
-        return false
-        /*
          var node: StationGroup? = dest
          while node != nil {
              if node?.id == src.id {
                  return false
              }
-             node = node?.parent
+             node = list?.itemParent(item: node!)
          }
 
          return true
-          */
     }
 
     /* ****************************************
@@ -181,15 +178,13 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
-        return false
-        /*
          guard
              let list = list,
              let srcId = UUID(uuidString: info.draggingPasteboard.pasteboardItems?.first?.string(forType: nodePasteboardType) ?? ""),
              let srcItem = list.item(byID: srcId),
-             let srcParent = srcItem.parent,
+             let srcParent = list.itemParent(item: srcItem),
              let srcIndex = srcParent.items.firstIndex(where: { $0.id == srcId }),
-             let destGroup = item == nil ? list.root : item as? StationGroup
+             let destGroup = item == nil ? list : item as? StationGroup
          else {
              return false
          }
@@ -232,9 +227,9 @@ extension LocalStationDelegate {
          outlineView.beginUpdates()
          outlineView.moveItem(
              at: srcIndex,
-             inParent: srcParent === list.root ? nil : srcParent,
+             inParent: srcParent === list ? nil : srcParent,
              to: destIndex,
-             inParent: destGroup === list.root ? nil : destGroup
+             inParent: destGroup === list ? nil : destGroup
          )
          outlineView.endUpdates()
          outlineView.reloadItem(destGroup)
@@ -242,7 +237,6 @@ extension LocalStationDelegate {
 
          // stationsStore.dump()
          return true
-          */
     }
 }
 
