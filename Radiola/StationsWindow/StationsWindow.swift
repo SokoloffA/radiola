@@ -471,7 +471,6 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     @objc func exportStations(_ sender: Any) {
-        /*
         guard let window = window else { return }
         guard let stations = AppState.shared.localStations.first else { return }
 
@@ -485,12 +484,11 @@ extension StationsWindow: NSUserInterfaceValidations {
         dialog.beginSheetModal(for: window) { result in
             guard result == .OK, let url = dialog.url else { return }
             do {
-                try stations.saveAs(file: url)
+                try stations.saveAsOpml(file: url)
             } catch {
                 error.show()
             }
         }
-         */
     }
 
     /* ****************************************

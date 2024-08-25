@@ -143,15 +143,17 @@ class OpmlStations: StationList {
     func save() {
         do {
             guard let file = file else { return }
-            try saveAs(file: file)
+            try saveAsOpml(file: file)
         } catch {
         }
     }
+}
 
+extension StationList {
     /* ****************************************
      *
      * ****************************************/
-    func saveAs(file: URL) throws {
+    func saveAsOpml(file: URL) throws {
         do {
             let document = asXML()
             let xmlData = document.xmlData(options: .nodePrettyPrint)
