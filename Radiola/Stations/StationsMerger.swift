@@ -162,7 +162,7 @@ class StationsMerger {
     }
 }
 
-// MARK: - lStationGroup
+// MARK: - StationGroup
 
 fileprivate extension StationGroup {
     func findStation(src: Station) -> Station? {
