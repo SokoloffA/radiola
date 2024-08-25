@@ -7,25 +7,40 @@
 
 import Foundation
 
+fileprivate class DefaultStation: Station {
+    var id: UUID = UUID()
+    var title: String
+    var url: String
+    var isFavorite: Bool
+    var parent: (any StationGroup)? = nil
+
+    init(title: String, url: String, isFavorite: Bool) {
+        self.title = title
+        self.url = url
+        self.isFavorite = isFavorite
+    }
+
+}
+
 // MARK: - AppState
 
 fileprivate let oplDirectoryName = "com.github.SokoloffA.Radiola/"
 fileprivate let oplFileName = "bookmarks.opml"
 
-fileprivate let defaultStations: [LocalStation] = [
-    LocalStation(
+fileprivate let defaultStations: [Station] = [
+    DefaultStation(
         title: "Radio Caroline",
         url: "http://sc3.radiocaroline.net:8030",
         isFavorite: true
     ),
 
-    LocalStation(
+    DefaultStation(
         title: "Radio Caroline 319 Gold [ Hits from '60-'70 ]",
         url: "http://www.rcgoldserver.eu:8192",
         isFavorite: true
     ),
 
-    LocalStation(
+    DefaultStation(
         title: "Radio Caroline 259 Gold [ Happy Rock &amp; Album Station ]",
         url: "http://www.rcgoldserver.eu:8253",
         isFavorite: true
@@ -35,9 +50,7 @@ fileprivate let defaultStations: [LocalStation] = [
 class AppState: ObservableObject {
     static let shared = AppState()
 
-    @Published var localStations: [LocalStationList] = [
-        LocalStationList(title: "My stations", icon: "music.house", help: nil),
-    ]
+    @Published var localStations: [any StationList] = []
 
     @Published var internetStations: [InternetStationList] = [
         InternetStationList(title: "By tag", icon: "globe", help: nil, provider: RadioBrowserProvider(.byTag)),
@@ -69,7 +82,9 @@ class AppState: ObservableObject {
 
         // Read local stations .................................
         debug("Load stations from: \(fileName.path)")
-        localStations[0].load(file: fileName, defaultStations: defaultStations)
+        let opmlList = OpmlStations(title: "My stations", icon: "music.house", help: nil)
+        opmlList.load(file: fileName, defaultStations: defaultStations)
+        localStations.append(opmlList)
     }
 
     /* ****************************************

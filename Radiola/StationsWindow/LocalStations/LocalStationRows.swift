@@ -10,8 +10,8 @@ import Cocoa
 // MARK: - LocalGroupRow
 
 class LocalGroupRow: NSView {
-    private let group: LocalStationGroup
-    private let list: LocalStationList
+    private let group: StationGroup
+    private let list: any StationList
 
     private var nameEdit = TextField()
     private let separator = Separator()
@@ -20,7 +20,7 @@ class LocalGroupRow: NSView {
     /* ****************************************
      *
      * ****************************************/
-    init(group: LocalStationGroup, list: LocalStationList) {
+    init(group: StationGroup, list: any StationList) {
         self.group = group
         self.list = list
 
@@ -85,8 +85,8 @@ class LocalGroupRow: NSView {
 // MARK: - LocalStationRow
 
 class LocalStationRow: NSView, NSTextFieldDelegate {
-    private let station: LocalStation
-    private let list: LocalStationList
+    private let station: Station
+    private let list: any StationList
 
     var nameEdit = TextField()
     var urlEdit = TextField()
@@ -104,7 +104,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
     /* ****************************************
      *
      * ****************************************/
-    init(station: LocalStation, list: LocalStationList) {
+    init(station: Station, list: any StationList) {
         self.station = station
         self.list = list
 

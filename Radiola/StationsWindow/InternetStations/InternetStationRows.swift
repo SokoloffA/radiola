@@ -127,7 +127,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         let inLocal = list.first(byURL: station.url) != nil
 
         if !inLocal {
-            let s = LocalStation(title: station.title, url: station.url)
+            let s = list.createStation(title: station.title, url: station.url)
             list.append(s)
             list.save()
             refreshActionButton()

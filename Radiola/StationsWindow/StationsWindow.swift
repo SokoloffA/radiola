@@ -285,7 +285,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    private func setLocalStationList(list: LocalStationList) {
+    private func setLocalStationList(list: any StationList) {
         stationsTree.delegate = localStationsDelegate
         stationsTree.dataSource = localStationsDelegate
         localStationsDelegate.list = list
@@ -445,9 +445,9 @@ extension StationsWindow: NSUserInterfaceValidations {
         }
 
         var messageText = ""
-        if let station = item as? LocalStation {
+        if let station = item as? Station {
             messageText = "Are you sure you want to remove the station \"\(station.title)\"?"
-        } else if let group = item as? LocalStationGroup {
+        } else if let group = item as? StationGroup {
             if group.items.isEmpty {
                 messageText = "Are you sure you want to remove the group \"\(group.title)\"?"
             } else {
@@ -471,6 +471,7 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     @objc func exportStations(_ sender: Any) {
+        /*
         guard let window = window else { return }
         guard let stations = AppState.shared.localStations.first else { return }
 
@@ -489,6 +490,7 @@ extension StationsWindow: NSUserInterfaceValidations {
                 error.show()
             }
         }
+         */
     }
 
     /* ****************************************
@@ -519,10 +521,11 @@ extension StationsWindow: NSUserInterfaceValidations {
     /* ****************************************
      *
      * ****************************************/
-    private func doImportStations(url: URL, current: LocalStationList) {
+    private func doImportStations(url: URL, current: StationList) {
+        /*
         guard let window = window else { return }
 
-        let new = LocalStationList(title: "", icon: "")
+        let new = StationList(title: "", icon: "")
         do {
             try new.load(file: url)
         } catch {
@@ -558,5 +561,6 @@ extension StationsWindow: NSUserInterfaceValidations {
             current.save()
             self.stationsTree.reloadData()
         })
+         */
     }
 }

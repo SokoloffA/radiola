@@ -283,15 +283,15 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     func buildMarginFavoritesMenu(menu: NSMenu) {
-        func build(items: [LocalStationItem], menu: NSMenu, prefix: String = "") {
+        func build(items: [StationItem], menu: NSMenu, prefix: String = "") {
             for item in items {
-                if let station = item as? LocalStation {
+                if let station = item as? Station {
                     if station.isFavorite {
                         menu.addItem(createStationMenuItem(station, prefix: prefix))
                     }
                 }
 
-                if let group = item as? LocalStationGroup {
+                if let group = item as? StationGroup {
                     let n = menu.numberOfItems
 
                     build(items: group.items, menu: menu, prefix: prefix + menuPrefix + "  ")
@@ -313,15 +313,15 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     func buildSubmenuFavoritesMenu(menu: NSMenu) {
-        func build(items: [LocalStationItem], menu: NSMenu, prefix: String = "") {
+        func build(items: [StationItem], menu: NSMenu, prefix: String = "") {
             for item in items {
-                if let station = item as? LocalStation {
+                if let station = item as? Station {
                     if station.isFavorite {
                         menu.addItem(createStationMenuItem(station, prefix: prefix))
                     }
                 }
 
-                if let group = item as? LocalStationGroup {
+                if let group = item as? StationGroup {
                     let subMenu = NSMenu()
                     build(items: group.items, menu: subMenu)
                     if subMenu.numberOfItems > 0 {

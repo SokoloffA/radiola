@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+/*
 // MARK: - LocalStationsMerger
 
 class LocalStationsMerger {
@@ -175,3 +175,4 @@ fileprivate extension LocalStationGroup {
         return items.first { ($0 as? LocalStationGroup)?.title == src.title } as? LocalStationGroup
     }
 }
+*/

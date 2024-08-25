@@ -7,36 +7,58 @@
 
 import Foundation
 
+// MARK: - StationItem
+
+protocol StationItem: AnyObject {
+    var id: UUID { get }
+    var title: String { get set }
+    var parent: StationGroup? { get }
+}
+
 // MARK: - Station
 
-protocol Station {
+protocol Station: StationItem {
     var id: UUID { get }
     var title: String { get set }
     var url: String { get set }
+    var isFavorite: Bool { get set }
 }
 
-// MARK: - StationList
+// MARK: - StationGroup
 
-protocol StationList: Identifiable {
-    var title: String { get }
-    var icon: String { get }
-    var help: String? { get }
-
-    func firstStation(where: (Station) -> Bool) -> Station?
+protocol StationGroup: StationItem {
+    var id: UUID { get }
+    var title: String { get set }
+    var items: [StationItem] { get set }
 }
 
-extension StationList {
+extension StationGroup {
     /* ****************************************
      *
      * ****************************************/
-    func first(byURL: String) -> Station? {
-        return firstStation { $0.url == byURL }
+    func append(_ item: StationItem) {
+        items.append(item)
     }
 
     /* ****************************************
      *
      * ****************************************/
-    func first(byID: UUID) -> Station? {
-        return firstStation { $0.id == byID }
+    func insert(_ item: StationItem, afterId: UUID) {
+        let index = items.firstIndex { $0.id == afterId }
+
+        if let index = index {
+            if index < items.count - 1 {
+                items.insert(item, at: index + 1)
+            } else {
+                append(item)
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func index(_ itemId: UUID) -> Int? {
+        return items.firstIndex { $0.id == itemId }
     }
 }

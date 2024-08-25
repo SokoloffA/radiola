@@ -12,7 +12,7 @@ import Cocoa
 class LocalStationDelegate: NSObject {
     private weak var outlineView: NSOutlineView!
 
-    var list: LocalStationList?
+    var list: (any StationList)?
 
     let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
 
@@ -34,11 +34,11 @@ extension LocalStationDelegate: NSOutlineViewDelegate {
     func outlineView(_ outlineView: NSOutlineView, viewFor tableColumn: NSTableColumn?, item: Any) -> NSView? {
         guard let list = list else { return nil }
 
-        if let station = item as? LocalStation {
+        if let station = item as? Station {
             return LocalStationRow(station: station, list: list)
         }
 
-        if let group = item as? LocalStationGroup {
+        if let group = item as? StationGroup {
             return LocalGroupRow(group: group, list: list)
         }
 
@@ -58,7 +58,7 @@ extension LocalStationDelegate: NSOutlineViewDataSource {
             return list?.items.count ?? 0
         }
 
-        if let group = item as? LocalStationGroup {
+        if let group = item as? StationGroup {
             return group.items.count
         }
 
@@ -76,7 +76,7 @@ extension LocalStationDelegate: NSOutlineViewDataSource {
             return list.items[index]
         }
 
-        if let group = item as? LocalStationGroup {
+        if let group = item as? StationGroup {
             return group.items[index]
         }
 
@@ -87,7 +87,7 @@ extension LocalStationDelegate: NSOutlineViewDataSource {
      * We must specify if a given item should be expandable or not.
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        if let group = item as? LocalStationGroup {
+        if let group = item as? StationGroup {
             return !group.items.isEmpty
         }
 
@@ -98,7 +98,7 @@ extension LocalStationDelegate: NSOutlineViewDataSource {
      * Variable Row Heights
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        if item is LocalStationGroup {
+        if item is StationGroup {
             return CGFloat(38.0)
         }
 
@@ -128,13 +128,13 @@ extension LocalStationDelegate {
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
         outlineView.registerForDraggedTypes([nodePasteboardType])
-        if let station = item as? LocalStation {
+        if let station = item as? Station {
             let res = NSPasteboardItem()
             res.setString(station.id.uuidString, forType: nodePasteboardType)
             return res
         }
 
-        if let group = item as? LocalStationGroup {
+        if let group = item as? StationGroup {
             let res = NSPasteboardItem()
             res.setString(group.id.uuidString, forType: nodePasteboardType)
             return res
@@ -146,8 +146,8 @@ extension LocalStationDelegate {
     /* ****************************************
      *
      * ****************************************/
-    private func canDragAndDrop(src: LocalStationItem, dest: LocalStationGroup) -> Bool {
-        var node: LocalStationGroup? = dest
+    private func canDragAndDrop(src: StationItem, dest: StationGroup) -> Bool {
+        var node: StationGroup? = dest
         while node != nil {
             if node?.id == src.id {
                 return false
@@ -167,7 +167,7 @@ extension LocalStationDelegate {
         }
 
         // We forbid insertion into the station node
-        if item is LocalStation && index == NSOutlineViewDropOnItemIndex {
+        if item is Station && index == NSOutlineViewDropOnItemIndex {
             return []
         }
 
@@ -178,13 +178,15 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
+        return false
+        /*
         guard
             let list = list,
             let srcId = UUID(uuidString: info.draggingPasteboard.pasteboardItems?.first?.string(forType: nodePasteboardType) ?? ""),
             let srcItem = list.item(byID: srcId),
             let srcParent = srcItem.parent,
             let srcIndex = srcParent.items.firstIndex(where: { $0.id == srcId }),
-            let destGroup = item == nil ? list.root : item as? LocalStationGroup
+            let destGroup = item == nil ? list.root : item as? StationGroup
         else {
             return false
         }
@@ -237,6 +239,7 @@ extension LocalStationDelegate {
 
         // stationsStore.dump()
         return true
+         */
     }
 }
 
@@ -247,20 +250,25 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     func addStation(title: String, url: String) {
-        addItem(newItem: LocalStation(title: title, url: url))
+        if let list = list {
+            addItem(list.createStation(title: title, url: url))
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
     func addGroup(title: String) {
-        addItem(newItem: LocalStationGroup(title: title))
+        if let list = list {
+            addItem(list.createGroup(title: title))
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func addItem(newItem: LocalStationItem) {
+    private func addItem(_ newItem: StationItem) {
+        /*
         guard let list = list else { return }
 
         let destItem = outlineView.item(atRow: outlineView.selectedRow)
@@ -269,18 +277,18 @@ extension LocalStationDelegate {
         // ::::::::::::::::::::::::::::::
         // No items selected, we append to endo of top items
         if destItem == nil {
-            list.root.append(newItem)
+            list.items.append(newItem)
         }
 
         // ::::::::::::::::::::::::::::::
         // A group is selected, we add to its end
-        if let group = destItem as? LocalStationGroup {
+        if let group = destItem as? StationGroup {
             group.append(newItem)
         }
 
         // ::::::::::::::::::::::::::::::
         // A station is selected, we after it
-        if let station = destItem as? LocalStation, let group = station.parent {
+        if let station = destItem as? Station, let group = station.parent {
             group.insert(newItem, afterId: station.id)
         }
 
@@ -305,17 +313,18 @@ extension LocalStationDelegate {
             outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
             outlineView.scrollRowToVisible(row)
         }
+         */
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func getParentGroup(item: Any) -> LocalStationGroup? {
-        if let station = item as? LocalStation {
+    private func getParentGroup(item: Any) -> StationGroup? {
+        if let station = item as? Station {
             return station.parent
         }
 
-        if let group = item as? LocalStationGroup {
+        if let group = item as? StationGroup {
             return group.parent
         }
 
@@ -326,6 +335,7 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     func remove(item: Any) {
+        /*
         guard
             let list = list,
             let parent = getParentGroup(item: item)
@@ -347,5 +357,6 @@ extension LocalStationDelegate {
         let row = parent.items.isEmpty ? outlineView.row(forItem: parent) : outlineView.row(forItem: parent.items[min(index, parent.items.count - 1)])
         outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
         outlineView.scrollRowToVisible(row)
+         */
     }
 }

@@ -14,7 +14,7 @@ class LocalStationToolBox: NSView {
     let addGroupButton = NSButton()
     let delButton = NSButton()
 
-    private var list: LocalStationList?
+    private var list: (any StationList)?
 
     /* ****************************************
      *
