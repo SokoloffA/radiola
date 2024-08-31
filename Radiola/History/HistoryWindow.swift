@@ -85,7 +85,7 @@ extension HistoryWindow: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let list = onlyFavoriteCheckbox.state == .on ?
             AppState.shared.history.favorites() :
-            AppState.shared.history
+            AppState.shared.history.records
 
         if row >= list.count {
             return nil
@@ -102,6 +102,6 @@ extension HistoryWindow: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return onlyFavoriteCheckbox.state == .on ?
             AppState.shared.history.favorites().count :
-            AppState.shared.history.count
+            AppState.shared.history.records.count
     }
 }

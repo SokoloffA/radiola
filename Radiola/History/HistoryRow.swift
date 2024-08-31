@@ -79,9 +79,9 @@ class HistoryRow: NSView {
                                                object: nil)
 
         songLabel.stringValue = record.song
-        stationLabel.stringValue = record.station
+        stationLabel.stringValue = record.stationTitle
         dateLabel.toolTip = dateAndTime()
-        favoriteSong.state = record.favorite ? .on : .off
+        favoriteSong.state = record.isFavorite ? .on : .off
 
         refreshDate()
     }
@@ -97,7 +97,7 @@ class HistoryRow: NSView {
      *
      * ****************************************/
     @objc private func refreshDate() {
-        if player.isPlaying && player.stationName == record.station && player.songTitle == record.song {
+        if player.isPlaying && player.stationName == record.stationTitle && player.songTitle == record.song {
             dateLabel.stringValue = "playing now"
             dateLabel.sizeToFit()
             return

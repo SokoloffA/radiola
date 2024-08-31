@@ -334,8 +334,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         guard let station = station else { return false }
         guard let rec = AppState.shared.history.last else { return false }
 
-        if rec.station == station.title && rec.song == songTitle {
-            return rec.favorite
+        if rec.stationURL == station.url && rec.song == songTitle {
+            return rec.isFavorite
         }
 
         return false
@@ -351,7 +351,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         guard let rec = AppState.shared.history.last else { return }
 
-        rec.favorite = favorite
+        rec.isFavorite = favorite
         NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": songTitle])
     }
 }

@@ -54,6 +54,9 @@
 		396704692943AD2700012FFD /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396704682943AD2700012FFD /* AudioDevice.swift */; };
 		3967046C2944961500012FFD /* AudioPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3967046A2944961500012FFD /* AudioPage.swift */; };
 		3967046D2944961500012FFD /* AudioPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3967046B2944961500012FFD /* AudioPage.xib */; };
+		3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD0C2C7B7BAB005432C7 /* Radiola.xcdatamodeld */; };
+		3975DD102C7B7C3D005432C7 /* SharedStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD0F2C7B7C3D005432C7 /* SharedStations.swift */; };
+		3975DD132C8310B0005432C7 /* HistoryData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD112C8310B0005432C7 /* HistoryData.xcdatamodeld */; };
 		3987B99D2A9635930077EB03 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B99B2A9635930077EB03 /* SideBar.swift */; };
 		3987B99E2A9635930077EB03 /* SideBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B99C2A9635930077EB03 /* SideBar.xib */; };
 		3987B9A72A9F81570077EB03 /* ToolbarVolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */; };
@@ -151,6 +154,9 @@
 		396704682943AD2700012FFD /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		3967046A2944961500012FFD /* AudioPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPage.swift; sourceTree = "<group>"; };
 		3967046B2944961500012FFD /* AudioPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPage.xib; sourceTree = "<group>"; };
+		3975DD0D2C7B7BAB005432C7 /* Radiola.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Radiola.xcdatamodel; sourceTree = "<group>"; };
+		3975DD0F2C7B7C3D005432C7 /* SharedStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedStations.swift; sourceTree = "<group>"; };
+		3975DD122C8310B0005432C7 /* HistoryData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HistoryData.xcdatamodel; sourceTree = "<group>"; };
 		3987B99B2A9635930077EB03 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		3987B99C2A9635930077EB03 /* SideBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideBar.xib; sourceTree = "<group>"; };
 		3987B9A52A9F81570077EB03 /* ToolbarVolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarVolumeView.swift; sourceTree = "<group>"; };
@@ -238,6 +244,7 @@
 				39950B9C2C7B2C4300C37952 /* OpmlStations.swift */,
 				39A7940D2B4B647E000D9875 /* RadioBrowserProvider.swift */,
 				39A794092B4B646D000D9875 /* InternetStations.swift */,
+				3975DD0F2C7B7C3D005432C7 /* SharedStations.swift */,
 			);
 			path = Stations;
 			sourceTree = "<group>";
@@ -282,6 +289,8 @@
 				394F8A402873933A005EA7FA /* Assets.xcassets */,
 				394F8A6C2873A2FE005EA7FA /* Info.plist */,
 				394F8A452873933A005EA7FA /* Radiola.entitlements */,
+				3975DD0C2C7B7BAB005432C7 /* Radiola.xcdatamodeld */,
+				3975DD112C8310B0005432C7 /* HistoryData.xcdatamodeld */,
 				394F8A6528739A1D005EA7FA /* StationsWindow */,
 				394F8A4F2873938B005EA7FA /* History */,
 				39F869A3288C11B600273AB0 /* Preferences */,
@@ -533,6 +542,7 @@
 				394ABCAB2A9CA25500E2B6E9 /* RadioBrowserStations.swift in Sources */,
 				39950B9D2C7B2C4300C37952 /* OpmlStations.swift in Sources */,
 				392024B32A519FF900670ABD /* AppearancePage.swift in Sources */,
+				3975DD132C8310B0005432C7 /* HistoryData.xcdatamodeld in Sources */,
 				3964339B2B55A293009BE1CE /* InternetStationRows.swift in Sources */,
 				390C7294287B213200E17BAE /* Controls.swift in Sources */,
 				39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */,
@@ -543,6 +553,7 @@
 				39B5494D2B5D7DAE00D1E423 /* AlarmPopover.swift in Sources */,
 				3964339D2B55A69C009BE1CE /* InternetStationSearchPanel.swift in Sources */,
 				3962D03C2BE688DE0014BCFB /* Utilities.swift in Sources */,
+				3975DD102C7B7C3D005432C7 /* SharedStations.swift in Sources */,
 				396704692943AD2700012FFD /* AudioDevice.swift in Sources */,
 				3962D0442BE689190014BCFB /* RecorderCocoa.swift in Sources */,
 				396433962B502AE9009BE1CE /* LocalStationToolBox.swift in Sources */,
@@ -561,6 +572,7 @@
 				39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */,
 				39A794102B4B6483000D9875 /* Stations.swift in Sources */,
 				39E042D0293B3ACA00A2167E /* VolumeMenuItemContoller.swift in Sources */,
+				3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */,
 				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
 				39FF07732933A59900751A03 /* StatuBarController.swift in Sources */,
 				394ABC972A97AC9B00E2B6E9 /* SidebarTopLevelView.swift in Sources */,
@@ -895,6 +907,31 @@
 			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		3975DD0C2C7B7BAB005432C7 /* Radiola.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3975DD0D2C7B7BAB005432C7 /* Radiola.xcdatamodel */,
+			);
+			currentVersion = 3975DD0D2C7B7BAB005432C7 /* Radiola.xcdatamodel */;
+			name = Radiola.xcdatamodeld;
+			path = /Users/sokoloff/myPrograms/Radiola/coredata/Radiola/Radiola.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		3975DD112C8310B0005432C7 /* HistoryData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3975DD122C8310B0005432C7 /* HistoryData.xcdatamodel */,
+			);
+			currentVersion = 3975DD122C8310B0005432C7 /* HistoryData.xcdatamodel */;
+			name = HistoryData.xcdatamodeld;
+			path = /Users/sokoloff/myPrograms/Radiola/coredata/Radiola/HistoryData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 394F8A3028739339005EA7FA /* Project object */;
 }

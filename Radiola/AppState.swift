@@ -84,6 +84,14 @@ class AppState: ObservableObject {
         let opmlList = OpmlStations(title: "My stations", icon: "music.house", help: nil)
         opmlList.load(file: fileName, defaultStations: defaultStations)
         localStations.append(opmlList)
+
+
+        let sharedList = SharedStations(title: "Shared", icon: "music.house")
+//        sharedList.load()
+        localStations.append(sharedList)
+
+        print("LIST:", sharedList.id.uuidString)
+
     }
 
     /* ****************************************
