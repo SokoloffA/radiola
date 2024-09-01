@@ -30,7 +30,14 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Build
-        run: xcodebuild
+        run: xcodebuild clean build \
+              -project "Radiola.xcodeproj" \
+              -scheme "Radiola" \
+              -sdk macosx \
+              -configuration Release \
+              CODE_SIGN_IDENTITY="-" \
+              CODE_SIGNING_REQUIRED=NO \
+              CODE_SIGNING_ALLOWED=YES
 
       - name: Prepare artifacts
         run : |
