@@ -916,7 +916,7 @@
 			);
 			currentVersion = 3975DD0D2C7B7BAB005432C7 /* Radiola.xcdatamodel */;
 			name = Radiola.xcdatamodeld;
-			path = /Users/sokoloff/myPrograms/Radiola/coredata/Radiola/Radiola.xcdatamodeld;
+			path = Radiola.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
@@ -927,7 +927,7 @@
 			);
 			currentVersion = 3975DD122C8310B0005432C7 /* HistoryData.xcdatamodel */;
 			name = HistoryData.xcdatamodeld;
-			path = /Users/sokoloff/myPrograms/Radiola/coredata/Radiola/HistoryData.xcdatamodeld;
+			path = HistoryData.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
