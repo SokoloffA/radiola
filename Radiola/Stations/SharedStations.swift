@@ -67,6 +67,7 @@ class SharedStations: StationList {
     var icon: String
     var help: String?
     var items: [any StationItem] = []
+    private var savedRecords: [UUID: SharedStationRecord] = [:]
 
     private var persistentContainer: NSPersistentContainer
     private var context: NSManagedObjectContext
@@ -144,6 +145,10 @@ class SharedStations: StationList {
             }
         }
 
+        for rec in recs {
+            savedRecords[rec.id] = rec
+        }
+
 //        for rec in recs {
 //            print(" * ", rec.order, " ::  ", rec.title, "<", rec.url, "> [", rec.id, "] PARENT", rec.parentId)
 //        }
@@ -155,6 +160,9 @@ class SharedStations: StationList {
      *
      * ****************************************/
     func save() {
+        var forDelete = savedRecords
+        savedRecords.removeAll()
+
         func fix(parent: StationGroup, parentId: UUID?) {
             var i = 0
             for it in parent.items {
@@ -163,9 +171,15 @@ class SharedStations: StationList {
                 if let station = it as? SharedStation {
                     station.data.setParent(parentId)
                     station.data.setOrder(i)
+                    savedRecords[station.id] = station.data
+                    forDelete.removeValue(forKey: station.id)
+
                 } else if let group = it as? SharedStationGroup {
                     group.data.setParent(parentId)
                     group.data.setOrder(i)
+
+                    savedRecords[group.id] = group.data
+                    forDelete.removeValue(forKey: group.id)
 
                     fix(parent: group, parentId: group.id)
                 }
@@ -173,6 +187,10 @@ class SharedStations: StationList {
         }
 
         fix(parent: self, parentId: nil)
+
+        for rec in forDelete.values {
+            context.delete(rec)
+        }
 
         if context.hasChanges {
             do {

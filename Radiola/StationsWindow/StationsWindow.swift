@@ -565,7 +565,7 @@ extension StationsWindow: NSUserInterfaceValidations {
                 return
             }
             merger.run()
-            list.dump()
+
             list.save()
             self.stationsTree.reloadData()
         })
