@@ -18,7 +18,6 @@ fileprivate class DefaultStation: Station {
         self.url = url
         self.isFavorite = isFavorite
     }
-
 }
 
 // MARK: - AppState
@@ -85,13 +84,9 @@ class AppState: ObservableObject {
         opmlList.load(file: fileName, defaultStations: defaultStations)
         localStations.append(opmlList)
 
-
         let sharedList = SharedStations(title: "Shared", icon: "music.house")
-//        sharedList.load()
+        sharedList.load()
         localStations.append(sharedList)
-
-        print("LIST:", sharedList.id.uuidString)
-
     }
 
     /* ****************************************
