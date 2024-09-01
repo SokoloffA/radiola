@@ -471,15 +471,20 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     @objc func exportStations(_ sender: Any) {
-        guard let window = window else { return }
-        guard let stations = AppState.shared.localStations.first else { return }
+        guard
+            let window = window,
+            let listID = sideBar.selectedListId,
+            let stations = AppState.shared.localStations.find(byId: listID)
+        else {
+            return
+        }
 
         let dialog = NSSavePanel()
         dialog.allowedFileTypes = ["opml"]
         dialog.allowsOtherFileTypes = true
         dialog.canCreateDirectories = true
         dialog.isExtensionHidden = false
-        dialog.nameFieldStringValue = "RadiolaStations"
+        dialog.nameFieldStringValue = "RadiolaStations[\(stations.title)]"
 
         dialog.beginSheetModal(for: window) { result in
             guard result == .OK, let url = dialog.url else { return }
@@ -495,8 +500,13 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     @objc func importStations(_ sender: Any) {
-        guard let window = window else { return }
-        guard let stations = AppState.shared.localStations.first else { return }
+        guard
+            let window = window,
+            let listID = sideBar.selectedListId,
+            let list = AppState.shared.localStations.find(byId: listID)
+        else {
+            return
+        }
 
         let dialog = NSOpenPanel()
         dialog.allowedFileTypes = ["opml"]
@@ -512,14 +522,14 @@ extension StationsWindow: NSUserInterfaceValidations {
             guard result == .OK, let url = dialog.url else { return }
 
             dialog.close()
-            self.doImportStations(url: url, current: stations)
+            self.doImportStations(url: url, list: list)
         }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func doImportStations(url: URL, current: StationList) {
+    private func doImportStations(url: URL, list: StationList) {
         guard let window = window else { return }
 
         let new = OpmlStations(title: "", icon: "")
@@ -530,7 +540,7 @@ extension StationsWindow: NSUserInterfaceValidations {
             return
         }
 
-        let merger = StationsMerger(currentStations: current, newStations: new)
+        let merger = StationsMerger(currentStations: list, newStations: new)
         if merger.statistics.isEmpty {
             NSAlert.showInfo(message: "The file does not contain any new or changed radio stations.", informativeText: "You may have already exported it before.")
             return
@@ -555,7 +565,8 @@ extension StationsWindow: NSUserInterfaceValidations {
                 return
             }
             merger.run()
-            current.save()
+            list.dump()
+            list.save()
             self.stationsTree.reloadData()
         })
     }

@@ -111,7 +111,7 @@ class StationsMerger {
 
         if group == nil {
             let index = insertIndex(src: src, srcParent: srcParent, destParent: destParent)
-            group = newStations.createGroup(title: src.title)
+            group = currentStations.createGroup(title: src.title)
             destParent.items.insert(group!, at: index)
         }
 
@@ -129,7 +129,7 @@ class StationsMerger {
         }
 
         let index = insertIndex(src: src, srcParent: srcParent, destParent: destParent)
-        let station = newStations.createStation(title: src.title, url: src.url)
+        let station = currentStations.createStation(title: src.title, url: src.url)
         station.isFavorite = src.isFavorite
         destParent.items.insert(station, at: index)
     }
