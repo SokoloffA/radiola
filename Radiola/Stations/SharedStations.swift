@@ -69,7 +69,7 @@ class SharedStations: StationList {
     var items: [any StationItem] = []
     private var savedRecords: [UUID: SharedStationRecord] = [:]
 
-    private var persistentContainer: NSPersistentContainer
+    private var persistentContainer: NSPersistentCloudKitContainer
     private var context: NSManagedObjectContext
 
     init(title: String, icon: String, help: String? = nil) {
@@ -77,9 +77,12 @@ class SharedStations: StationList {
         self.icon = icon
         self.help = help
 
-        persistentContainer = NSPersistentContainer(name: "Radiola")
+        persistentContainer = NSPersistentCloudKitContainer(name: "Radiola")
+        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
+
         persistentContainer.loadPersistentStores { _, error in
             if let error = error as Error? {
+                warning(error)
                 Alarm.show(title: "Unable to load shared stations", message: error.localizedDescription)
                 return
             }
@@ -124,6 +127,7 @@ class SharedStations: StationList {
         do {
             recs = try context.fetch(fetchRequest)
         } catch {
+            warning(error)
             Alarm.show(title: "Unable to load shared stations", message: error.localizedDescription)
             return
         }
@@ -197,6 +201,7 @@ class SharedStations: StationList {
                 try context.save()
             } catch {
                 context.rollback()
+                warning(error)
                 Alarm.show(title: "Unable to save shared stations", message: error.localizedDescription)
             }
         }
