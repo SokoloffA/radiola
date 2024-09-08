@@ -5,8 +5,8 @@
 //  Created by Aleksandr Sokolov on 01.12.2023.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 fileprivate class DefaultStation: Station {
     var id: UUID = UUID()
@@ -59,7 +59,6 @@ class AppState: ObservableObject {
 
     public var history = History()
 
-
     /* ****************************************
      *
      * ****************************************/
@@ -80,87 +79,23 @@ class AppState: ObservableObject {
             }
         }
 
-
-
-        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: iCloud.context)
-        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextWillSave), name: NSNotification.Name.NSManagedObjectContextWillSave, object: iCloud.context)
-        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: iCloud.context)
-
-        var cloudStations: [CloudStationList] = []
+        // Read iCloud stations ..............................
         do {
-            try cloudStations.load()
-        }
-        catch {
-            Alarm.show(title: "Unable to load stations from iCloud", message: error.localizedDescription)
-        }
-
-        if var cloudStations = loadCloudStationList() {
-            print("LOADED ____________________________", cloudStations.count)
-
-//            if cloudStations.isEmpty {
-//                debug("Create default iCloud list")
-//                let list = CloudStationList(context: iCloud.context)
-//
-//                list.title = "My stations"
-//                list.icon = "music.house"
-//                list.id = UUID()
-//                list.save()
-//
-//                cloudStations.append(list)
-//            }
-
-            for list in cloudStations {
-
-                print(" *", list.title, list.id )
-//                iCloud.context.delete(list)
-//                iCloud.save()
+            var cloudLists = [CloudStationList]()
+            try cloudLists.load()
+            for list in cloudLists {
+                try list.load()
+                localStations.append(list)
             }
+        } catch {
+            Alarm.show(title: "Sorry, we couldn't load iCloud stations.", message: error.localizedDescription)
         }
-
-
 
         // Read local stations .................................
         debug("Load stations from: \(fileName.path)")
-        let opmlList = OpmlStations(title: "My stations", icon: "music.house")
-        opmlList.load(file: fileName, defaultStations: defaultStations)
+        let opmlList = OpmlStations(title: "Local stations", icon: "music.house", file: fileName)
+        opmlList.load(defaultStations: defaultStations)
         localStations.append(opmlList)
-
-        let sharedList = SharedStations(title: "Shared", icon: "music.house")
-        sharedList.load()
-        localStations.append(sharedList)
-    }
-
-    @objc func managedObjectContextObjectsDidChange(notification: NSNotification) {
-        guard let userInfo = notification.userInfo else { return }
-        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
-             print("--- INSERTS ---")
-             print(inserts)
-             print("+++++++++++++++")
-         }
-
-         if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> , updates.count > 0 {
-             print("--- UPDATES ---")
-             print(updates)
-             for update in updates {
-                 print(update.changedValues())
-             }
-             print("+++++++++++++++")
-         }
-
-         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
-             print("--- DELETES ---")
-             print(deletes)
-             print("+++++++++++++++")
-         }
-
-    }
-
-    @objc func managedObjectContextWillSave() {
-        print(#function)
-    }
-
-    @objc func managedObjectContextDidSave() {
-        print(#function)
     }
 
     /* ****************************************

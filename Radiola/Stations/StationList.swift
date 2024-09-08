@@ -17,10 +17,24 @@ protocol StationList: StationGroup {
     func createStation(title: String, url: String) -> Station
     func createGroup(title: String) -> StationGroup
 
-    func save()
+    func load() throws
+    func save() throws
 }
 
 extension StationList {
+    /* ****************************************
+     *
+     * ****************************************/
+    func trySave() {
+        do {
+            try save()
+        }
+        catch {
+            warning("Sorry, we couldn't load iCloud stations.", error)
+            Alarm.show(title: "Sorry, we couldn't load iCloud stations.", message: error.localizedDescription)
+        }
+    }
+
     /* ****************************************
      *
      * ****************************************/

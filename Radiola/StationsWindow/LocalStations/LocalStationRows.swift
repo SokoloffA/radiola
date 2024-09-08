@@ -69,7 +69,7 @@ class LocalGroupRow: NSView {
      * ****************************************/
     @objc func nameEdited(sender: NSTextField) {
         group.title = sender.stringValue
-        list.save()
+        list.trySave()
     }
 
     /* ****************************************
@@ -178,7 +178,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
     @objc private func update() {
         station.title = nameEdit.stringValue
         station.url = urlEdit.stringValue
-        list.save()
+        list.trySave()
     }
 
     /* ****************************************
@@ -186,7 +186,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
      * ****************************************/
     @objc private func favClicked(sender: NSButton) {
         station.isFavorite = !station.isFavorite
-        list.save()
+        list.trySave()
         refreshFavoriteButton()
     }
 

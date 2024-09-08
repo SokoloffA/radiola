@@ -532,9 +532,9 @@ extension StationsWindow: NSUserInterfaceValidations {
     private func doImportStations(url: URL, list: StationList) {
         guard let window = window else { return }
 
-        let new = OpmlStations(title: "", icon: "")
+        let new = OpmlStations(title: "", icon: "", file: url)
         do {
-            try new.load(file: url)
+            try new.load()
         } catch {
             error.show()
             return
@@ -566,7 +566,7 @@ extension StationsWindow: NSUserInterfaceValidations {
             }
             merger.run()
 
-            list.save()
+            list.trySave()
             self.stationsTree.reloadData()
         })
     }
