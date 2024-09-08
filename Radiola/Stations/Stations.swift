@@ -5,9 +5,11 @@
 //  Created by Aleksandr Sokolov on 01.12.2023.
 //
 
-import Foundation
+import Cocoa
 
 // MARK: - StationItem
+
+let StationItemPasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
 
 protocol StationItem: AnyObject {
     var id: UUID { get }

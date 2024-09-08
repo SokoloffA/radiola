@@ -14,8 +14,6 @@ class LocalStationDelegate: NSObject {
 
     var list: (any StationList)?
 
-    let nodePasteboardType = NSPasteboard.PasteboardType(rawValue: "Station.row")
-
     /* ****************************************
      *
      * ****************************************/
@@ -127,16 +125,16 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
-        outlineView.registerForDraggedTypes([nodePasteboardType])
+        outlineView.registerForDraggedTypes([StationItemPasteboardType])
         if let station = item as? Station {
             let res = NSPasteboardItem()
-            res.setString(station.id.uuidString, forType: nodePasteboardType)
+            res.setString(station.id.uuidString, forType: StationItemPasteboardType)
             return res
         }
 
         if let group = item as? StationGroup {
             let res = NSPasteboardItem()
-            res.setString(group.id.uuidString, forType: nodePasteboardType)
+            res.setString(group.id.uuidString, forType: StationItemPasteboardType)
             return res
         }
 
@@ -180,7 +178,7 @@ extension LocalStationDelegate {
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         guard
             let list = list,
-            let srcId = UUID(uuidString: info.draggingPasteboard.pasteboardItems?.first?.string(forType: nodePasteboardType) ?? ""),
+            let srcId = UUID(uuidString: info.draggingPasteboard.pasteboardItems?.first?.string(forType: StationItemPasteboardType) ?? ""),
             let srcItem = list.item(byID: srcId),
             let srcParent = list.itemParent(item: srcItem),
             let srcIndex = srcParent.items.firstIndex(where: { $0.id == srcId }),

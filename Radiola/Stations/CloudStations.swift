@@ -9,6 +9,7 @@ import CoreData
 import Foundation
 
 //MARK: - CloudStationList
+
 class CloudStationList: NSManagedObject, StationList {
     @NSManaged var id: UUID
     @NSManaged var title: String
@@ -57,6 +58,7 @@ class CloudStationList: NSManagedObject, StationList {
     func load() throws {
         func loadGroup(topGroup: StationGroup) throws {
             let recs = try fetchRecords(parentId: topGroup.id)
+
             for rec in recs {
                 savedRecords[rec.id] = rec
 
@@ -71,6 +73,8 @@ class CloudStationList: NSManagedObject, StationList {
             }
         }
 
+        items = []
+        savedRecords = [:]
         try loadGroup(topGroup: self)
     }
 
@@ -189,6 +193,7 @@ class CloudStationGroup: StationGroup {
 }
 
 //MARK: - [CloudStationList]
+
 extension [CloudStationList] {
 
     /* ****************************************
@@ -206,18 +211,4 @@ extension [CloudStationList] {
             throw(error)
         }
     }
-
-//    mutating func addDefaultList(stations: [Station]) {
-//        let list = CloudStationList(context: iCloud.context)
-//
-//        list.title = "My stations"
-//        list.icon = "music.house"
-//        list.id = UUID()
-//        for station in stations {
-//            list.addSt
-//        }
-//        list.
-//        list.save()
-//    }
-
 }

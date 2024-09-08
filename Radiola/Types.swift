@@ -82,6 +82,15 @@ struct Alarm: Error, Identifiable {
     static func show(title: String, message: String? = nil) {
         NotificationCenter.default.post(name: notificationName, object: Alarm(title: title, message: message))
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func show(loadListErrot: Error) {
+        warning("Sorry, we couldn't load stations.", loadListErrot)
+        show(title: "Sorry, we couldn't load stations.", message: loadListErrot.localizedDescription)
+    }
+
 }
 
 extension Error {
