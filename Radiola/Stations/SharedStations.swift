@@ -65,37 +65,19 @@ class SharedStations: StationList {
     let id: UUID = UUID()
     var title: String
     var icon: String
-    var help: String?
     var items: [any StationItem] = []
     private var savedRecords: [UUID: SharedStationRecord] = [:]
 
-    private var persistentContainer: NSPersistentCloudKitContainer
-    private var context: NSManagedObjectContext
-
-    init(title: String, icon: String, help: String? = nil) {
+    init(title: String, icon: String) {
         self.title = title
         self.icon = icon
-        self.help = help
-
-        persistentContainer = NSPersistentCloudKitContainer(name: "Radiola")
-        persistentContainer.viewContext.automaticallyMergesChangesFromParent = true
-
-        persistentContainer.loadPersistentStores { _, error in
-            if let error = error as Error? {
-                warning(error)
-                Alarm.show(title: "Unable to load shared stations", message: error.localizedDescription)
-                return
-            }
-        }
-
-        context = persistentContainer.viewContext
     }
 
     /* ****************************************
      *
      * ****************************************/
     func createStation(title: String, url: String) -> any Station {
-        let data = SharedStationRecord(context: context)
+        let data = SharedStationRecord(context: iCloud.context)
         data.id = UUID()
         data.title = title
         data.url = url
@@ -107,7 +89,7 @@ class SharedStations: StationList {
      *
      * ****************************************/
     func createGroup(title: String) -> any StationGroup {
-        let data = SharedStationRecord(context: context)
+        let data = SharedStationRecord(context: iCloud.context)
         data.id = UUID()
         data.title = title
         data.url = ""
@@ -125,7 +107,7 @@ class SharedStations: StationList {
         fetchRequest.sortDescriptors = [sortDescriptor]
 
         do {
-            recs = try context.fetch(fetchRequest)
+            recs = try iCloud.context.fetch(fetchRequest)
         } catch {
             warning(error)
             Alarm.show(title: "Unable to load shared stations", message: error.localizedDescription)
@@ -193,14 +175,14 @@ class SharedStations: StationList {
         fix(parent: self, parentId: nil)
 
         for rec in forDelete.values {
-            context.delete(rec)
+            iCloud.context.delete(rec)
         }
 
-        if context.hasChanges {
+        if iCloud.context.hasChanges {
             do {
-                try context.save()
+                try iCloud.context.save()
             } catch {
-                context.rollback()
+                iCloud.context.rollback()
                 warning(error)
                 Alarm.show(title: "Unable to save shared stations", message: error.localizedDescription)
             }

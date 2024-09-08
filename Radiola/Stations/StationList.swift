@@ -12,7 +12,6 @@ import Foundation
 protocol StationList: StationGroup {
     var id: UUID {get}
     var icon: String { get }
-    var help: String? { get }
     var items: [StationItem] { get set }
 
     func createStation(title: String, url: String) -> Station

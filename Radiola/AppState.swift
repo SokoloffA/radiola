@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 fileprivate class DefaultStation: Station {
     var id: UUID = UUID()
@@ -51,12 +52,13 @@ class AppState: ObservableObject {
     @Published var localStations: [any StationList] = []
 
     @Published var internetStations: [InternetStationList] = [
-        InternetStationList(title: "By tag", icon: "globe", help: nil, provider: RadioBrowserProvider(.byTag)),
-        InternetStationList(title: "By name", icon: "globe", help: nil, provider: RadioBrowserProvider(.byName)),
-        InternetStationList(title: "By country", icon: "globe", help: nil, provider: RadioBrowserProvider(.byCountry)),
+        InternetStationList(title: "By tag", icon: "globe", provider: RadioBrowserProvider(.byTag)),
+        InternetStationList(title: "By name", icon: "globe", provider: RadioBrowserProvider(.byName)),
+        InternetStationList(title: "By country", icon: "globe", provider: RadioBrowserProvider(.byCountry)),
     ]
 
     public var history = History()
+
 
     /* ****************************************
      *
@@ -78,15 +80,87 @@ class AppState: ObservableObject {
             }
         }
 
+
+
+        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextObjectsDidChange), name: NSNotification.Name.NSManagedObjectContextObjectsDidChange, object: iCloud.context)
+        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextWillSave), name: NSNotification.Name.NSManagedObjectContextWillSave, object: iCloud.context)
+        NotificationCenter.default.addObserver(self, selector: #selector(managedObjectContextDidSave), name: NSNotification.Name.NSManagedObjectContextDidSave, object: iCloud.context)
+
+        var cloudStations: [CloudStationList] = []
+        do {
+            try cloudStations.load()
+        }
+        catch {
+            Alarm.show(title: "Unable to load stations from iCloud", message: error.localizedDescription)
+        }
+
+        if var cloudStations = loadCloudStationList() {
+            print("LOADED ____________________________", cloudStations.count)
+
+//            if cloudStations.isEmpty {
+//                debug("Create default iCloud list")
+//                let list = CloudStationList(context: iCloud.context)
+//
+//                list.title = "My stations"
+//                list.icon = "music.house"
+//                list.id = UUID()
+//                list.save()
+//
+//                cloudStations.append(list)
+//            }
+
+            for list in cloudStations {
+
+                print(" *", list.title, list.id )
+//                iCloud.context.delete(list)
+//                iCloud.save()
+            }
+        }
+
+
+
         // Read local stations .................................
         debug("Load stations from: \(fileName.path)")
-        let opmlList = OpmlStations(title: "My stations", icon: "music.house", help: nil)
+        let opmlList = OpmlStations(title: "My stations", icon: "music.house")
         opmlList.load(file: fileName, defaultStations: defaultStations)
         localStations.append(opmlList)
 
         let sharedList = SharedStations(title: "Shared", icon: "music.house")
         sharedList.load()
         localStations.append(sharedList)
+    }
+
+    @objc func managedObjectContextObjectsDidChange(notification: NSNotification) {
+        guard let userInfo = notification.userInfo else { return }
+        if let inserts = userInfo[NSInsertedObjectsKey] as? Set<NSManagedObject>, inserts.count > 0 {
+             print("--- INSERTS ---")
+             print(inserts)
+             print("+++++++++++++++")
+         }
+
+         if let updates = userInfo[NSUpdatedObjectsKey] as? Set<NSManagedObject> , updates.count > 0 {
+             print("--- UPDATES ---")
+             print(updates)
+             for update in updates {
+                 print(update.changedValues())
+             }
+             print("+++++++++++++++")
+         }
+
+         if let deletes = userInfo[NSDeletedObjectsKey] as? Set<NSManagedObject>, deletes.count > 0 {
+             print("--- DELETES ---")
+             print(deletes)
+             print("+++++++++++++++")
+         }
+
+    }
+
+    @objc func managedObjectContextWillSave() {
+        print(#function)
+    }
+
+    @objc func managedObjectContextDidSave() {
+        print(#function)
     }
 
     /* ****************************************

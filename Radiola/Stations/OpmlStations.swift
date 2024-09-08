@@ -42,7 +42,6 @@ class OpmlStations: StationList {
     let id = UUID()
     var title: String
     var icon: String
-    var help: String?
     var items: [any StationItem] = []
 
     private(set) var file: URL?
@@ -50,10 +49,9 @@ class OpmlStations: StationList {
     /* ****************************************
      *
      * ****************************************/
-    init(title: String, icon: String, help: String? = nil) {
+    init(title: String, icon: String) {
         self.title = title
         self.icon = icon
-        self.help = help
     }
 
     /* ****************************************

@@ -35,7 +35,6 @@ class InternetStationList: ObservableObject {
     let id = UUID()
     let title: String
     let icon: String
-    let help: String?
 
     var items = [InternetStation]()
 
@@ -53,10 +52,9 @@ class InternetStationList: ObservableObject {
     /* ****************************************
      *
      * ****************************************/
-    init(title: String, icon: String, help: String? = nil, provider: RadioBrowserProvider) {
+    init(title: String, icon: String, provider: RadioBrowserProvider) {
         self.title = title
         self.icon = icon
-        self.help = help
         self.provider = provider
     }
 
