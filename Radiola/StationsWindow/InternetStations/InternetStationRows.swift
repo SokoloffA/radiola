@@ -19,7 +19,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     var qualityText = Label()
     var voteText = Label()
     var actionButton = ImageButton()
-    let menuButton = MenuButton()
+    let menuButton = StationMenuButton()
     let separator = Separator()
 
     private let actionButtonIcons = [
@@ -36,6 +36,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     init(station: InternetStation, list: InternetStationList) {
         self.station = station
         self.list = list
+        menuButton.station = station
 
         super.init(frame: NSRect())
         addSubview(nameEdit)
@@ -107,9 +108,6 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         separator.alignBottom(of: self)
 
         refreshActionButton()
-
-        menuButton.menu?.addItem(withTitle: "Copy station title", action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
-        menuButton.menu?.addItem(withTitle: "Copy station URL", action: #selector(copyUrlToClipboard), keyEquivalent: "").target = self
     }
 
     /* ****************************************
@@ -124,7 +122,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
      * ****************************************/
     @objc private func actionButtonClicked(sender: NSButton) {
         guard let list = AppState.shared.localStations.first else { return }
-        let inLocal = list.first(byURL: station.url) != nil
+        let inLocal = list.firstStation(byURL: station.url) != nil
 
         if !inLocal {
             let s = list.createStation(title: station.title, url: station.url)
@@ -166,13 +164,13 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
                 res.append(format("votes:", smallFont))
                 res.append(format(" \(votes)", normalFont))
 
-            case 1000 ..< 1_000_000:
+            case 1000 ..< 1000000:
                 res.append(format("votes:", smallFont))
                 res.append(format(" \(votes / 1000)", normalFont))
                 res.append(format("k", smallFont))
             default:
                 res.append(format("votes: ", smallFont))
-                res.append(format("\(votes / 10_000_000)", normalFont))
+                res.append(format("\(votes / 10000000)", normalFont))
                 res.append(format("M", smallFont))
         }
         return res
@@ -201,23 +199,5 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
             }
         }
         return res
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func copyTitleToClipboard() {
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(station.title, forType: .string)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func copyUrlToClipboard() {
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(station.url, forType: .string)
     }
 }

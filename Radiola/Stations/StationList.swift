@@ -10,7 +10,7 @@ import Foundation
 // MARK: - StationList
 
 protocol StationList: StationGroup {
-    var id: UUID {get}
+    var id: UUID { get }
     var icon: String { get }
     var items: [StationItem] { get set }
 
@@ -28,8 +28,7 @@ extension StationList {
     func trySave() {
         do {
             try save()
-        }
-        catch {
+        } catch {
             warning("Sorry, we couldn't load iCloud stations.", error)
             Alarm.show(title: "Sorry, we couldn't load iCloud stations.", message: error.localizedDescription)
         }
@@ -38,22 +37,56 @@ extension StationList {
     /* ****************************************
      *
      * ****************************************/
-    func first(byURL: String) -> Station? {
+    func firstStation(byURL: String) -> Station? {
         return firstStation { $0.url == byURL }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    func first(byID: UUID) -> Station? {
+    func firstStation(byID: UUID) -> Station? {
         return firstStation { $0.id == byID }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    func append(_ item: StationItem) {
-        items.append(item)
+    func firstGroup(byID: UUID) -> StationGroup? {
+        return firstGroup { $0.id == byID }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func add(_ station: Station) {
+        let new = createStation(title: station.title, url: station.url)
+        new.fill(from: station)
+        items.append(new)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func add(_ group: StationGroup) {
+        func addGroup(src: StationGroup, parent: StationGroup) {
+            let dest = createGroup(title: src.title)
+            dest.fill(from: src)
+            parent.items.append(dest)
+
+            for it in src.items {
+                if let station = it as? Station {
+                    let new = createStation(title: station.title, url: station.url)
+                    new.fill(from: station)
+                    dest.items.append(new)
+                }
+
+                if let group = it as? StationGroup {
+                    addGroup(src: group, parent: dest)
+                }
+            }
+        }
+
+        addGroup(src: group, parent: self)
     }
 
     /* ****************************************
@@ -82,6 +115,27 @@ extension StationList {
     /* ****************************************
      *
      * ****************************************/
+    func firstGroup(where predicate: (StationGroup) -> Bool) -> StationGroup? {
+        var queue = items
+
+        while !queue.isEmpty {
+            let item = queue.removeFirst()
+
+            if let group = item as? StationGroup {
+                if predicate(group) {
+                    return group
+                }
+
+                queue += group.items
+            }
+        }
+
+        return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func favoritesStations() -> [Station] {
         return filterStations { $0.isFavorite }
     }
@@ -90,26 +144,25 @@ extension StationList {
      *
      * ****************************************/
     private func filterStations(where match: (Station) -> Bool) -> [Station] {
-           var res: [Station] = []
-           var queue = items
+        var res: [Station] = []
+        var queue = items
 
-           while !queue.isEmpty {
-               let item = queue.removeFirst()
+        while !queue.isEmpty {
+            let item = queue.removeFirst()
 
-               if let station = item as? Station {
-                   if match(station) {
-                       res.append(station)
-                   }
-               }
+            if let station = item as? Station {
+                if match(station) {
+                    res.append(station)
+                }
+            }
 
-               if let group = item as? StationGroup {
-                   queue.insert(contentsOf: group.items, at: 0)
-               }
-           }
+            if let group = item as? StationGroup {
+                queue.insert(contentsOf: group.items, at: 0)
+            }
+        }
 
-           return res
-       }
-
+        return res
+    }
 
     /* ****************************************
      *
@@ -175,9 +228,16 @@ extension StationList {
 
         return nil
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func station(byURL: String) -> Station? {
+        return firstStation { $0.url == byURL }
+    }
 }
 
-//MARK: - extension [StationList]
+// MARK: - extension [StationList]
 
 extension [StationList] {
     func find(byId: UUID) -> (any StationList)? {

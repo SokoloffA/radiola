@@ -117,7 +117,7 @@ class AppState: ObservableObject {
 
         if !url.isEmpty {
             for list in localStations {
-                if let res = list.first(byURL: url) {
+                if let res = list.firstStation(byURL: url) {
                     return res
                 }
             }
@@ -144,7 +144,7 @@ class AppState: ObservableObject {
 
         var res: Station?
         for sl in localStations {
-            res = sl.first(byID: byID)
+            res = sl.firstStation(byID: byID)
             if res != nil {
                 return res
             }
@@ -168,7 +168,7 @@ class AppState: ObservableObject {
 
         var res: Station?
         for sl in localStations {
-            res = sl.first(byID: byID)
+            res = sl.firstStation(byID: byID)
             if res != nil {
                 return res
             }
@@ -183,7 +183,7 @@ class AppState: ObservableObject {
     func localStation(byURL: String) -> Station? {
         var res: Station?
         for sl in localStations {
-            res = sl.first(byURL: byURL)
+            res = sl.firstStation(byURL: byURL)
             if res != nil {
                 return res
             }

@@ -5,6 +5,7 @@
 //  Created by Alex Sokolov on 11.05.2023.
 //
 
+import Cocoa
 import Foundation
 
 // MARK: - Simple types
@@ -90,7 +91,6 @@ struct Alarm: Error, Identifiable {
         warning("Sorry, we couldn't load stations.", loadListErrot)
         show(title: "Sorry, we couldn't load stations.", message: loadListErrot.localizedDescription)
     }
-
 }
 
 extension Error {
@@ -125,4 +125,36 @@ func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") 
 func warning(_ items: Any..., separator: String = " ", terminator: String = "\n") {
     print("Warning: \(Date()) ", terminator: "")
     print(items, separator: separator, terminator: terminator)
+}
+
+// MARK: - NSMenuItem
+
+extension NSMenuItem {
+    convenience init(title: String, keyEquivalent: String = "", action: @escaping () -> Void) {
+        self.init(title: title, action: nil, keyEquivalent: keyEquivalent)
+        let actionHandler = Handler(action: action)
+        target = actionHandler
+        self.action = #selector(Handler.executeAction)
+        objc_setAssociatedObject(self, "[\(title)-actionHandler]", actionHandler, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+
+    private class Handler {
+        private let action: () -> Void
+
+        init(action: @escaping () -> Void) {
+            self.action = action
+        }
+
+        @objc func executeAction() {
+            action()
+        }
+    }
+}
+
+// MARK: - NSMenu
+
+extension NSMenu {
+    func addItem(withTitle: String, keyEquivalent: String = "", action: @escaping () -> Void) {
+        addItem(NSMenuItem(title: withTitle, keyEquivalent: keyEquivalent, action: action))
+    }
 }

@@ -25,6 +25,17 @@ protocol Station: StationItem {
     var isFavorite: Bool { get set }
 }
 
+extension Station {
+    /* ****************************************
+     *
+     * ****************************************/
+    func fill(from: Station) {
+        title = from.title
+        url = from.url
+        isFavorite = from.isFavorite
+    }
+}
+
 // MARK: - StationGroup
 
 protocol StationGroup: StationItem {
@@ -34,6 +45,13 @@ protocol StationGroup: StationItem {
 }
 
 extension StationGroup {
+    /* ****************************************
+     *
+     * ****************************************/
+    func fill(from: StationGroup) {
+        title = from.title
+    }
+
     /* ****************************************
      *
      * ****************************************/
