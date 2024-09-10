@@ -27,6 +27,7 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.style = .inset
 
         NotificationCenter.default.addObserver(
             self,

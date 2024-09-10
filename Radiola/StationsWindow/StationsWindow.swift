@@ -60,6 +60,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         localStationsDelegate = LocalStationDelegate(outlineView: stationsTree)
         internetStationsDelegate = InternetStationDelegate(outlineView: stationsTree)
 
+        stationsTree.style = .inset
         stationsTree.doubleAction = #selector(doubleClickRow)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(selectionChanged),
@@ -274,8 +275,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         if let list = AppState.shared.localStations.find(byId: listId) {
             do {
                 try list.load()
-            }
-            catch {
+            } catch {
                 Alarm.show(loadListErrot: error)
             }
             setLocalStationList(list: list)
