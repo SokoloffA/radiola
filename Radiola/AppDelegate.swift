@@ -13,18 +13,6 @@ extension KeyboardShortcuts.Name {
     static let showHistoryWindow = Self("showHistoryWindow")
 }
 
-extension String {
-    var tr: String {
-        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: "")
-    }
-}
-
-extension String {
-    func tr(withComment: String) -> String {
-        return NSLocalizedString(self, tableName: nil, bundle: Bundle.main, value: "", comment: withComment)
-    }
-}
-
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
     private let oplDirectoryName = "com.github.SokoloffA.Radiola/"

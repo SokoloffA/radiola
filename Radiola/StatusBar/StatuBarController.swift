@@ -204,7 +204,7 @@ class StatusBarController: NSObject {
 
         if settings.showMuteInMenu {
             let item = NSMenuItem(
-                title: player.isMuted ? "Unmute" : "Mute",
+                title: player.isMuted ? NSLocalizedString("Unmute", comment: "Menu Item") : "Mute".localized,
                 action: #selector(Player.toggleMute),
                 keyEquivalent: "m")
             item.target = player
@@ -246,7 +246,7 @@ class StatusBarController: NSObject {
             keyEquivalent: ","))
 
         menu.addItem(NSMenuItem(
-            title: "Quit".tr,
+            title: NSLocalizedString("Quit", comment: "Status bar menu item"),
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"))
 
@@ -272,7 +272,7 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     func buildFlatFavoritesMenu(menu: NSMenu) {
-        menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
 
         for station in appState.favoritesStations() {
             menu.addItem(createStationMenuItem(station))
@@ -303,7 +303,7 @@ class StatusBarController: NSObject {
             }
         }
 
-        menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
         for list in AppState.shared.localStations {
             build(items: list.items, menu: menu, prefix: menuPrefix)
         }
@@ -333,7 +333,7 @@ class StatusBarController: NSObject {
             }
         }
 
-        menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
         for list in AppState.shared.localStations {
             build(items: list.items, menu: menu, prefix: menuPrefix)
         }
@@ -371,7 +371,7 @@ class StatusBarController: NSObject {
                 menuItem.button?.toolTip =
                     player.stationName +
                     "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                    "Connecting...".tr(withComment: "Tooltip text")
+                    NSLocalizedString("Connecting...", tableName: "Tooltip text", comment: "Tooltip text")
 
             case Player.Status.playing:
                 menuItem.button?.toolTip =

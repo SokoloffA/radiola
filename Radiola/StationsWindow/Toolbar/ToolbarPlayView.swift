@@ -68,7 +68,7 @@ class ToolbarPlayView: NSViewController {
 
             case Player.Status.connecting:
                 stationLabel.stringValue = player.stationName
-                songLabel.stringValue = "Connecting...".tr(withComment: "Station label text")
+                songLabel.stringValue = NSLocalizedString("Connecting...", comment: "Station label text")
 
             case Player.Status.playing:
                 stationLabel.stringValue = player.stationName
@@ -82,17 +82,17 @@ class ToolbarPlayView: NSViewController {
             case Player.Status.paused:
                 playButton.image = NSImage(named: NSImage.Name("NSTouchBarPlayTemplate"))
                 playButton.image?.isTemplate = true
-                playButton.toolTip = "Play".tr(withComment: "Toolbar button toolTip")
+                playButton.toolTip = NSLocalizedString("Play", comment: "Toolbar button toolTip")
 
             case Player.Status.connecting:
                 playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
                 playButton.image?.isTemplate = true
-                playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
+                playButton.toolTip = NSLocalizedString("Pause", comment: "Toolbar button toolTip")
 
             case Player.Status.playing:
                 playButton.image = NSImage(named: NSImage.Name("NSTouchBarPauseTemplate"))
                 playButton.image?.isTemplate = true
-                playButton.toolTip = "Pause".tr(withComment: "Toolbar button toolTip")
+                playButton.toolTip = NSLocalizedString("Pause", comment: "Toolbar button toolTip")
         }
     }
 
