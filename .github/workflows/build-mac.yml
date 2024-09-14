@@ -27,7 +27,7 @@ jobs:
           cat $GITHUB_ENV
           echo "==============================="
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build
         run: xcodebuild CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
@@ -39,7 +39,7 @@ jobs:
           cp ${{github.workspace}}/.github/workflows/dmg_settings.json dmg_settings.json
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: |
