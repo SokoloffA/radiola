@@ -82,12 +82,12 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     private func initSideBar() {
         let appState = AppState.shared
 
-        sideBar.addGroup(title: "My lists")
+        sideBar.addGroup(title: NSLocalizedString("My lists", comment: "Sidebar group"))
         for list in appState.localStations {
             sideBar.addItem(id: list.id, title: list.title, icon: list.icon)
         }
 
-        sideBar.addGroup(title: "Radio browser")
+        sideBar.addGroup(title: NSLocalizedString("Radio browser", comment: "Sidebar group"))
         for list in appState.internetStations {
             sideBar.addItem(id: list.id, title: list.title, icon: list.icon)
         }

@@ -52,9 +52,9 @@ class AppState: ObservableObject {
     @Published var localStations: [any StationList] = []
 
     @Published var internetStations: [InternetStationList] = [
-        InternetStationList(title: "By tag", icon: "globe", provider: RadioBrowserProvider(.byTag)),
-        InternetStationList(title: "By name", icon: "globe", provider: RadioBrowserProvider(.byName)),
-        InternetStationList(title: "By country", icon: "globe", provider: RadioBrowserProvider(.byCountry)),
+        InternetStationList(title: NSLocalizedString("By tag", comment: "Internet station list"), icon: "globe", provider: RadioBrowserProvider(.byTag)),
+        InternetStationList(title: NSLocalizedString("By name", comment: "Internet station list"), icon: "globe", provider: RadioBrowserProvider(.byName)),
+        InternetStationList(title: NSLocalizedString("By country", comment: "Internet station list"), icon: "globe", provider: RadioBrowserProvider(.byCountry)),
     ]
 
     public var history = History()

@@ -138,7 +138,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     private func refreshActionButton() {
         let inLocal = AppState.shared.localStation(byURL: station.url) != nil
         actionButton.image = actionButtonIcons[inLocal]!
-        actionButton.toolTip = inLocal ? "" : "Add the station to my stations list"
+        actionButton.toolTip = inLocal ? "" : NSLocalizedString("Add the station to my stations list", comment: "Button tooltip")
     }
 
     /* ****************************************

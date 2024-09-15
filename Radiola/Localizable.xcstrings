@@ -1,6 +1,72 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Add group" : {
+      "comment" : "Button title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить группу"
+          }
+        }
+      }
+    },
+    "Add station" : {
+      "comment" : "Button title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить станцию"
+          }
+        }
+      }
+    },
+    "Add the station to my stations list" : {
+      "comment" : "Button tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить станцию в список \"Мои станции\""
+          }
+        }
+      }
+    },
+    "By country" : {
+      "comment" : "Internet station list",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По странам"
+          }
+        }
+      }
+    },
+    "By name" : {
+      "comment" : "Internet station list",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По имени"
+          }
+        }
+      }
+    },
+    "By tag" : {
+      "comment" : "Internet station list",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "По тэгу"
+          }
+        }
+      }
+    },
     "Connecting…" : {
       "comment" : "Station label text\nTooltip text",
       "localizations" : {
@@ -78,6 +144,17 @@
         }
       }
     },
+    "My lists" : {
+      "comment" : "Sidebar group",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мои списки"
+          }
+        }
+      }
+    },
     "Open Radiola…" : {
       "comment" : "Status bar menu item",
       "localizations" : {
@@ -118,6 +195,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выйти"
+          }
+        }
+      }
+    },
+    "Radio browser" : {
+      "comment" : "Sidebar group",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radio browser"
+          }
+        }
+      }
+    },
+    "Remove station" : {
+      "comment" : "Button title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить станцию"
           }
         }
       }
