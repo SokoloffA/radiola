@@ -30,6 +30,7 @@ class VolumeMenuItem: NSMenuItem {
 class VolumeMenuItemContoller: NSViewController {
     private let menuItem: NSMenuItem
 
+    @IBOutlet var volumeLabel: NSTextField!
     @IBOutlet var volumeDownButton: NSButton!
     @IBOutlet var volumeUpButton: NSButton!
     @IBOutlet var volumeControl: NSSlider!
@@ -54,6 +55,8 @@ class VolumeMenuItemContoller: NSViewController {
      * ****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        volumeLabel.stringValue = NSLocalizedString("Volume", comment: "Status bar menu item")
 
         volumeControl.minValue = 0
         volumeControl.maxValue = 1

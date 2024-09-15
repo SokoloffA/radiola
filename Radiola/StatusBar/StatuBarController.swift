@@ -204,7 +204,9 @@ class StatusBarController: NSObject {
 
         if settings.showMuteInMenu {
             let item = NSMenuItem(
-                title: player.isMuted ? NSLocalizedString("Unmute", comment: "Menu Item") : "Mute".localized,
+                title: player.isMuted ?
+                    NSLocalizedString("Unmute", comment: "Status bar menu Item") :
+                    NSLocalizedString("Mute", comment: "Status bar menu Item"),
                 action: #selector(Player.toggleMute),
                 keyEquivalent: "m")
             item.target = player
@@ -231,17 +233,17 @@ class StatusBarController: NSObject {
         menu.addItem(NSMenuItem.separator())
 
         menu.addItem(NSMenuItem(
-            title: "Open Radiola",
+            title: NSLocalizedString("Open Radiola…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showStationView(_:)),
             keyEquivalent: "r"))
 
         menu.addItem(NSMenuItem(
-            title: "History...",
+            title: NSLocalizedString("History…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showHistory(_:)),
             keyEquivalent: "y"))
 
         menu.addItem(NSMenuItem(
-            title: "Settings...",
+            title: NSLocalizedString("Settings…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showPreferences(_:)),
             keyEquivalent: ","))
 
@@ -371,7 +373,7 @@ class StatusBarController: NSObject {
                 menuItem.button?.toolTip =
                     player.stationName +
                     "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                    NSLocalizedString("Connecting...", tableName: "Tooltip text", comment: "Tooltip text")
+                    NSLocalizedString("Connecting…", comment: "Tooltip text")
 
             case Player.Status.playing:
                 menuItem.button?.toolTip =

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -11,6 +11,7 @@
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
                 <outlet property="volumeControl" destination="NgG-C5-KCb" id="prY-F8-DG0"/>
                 <outlet property="volumeDownButton" destination="TWl-Xg-acs" id="gdd-25-oWG"/>
+                <outlet property="volumeLabel" destination="hDe-Ke-H6l" id="MbG-pu-g0J"/>
                 <outlet property="volumeUpButton" destination="xRB-vR-2Rb" id="PRj-7g-WrU"/>
             </connections>
         </customObject>
@@ -20,8 +21,8 @@
             <rect key="frame" x="0.0" y="0.0" width="360" height="40"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hDe-Ke-H6l">
-                    <rect key="frame" x="13" y="24" width="53" height="16"/>
+                <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hDe-Ke-H6l">
+                    <rect key="frame" x="13" y="24" width="329" height="16"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="Volume:" id="N5y-Qs-Wn4">
                         <font key="font" metaFont="menu"/>
@@ -61,11 +62,11 @@
                     </connections>
                 </button>
             </subviews>
-            <point key="canvasLocation" x="241.5" y="1"/>
+            <point key="canvasLocation" x="241" y="1"/>
         </customView>
     </objects>
     <resources>
-        <image name="NSTouchBarAudioOutputVolumeOffTemplate" width="13" height="14"/>
-        <image name="NSTouchBarVolumeUpTemplate" width="22" height="15"/>
+        <image name="NSTouchBarAudioOutputVolumeOffTemplate" width="16" height="17"/>
+        <image name="NSTouchBarVolumeUpTemplate" width="26" height="18"/>
     </resources>
 </document>

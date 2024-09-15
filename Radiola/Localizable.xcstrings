@@ -1,11 +1,60 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Connecting..." : {
-      "comment" : "Station label text"
+    "Connecting…" : {
+      "comment" : "Station label text\nTooltip text",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключение…"
+          }
+        }
+      }
     },
     "Favorite stations" : {
-      "comment" : "Status bar menu item"
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любимые станции"
+          }
+        }
+      }
+    },
+    "History…" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История…"
+          }
+        }
+      }
+    },
+    "Mute" : {
+      "comment" : "Status bar menu Item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выключить звук"
+          }
+        }
+      }
+    },
+    "Open Radiola…" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть Radiola…"
+          }
+        }
+      }
     },
     "Pause" : {
       "comment" : "Toolbar button toolTip"
@@ -24,8 +73,38 @@
         }
       }
     },
+    "Settings…" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки…"
+          }
+        }
+      }
+    },
     "Unmute" : {
-      "comment" : "Menu Item"
+      "comment" : "Status bar menu Item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить звук"
+          }
+        }
+      }
+    },
+    "Volume" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Громкость"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"

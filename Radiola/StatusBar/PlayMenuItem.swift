@@ -154,7 +154,7 @@ fileprivate class PlayItemView: NSView {
                 playIcon.image = NSImage(systemSymbolName: NSImage.Name("pause.fill"), accessibilityDescription: "Pause")
                 playIcon.image?.isTemplate = true
                 stationLabel.stringValue = player.stationName
-                songLabel.stringValue = NSLocalizedString("Connecting...", comment: "Station label text")
+                songLabel.stringValue = NSLocalizedString("Connecting…", comment: "Station label text")
 
             case Player.Status.playing:
                 playIcon.image = NSImage(systemSymbolName: NSImage.Name("pause.fill"), accessibilityDescription: "Pause")

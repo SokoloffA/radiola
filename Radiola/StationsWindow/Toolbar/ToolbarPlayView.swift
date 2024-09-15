@@ -68,7 +68,7 @@ class ToolbarPlayView: NSViewController {
 
             case Player.Status.connecting:
                 stationLabel.stringValue = player.stationName
-                songLabel.stringValue = NSLocalizedString("Connecting...", comment: "Station label text")
+                songLabel.stringValue = NSLocalizedString("Connecting…", comment: "Station label text")
 
             case Player.Status.playing:
                 stationLabel.stringValue = player.stationName
