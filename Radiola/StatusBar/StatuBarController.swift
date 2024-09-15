@@ -10,7 +10,7 @@ import Cocoa
 /* ****************************************
  *
  * ****************************************/
-class StatusBarController: NSObject {
+class StatusBarController: NSObject, NSMenuDelegate {
     private let appState = AppState.shared
     let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menuPrefix = "  "
@@ -198,11 +198,13 @@ class StatusBarController: NSObject {
 
         if settings.showVolumeInMenu {
             menu.addItem(NSMenuItem.separator())
-            let volumeItem = VolumeMenuItem()
+            menu.addItem(NSMenuItem(title: NSLocalizedString("Volume", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
+            let volumeItem = VolumeMenuItem(showMuteButton: settings.showMuteInMenu)
             menu.addItem(volumeItem)
         }
 
-        if settings.showMuteInMenu {
+        if settings.showMuteInMenu && !settings.showVolumeInMenu {
+            menu.addItem(NSMenuItem.separator())
             let item = NSMenuItem(
                 title: player.isMuted ?
                     NSLocalizedString("Unmute", comment: "Status bar menu Item") :
@@ -252,6 +254,7 @@ class StatusBarController: NSObject {
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"))
 
+        menu.delegate = self
         return menu
     }
 
@@ -339,6 +342,13 @@ class StatusBarController: NSObject {
         for list in AppState.shared.localStations {
             build(items: list.items, menu: menu, prefix: menuPrefix)
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func menuDidClose(_ menu: NSMenu) {
+        menuItem.menu = nil
     }
 
     /* ****************************************

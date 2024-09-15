@@ -12,6 +12,9 @@
         }
       }
     },
+    "Decrease the volume" : {
+      "comment" : "Volume button tooltip"
+    },
     "Favorite stations" : {
       "comment" : "Status bar menu item",
       "localizations" : {
@@ -34,8 +37,11 @@
         }
       }
     },
+    "Increase the volume" : {
+      "comment" : "Volume button tooltip"
+    },
     "Mute" : {
-      "comment" : "Status bar menu Item",
+      "comment" : "Mute button tooltip\nStatus bar menu Item",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -85,7 +91,7 @@
       }
     },
     "Unmute" : {
-      "comment" : "Status bar menu Item",
+      "comment" : "Mute button tooltip\nStatus bar menu Item",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
