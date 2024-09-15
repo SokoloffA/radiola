@@ -77,7 +77,7 @@ class VolumeView: NSView {
         upButton.isContinuous = true
         upButton.target = self
         upButton.action = #selector(volumeUp)
-        downButton.toolTip = NSLocalizedString("Increase the volume", comment: "Volume button tooltip")
+        upButton.toolTip = NSLocalizedString("Increase the volume", comment: "Volume button tooltip")
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refresh),

@@ -13,7 +13,15 @@
       }
     },
     "Decrease the volume" : {
-      "comment" : "Volume button tooltip"
+      "comment" : "Volume button tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уменьшить громкость"
+          }
+        }
+      }
     },
     "Favorite stations" : {
       "comment" : "Status bar menu item",
@@ -38,7 +46,26 @@
       }
     },
     "Increase the volume" : {
-      "comment" : "Volume button tooltip"
+      "comment" : "Volume button tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увеличить громкость"
+          }
+        }
+      }
+    },
+    "Mark current song as favorite" : {
+      "comment" : "Button tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пометить текущую песню как любимую"
+          }
+        }
+      }
     },
     "Mute" : {
       "comment" : "Mute button tooltip\nStatus bar menu Item",
@@ -63,10 +90,26 @@
       }
     },
     "Pause" : {
-      "comment" : "Toolbar button toolTip"
+      "comment" : "Toolbar button toolTip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Остановить"
+          }
+        }
+      }
     },
     "Play" : {
-      "comment" : "Toolbar button toolTip"
+      "comment" : "Toolbar button toolTip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Играть"
+          }
+        }
+      }
     },
     "Quit" : {
       "comment" : "Status bar menu item",

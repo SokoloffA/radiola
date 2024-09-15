@@ -81,7 +81,7 @@ fileprivate class PlayItemView: NSView {
         favoriteButton.alternateImage = NSImage(systemSymbolName: NSImage.Name("heart.fill"), accessibilityDescription: "Unmark current song as favorite")
         favoriteButton.target = self
         favoriteButton.action = #selector(markAsFavoriteSong)
-        favoriteButton.toolTip = "Mark current song as favorite"
+        favoriteButton.toolTip = NSLocalizedString("Mark current song as favorite", comment: "Button tooltip")
 
         songLabel.textColor = .labelColor
         songLabel.lineBreakMode = .byClipping
