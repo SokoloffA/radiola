@@ -1,0 +1,9 @@
+[main]
+host = https://www.transifex.com
+
+[o:sokoloff:p:radiola:r:Localizable]
+file_filter = ./tmp/<lang>/Localizable.json
+source_file = ./tmp/Localizable.json
+source_lang = en
+type        = STRUCTURED_JSON
+minimum_perc = 10
