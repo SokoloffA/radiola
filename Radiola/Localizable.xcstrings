@@ -1,0 +1,35 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Connecting..." : {
+      "comment" : "Station label text"
+    },
+    "Favorite stations" : {
+      "comment" : "Status bar menu item"
+    },
+    "Pause" : {
+      "comment" : "Toolbar button toolTip"
+    },
+    "Play" : {
+      "comment" : "Toolbar button toolTip"
+    },
+    "Quit" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйти"
+          }
+        }
+      }
+    },
+    "record_shortcut" : {
+
+    },
+    "Unmute" : {
+      "comment" : "Menu Item"
+    }
+  },
+  "version" : "1.0"
+}
