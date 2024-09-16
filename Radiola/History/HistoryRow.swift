@@ -12,7 +12,7 @@ class HistoryRow: NSView {
     private var stationLabel = Label()
     private var dateLabel = Label()
     private let favoriteSong = IconView(
-        onImage: NSImage(systemSymbolName: NSImage.Name("heart.fill"), accessibilityDescription: "Current song is favorite"),
+        onImage: NSImage(systemSymbolName: NSImage.Name("heart.fill"), accessibilityDescription: NSLocalizedString("The current song has been marked as a favorite", comment: "History window icon tooltip")),
         offImage: nil
     )
     let separator = Separator()
@@ -35,7 +35,7 @@ class HistoryRow: NSView {
 
         songLabel.setFontWeight(.medium)
 
-        favoriteSong.toolTip = "The current song has been marked as a favorite."
+        favoriteSong.toolTip = NSLocalizedString("The current song has been marked as a favorite.", comment: "History window icon tooltip")
 
         stationLabel.font = NSFont.systemFont(ofSize: 11)
         stationLabel.textColor = .secondaryLabelColor
@@ -98,14 +98,14 @@ class HistoryRow: NSView {
      * ****************************************/
     @objc private func refreshDate() {
         if player.isPlaying && player.stationName == record.stationTitle && player.songTitle == record.song {
-            dateLabel.stringValue = "playing now"
+            dateLabel.stringValue = NSLocalizedString("playing now", comment: "History window song status")
             dateLabel.sizeToFit()
             return
         }
 
         let now = Date()
         if now.timeIntervalSince(record.date) < 60 {
-            dateLabel.stringValue = "less than a minute ago"
+            dateLabel.stringValue = NSLocalizedString("less than a minute ago", comment: "History window song status")
             startTimer(timeInterval: 60)
 
         } else if now.timeIntervalSince(record.date) < 60 * 60 {

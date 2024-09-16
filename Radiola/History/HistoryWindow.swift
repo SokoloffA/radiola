@@ -25,6 +25,10 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        window?.title = NSLocalizedString("History", comment: "History window title")
+        placeholderLabel.stringValue = NSLocalizedString("No records yet", comment: "History window placeholder")
+        onlyFavoriteCheckbox.title = NSLocalizedString("Show only your favorite songs", comment: "History window checkbox title")
+
         tableView.delegate = self
         tableView.dataSource = self
         tableView.style = .inset

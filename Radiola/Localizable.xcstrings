@@ -100,6 +100,17 @@
         }
       }
     },
+    "History" : {
+      "comment" : "History window title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История"
+          }
+        }
+      }
+    },
     "History…" : {
       "comment" : "Status bar menu item",
       "localizations" : {
@@ -118,6 +129,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увеличить громкость"
+          }
+        }
+      }
+    },
+    "less than a minute ago" : {
+      "comment" : "History window song status",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "меньше минуты назад"
           }
         }
       }
@@ -155,6 +177,17 @@
         }
       }
     },
+    "No records yet" : {
+      "comment" : "History window placeholder",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пока нет записей"
+          }
+        }
+      }
+    },
     "Open Radiola…" : {
       "comment" : "Status bar menu item",
       "localizations" : {
@@ -184,6 +217,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Играть"
+          }
+        }
+      }
+    },
+    "playing now" : {
+      "comment" : "History window song status",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "играет сейчас"
           }
         }
       }
@@ -228,6 +272,39 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Настройки…"
+          }
+        }
+      }
+    },
+    "Show only your favorite songs" : {
+      "comment" : "History window checkbox title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показывать только любимые песни"
+          }
+        }
+      }
+    },
+    "The current song has been marked as a favorite" : {
+      "comment" : "History window icon tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Песня была помечена как любимая"
+          }
+        }
+      }
+    },
+    "The current song has been marked as a favorite." : {
+      "comment" : "History window icon tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Песня была помечена как любимая."
           }
         }
       }
