@@ -10,6 +10,12 @@
             "state" : "new",
             "value" : "Radiola"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola"
+          }
         }
       }
     },
@@ -21,6 +27,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Add Station to my stations"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить станцию в список «Мои станции»"
           }
         }
       }
@@ -34,6 +46,12 @@
             "state" : "new",
             "value" : "Quit Radiola"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершить Радиолу"
+          }
         }
       }
     },
@@ -46,17 +64,11 @@
             "state" : "new",
             "value" : "About Radiola"
           }
-        }
-      }
-    },
-    "aTl-1u-JFS.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Print…\"; ObjectID = \"aTl-1u-JFS\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Print…"
+            "state" : "translated",
+            "value" : "О приложении «Radiola»"
           }
         }
       }
@@ -70,6 +82,12 @@
             "state" : "new",
             "value" : "Window"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Окно"
+          }
         }
       }
     },
@@ -81,6 +99,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Control"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление"
           }
         }
       }
@@ -94,6 +118,12 @@
             "state" : "new",
             "value" : "Main Menu"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Основное меню"
+          }
         }
       }
     },
@@ -105,6 +135,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "File"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл"
           }
         }
       }
@@ -118,17 +154,11 @@
             "state" : "new",
             "value" : "Settings…"
           }
-        }
-      }
-    },
-    "Bw7-FT-i3A.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Save As…\"; ObjectID = \"Bw7-FT-i3A\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Save As…"
+            "state" : "translated",
+            "value" : "Настройки…"
           }
         }
       }
@@ -142,6 +172,12 @@
             "state" : "new",
             "value" : "New Station"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать новую станция"
+          }
         }
       }
     },
@@ -153,6 +189,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "File"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Файл"
           }
         }
       }
@@ -166,6 +208,12 @@
             "state" : "new",
             "value" : "Close"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть"
+          }
         }
       }
     },
@@ -177,6 +225,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Help"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Справка"
           }
         }
       }
@@ -190,6 +244,12 @@
             "state" : "new",
             "value" : "Radiola Help"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Справка Радиолы"
+          }
         }
       }
     },
@@ -202,29 +262,11 @@
             "state" : "new",
             "value" : "Services"
           }
-        }
-      }
-    },
-    "IAo-SY-fd9.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Open…\"; ObjectID = \"IAo-SY-fd9\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Open…"
-          }
-        }
-      }
-    },
-    "KaW-ft-85H.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Revert to Saved\"; ObjectID = \"KaW-ft-85H\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Revert to Saved"
+            "state" : "translated",
+            "value" : "Службы"
           }
         }
       }
@@ -238,6 +280,12 @@
             "state" : "new",
             "value" : "Show All"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать все"
+          }
         }
       }
     },
@@ -249,6 +297,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Bring All to Front"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Все окна — на передний план"
           }
         }
       }
@@ -262,17 +316,11 @@
             "state" : "new",
             "value" : "Services"
           }
-        }
-      }
-    },
-    "oas-Oc-fiZ.title" : {
-      "comment" : "Class = \"NSMenu\"; title = \"Open Recent\"; ObjectID = \"oas-Oc-fiZ\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Open Recent"
+            "state" : "translated",
+            "value" : "Службы"
           }
         }
       }
@@ -286,6 +334,12 @@
             "state" : "new",
             "value" : "Hide Radiola"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть Радиолу"
+          }
         }
       }
     },
@@ -297,6 +351,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Control"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление"
           }
         }
       }
@@ -310,6 +370,12 @@
             "state" : "new",
             "value" : "Minimize"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скрыть Радиолу"
+          }
         }
       }
     },
@@ -322,29 +388,11 @@
             "state" : "new",
             "value" : "Play"
           }
-        }
-      }
-    },
-    "pxx-59-PXV.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Save…\"; ObjectID = \"pxx-59-PXV\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Save…"
-          }
-        }
-      }
-    },
-    "qIS-W8-SiK.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Page Setup…\"; ObjectID = \"qIS-W8-SiK\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Page Setup…"
+            "state" : "translated",
+            "value" : "Воспроизвести"
           }
         }
       }
@@ -358,6 +406,12 @@
             "state" : "new",
             "value" : "Zoom"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить масштаб"
+          }
         }
       }
     },
@@ -369,6 +423,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Delete Station or Group"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить станцию или группу"
           }
         }
       }
@@ -382,17 +442,11 @@
             "state" : "new",
             "value" : "Window"
           }
-        }
-      }
-    },
-    "tXI-mr-wws.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Open Recent\"; ObjectID = \"tXI-mr-wws\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Open Recent"
+            "state" : "translated",
+            "value" : "Окно"
           }
         }
       }
@@ -406,6 +460,12 @@
             "state" : "new",
             "value" : "Import stations from a file…"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Импортировать станции из файла…"
+          }
         }
       }
     },
@@ -416,6 +476,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Radiola"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Radiola"
           }
         }
@@ -430,17 +496,11 @@
             "state" : "new",
             "value" : "Hide Others"
           }
-        }
-      }
-    },
-    "vNY-rz-j42.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Clear Menu\"; ObjectID = \"vNY-rz-j42\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Clear Menu"
+            "state" : "translated",
+            "value" : "Скрыть остальные"
           }
         }
       }
@@ -454,17 +514,11 @@
             "state" : "new",
             "value" : "Export stations to a file…"
           }
-        }
-      }
-    },
-    "Was-JA-tGl.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"New\"; ObjectID = \"Was-JA-tGl\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
+        },
+        "ru" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "New"
+            "state" : "translated",
+            "value" : "Экспортировать станции в файл…"
           }
         }
       }
@@ -478,6 +532,12 @@
             "state" : "new",
             "value" : "New Station Group"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создать новую группу станций"
+          }
         }
       }
     },
@@ -489,6 +549,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Help"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Справка"
           }
         }
       }
@@ -502,6 +568,12 @@
             "state" : "new",
             "value" : "Check For Updates…"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проверить наличие обновлений…"
+          }
         }
       }
     },
@@ -513,6 +585,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Pause"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пауза"
           }
         }
       }
