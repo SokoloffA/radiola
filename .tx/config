@@ -7,3 +7,10 @@ source_file = ./tmp/Localizable.json
 source_lang = en
 type        = STRUCTURED_JSON
 minimum_perc = 10
+
+[o:sokoloff:p:radiola:r:MainMenu]
+file_filter = ./tmp/<lang>/MainMenu.json
+source_file = ./tmp/MainMenu.json
+source_lang = en
+type        = STRUCTURED_JSON
+minimum_perc = 10

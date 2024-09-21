@@ -14,24 +14,21 @@ TMP_DIR = "./tmp"
 class Error(Exception):
     pass
 
-def update_lang(lang, dir):
-    for json_file in glob.glob(f"{dir}/*.json"):
-        update_file(lang, json_file)
-
+def find_xcstrings_files(dir):
+    res = []
+    for f in glob.glob("**/*.xcstrings", root_dir=dir, recursive=True):
+        res.append(f"{dir}/{f}")
+    return res
 
 def set_deep(d, keys, value):
     for key in keys[:-1]:
         d = d.setdefault(key, {})
     d[keys[-1]] = value
 
-def update_file(lang, in_file):
-    name = os.path.splitext(os.path.basename(in_file))[0]
-    out_file = f"{XCFILES_DIR}/{name}.xcstrings"
-
-    with open(out_file) as r:
+def remove_stale_strings(xcstrings_file):
+    with open(xcstrings_file) as r:
         xcstrings = json.load(r)
 
-    # Remove stale strings
     remove = []
     for key, value in xcstrings["strings"].items():
         if value.get("extractionState") == "stale":
@@ -42,8 +39,12 @@ def update_file(lang, in_file):
         del xcstrings["strings"][key]
 
 
+def update_file(lang, xcstrings_file, json_file):
+    with open(xcstrings_file) as r:
+        xcstrings = json.load(r)
+
     # merge from json to xcstrings
-    with open(in_file) as r:
+    with open(json_file) as r:
         translations = json.load(r)
 
     for key, tr in translations.items():
@@ -65,7 +66,7 @@ def update_file(lang, in_file):
         set_deep(xcstrings, ["strings", key, "localizations", lang, "stringUnit", "value"], tr["string"])
 
 
-    with open(out_file, 'w', encoding='utf-8') as f:
+    with open(xcstrings_file, 'w', encoding='utf-8') as f:
         json.dump(xcstrings, f, ensure_ascii=False, indent=2, separators=(',', ' : '))
 
 
@@ -82,12 +83,17 @@ def pull_translations():
 
 if __name__ == "__main__":
     try:
-        shutil.rmtree(TMP_DIR)
+        shutil.rmtree(TMP_DIR, ignore_errors=True)
         pull_translations()
+        xcstrings_files = find_xcstrings_files("..")
 
-        for lang in glob.glob("*", root_dir=TMP_DIR):
-            print(f"Update {lang}")
-            update_lang(lang, f"{TMP_DIR}/{lang}")
+        for xcstrings_file in xcstrings_files:
+            remove_stale_strings(xcstrings_file)
+
+            for lang in glob.glob("*", root_dir=TMP_DIR):
+
+                name = os.path.splitext(os.path.basename(xcstrings_file))[0]
+                update_file(lang, xcstrings_file, f"{TMP_DIR}/{lang}/{name}.json")
 
     except KeyboardInterrupt:
         sys.exit(0)
