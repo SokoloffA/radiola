@@ -34,7 +34,7 @@ fileprivate class PlayItemView: NSView {
     var stationLabel = Label()
     var favoriteButton = FavButton()
 
-    var menuItem: NSMenuItem
+    weak var menuItem: NSMenuItem?
 
     /* ****************************************
      *
@@ -122,7 +122,7 @@ fileprivate class PlayItemView: NSView {
      * ****************************************/
     @objc func toggle() {
         player.toggle()
-        menuItem.menu?.cancelTracking()
+        menuItem?.menu?.cancelTracking()
     }
 
     /* ****************************************
