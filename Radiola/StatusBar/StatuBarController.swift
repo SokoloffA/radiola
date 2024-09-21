@@ -106,23 +106,21 @@ class StatusBarController: NSObject {
 
             case .playPause:
                 player.toggle()
-                return nil
 
             case .showMainWindow:
                 _ = StationsWindow.show()
-                return nil
 
             case .showHistory:
                 _ = HistoryWindow.show()
-                return nil
 
             case .mute:
                 player.isMuted = !player.isMuted
-                return nil
 
             case nil:
-                return event
+                break
         }
+
+        return event
     }
 
     /* ****************************************
@@ -148,21 +146,11 @@ class StatusBarController: NSObject {
                     clickCount: event.clickCount,
                     pressure: event.pressure)
 
-            case .playPause:
-                return nil
-
-            case .showMainWindow:
-                return nil
-
-            case .showHistory:
-                return nil
-
-            case .mute:
-                return nil
-
-            case nil:
-                return event
+            default:
+                break
         }
+
+        return event
     }
 
     /* ****************************************
