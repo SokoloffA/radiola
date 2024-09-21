@@ -16,8 +16,7 @@ class StatusBarController: NSObject {
     private let menuPrefix = "  "
     private let icon = StatusBarIcon(size: 16)
 
-    private var mouseDownMonitor: Any?
-    private var mouseUpMonitor: Any?
+    private var middleMouseMonitor: Any?
     private var scrollWheelMonitor: Any?
 
     /* ****************************************
@@ -50,9 +49,10 @@ class StatusBarController: NSObject {
                                                name: Notification.Name.SettingsChanged,
                                                object: nil)
 
-        mouseDownMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .otherMouseDown], handler: mouseDown)
-        mouseUpMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp], handler: mouseUp)
-        scrollWheelMonitor = NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel], handler: scrollWheel)
+        menuItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp, .otherMouseUp])
+        menuItem.button?.target = self
+        menuItem.button?.action = #selector(leftRightMouseAction)
+        middleMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.otherMouseDown, .otherMouseUp], handler: middleMouseDown)
 
         playerStatusChanged()
     }
@@ -61,95 +61,28 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     deinit {
-        if let monitor = mouseDownMonitor { NSEvent.removeMonitor(monitor) }
-        if let monitor = mouseUpMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = middleMouseMonitor { NSEvent.removeMonitor(monitor) }
         if let monitor = scrollWheelMonitor { NSEvent.removeMonitor(monitor) }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func actionType(_ event: NSEvent) -> MouseButtonAction? {
-        guard let btn = MouseButton(rawValue: event.buttonNumber) else { return nil }
-
-        if event.modifierFlags.contains(.control) {
-            return MouseButtonAction.showMenu
+    @objc func leftRightMouseAction() {
+        if let event = NSApp.currentEvent {
+            processEvent(event)
         }
-
-        return settings.mouseAction(forButton: btn)
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func mouseDown(_ event: NSEvent) -> NSEvent? {
-        if event.window != menuItem.button?.window {
-            return event
+    private func middleMouseDown(_ event: NSEvent) -> NSEvent? {
+        menuItem.button?.highlight(event.type == .otherMouseDown)
+
+        if event.type == .otherMouseDown {
+            processEvent(event)
         }
-
-        let action = actionType(event)
-
-        switch action {
-            case .showMenu:
-                menuItem.menu = buildMenu()
-                return NSEvent.mouseEvent(
-                    with: .leftMouseDown,
-                    location: event.locationInWindow,
-                    modifierFlags: event.modifierFlags,
-                    timestamp: event.timestamp,
-                    windowNumber: event.windowNumber,
-                    context: nil,
-                    eventNumber:
-                    event.eventNumber,
-                    clickCount: event.clickCount,
-                    pressure: event.pressure)
-
-            case .playPause:
-                player.toggle()
-
-            case .showMainWindow:
-                _ = StationsWindow.show()
-
-            case .showHistory:
-                _ = HistoryWindow.show()
-
-            case .mute:
-                player.isMuted = !player.isMuted
-
-            case nil:
-                break
-        }
-
-        return event
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func mouseUp(_ event: NSEvent) -> NSEvent? {
-        if event.window != menuItem.button?.window {
-            return event
-        }
-
-        let action = actionType(event)
-
-        switch action {
-            case .showMenu:
-                return NSEvent.mouseEvent(
-                    with: .leftMouseUp,
-                    location: event.locationInWindow,
-                    modifierFlags: event.modifierFlags,
-                    timestamp: event.timestamp,
-                    windowNumber: event.windowNumber,
-                    context: nil,
-                    eventNumber: event.eventNumber,
-                    clickCount: event.clickCount,
-                    pressure: event.pressure)
-
-            default:
-                break
-        }
-
         return event
     }
 
@@ -176,7 +109,45 @@ class StatusBarController: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    @objc func buildMenu() -> NSMenu {
+    private func processEvent(_ event: NSEvent) {
+        guard let action = actionType(event) else { return }
+
+        switch action {
+            case .showMenu:
+                menuItem.popUpMenu(buildMenu())
+                break
+
+            case .playPause:
+                player.toggle()
+
+            case .showMainWindow:
+                _ = StationsWindow.show()
+
+            case .showHistory:
+                _ = HistoryWindow.show()
+
+            case .mute:
+                player.isMuted = !player.isMuted
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func actionType(_ event: NSEvent) -> MouseButtonAction? {
+        guard let mouseButton = MouseButton(rawValue: event.buttonNumber) else { return nil }
+
+        if event.modifierFlags.contains(.control) {
+            return MouseButtonAction.showMenu
+        }
+
+        return settings.mouseAction(forButton: mouseButton)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func buildMenu() -> NSMenu {
         let menu = NSMenu()
 
         let playItem = PlayMenuItem()
