@@ -19,68 +19,155 @@ def find_xcstrings_files(dir):
         res.append(f"{dir}/{f}")
     return res
 
+class Item:
+    ##############################
+    #
+    def __init__(self, key, data):
+        self.key     = key
+        self.json    = data
+        self.comment = data.get("comment", "")
+        self.localizations = data.get("localizations", "")
+
+
+    ##############################
+    #
+    def source_string(self):
+        if self._key_exists(["localizations", "en", "variations", "plural"]):
+            return self._variations_string("en")
+
+        res = ""
+        if self._key_exists(["localizations", "en", "stringUnit"]):
+            res = self._get(["localizations", "en", "stringUnit", "value"])
+        else:
+            res = self.key
+
+        return self._plural_str(res)
+
+
+    ##############################
+    #
+    def translation_string(self, lang):
+        if self._key_exists(["localizations", lang, "variations", "plural"]):
+            return self._variations_string(lang)
+
+        res = self._get(["localizations", lang, "stringUnit", "value"])
+
+        if res == None:
+            return None
+
+        return self._plural_str(res)
+
+
+    ##############################
+    #
+    def _variations_string(self, lang):
+        plural = self.json["localizations"][lang]["variations"]["plural"]
+
+        items = []
+        for k, v in plural.items():
+            s = v["stringUnit"]["value"]
+            s = s.replace("%lld", "{lld}")
+            items.append("%s {%s}" % (k, s))
+
+        return "{lld, plural, " + " ".join(items) + "}"
+
+
+    ##############################
+    #
+    def _plural_str(self, str):
+        if "%lld" in str:
+            res = str.replace("%lld", "{lld}")
+            return "{lld, plural, one {" + res + "} other {" + res +"}}"
+
+        return str
+
+
+    ##############################
+    #
+    def _key_exists(self, key):
+        v = self.json
+        for k in key:
+            v = v.get(k)
+            if v == None:
+                return False
+
+        return True
+
+
+    ##############################
+    #
+    def _get(self, key):
+        res = self.json
+        for k in key:
+            res = res.get(k)
+            if res == None:
+                return None
+
+        return res
+
+
+##################################
+#
+def load_xcstrings(file):
+    with open(file) as r:
+        xcstrings = json.load(r)
+
+    res = []
+    for key, data in xcstrings["strings"].items():
+        res.append(Item(key, data))
+
+    return res
+
+
+##################################
+#
 def extract_source(in_file, out_dir):
     name = os.path.splitext(os.path.basename(file))[0]
     out_file = f"{TMP_DIR}/{name}.json"
 
-    with open(in_file) as r:
-        xcstrings = json.load(r)
+    xcstrings = load_xcstrings(in_file)
 
-    data = {}
-    for key, value in xcstrings["strings"].items():
-
-        if value.get("extractionState") == "stale":
-            continue
-
-        try:
-            src = value["localizations"]["en"]["stringUnit"]["value"]
-        except KeyError:
-            src = key
-
-        context = value.get("comment", "")
-
-        item ={
-            "string": src,
-            "context": context,
-            "developer_comment": context,
+    res = {}
+    for xcs in xcstrings:
+        res[xcs.key] = {
+            "string": xcs.source_string(),
+            "context": xcs.comment,
+            "developer_comment": xcs.comment,
         }
-        data[key] = item
-
 
     with open(out_file, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+        json.dump(res, f, ensure_ascii=False, indent=4)
 
 
+
+##################################
+#
 def extract_lang(in_file, out_dir, lang):
     name = os.path.splitext(os.path.basename(file))[0]
     os.makedirs(f"{out_dir}/{lang}", exist_ok=True)
     out_file = f"{out_dir}/{lang}/{name}.json"
 
-    with open(in_file) as r:
-        xcstrings = json.load(r)
+    xcstrings = load_xcstrings(in_file)
 
-    data = {}
-    for key, value in xcstrings["strings"].items():
+    res = {}
+    for xcs in xcstrings:
+        str = xcs.translation_string(lang)
 
-        try:
-            tr = value["localizations"]["ru"]["stringUnit"]
-        except KeyError:
+        if str == None:
             continue
 
-        context = value.get("comment", "")
-
-        item ={
-            "string": tr["value"],
-            "context": context,
-            "developer_comment": context,
+        res[xcs.key] = {
+            "string": xcs.translation_string(lang),
+            "context": xcs.comment,
+            "developer_comment": xcs.comment,
         }
-        data[key] = item
-
 
     with open(out_file, 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+        json.dump(res, f, ensure_ascii=False, indent=4)
 
 
+##################################
+#
 def push_source():
     args = [
         "tx",
@@ -90,6 +177,9 @@ def push_source():
 
     subprocess.run(args)
 
+
+##################################
+#
 def push_lang(lang):
     args = [
         "tx",
@@ -101,6 +191,9 @@ def push_lang(lang):
 
     subprocess.run(args)
 
+
+##################################
+#
 if __name__ == "__main__":
     try:
         shutil.rmtree(TMP_DIR, ignore_errors=True)
@@ -118,6 +211,7 @@ if __name__ == "__main__":
 
         for lang in sys.argv[1:]:
             push_lang(lang)
+            pass
 
     except KeyboardInterrupt:
         sys.exit(0)
