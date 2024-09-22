@@ -105,7 +105,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         }
 
         if url == nil {
-            Alarm.show(title: String(format: "Looks like \"%@\" is not a valid URL.", station.url))
+            Alarm.show(title: String(format: NSLocalizedString("Looks like \"%@\" is not a valid URL.", comment: "Player error message. %@ is URL of station."), station.url))
             return
         }
 

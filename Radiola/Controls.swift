@@ -425,8 +425,8 @@ class StationMenuButton: NSButton {
         let p = NSPoint(x: frame.width / 2, y: frame.height / 2)
         let menu = NSMenu()
 
-        menu.addItem(withTitle: "Copy station title to clipboard", action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
-        menu.addItem(withTitle: "Copy station URL  to clipboard", action: #selector(copyUrlToClipboard), keyEquivalent: "").target = self
+        menu.addItem(withTitle: NSLocalizedString("Copy station title to clipboard", comment: "Station action menu item"), action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
+        menu.addItem(withTitle: NSLocalizedString("Copy station URL  to clipboard", comment: "Station action menu item"), action: #selector(copyUrlToClipboard), keyEquivalent: "").target = self
 
         menu.addItem(NSMenuItem.separator())
 
@@ -435,7 +435,7 @@ class StationMenuButton: NSButton {
                 continue
             }
 
-            menu.addItem(withTitle: "Add station to \(list.title)") {
+            menu.addItem(withTitle: String(format: NSLocalizedString("Add station to \"%@\"", comment: "Station action menu item. %@ is station list title."),  list.title)) {
                 list.add(station)
                 list.trySave()
             }

@@ -8,6 +8,9 @@
 import Cocoa
 
 class AddStationDialog: NSWindowController, NSTextFieldDelegate {
+    @IBOutlet var messageLabel: NSTextField!
+    @IBOutlet var titleEditLabel: NSTextField!
+    @IBOutlet var urlEditLabel: NSTextField!
     @IBOutlet var titleEdit: NSTextField!
     @IBOutlet var urlEdit: NSTextField!
     @IBOutlet var okButton: NSButton!
@@ -25,6 +28,13 @@ class AddStationDialog: NSWindowController, NSTextFieldDelegate {
 
     override func windowDidLoad() {
         super.windowDidLoad()
+
+        messageLabel.stringValue = NSLocalizedString("To add a station, fill out the following information:", comment: "Add station dialog message")
+        titleEditLabel.stringValue = NSLocalizedString("Title:", comment: "Add station dialog label for Tile edit")
+        urlEditLabel.stringValue = NSLocalizedString("URL:", comment: "Add station dialog label for URL edit")
+
+        cancelButton.title = NSLocalizedString("Cancel", comment: "Cancel button")
+        okButton.title = NSLocalizedString("Add station", comment: "Add station dialog button")
 
         urlEdit.delegate = self
         titleEdit.delegate = self

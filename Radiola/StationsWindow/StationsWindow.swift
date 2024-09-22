@@ -453,19 +453,19 @@ extension StationsWindow: NSUserInterfaceValidations {
 
         var messageText = ""
         if let station = item as? Station {
-            messageText = "Are you sure you want to remove the station \"\(station.title)\"?"
+            messageText = String(format: NSLocalizedString("Are you sure you want to remove the station \"%@\"?", comment: "Remove station dialog text. %@ is station title."), station.title)
         } else if let group = item as? StationGroup {
             if group.items.isEmpty {
-                messageText = "Are you sure you want to remove the group \"\(group.title)\"?"
+                messageText = String(format: NSLocalizedString("Are you sure you want to remove the group \"%@\"?", comment: "Remove group dialog text. %@ is group title."), group.title)
             } else {
-                messageText = "Are you sure you want to remove the group \"\(group.title)\", and all of its children?"
+                messageText = String(format: NSLocalizedString("Are you sure you want to remove the group \"%@\", and all of its children?", comment: "Remove group dialog text. %@ is group title."), group.title)
             }
         }
 
         let alert = NSAlert()
-        alert.informativeText = "This operation cannot be undone."
-        alert.addButton(withTitle: "Yes")
-        alert.addButton(withTitle: "Cancel")
+        alert.informativeText = NSLocalizedString("This operation cannot be undone.", comment: "Remove dialog informativeText")
+        alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Yes button"))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button"))
         alert.messageText = messageText
         alert.beginSheetModal(for: window, completionHandler: { response in
             if response == NSApplication.ModalResponse.alertFirstButtonReturn {
@@ -549,24 +549,28 @@ extension StationsWindow: NSUserInterfaceValidations {
 
         let merger = StationsMerger(currentStations: list, newStations: new)
         if merger.statistics.isEmpty {
-            NSAlert.showInfo(message: "The file does not contain any new or changed radio stations.", informativeText: "You may have already exported it before.")
+            let message = NSLocalizedString("The file does not contain any new or changed radio stations.", comment: "Merger dialog message")
+            let informativeText = NSLocalizedString("You may have already exported it before.", comment: "Merger dialog informativeText")
+            NSAlert.showInfo(message: message, informativeText: informativeText)
             return
         }
 
-        var message = ""
-        if merger.statistics.insertedStations != 0 && merger.statistics.updatedStations != 0 {
-            message = String(format: "%d stations will be added and %d stations will be updated.", merger.statistics.insertedStations, merger.statistics.updatedStations)
-        } else if merger.statistics.insertedStations != 0 {
-            message = String(format: "%d stations will be added.", merger.statistics.insertedStations)
-        } else if merger.statistics.updatedStations != 0 {
-            message = String(format: "%d stations will be updated.", merger.statistics.updatedStations)
+        let message = NSLocalizedString("Are you sure you want to continue?", comment: "Merger dialog message")
+        var informativeText = [""]
+
+        if merger.statistics.insertedStations != 0 {
+            informativeText.append(String(format: NSLocalizedString("%lld stations will be added.", comment: "Merger dialog informativeText"), merger.statistics.insertedStations))
+        }
+
+        if merger.statistics.updatedStations != 0 {
+            informativeText.append(String(format: NSLocalizedString("%lld stations will be updated.", comment: "Merger dialog informativeText"), merger.statistics.updatedStations))
         }
 
         let alert = NSAlert()
-        alert.informativeText = message
-        alert.addButton(withTitle: "Yes")
-        alert.addButton(withTitle: "Cancel")
-        alert.messageText = "Are you sure you want to continue?"
+        alert.messageText = message
+        alert.informativeText = informativeText.joined(separator: "\n")
+        alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Yes button"))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button"))
         alert.beginSheetModal(for: window, completionHandler: { response in
             if response != NSApplication.ModalResponse.alertFirstButtonReturn {
                 return

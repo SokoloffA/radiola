@@ -158,19 +158,19 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         switch votes {
             case 0:
-                res.append(format("no votes", normalFont))
+            res.append(format(NSLocalizedString("no votes", comment: "Internet station row"), normalFont))
 
             case 0 ..< 1000:
-                res.append(format("votes:", smallFont))
+                res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
                 res.append(format(" \(votes)", normalFont))
 
             case 1000 ..< 1000000:
-                res.append(format("votes:", smallFont))
+                res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
                 res.append(format(" \(votes / 1000)", normalFont))
                 res.append(format("k", smallFont))
             default:
-                res.append(format("votes: ", smallFont))
-                res.append(format("\(votes / 10000000)", normalFont))
+                res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
+                res.append(format(" \(votes / 10000000)", normalFont))
                 res.append(format("M", smallFont))
         }
         return res
@@ -183,8 +183,8 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         let res = NSMutableAttributedString()
 
         if let codec = station.codec {
-            res.append(format("codec: ", smallFont))
-            res.append(format(codec.lowercased(), normalFont))
+            res.append(format(NSLocalizedString("codec:", comment: "Internet station row"), smallFont))
+            res.append(format(" \(codec.lowercased())", normalFont))
         }
 
         if let bitrate = station.bitrate {

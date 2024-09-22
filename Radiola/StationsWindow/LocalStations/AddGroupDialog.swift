@@ -8,6 +8,8 @@
 import Cocoa
 
 class AddGroupDialog: NSWindowController, NSTextFieldDelegate {
+    @IBOutlet var messageLabel: NSTextField!
+    @IBOutlet var titleEditLabel: NSTextField!
     @IBOutlet var titleEdit: NSTextField!
     @IBOutlet var okButton: NSButton!
     @IBOutlet var cancelButton: NSButton!
@@ -23,6 +25,11 @@ class AddGroupDialog: NSWindowController, NSTextFieldDelegate {
 
     override func windowDidLoad() {
         super.windowDidLoad()
+
+        messageLabel.stringValue = NSLocalizedString("To add a group, fill out the following information:", comment: "Add group dialog message")
+        titleEditLabel.stringValue = NSLocalizedString("Title:", comment: "Add group dialog label for TileEdit")
+        cancelButton.title = NSLocalizedString("Cancel", comment: "Cancel button")
+        okButton.title = NSLocalizedString("Add group", comment: "Add group dialog button")
 
         titleEdit.delegate = self
         okButton.isEnabled = false
