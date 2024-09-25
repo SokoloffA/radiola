@@ -1,0 +1,117 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Connecting…" : {
+      "comment" : "Station label text\nTooltip text",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подключение…"
+          }
+        }
+      }
+    },
+    "Decrease the volume" : {
+      "comment" : "Volume button tooltip"
+    },
+    "Favorite stations" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Любимые станции"
+          }
+        }
+      }
+    },
+    "History…" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История…"
+          }
+        }
+      }
+    },
+    "Increase the volume" : {
+      "comment" : "Volume button tooltip"
+    },
+    "Mute" : {
+      "comment" : "Mute button tooltip\nStatus bar menu Item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выключить звук"
+          }
+        }
+      }
+    },
+    "Open Radiola…" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть Radiola…"
+          }
+        }
+      }
+    },
+    "Pause" : {
+      "comment" : "Toolbar button toolTip"
+    },
+    "Play" : {
+      "comment" : "Toolbar button toolTip"
+    },
+    "Quit" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выйти"
+          }
+        }
+      }
+    },
+    "Settings…" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Настройки…"
+          }
+        }
+      }
+    },
+    "Unmute" : {
+      "comment" : "Mute button tooltip\nStatus bar menu Item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить звук"
+          }
+        }
+      }
+    },
+    "Volume" : {
+      "comment" : "Status bar menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Громкость"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

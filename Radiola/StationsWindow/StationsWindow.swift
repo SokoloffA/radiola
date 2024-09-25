@@ -17,7 +17,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     var sideBarWidth: CGFloat = 0.0
     private var searchPanelHeight: CGFloat = 0.0
     private let toolbarPlayView = ToolbarPlayView()
-    private let toolbarVolumeView = ToolbarVolumeView()
+    private let toolbarVolumeView = VolumeView(showMuteButton: true)
     private let toolbarLeftMargin = 145.0
 
     @IBOutlet var stationsTree: NSOutlineView!
@@ -108,18 +108,19 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      * ****************************************/
     private func initPlaytoolbar() {
         let playView = toolbarPlayView.view
-        let volumeView = toolbarVolumeView.view
         playtoolbar.addSubview(playView)
-        playtoolbar.addSubview(volumeView)
+        playtoolbar.addSubview(toolbarVolumeView)
+
+        toolbarVolumeView.widthAnchor.constraint(equalToConstant: 210).isActive = true
 
         playView.translatesAutoresizingMaskIntoConstraints = false
-        volumeView.translatesAutoresizingMaskIntoConstraints = false
+        toolbarVolumeView.translatesAutoresizingMaskIntoConstraints = false
         playtoolbar.translatesAutoresizingMaskIntoConstraints = false
 
         playView.topAnchor.constraint(equalTo: playtoolbar.topAnchor).isActive = true
         playView.bottomAnchor.constraint(equalTo: playtoolbar.bottomAnchor).isActive = true
-        volumeView.topAnchor.constraint(equalTo: playView.topAnchor).isActive = true
-        volumeView.bottomAnchor.constraint(equalTo: playView.bottomAnchor).isActive = true
+        toolbarVolumeView.topAnchor.constraint(equalTo: playView.topAnchor).isActive = true
+        toolbarVolumeView.bottomAnchor.constraint(equalTo: playView.bottomAnchor).isActive = true
 
         let cnst = playView.leadingAnchor.constraint(equalTo: playtoolbar.leadingAnchor)
         cnst.priority = NSLayoutConstraint.Priority(999)
@@ -128,9 +129,9 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
             playView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: toolbarLeftMargin).isActive = true
         }
 
-        playView.trailingAnchor.constraint(equalTo: volumeView.leadingAnchor).isActive = true
-        volumeView.leadingAnchor.constraint(equalTo: playView.trailingAnchor).isActive = true
-        volumeView.trailingAnchor.constraint(equalTo: playtoolbar.trailingAnchor).isActive = true
+        playView.trailingAnchor.constraint(equalTo: toolbarVolumeView.leadingAnchor).isActive = true
+        toolbarVolumeView.leadingAnchor.constraint(equalTo: playView.trailingAnchor).isActive = true
+        toolbarVolumeView.trailingAnchor.constraint(equalTo: playtoolbar.trailingAnchor).isActive = true
     }
 
     /* ****************************************

@@ -70,6 +70,12 @@ public extension NSView {
         wantsLayer = true
         layer?.backgroundColor = color.cgColor
     }
+
+    func addSubview(_ view: NSView?) {
+        if let view = view {
+            addSubview(view)
+        }
+    }
 }
 
 // MARK: - NSImage
@@ -255,11 +261,16 @@ class SecondaryLabel: Label {
 // MARK: - ImageButton
 
 class ImageButton: NSButton {
-    init() {
+    init(image: NSImage? = nil) {
         super.init(frame: NSRect())
         bezelStyle = .shadowlessSquare
         isBordered = false
         setButtonType(.toggle)
+        self.image = image
+    }
+
+    convenience init(systemSymbolName: String, accessibilityDescription: String) {
+        self.init(image: NSImage(systemSymbolName: NSImage.Name(systemSymbolName), accessibilityDescription: accessibilityDescription))
     }
 
     required init?(coder: NSCoder) {
