@@ -19,6 +19,7 @@ class VolumeView: NSView {
     init(showMuteButton: Bool) {
         if showMuteButton {
             muteButton = ImageButton(systemSymbolName: "speaker.slash.fill", accessibilityDescription: "Mute")
+
         }
         super.init(frame: NSRect())
 
@@ -30,6 +31,10 @@ class VolumeView: NSView {
         slider.controlSize = .small
 
         if let muteButton = muteButton {
+            muteButton.bezelStyle = .recessed
+            muteButton.isBordered = true
+            muteButton.setButtonType(.pushOnPushOff)
+
             muteButton.translatesAutoresizingMaskIntoConstraints = false
             muteButton.centerYAnchor.constraint(equalTo: downButton.centerYAnchor).isActive = true
             muteButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
@@ -77,12 +82,14 @@ class VolumeView: NSView {
         upButton.isContinuous = true
         upButton.target = self
         upButton.action = #selector(volumeUp)
-        downButton.toolTip = NSLocalizedString("Increase the volume", comment: "Volume button tooltip")
+        upButton.toolTip = NSLocalizedString("Increase the volume", comment: "Volume button tooltip")
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refresh),
                                                name: Notification.Name.PlayerVolumeChanged,
                                                object: nil)
+
+        refresh()
     }
 
     /* ****************************************
