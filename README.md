@@ -1,11 +1,11 @@
-# Radiola - lightweight Internet radio player for MacOS.
+# Radiola - lightweight Internet radio player for macOS.
 
 [![Generic badge](https://img.shields.io/badge/-Download-blue.svg?style=for-the-badge)](https://github.com/SokoloffA/radiola/releases)
 
 ## About
 While most music players provides option for Internet streaming, but you might not always want to run your resource hungry media player. 
 
-Radiola is a lightweight Internet radio player for MacOS, its located in the status bar and allows you to listen to Internet radio stations quickly and without complications.
+Radiola is a lightweight Internet radio player for macOS, its located in the status bar and allows you to listen to Internet radio stations quickly and without complications.
 
 More often, you use the **menu in the status bar**.  
 ![Radiola menu](https://user-images.githubusercontent.com/854935/182122940-a42de641-3377-4728-bd95-b3b6e54f2ea9.png)  
@@ -43,7 +43,7 @@ Install the program
 brew install --cask --no-quarantine radiola
 ```
 *Why you need the **"--no-quarantine"** parameter?  
-MacOS marks all files downloaded from the Internet as quarantined. When you run a quarantined program, OS displays the message **«Radiola can’t be opened because Apple cannot check it for malicious software"**.
+macOS marks all files downloaded from the Internet as quarantined. When you run a quarantined program, OS displays the message **«Radiola can’t be opened because Apple cannot check it for malicious software"**.
 Of course, the new program is downloaded from the Internet, so don't mark it as quarantined use the **"--no-quarantine"** option*.
 
 
