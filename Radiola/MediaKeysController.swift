@@ -43,9 +43,16 @@ class MediaKeysController: NSObject {
      * ****************************************/
     @objc private func playerStatusChanged() {
         switch player.status {
-            case .paused: MPNowPlayingInfoCenter.default().playbackState = .interrupted
-            case .connecting: MPNowPlayingInfoCenter.default().playbackState = .interrupted
-            case .playing: MPNowPlayingInfoCenter.default().playbackState = .playing
+            case .playing:
+                MPNowPlayingInfoCenter.default().playbackState = .playing
+
+            case .paused:
+                MPNowPlayingInfoCenter.default().playbackState = .stopped
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyArtist: player.station?.title ?? ""]
+
+            case .connecting:
+                MPNowPlayingInfoCenter.default().playbackState = .stopped
+                MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyArtist: player.station?.title ?? ""]
         }
     }
 
