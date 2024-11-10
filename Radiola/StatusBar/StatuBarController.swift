@@ -121,7 +121,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
                 player.toggle()
 
             case .showMainWindow:
-                _ = StationsWindow.show()
+                StationsWindow.show()
 
             case .showHistory:
                 _ = HistoryWindow.show()

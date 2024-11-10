@@ -88,8 +88,7 @@
 		39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BA288C56C300273AB0 /* UpdatePanel.swift */; };
 		39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F869BB288C56C300273AB0 /* UpdatePanel.xib */; };
 		39FF07732933A59900751A03 /* StatuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF07722933A59900751A03 /* StatuBarController.swift */; };
-		9D1D31CA2A06448200F0BA44 /* StartupPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D31C92A06448200F0BA44 /* StartupPage.swift */; };
-		9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */; };
+		9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -188,8 +187,7 @@
 		39F869BA288C56C300273AB0 /* UpdatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePanel.swift; sourceTree = "<group>"; };
 		39F869BB288C56C300273AB0 /* UpdatePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePanel.xib; sourceTree = "<group>"; };
 		39FF07722933A59900751A03 /* StatuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatuBarController.swift; sourceTree = "<group>"; };
-		9D1D31C92A06448200F0BA44 /* StartupPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartupPage.swift; sourceTree = "<group>"; };
-		9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StartupPage.xib; sourceTree = "<group>"; };
+		9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedPage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -395,8 +393,7 @@
 				392024AD2A51953600670ABD /* ControlsPage.swift */,
 				392024B12A519FF900670ABD /* AppearancePage.swift */,
 				3967046A2944961500012FFD /* AudioPage.swift */,
-				9D1D31C92A06448200F0BA44 /* StartupPage.swift */,
-				9D1D31CB2A0644AA00F0BA44 /* StartupPage.xib */,
+				9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */,
 				3967046B2944961500012FFD /* AudioPage.xib */,
 				39F869BB288C56C300273AB0 /* UpdatePanel.xib */,
 			);
@@ -504,7 +501,6 @@
 			files = (
 				3987B9AC2A9F8A190077EB03 /* ToolbarPlayView.xib in Resources */,
 				39D582C42C96B40400AE3A01 /* Localizable.xcstrings in Resources */,
-				9D1D31CC2A0644AA00F0BA44 /* StartupPage.xib in Resources */,
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
 				3987B99E2A9635930077EB03 /* SideBar.xib in Resources */,
 				39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */,
@@ -550,7 +546,7 @@
 				39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */,
 				39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */,
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
-				9D1D31CA2A06448200F0BA44 /* StartupPage.swift in Sources */,
+				9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */,
 				39A794052B4B33F1000D9875 /* LocalStationDelegate.swift in Sources */,
 				39B5494D2B5D7DAE00D1E423 /* AlarmPopover.swift in Sources */,
 				39C140AE2C8C3BC500431773 /* CloudStations.swift in Sources */,

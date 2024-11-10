@@ -193,13 +193,19 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    class func show() -> StationsWindow {
+    class func show() {
         if instance == nil {
             instance = StationsWindow()
         }
 
         instance?.window?.show()
-        return instance!
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    class func close() {
+        instance?.window?.close()
     }
 
     /* ****************************************
@@ -270,6 +276,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         toolBox = nil
 
         guard let listId = selectedListId else {
+            updateStateIndicator(state: .notLoaded)
             return
         }
 
@@ -354,7 +361,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
                 stateIndicatorSpinner.stopAnimation(nil)
 
             case (.loading, _):
-                stateIndicatorText.stringValue = "Loading"
+                stateIndicatorText.stringValue = NSLocalizedString("Loading…", comment: "Internet stations placeholder")
                 stateIndicator.isHidden = false
                 stateIndicatorSpinner.isHidden = false
                 stateIndicatorSpinner.startAnimation(nil)
@@ -367,7 +374,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
                 stateIndicatorSpinner.stopAnimation(nil)
                 stateIndicatorSpinner.isHidden = true
                 stateIndicator.isHidden = false
-                stateIndicatorText.stringValue = "No results"
+                stateIndicatorText.stringValue = NSLocalizedString("No results", comment: "Internet stations placeholder")
 
             case (.loaded, false):
                 stateIndicatorSpinner.stopAnimation(nil)

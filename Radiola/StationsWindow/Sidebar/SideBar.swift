@@ -62,6 +62,10 @@ class SideBar: NSViewController {
             return initListId
         }
 
+        if outlineView.selectedRow < 0 {
+            return initListId
+        }
+
         return items[outlineView.selectedRow].id
     }
 

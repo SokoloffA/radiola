@@ -23,6 +23,7 @@ class Settings {
     private let showMuteInMenuKey = "ShowMuteInMenu"
     private let showTooltipKey = "ShowTooltip"
     private let showCopyToClipboardInMenuKey = "ShowCopyToClipboardInMenu"
+    private let stationsListModeKey = "StationsListMode"
 
     private var mouseActs: [MouseButton: MouseButtonAction] = [:]
 
@@ -36,6 +37,12 @@ class Settings {
         case enable
         case disable
         case mainWindowActive
+    }
+
+    enum StationsListMode: Int {
+        case opml
+        case cloud
+        case both
     }
 
     /* ****************************************
@@ -238,6 +245,62 @@ class Settings {
     var showCopyToClipboardInMenu: Bool {
         get { data.bool(forKey: showCopyToClipboardInMenuKey) }
         set { data.set(newValue, forKey: showCopyToClipboardInMenuKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var stationsListMode: StationsListMode {
+        get {
+            let s = data.string(forKey: stationsListModeKey) ?? ""
+            if s == "opml" { return .opml }
+            if s == "cloud" { return .cloud }
+            if s == "both" { return .both }
+            return .cloud
+        }
+
+        set {
+            switch newValue {
+                case .opml: data.set("opml", forKey: stationsListModeKey)
+                case .cloud: data.set("cloud", forKey: stationsListModeKey)
+                case .both: data.set("both", forKey: stationsListModeKey)
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var isStationsListModeSet: Bool {
+        return data.string(forKey: stationsListModeKey) != nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func isShowCloudStations() -> Bool {
+        switch stationsListMode {
+            case .opml:
+                return false
+            case .cloud:
+                return true
+            case .both:
+                return true
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func isShowOpmlStations() -> Bool {
+        switch stationsListMode {
+            case .opml:
+                return true
+            case .cloud:
+                return false
+            case .both:
+                return true
+        }
     }
 }
 

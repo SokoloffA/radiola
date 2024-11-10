@@ -48,6 +48,8 @@ fileprivate let defaultStations: [Station] = [
 
 class AppState: ObservableObject {
     static let shared = AppState()
+    private var isCloudStationsVisible = false
+    private var isOpmlStationsVisible = false
 
     @Published var localStations: [any StationList] = []
 
@@ -63,6 +65,71 @@ class AppState: ObservableObject {
      *
      * ****************************************/
     init() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateStationLists),
+                                               name: Notification.Name.SettingsChanged,
+                                               object: nil)
+
+        updateStationLists()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func updateStationLists() {
+        if isCloudStationsVisible != settings.isShowCloudStations() || isOpmlStationsVisible != settings.isShowOpmlStations() {
+            updateCloudStations(show: settings.isShowCloudStations())
+            updateOpmlStations(show: settings.isShowOpmlStations())
+
+            if StationsWindow.isActie() {
+                StationsWindow.close()
+                StationsWindow.show()
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateCloudStations(show: Bool) {
+        if show == isCloudStationsVisible {
+            return
+        }
+        isCloudStationsVisible = show
+
+        if !show {
+            localStations.removeAll { $0 is CloudStationList }
+            return
+        }
+
+        // Read iCloud stations ..............................
+        do {
+            var cloudLists = [CloudStationList]()
+            try cloudLists.load()
+            for list in cloudLists {
+                try list.load()
+                localStations.append(list)
+            }
+        } catch {
+            Alarm.show(title: "Sorry, we couldn't load iCloud stations.", message: error.localizedDescription)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateOpmlStations(show: Bool) {
+        if show == isOpmlStationsVisible {
+            return
+        }
+        isOpmlStationsVisible = show
+
+        if !show {
+            localStations.removeAll { $0 is OpmlStations }
+            return
+        }
+
+        // Read local stations .................................
         let dirName = URL(
             fileURLWithPath: oplDirectoryName,
             relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
@@ -79,19 +146,6 @@ class AppState: ObservableObject {
             }
         }
 
-        // Read iCloud stations ..............................
-        do {
-            var cloudLists = [CloudStationList]()
-            try cloudLists.load()
-            for list in cloudLists {
-                try list.load()
-                localStations.append(list)
-            }
-        } catch {
-            Alarm.show(title: "Sorry, we couldn't load iCloud stations.", message: error.localizedDescription)
-        }
-
-        // Read local stations .................................
         debug("Load stations from: \(fileName.path)")
         let opmlList = OpmlStations(title: "Local stations", icon: "music.house", file: fileName)
         opmlList.load(defaultStations: defaultStations)
