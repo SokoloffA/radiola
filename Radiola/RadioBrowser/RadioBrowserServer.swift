@@ -33,8 +33,7 @@ extension RadioBrowser {
             debug("Fetch \(url.absoluteString)")
             do {
                 return try decoder.decode(type, from: data)
-            }
-            catch let error {
+            } catch let error {
                 warning(error)
                 throw error
             }
@@ -87,36 +86,46 @@ extension RadioBrowser {
     }
 
     // ******************************************************************
+    //
+    private static func pingServer(server: Server) async -> (Server, Bool) {
+        do {
+            let stats = try await server.stats()
+            return (server, stats.status == Status.statusOK)
+        } catch {
+            do {
+                try Task.checkCancellation()
+            }
+            catch {
+                return (server, false)
+            }
+
+            print("Failed to ping \(server.url): \(error)")//.localizedDescription)")
+            return (server, false)
+        }
+    }
+
+    // ******************************************************************
     /// Do a DNS-lookup of 'all.api.radio-browser.info'. This gives you a fastest server from all available servers.
     public static func getFastestServer() async throws -> Server {
-        func ping(_ servers: [Server]) -> AsyncStream<(Server, Bool)> {
-            var index = 0
+        let servers = try getAllServers()
 
-            return AsyncStream {
-                guard index < servers.count else {
-                    return nil
-                }
+        do {
+                return try await withThrowingTaskGroup(of: (Server, Bool).self) { taskGroup in
+                    for server in servers {
+                        taskGroup.addTask {
+                            await pingServer(server: server)
+                        }
+                    }
 
-                let server = servers[index]
-                index += 1
+                    for try await (server, isAvailable) in taskGroup {
+                        if isAvailable {
+                            taskGroup.cancelAll()
+                            return server
+                        }
+                    }
 
-                do {
-                    let stats = try await server.stats()
-                    debug("Check OK for \(server.url.absoluteString)")
-                    return (server, stats.status == Status.statusOK)
-                } catch {
-                    warning("Server check failed \(server.url.absoluteString): \(error)")
-                    return (server, false)
+                    throw RadioBrowser.Error("Unable to find an available server")  // Если все серверы недоступны
                 }
             }
-        }
-
-        for try await (server, ok) in ping(try getAllServers()) {
-            if ok {
-                return server
-            }
-        }
-
-        throw RadioBrowser.Error("Unable to find the fastest server")
     }
 }
