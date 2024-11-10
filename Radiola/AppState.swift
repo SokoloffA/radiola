@@ -21,10 +21,24 @@ fileprivate class DefaultStation: Station {
     }
 }
 
-// MARK: - AppState
+// MARK: - Settings
 
-fileprivate let oplDirectoryName = "com.github.SokoloffA.Radiola/"
-fileprivate let oplFileName = "bookmarks.opml"
+fileprivate let opmlDirectoryName = "com.github.SokoloffA.Radiola/"
+fileprivate let opmlFileName = "bookmarks.opml"
+
+fileprivate func opmlFilePath() -> URL {
+    return URL(fileURLWithPath: opmlDirectoryName + "/" + opmlFileName,
+               relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+}
+
+fileprivate func opmlFileExists() -> Bool {
+    return FileManager.default.fileExists(atPath: opmlFilePath().path)
+}
+
+fileprivate func opmlFileDir() -> URL {
+    return URL(fileURLWithPath: opmlDirectoryName,
+               relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+}
 
 fileprivate let defaultStations: [Station] = [
     DefaultStation(
@@ -45,6 +59,8 @@ fileprivate let defaultStations: [Station] = [
         isFavorite: true
     ),
 ]
+
+// MARK: - AppState
 
 class AppState: ObservableObject {
     static let shared = AppState()
@@ -70,7 +86,19 @@ class AppState: ObservableObject {
                                                name: Notification.Name.SettingsChanged,
                                                object: nil)
 
+        var needImport = false
+
+        // If this is the first run and the OPML file exists, then we show the wizard
+        if !settings.isStationsListModeSet && opmlFileExists() {
+            StationListWizard.show()
+            needImport = settings.stationsListMode == .cloud
+        }
+
         updateStationLists()
+
+        if needImport {
+            importOpmlToCloud()
+        }
     }
 
     /* ****************************************
@@ -130,13 +158,8 @@ class AppState: ObservableObject {
         }
 
         // Read local stations .................................
-        let dirName = URL(
-            fileURLWithPath: oplDirectoryName,
-            relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
-
-        let fileName = URL(
-            fileURLWithPath: oplDirectoryName + "/" + oplFileName,
-            relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+        let dirName = opmlFileDir()
+        let fileName = opmlFilePath()
 
         if !FileManager.default.fileExists(atPath: dirName.absoluteString) {
             do {
@@ -150,6 +173,25 @@ class AppState: ObservableObject {
         let opmlList = OpmlStations(title: "Local stations", icon: "music.house", file: fileName)
         opmlList.load(defaultStations: defaultStations)
         localStations.append(opmlList)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func importOpmlToCloud() {
+        guard let cloudList = localStations.first(where: { $0 is CloudStationList }) else { return }
+
+        let opmlList = OpmlStations(title: "", icon: "", file: opmlFilePath())
+        do {
+            try opmlList.load()
+        } catch {
+            error.show()
+            return
+        }
+
+        let merger = StationsMerger(currentStations: cloudList, newStations: opmlList)
+        merger.run()
+        cloudList.trySave()
     }
 
     /* ****************************************

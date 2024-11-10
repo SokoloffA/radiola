@@ -347,6 +347,9 @@
         }
       }
     },
+    "In any case, you can change your choice later in the settings dialog." : {
+      "comment" : "List mode wizard text"
+    },
     "Increase the volume" : {
       "comment" : "Volume button tooltip",
       "localizations" : {
@@ -429,6 +432,9 @@
           }
         }
       }
+    },
+    "New versions of the program allow you to store radio station lists in the cloud.\nThis will allow you to have the same lists on several computers.\nLists are stored in your personal iCloud and are not available to outsiders." : {
+      "comment" : "List mode wizard text"
     },
     "No records yet" : {
       "comment" : "History window placeholder",
@@ -702,6 +708,15 @@
           }
         }
       }
+    },
+    "Use a local file on this computer. Lists will not be synchronized between your computers." : {
+      "comment" : "List mode wizard option"
+    },
+    "Use both, cloud and local file. This will allow you to copy radio stations one by one, or by using the export and import functions." : {
+      "comment" : "List mode wizard option"
+    },
+    "Use the cloud (recommended). The lists are stored in your personal iCloud cloud and are not accessible to outsiders.\nIf you select this option, stations that were on this computer will be copied to the cloud." : {
+      "comment" : "List mode wizard option"
     },
     "Volume" : {
       "comment" : "Status bar menu item",
