@@ -152,7 +152,15 @@
       }
     },
     "Advanced" : {
-      "comment" : "Settings page title"
+      "comment" : "Settings page title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дополнительно"
+          }
+        }
+      }
     },
     "Are you sure you want to continue?" : {
       "comment" : "Merger dialog message",
@@ -373,7 +381,15 @@
       }
     },
     "Loading…" : {
-      "comment" : "Internet stations placeholder"
+      "comment" : "Internet stations placeholder",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Загрузка…"
+          }
+        }
+      }
     },
     "local stations only" : {
       "comment" : "Settings combobox item"
@@ -448,7 +464,15 @@
       }
     },
     "No results" : {
-      "comment" : "Internet stations placeholder"
+      "comment" : "Internet stations placeholder",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет результатов"
+          }
+        }
+      }
     },
     "no votes" : {
       "comment" : "Internet station row",
