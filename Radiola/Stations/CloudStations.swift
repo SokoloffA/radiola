@@ -211,4 +211,22 @@ extension [CloudStationList] {
             throw(error)
         }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    mutating func createList(title: String, icon: String, stations: [Station]) throws {
+        let list = CloudStationList(context: iCloud.context)
+        list.id = UUID()
+        list.title = title
+        list.icon = icon
+        append(list)
+
+        for s in stations {
+            let station = list.createStation(title: s.title, url: s.url)
+            station.isFavorite = s.isFavorite
+            list.append(station)
+            try list.save()
+          }
+    }
 }

@@ -10,7 +10,6 @@ import CoreData
 // MARK: - ICloud
 
 class ICloud {
-
     private var persistentContainer: NSPersistentCloudKitContainer
     let context: NSManagedObjectContext
 
@@ -43,6 +42,26 @@ class ICloud {
                 context.rollback()
                 warning(error)
                 Alarm.show(title: "Unable to save iCloud data", message: error.localizedDescription)
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func deleteAll_UseOnlyForDebug() {
+        persistentContainer.managedObjectModel.entities.forEach { entity in
+            guard let entityName = entity.name else { return }
+
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
+            let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+
+            do {
+                try context.execute(deleteRequest)
+                try context.save()
+                print("Удалены все данные для сущности \(entityName)")
+            } catch {
+                print("Ошибка удаления данных для сущности \(entityName): \(error)")
             }
         }
     }

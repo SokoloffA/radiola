@@ -17,6 +17,8 @@ class StationListWizard: NSWindowController {
     private var bothRadioButton = NSButton(radioButtonWithTitle: "", target: nil, action: nil)
     private let okButton = NSButton()
 
+    public var result: Settings.StationsListMode = .cloud
+
     /* ****************************************
      *
      * ****************************************/
@@ -132,11 +134,12 @@ class StationListWizard: NSWindowController {
     /* ****************************************
      *
      * ****************************************/
-    class func show() {
+    class func show() -> Settings.StationsListMode {
         let wizard = StationListWizard()
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
         NSApp.runModal(for: wizard.window!)
+        return wizard.result
     }
 
     /* ****************************************
@@ -149,9 +152,9 @@ class StationListWizard: NSWindowController {
      *
      * ****************************************/
     @objc private func closeWizard() {
-        if cloudRadioButton.state == .on { settings.stationsListMode = .cloud }
-        if opmlRadioButton.state == .on { settings.stationsListMode = .opml }
-        if bothRadioButton.state == .on { settings.stationsListMode = .both }
+        if cloudRadioButton.state == .on { result = .cloud }
+        if opmlRadioButton.state == .on { result = .opml }
+        if bothRadioButton.state == .on { result = .both }
 
         NSApplication.shared.stopModal()
         window?.close()

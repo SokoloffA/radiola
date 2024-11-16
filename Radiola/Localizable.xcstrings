@@ -391,6 +391,9 @@
         }
       }
     },
+    "Local stations" : {
+      "comment" : "Station list name"
+    },
     "local stations only" : {
       "comment" : "Settings combobox item"
     },
@@ -448,6 +451,9 @@
           }
         }
       }
+    },
+    "My stations" : {
+      "comment" : "Station list name"
     },
     "New versions of the program allow you to store radio station lists in the cloud.\nThis will allow you to have the same lists on several computers.\nLists are stored in your personal iCloud and are not available to outsiders." : {
       "comment" : "List mode wizard text"
