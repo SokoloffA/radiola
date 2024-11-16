@@ -35,7 +35,7 @@ class LogsWindow: NSWindowController, NSWindowDelegate {
 
         logsView.isEditable = false
         logsView.isSelectable = true
-        logsView.string = allLogs().joined()
+        logsView.string = allLogs().joined(separator: "\n")
 
         copyButton.title = NSLocalizedString("Copy to clipboard", comment: "Button label")
         copyButton.target = self
