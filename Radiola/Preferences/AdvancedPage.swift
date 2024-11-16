@@ -8,8 +8,8 @@
 import Cocoa
 
 class AdvancedPage: NSViewController {
-    private let playLastStationCheckBox = Checkbox(title: NSLocalizedString("Play last station on startup", comment: "Settings control title"))
-    private let stationListLabel = Label(text: NSLocalizedString("Show station lists:", comment: "Settings control title"))
+    private let playLastStationCheckBox = Checkbox(title: NSLocalizedString("Play last station on startup", tableName: "Settings", comment: "Settings control title"))
+    private let stationListLabel = Label(text: NSLocalizedString("Show station lists:", tableName: "Settings", comment: "Settings control title"))
     private let stationListComboBox = NSPopUpButton()
 
     /* ****************************************
@@ -17,7 +17,7 @@ class AdvancedPage: NSViewController {
      * ****************************************/
     init() {
         super.init(nibName: nil, bundle: nil)
-        title = NSLocalizedString("Advanced", comment: "Settings page title")
+        title = NSLocalizedString("Advanced", tableName: "Settings", comment: "Settings page title")
         view = createView()
 
         initPlayLastStationCbx()
@@ -81,13 +81,13 @@ class AdvancedPage: NSViewController {
     private func initStationListComboBox() {
         stationListComboBox.removeAllItems()
 
-        stationListComboBox.addItem(withTitle: NSLocalizedString("cloud stations only (recommended)", comment: "Settings combobox item"))
+        stationListComboBox.addItem(withTitle: NSLocalizedString("cloud stations only (recommended)", tableName: "Settings", comment: "Settings combobox item"))
         stationListComboBox.lastItem?.tag = Settings.StationsListMode.cloud.rawValue
 
-        stationListComboBox.addItem(withTitle: NSLocalizedString("local stations only", comment: "Settings combobox item"))
+        stationListComboBox.addItem(withTitle: NSLocalizedString("local stations only", tableName: "Settings", comment: "Settings combobox item"))
         stationListComboBox.lastItem?.tag = Settings.StationsListMode.opml.rawValue
 
-        stationListComboBox.addItem(withTitle: NSLocalizedString("cloud and local stations", comment: "Settings combobox item"))
+        stationListComboBox.addItem(withTitle: NSLocalizedString("cloud and local stations", tableName: "Settings", comment: "Settings combobox item"))
         stationListComboBox.lastItem?.tag = Settings.StationsListMode.both.rawValue
 
         stationListComboBox.target = self

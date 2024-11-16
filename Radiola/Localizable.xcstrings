@@ -151,17 +151,6 @@
         }
       }
     },
-    "Advanced" : {
-      "comment" : "Settings page title",
-      "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Дополнительно"
-          }
-        }
-      }
-    },
     "Are you sure you want to continue?" : {
       "comment" : "Merger dialog message",
       "localizations" : {
@@ -249,12 +238,6 @@
           }
         }
       }
-    },
-    "cloud and local stations" : {
-      "comment" : "Settings combobox item"
-    },
-    "cloud stations only (recommended)" : {
-      "comment" : "Settings combobox item"
     },
     "codec:" : {
       "comment" : "Internet station row",
@@ -397,9 +380,6 @@
     "Local stations" : {
       "comment" : "Station list name"
     },
-    "local stations only" : {
-      "comment" : "Settings combobox item"
-    },
     "Looks like \"%@\" is not a valid URL." : {
       "comment" : "Player error message. %@ is URL of station.",
       "localizations" : {
@@ -527,9 +507,6 @@
         }
       }
     },
-    "Play last station on startup" : {
-      "comment" : "Settings control title"
-    },
     "playing now" : {
       "comment" : "History window song status",
       "localizations" : {
@@ -598,9 +575,6 @@
           }
         }
       }
-    },
-    "Show station lists:" : {
-      "comment" : "Settings control title"
     },
     "sort by bitrate" : {
       "comment" : "Internet station search panel",

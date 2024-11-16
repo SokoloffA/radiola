@@ -1,0 +1,36 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Advanced" : {
+      "comment" : "Settings page title"
+    },
+    "Appearance" : {
+      "comment" : "Settings tab title"
+    },
+    "Audio" : {
+      "comment" : "Settings tab title"
+    },
+    "cloud and local stations" : {
+      "comment" : "Settings combobox item"
+    },
+    "cloud stations only (recommended)" : {
+      "comment" : "Settings combobox item"
+    },
+    "Controls" : {
+      "comment" : "Settings tab title"
+    },
+    "local stations only" : {
+      "comment" : "Settings combobox item"
+    },
+    "Play last station on startup" : {
+      "comment" : "Settings control title"
+    },
+    "Show station lists:" : {
+      "comment" : "Settings control title"
+    },
+    "Updates" : {
+      "comment" : "Settings tab title"
+    }
+  },
+  "version" : "1.0"
+}

@@ -8,6 +8,14 @@ source_lang = en
 type        = STRUCTURED_JSON
 minimum_perc = 10
 
+[o:sokoloff:p:radiola:r:Settings]
+file_filter = ./tmp/<lang>/Settings.json
+source_file = ./tmp/Settings.json
+source_lang = en
+type        = STRUCTURED_JSON
+minimum_perc = 10
+
+
 [o:sokoloff:p:radiola:r:MainMenu]
 file_filter = ./tmp/<lang>/MainMenu.json
 source_file = ./tmp/MainMenu.json

@@ -15,6 +15,7 @@
 		3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3926FF112AD4687A0094D875 /* AddStationDialog.xib */; };
 		392C469B2A6C21BD0095DDA2 /* MediaKeysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */; };
 		393B221D2CE8B3430035233D /* LogsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393B221C2CE8B3430035233D /* LogsWindow.swift */; };
+		393B221F2CE951380035233D /* Settings.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 393B221E2CE951380035233D /* Settings.xcstrings */; };
 		394ABC972A97AC9B00E2B6E9 /* SidebarTopLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394ABC952A97AC9B00E2B6E9 /* SidebarTopLevelView.swift */; };
 		394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394ABC962A97AC9B00E2B6E9 /* SidebarTopLevelView.xib */; };
 		394ABC9B2A97AD9C00E2B6E9 /* SidebarSecondLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394ABC992A97AD9C00E2B6E9 /* SidebarSecondLevelView.swift */; };
@@ -112,6 +113,7 @@
 		3926FF112AD4687A0094D875 /* AddStationDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
 		392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeysController.swift; sourceTree = "<group>"; };
 		393B221C2CE8B3430035233D /* LogsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsWindow.swift; sourceTree = "<group>"; };
+		393B221E2CE951380035233D /* Settings.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Settings.xcstrings; sourceTree = "<group>"; };
 		394ABC952A97AC9B00E2B6E9 /* SidebarTopLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTopLevelView.swift; sourceTree = "<group>"; };
 		394ABC962A97AC9B00E2B6E9 /* SidebarTopLevelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SidebarTopLevelView.xib; sourceTree = "<group>"; };
 		394ABC992A97AD9C00E2B6E9 /* SidebarSecondLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarSecondLevelView.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 		39F869A3288C11B600273AB0 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
+				393B221E2CE951380035233D /* Settings.xcstrings */,
 				39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */,
 				39F869BA288C56C300273AB0 /* UpdatePanel.swift */,
 				392024AD2A51953600670ABD /* ControlsPage.swift */,
@@ -530,6 +533,7 @@
 				39D27F532BA36B2D00D5857A /* Credits.html in Resources */,
 				3967046D2944961500012FFD /* AudioPage.xib in Resources */,
 				394F8A412873933A005EA7FA /* Assets.xcassets in Resources */,
+				393B221F2CE951380035233D /* Settings.xcstrings in Resources */,
 				394F8A4E2873937F005EA7FA /* HistoryWindow.xib in Resources */,
 				394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */,
 				3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */,
@@ -712,6 +716,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -767,6 +772,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Release;

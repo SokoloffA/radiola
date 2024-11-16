@@ -19,19 +19,19 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
         windowFrameAutosaveName = "PreferencesWindow"
 
         var tab = NSTabViewItem(viewController: ControlsPage())
-        tab.label = "Controls"
+        tab.label = NSLocalizedString("Controls" , tableName: "Settings", comment: "Settings tab title")
         tab.image = NSImage(systemSymbolName: "computermouse", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
 
         tab = NSTabViewItem(viewController: AppearancePage())
-        tab.label = "Appearance"
+        tab.label = NSLocalizedString("Appearance" , tableName: "Settings", comment: "Settings tab title")
         tab.image = NSImage(systemSymbolName: "filemenu.and.cursorarrow", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
 
         tab = NSTabViewItem(viewController: AudioPage())
-        tab.label = "Audio"
+        tab.label = NSLocalizedString("Audio" , tableName: "Settings", comment: "Settings tab title")
         tab.image = NSImage(systemSymbolName: "hifispeaker.2", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
@@ -43,7 +43,7 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
         tab.viewController?.title = tab.label
 
         tab = NSTabViewItem(viewController: UpdatePanel())
-        tab.label = "Updates"
+        tab.label = NSLocalizedString("Updates" , tableName: "Settings", comment: "Settings tab title")
         tab.image = NSImage(systemSymbolName: "icloud.and.arrow.down", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
