@@ -106,7 +106,7 @@ class AppState: ObservableObject {
         // Not first run -> just load lists
         if settings.isStationsListModeSet {
             debug("StationsListMode is set -> load stations: settings.stationsListMode=", settings.stationsListMode)
-            updateCloudStations(show: settings.isShowCloudStations(), defaultStations: [])
+            updateCloudStations(show: settings.isShowCloudStations(), defaultStations: defaultStations)
             updateOpmlStations(show: settings.isShowOpmlStations())
             return
         }
