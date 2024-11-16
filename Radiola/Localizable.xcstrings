@@ -295,7 +295,15 @@
       }
     },
     "Copy to clipboard" : {
-      "comment" : "Button label"
+      "comment" : "Button label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать в буфер обмена"
+          }
+        }
+      }
     },
     "Decrease the volume" : {
       "comment" : "Volume button tooltip",
@@ -378,7 +386,15 @@
       }
     },
     "Local stations" : {
-      "comment" : "Station list name"
+      "comment" : "Station list name",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Локальные станции"
+          }
+        }
+      }
     },
     "Looks like \"%@\" is not a valid URL." : {
       "comment" : "Player error message. %@ is URL of station.",
@@ -436,7 +452,15 @@
       }
     },
     "My stations" : {
-      "comment" : "Station list name"
+      "comment" : "Station list name",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Мои станции"
+          }
+        }
+      }
     },
     "New versions of the program allow you to store radio station lists in the cloud.\nThis will allow you to have the same lists on several computers.\nLists are stored in your personal iCloud and are not available to outsiders." : {
       "comment" : "List mode wizard text"
@@ -541,7 +565,15 @@
       }
     },
     "Radiola logs" : {
-      "comment" : "Window title"
+      "comment" : "Window title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Логи Radiola"
+          }
+        }
+      }
     },
     "Remove station" : {
       "comment" : "Button title",
