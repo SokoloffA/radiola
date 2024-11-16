@@ -45,6 +45,7 @@ class LogsWindow: NSWindowController, NSWindowDelegate {
         logsView.topAnchor.constraint(equalTo: windowContentView.topAnchor, constant: 8).isActive = true
         logsView.leadingAnchor.constraint(equalTo: windowContentView.leadingAnchor, constant: 8).isActive = true
         logsView.trailingAnchor.constraint(equalTo: windowContentView.trailingAnchor, constant: 8).isActive = true
+        logsView.font = NSFont.monospacedSystemFont(ofSize: 12, weight: .regular)
 
         copyButton.translatesAutoresizingMaskIntoConstraints = false
         copyButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 100).isActive = true
