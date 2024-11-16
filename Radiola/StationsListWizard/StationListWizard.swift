@@ -127,8 +127,6 @@ class StationListWizard: NSWindowController {
         okButton.topAnchor.constraint(equalToSystemSpacingBelow: bottomLabel.bottomAnchor, multiplier: 3).isActive = true
         windowContentView.bottomAnchor.constraint(equalToSystemSpacingBelow: okButton.bottomAnchor, multiplier: 1).isActive = true
         windowContentView.trailingAnchor.constraint(equalToSystemSpacingAfter: okButton.trailingAnchor, multiplier: 1).isActive = true
-
-        print(windowContentView.frame.size)
     }
 
     /* ****************************************

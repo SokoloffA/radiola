@@ -149,6 +149,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
+    @IBAction func showLogsWindow(_ sender: Any?) {
+        LogsWindow.show()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         NSApp.setActivationPolicy(.accessory)
         return false
@@ -161,6 +168,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard let alarm = notification.object as? Alarm else { return }
 
         DispatchQueue.main.async {
+            warning("Alarm: \(alarm.title), \(alarm.message ?? "")")
             guard let button = self.statusBar.menuItem.button else { return }
 
             let dialog = AlarmPopover()

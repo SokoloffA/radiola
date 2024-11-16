@@ -105,20 +105,23 @@ class AppState: ObservableObject {
     private func initStationsLists() {
         // Not first run -> just load lists
         if settings.isStationsListModeSet {
+            debug("StationsListMode is set -> load stations: settings.stationsListMode=", settings.stationsListMode)
             updateCloudStations(show: settings.isShowCloudStations(), defaultStations: [])
             updateOpmlStations(show: settings.isShowOpmlStations())
             return
         }
 
-        // first run on this computer, no OPML file -> use Cloud
         if !opmlFileExists() {
+            debug("This is the first run on this computer, no OPML file - using Cloud with default stations")
             settings.stationsListMode = .cloud
             updateCloudStations(show: settings.isShowCloudStations(), defaultStations: defaultStations)
             return
         }
 
-        // If this is the first run and the OPML file exists, then we show the wizard
+        debug("This is the first run on this computer, no OPML file - showing wizard")
         settings.stationsListMode = StationListWizard.show()
+        debug("Wizard is done: settings.stationsListMode=", settings.stationsListMode)
+
         updateCloudStations(show: settings.isShowCloudStations(), defaultStations: [])
         updateOpmlStations(show: settings.isShowOpmlStations())
 
@@ -127,7 +130,7 @@ class AppState: ObservableObject {
             return
         }
 
-        // Import OPML stations to the cloud
+        debug("Importing stations from OPML to the cloud")
         guard let cloudList = localStations.first(where: { $0 is CloudStationList }) else { return }
 
         let opmlList = OpmlStations(title: "", icon: "", file: opmlFilePath())
@@ -180,9 +183,11 @@ class AppState: ObservableObject {
             for list in cloudLists {
                 try list.load()
             }
+            debug("Successfully loaded \(cloudLists.count) station lists")
 
             // Create lists
             if cloudLists.isEmpty {
+                debug("Create a new list with \(defaultStations.count) stations")
                 try cloudLists.createList(title: defaultCloudListTitle, icon: defaultCloudListIcon, stations: defaultStations)
             }
 

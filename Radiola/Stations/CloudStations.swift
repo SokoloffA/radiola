@@ -226,7 +226,9 @@ extension [CloudStationList] {
             let station = list.createStation(title: s.title, url: s.url)
             station.isFavorite = s.isFavorite
             list.append(station)
-            try list.save()
           }
+
+        try list.save()
+        iCloud.save()
     }
 }

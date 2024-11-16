@@ -253,6 +253,18 @@
         }
       }
     },
+    "hgr-ce-v6k.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Show logs\"; ObjectID = \"hgr-ce-v6k\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show logs"
+          }
+        }
+      }
+    },
     "hz9-B4-Xy5.title" : {
       "comment" : "Class = \"NSMenu\"; title = \"Services\"; ObjectID = \"hz9-B4-Xy5\";",
       "extractionState" : "extracted_with_value",

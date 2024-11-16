@@ -311,6 +311,9 @@
         }
       }
     },
+    "Copy to clipboard" : {
+      "comment" : "Button label"
+    },
     "Decrease the volume" : {
       "comment" : "Volume button tooltip",
       "localizations" : {
@@ -559,6 +562,9 @@
           }
         }
       }
+    },
+    "Radiola logs" : {
+      "comment" : "Window title"
     },
     "Remove station" : {
       "comment" : "Button title",
