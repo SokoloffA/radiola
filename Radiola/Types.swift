@@ -5,6 +5,7 @@
 //  Created by Alex Sokolov on 11.05.2023.
 //
 
+import Cocoa
 import Foundation
 
 // MARK: - Simple types
@@ -82,6 +83,14 @@ struct Alarm: Error, Identifiable {
     static func show(title: String, message: String? = nil) {
         NotificationCenter.default.post(name: notificationName, object: Alarm(title: title, message: message))
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func show(loadListErrot: Error) {
+        warning("Sorry, we couldn't load stations.", loadListErrot)
+        show(title: "Sorry, we couldn't load stations.", message: loadListErrot.localizedDescription)
+    }
 }
 
 extension Error {
@@ -105,15 +114,66 @@ extension Error {
 /* ****************************************
  *
  * ****************************************/
+fileprivate var logsData: [String] = []
+
+/* ****************************************
+ *
+ * ****************************************/
+func allLogs() -> [String] {
+    return logsData
+}
+
+/* ****************************************
+ *
+ * ****************************************/
+fileprivate func logMsg(prefix: String, _ items: Any..., separator: String = " ", terminator: String = "\n") {
+    let s = prefix + ": \(Date()) " + items.map { "\($0)" }.joined(separator: separator)
+    logsData.append(s)
+    print(s)
+}
+
+/* ****************************************
+ *
+ * ****************************************/
 func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    print("Debug: \(Date()) ", terminator: "")
-    print(items, separator: separator, terminator: terminator)
+    logMsg(prefix: "Debug", items, separator: separator, terminator: terminator)
 }
 
 /* ****************************************
  *
  * ****************************************/
 func warning(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    print("Warning: \(Date()) ", terminator: "")
-    print(items, separator: separator, terminator: terminator)
+    logMsg(prefix: "Warning", items, separator: separator, terminator: terminator)
+}
+
+// MARK: - NSMenuItem
+
+extension NSMenuItem {
+    convenience init(title: String, keyEquivalent: String = "", action: @escaping () -> Void) {
+        self.init(title: title, action: nil, keyEquivalent: keyEquivalent)
+        let actionHandler = Handler(action: action)
+        target = actionHandler
+        self.action = #selector(Handler.executeAction)
+        objc_setAssociatedObject(self, "[\(title)-actionHandler]", actionHandler, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+
+    private class Handler {
+        private let action: () -> Void
+
+        init(action: @escaping () -> Void) {
+            self.action = action
+        }
+
+        @objc func executeAction() {
+            action()
+        }
+    }
+}
+
+// MARK: - NSMenu
+
+extension NSMenu {
+    func addItem(withTitle: String, keyEquivalent: String = "", action: @escaping () -> Void) {
+        addItem(NSMenuItem(title: withTitle, keyEquivalent: keyEquivalent, action: action))
+    }
 }

@@ -19,31 +19,31 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
         windowFrameAutosaveName = "PreferencesWindow"
 
         var tab = NSTabViewItem(viewController: ControlsPage())
-        tab.label = "Controls"
+        tab.label = tab.viewController?.title ?? ""
         tab.image = NSImage(systemSymbolName: "computermouse", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
 
         tab = NSTabViewItem(viewController: AppearancePage())
-        tab.label = "Appearance"
+        tab.label = tab.viewController?.title ?? ""
         tab.image = NSImage(systemSymbolName: "filemenu.and.cursorarrow", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
 
         tab = NSTabViewItem(viewController: AudioPage())
-        tab.label = "Audio"
+        tab.label = tab.viewController?.title ?? ""
         tab.image = NSImage(systemSymbolName: "hifispeaker.2", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
 
-        tab = NSTabViewItem(viewController: StartupPage())
-        tab.label = "Startup"
-        tab.image = NSImage(systemSymbolName: NSImage.Name("arrow.up.arrow.down.square"), accessibilityDescription: "Startup page")
+        tab = NSTabViewItem(viewController: AdvancedPage())
+        tab.label = tab.viewController?.title ?? ""
+        tab.image = NSImage(systemSymbolName: NSImage.Name("gearshape.2"), accessibilityDescription: "Advanced page")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label
 
         tab = NSTabViewItem(viewController: UpdatePanel())
-        tab.label = "Updates"
+        tab.label = tab.viewController?.title ?? ""
         tab.image = NSImage(systemSymbolName: "icloud.and.arrow.down", accessibilityDescription: "")
         viewController.addTabViewItem(tab)
         tab.viewController?.title = tab.label

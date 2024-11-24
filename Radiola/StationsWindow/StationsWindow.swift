@@ -60,6 +60,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         localStationsDelegate = LocalStationDelegate(outlineView: stationsTree)
         internetStationsDelegate = InternetStationDelegate(outlineView: stationsTree)
 
+        stationsTree.style = .inset
         stationsTree.doubleAction = #selector(doubleClickRow)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(selectionChanged),
@@ -81,12 +82,12 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     private func initSideBar() {
         let appState = AppState.shared
 
-        sideBar.addGroup(title: "My lists")
+        sideBar.addGroup(title: NSLocalizedString("My lists", comment: "Sidebar group"))
         for list in appState.localStations {
             sideBar.addItem(id: list.id, title: list.title, icon: list.icon)
         }
 
-        sideBar.addGroup(title: "Radio browser")
+        sideBar.addGroup(title: NSLocalizedString("Radio browser", comment: "Sidebar group"))
         for list in appState.internetStations {
             sideBar.addItem(id: list.id, title: list.title, icon: list.icon)
         }
@@ -192,13 +193,19 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    class func show() -> StationsWindow {
+    class func show() {
         if instance == nil {
             instance = StationsWindow()
         }
 
         instance?.window?.show()
-        return instance!
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    class func close() {
+        instance?.window?.close()
     }
 
     /* ****************************************
@@ -269,10 +276,16 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         toolBox = nil
 
         guard let listId = selectedListId else {
+            updateStateIndicator(state: .notLoaded)
             return
         }
 
         if let list = AppState.shared.localStations.find(byId: listId) {
+            do {
+                try list.load()
+            } catch {
+                Alarm.show(loadListErrot: error)
+            }
             setLocalStationList(list: list)
             setFocus(listId: listId, toTree: true)
             updateStateIndicator(state: .notLoaded)
@@ -286,7 +299,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    private func setLocalStationList(list: LocalStationList) {
+    private func setLocalStationList(list: any StationList) {
         stationsTree.delegate = localStationsDelegate
         stationsTree.dataSource = localStationsDelegate
         localStationsDelegate.list = list
@@ -348,7 +361,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
                 stateIndicatorSpinner.stopAnimation(nil)
 
             case (.loading, _):
-                stateIndicatorText.stringValue = "Loading"
+                stateIndicatorText.stringValue = NSLocalizedString("Loading…", comment: "Internet stations placeholder")
                 stateIndicator.isHidden = false
                 stateIndicatorSpinner.isHidden = false
                 stateIndicatorSpinner.startAnimation(nil)
@@ -361,7 +374,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
                 stateIndicatorSpinner.stopAnimation(nil)
                 stateIndicatorSpinner.isHidden = true
                 stateIndicator.isHidden = false
-                stateIndicatorText.stringValue = "No results"
+                stateIndicatorText.stringValue = NSLocalizedString("No results", comment: "Internet stations placeholder")
 
             case (.loaded, false):
                 stateIndicatorSpinner.stopAnimation(nil)
@@ -446,20 +459,20 @@ extension StationsWindow: NSUserInterfaceValidations {
         }
 
         var messageText = ""
-        if let station = item as? LocalStation {
-            messageText = "Are you sure you want to remove the station \"\(station.title)\"?"
-        } else if let group = item as? LocalStationGroup {
+        if let station = item as? Station {
+            messageText = String(format: NSLocalizedString("Are you sure you want to remove the station \"%@\"?", comment: "Remove station dialog text. %@ is station title."), station.title)
+        } else if let group = item as? StationGroup {
             if group.items.isEmpty {
-                messageText = "Are you sure you want to remove the group \"\(group.title)\"?"
+                messageText = String(format: NSLocalizedString("Are you sure you want to remove the group \"%@\"?", comment: "Remove group dialog text. %@ is group title."), group.title)
             } else {
-                messageText = "Are you sure you want to remove the group \"\(group.title)\", and all of its children?"
+                messageText = String(format: NSLocalizedString("Are you sure you want to remove the group \"%@\", and all of its children?", comment: "Remove group dialog text. %@ is group title."), group.title)
             }
         }
 
         let alert = NSAlert()
-        alert.informativeText = "This operation cannot be undone."
-        alert.addButton(withTitle: "Yes")
-        alert.addButton(withTitle: "Cancel")
+        alert.informativeText = NSLocalizedString("This operation cannot be undone.", comment: "Remove dialog informativeText")
+        alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Yes button"))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button"))
         alert.messageText = messageText
         alert.beginSheetModal(for: window, completionHandler: { response in
             if response == NSApplication.ModalResponse.alertFirstButtonReturn {
@@ -472,20 +485,25 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     @objc func exportStations(_ sender: Any) {
-        guard let window = window else { return }
-        guard let stations = AppState.shared.localStations.first else { return }
+        guard
+            let window = window,
+            let listID = sideBar.selectedListId,
+            let stations = AppState.shared.localStations.find(byId: listID)
+        else {
+            return
+        }
 
         let dialog = NSSavePanel()
         dialog.allowedFileTypes = ["opml"]
         dialog.allowsOtherFileTypes = true
         dialog.canCreateDirectories = true
         dialog.isExtensionHidden = false
-        dialog.nameFieldStringValue = "RadiolaStations"
+        dialog.nameFieldStringValue = "RadiolaStations[\(stations.title)]"
 
         dialog.beginSheetModal(for: window) { result in
             guard result == .OK, let url = dialog.url else { return }
             do {
-                try stations.saveAs(file: url)
+                try stations.saveAsOpml(file: url)
             } catch {
                 error.show()
             }
@@ -496,8 +514,13 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     @objc func importStations(_ sender: Any) {
-        guard let window = window else { return }
-        guard let stations = AppState.shared.localStations.first else { return }
+        guard
+            let window = window,
+            let listID = sideBar.selectedListId,
+            let list = AppState.shared.localStations.find(byId: listID)
+        else {
+            return
+        }
 
         let dialog = NSOpenPanel()
         dialog.allowedFileTypes = ["opml"]
@@ -513,50 +536,55 @@ extension StationsWindow: NSUserInterfaceValidations {
             guard result == .OK, let url = dialog.url else { return }
 
             dialog.close()
-            self.doImportStations(url: url, current: stations)
+            self.doImportStations(url: url, list: list)
         }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func doImportStations(url: URL, current: LocalStationList) {
+    private func doImportStations(url: URL, list: StationList) {
         guard let window = window else { return }
 
-        let new = LocalStationList(title: "", icon: "")
+        let new = OpmlStations(title: "", icon: "", file: url)
         do {
-            try new.load(file: url)
+            try new.load()
         } catch {
             error.show()
             return
         }
 
-        let merger = LocalStationsMerger(currentStations: current, newStations: new)
+        let merger = StationsMerger(currentStations: list, newStations: new)
         if merger.statistics.isEmpty {
-            NSAlert.showInfo(message: "The file does not contain any new or changed radio stations.", informativeText: "You may have already exported it before.")
+            let message = NSLocalizedString("The file does not contain any new or changed radio stations.", comment: "Merger dialog message")
+            let informativeText = NSLocalizedString("You may have already exported it before.", comment: "Merger dialog informativeText")
+            NSAlert.showInfo(message: message, informativeText: informativeText)
             return
         }
 
-        var message = ""
-        if merger.statistics.insertedStations != 0 && merger.statistics.updatedStations != 0 {
-            message = String(format: "%d stations will be added and %d stations will be updated.", merger.statistics.insertedStations, merger.statistics.updatedStations)
-        } else if merger.statistics.insertedStations != 0 {
-            message = String(format: "%d stations will be added.", merger.statistics.insertedStations)
-        } else if merger.statistics.updatedStations != 0 {
-            message = String(format: "%d stations will be updated.", merger.statistics.updatedStations)
+        let message = NSLocalizedString("Are you sure you want to continue?", comment: "Merger dialog message")
+        var informativeText = [""]
+
+        if merger.statistics.insertedStations != 0 {
+            informativeText.append(String(format: NSLocalizedString("%lld stations will be added.", comment: "Merger dialog informativeText"), merger.statistics.insertedStations))
+        }
+
+        if merger.statistics.updatedStations != 0 {
+            informativeText.append(String(format: NSLocalizedString("%lld stations will be updated.", comment: "Merger dialog informativeText"), merger.statistics.updatedStations))
         }
 
         let alert = NSAlert()
-        alert.informativeText = message
-        alert.addButton(withTitle: "Yes")
-        alert.addButton(withTitle: "Cancel")
-        alert.messageText = "Are you sure you want to continue?"
+        alert.messageText = message
+        alert.informativeText = informativeText.joined(separator: "\n")
+        alert.addButton(withTitle: NSLocalizedString("Yes", comment: "Yes button"))
+        alert.addButton(withTitle: NSLocalizedString("Cancel", comment: "Cancel button"))
         alert.beginSheetModal(for: window, completionHandler: { response in
             if response != NSApplication.ModalResponse.alertFirstButtonReturn {
                 return
             }
             merger.run()
-            current.save()
+
+            list.trySave()
             self.stationsTree.reloadData()
         })
     }

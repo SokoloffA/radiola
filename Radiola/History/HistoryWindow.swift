@@ -25,8 +25,13 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        window?.title = NSLocalizedString("History", comment: "History window title")
+        placeholderLabel.stringValue = NSLocalizedString("No records yet", comment: "History window placeholder")
+        onlyFavoriteCheckbox.title = NSLocalizedString("Show only your favorite songs", comment: "History window checkbox title")
+
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.style = .inset
 
         NotificationCenter.default.addObserver(
             self,
@@ -85,7 +90,7 @@ extension HistoryWindow: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         let list = onlyFavoriteCheckbox.state == .on ?
             AppState.shared.history.favorites() :
-            AppState.shared.history
+            AppState.shared.history.records
 
         if row >= list.count {
             return nil
@@ -102,6 +107,6 @@ extension HistoryWindow: NSTableViewDataSource {
     func numberOfRows(in tableView: NSTableView) -> Int {
         return onlyFavoriteCheckbox.state == .on ?
             AppState.shared.history.favorites().count :
-            AppState.shared.history.count
+            AppState.shared.history.records.count
     }
 }

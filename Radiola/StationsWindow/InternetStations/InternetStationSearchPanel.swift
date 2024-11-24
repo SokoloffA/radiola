@@ -108,7 +108,9 @@ class InternetStationSearchPanel: NSControl {
      *
      * ****************************************/
     private func exactMatchToString(_ value: Bool) -> String {
-        return value ? "matches with" : "contains"
+        return value ?
+            NSLocalizedString("matches with", comment: "Internet station search panel") :
+            NSLocalizedString("contains", comment: "Internet station search panel")
     }
 
     /* ****************************************
@@ -116,10 +118,10 @@ class InternetStationSearchPanel: NSControl {
      * ****************************************/
     private func orderToString(_ order: RadioBrowserProvider.Order) -> String {
         switch order {
-            case .byName: return "sort by name"
-            case .byVotes: return "sort by votes"
-            case .byCountry: return "sort by country"
-            case .byBitrate: return "sort by bitrate"
+            case .byName: return NSLocalizedString("sort by name", comment: "Internet station search panel")
+            case .byVotes: return NSLocalizedString("sort by votes", comment: "Internet station search panel")
+            case .byCountry: return NSLocalizedString("sort by country", comment: "Internet station search panel")
+            case .byBitrate: return NSLocalizedString("sort by bitrate", comment: "Internet station search panel")
         }
     }
 

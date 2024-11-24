@@ -21,7 +21,7 @@ class AppearancePage: NSViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        title = "Appearance"
+        title = NSLocalizedString("Appearance", tableName: "Settings", comment: "Settings page title")
         view = createView()
 
         initFavoritesMenuGroupTypeCbx()

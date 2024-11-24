@@ -26,10 +26,10 @@ class ControlsPage: NSViewController {
     private var mediaPrevNextButtonLbl = Label()
     private var mediaPrevNextButtonCbx = NSPopUpButton()
 
-    private var globalKeyShowMainWindowLbl = Label(text: "Global shortcut to show stations")
+    private var globalKeyShowMainWindowLbl = Label(text: NSLocalizedString("Global shortcut to show stations", tableName: "Settings", comment: "Settings label"))
     private var globalKeyShowMainWindowCtrl = KeyboardShortcuts.RecorderCocoa(for: .showMainWindow)
 
-    private var globalKeyShowHistoryLbl = Label(text: "Global shortcut to show history")
+    private var globalKeyShowHistoryLbl = Label(text: NSLocalizedString("Global shortcut to show history", tableName: "Settings", comment: "Settings label"))
     private var globalKeyShowHistoryCtrl = KeyboardShortcuts.RecorderCocoa(for: .showHistoryWindow)
 
     /* ****************************************
@@ -38,7 +38,7 @@ class ControlsPage: NSViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
 
-        title = "Controls"
+        title = NSLocalizedString("Controls", tableName: "Settings", comment: "Settings page title")
         view = createView()
 
         initButtonCbx(leftMouseButtonCbx, button: .left)
@@ -83,7 +83,7 @@ class ControlsPage: NSViewController {
         res.addSubview(globalKeyShowHistoryLbl)
         res.addSubview(globalKeyShowHistoryCtrl)
 
-        leftMouseButtonLbl.stringValue = "Left mouse button:"
+        leftMouseButtonLbl.stringValue = NSLocalizedString("Left mouse button:", tableName: "Settings", comment: "Settings label")
         leftMouseButtonLbl.alignment = .right
         leftMouseButtonLbl.translatesAutoresizingMaskIntoConstraints = false
         leftMouseButtonCbx.translatesAutoresizingMaskIntoConstraints = false
@@ -92,20 +92,20 @@ class ControlsPage: NSViewController {
         leftMouseButtonCbx.leadingAnchor.constraint(equalTo: leftMouseButtonLbl.trailingAnchor, constant: 20).isActive = true
         leftMouseButtonLbl.centerYAnchor.constraint(equalTo: leftMouseButtonCbx.centerYAnchor).isActive = true
 
-        middleMouseButtonLbl.stringValue = "Middle mouse button:"
+        middleMouseButtonLbl.stringValue = NSLocalizedString("Middle mouse button:", tableName: "Settings", comment: "Settings label")
         alignRow(lbl: middleMouseButtonLbl, cbx: middleMouseButtonCbx, prev: leftMouseButtonCbx)
 
-        rightMouseButtonLbl.stringValue = "Right mouse button:"
+        rightMouseButtonLbl.stringValue = NSLocalizedString("Right mouse button:", tableName: "Settings", comment: "Settings label")
         alignRow(lbl: rightMouseButtonLbl, cbx: rightMouseButtonCbx, prev: middleMouseButtonCbx)
 
-        ctrlMouseHelp.stringValue = "You can always open the menu with Control+Mouse Click"
+        ctrlMouseHelp.stringValue = NSLocalizedString("You can always open the menu with Control+Mouse Click", tableName: "Settings", comment: "Settings label")
         ctrlMouseHelp.textColor = .secondaryLabelColor
         ctrlMouseHelp.translatesAutoresizingMaskIntoConstraints = false
         ctrlMouseHelp.topAnchor.constraint(equalTo: rightMouseButtonCbx.bottomAnchor, constant: 14).isActive = true
         ctrlMouseHelp.leadingAnchor.constraint(equalTo: rightMouseButtonCbx.leadingAnchor).isActive = true
         ctrlMouseHelp.trailingAnchor.constraint(equalTo: rightMouseButtonCbx.trailingAnchor).isActive = true
 
-        wheellMouseLbl.stringValue = "Mouse wheel:"
+        wheellMouseLbl.stringValue = NSLocalizedString("Mouse wheel:", tableName: "Settings", comment: "Settings label")
         alignRow(lbl: wheellMouseLbl, cbx: wheellMouseCbx, prev: ctrlMouseHelp, margin: 24)
 
         let separator = Separator()
@@ -114,10 +114,10 @@ class ControlsPage: NSViewController {
         separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
         separator.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
 
-        mediaKeysHandlingLbl.stringValue = "Media key handling:"
+        mediaKeysHandlingLbl.stringValue = NSLocalizedString("Media key handling:", tableName: "Settings", comment: "Settings label")
         alignRow(lbl: mediaKeysHandlingLbl, cbx: mediaKeysHandlingCbx, prev: separator, margin: 20)
 
-        mediaPrevNextButtonLbl.stringValue = "Previous and next track buttons:"
+        mediaPrevNextButtonLbl.stringValue = NSLocalizedString("Previous and next track buttons:", tableName: "Settings", comment: "Settings label")
         alignRow(lbl: mediaPrevNextButtonLbl, cbx: mediaPrevNextButtonCbx, prev: mediaKeysHandlingCbx)
 
         alignRow(lbl: globalKeyShowMainWindowLbl, cbx: globalKeyShowMainWindowCtrl, prev: mediaPrevNextButtonCbx)
@@ -158,19 +158,19 @@ class ControlsPage: NSViewController {
         cbx.tag = button.rawValue
 
         cbx.removeAllItems()
-        cbx.addItem(withTitle: "shows the popup menu")
+        cbx.addItem(withTitle: NSLocalizedString("shows the popup menu", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = MouseButtonAction.showMenu.rawValue
 
-        cbx.addItem(withTitle: "toggles playback and pause")
+        cbx.addItem(withTitle: NSLocalizedString("toggles playback and pause", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = MouseButtonAction.playPause.rawValue
 
-        cbx.addItem(withTitle: "shows the main window")
+        cbx.addItem(withTitle: NSLocalizedString("shows the main window", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = MouseButtonAction.showMainWindow.rawValue
 
-        cbx.addItem(withTitle: "shows the history")
+        cbx.addItem(withTitle: NSLocalizedString("shows the history", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = MouseButtonAction.showHistory.rawValue
 
-        cbx.addItem(withTitle: "toggles mute")
+        cbx.addItem(withTitle: NSLocalizedString("toggles mute", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = MouseButtonAction.mute.rawValue
 
         cbx.selectItem(withTag: settings.mouseAction(forButton: button).rawValue)
@@ -186,10 +186,10 @@ class ControlsPage: NSViewController {
 
         cbx.removeAllItems()
 
-        cbx.addItem(withTitle: "does nothing")
+        cbx.addItem(withTitle: NSLocalizedString("does nothing", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = MouseWheelAction.nothing.rawValue
 
-        cbx.addItem(withTitle: "changes the volume")
+        cbx.addItem(withTitle: NSLocalizedString("changes the volume", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = MouseWheelAction.volume.rawValue
 
         cbx.selectItem(withTag: settings.mouseWheelAction.rawValue)
@@ -205,13 +205,13 @@ class ControlsPage: NSViewController {
 
         cbx.removeAllItems()
 
-        cbx.addItem(withTitle: "never")
+        cbx.addItem(withTitle: NSLocalizedString("never", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = Settings.MediaKeysHandleType.disable.rawValue
 
-        cbx.addItem(withTitle: "always")
+        cbx.addItem(withTitle: NSLocalizedString("always", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = Settings.MediaKeysHandleType.enable.rawValue
 
-        cbx.addItem(withTitle: "when the main window is open")
+        cbx.addItem(withTitle: NSLocalizedString("when the main window is open", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = Settings.MediaKeysHandleType.mainWindowActive.rawValue
 
         cbx.selectItem(withTag: settings.mediaKeysHandle.rawValue)
@@ -226,10 +226,10 @@ class ControlsPage: NSViewController {
     private func initMediaPrevNextButtonCbx() {
         mediaPrevNextButtonCbx.removeAllItems()
 
-        mediaPrevNextButtonCbx.addItem(withTitle: "does nothing")
+        mediaPrevNextButtonCbx.addItem(withTitle: NSLocalizedString("does nothing", tableName: "Settings", comment: "Settings combobox item"))
         mediaPrevNextButtonCbx.lastItem?.tag = MediaPrevNextKeyAction.disable.rawValue
 
-        mediaPrevNextButtonCbx.addItem(withTitle: "switch favorite stations")
+        mediaPrevNextButtonCbx.addItem(withTitle: NSLocalizedString("switch favorite stations", tableName: "Settings", comment: "Settings combobox item"))
         mediaPrevNextButtonCbx.lastItem?.tag = MediaPrevNextKeyAction.switchStation.rawValue
 
         mediaPrevNextButtonCbx.selectItem(withTag: settings.mediaPrevNextKeyAction.rawValue)

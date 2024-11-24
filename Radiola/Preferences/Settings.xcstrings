@@ -1,0 +1,336 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Advanced" : {
+      "comment" : "Settings page title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Дополнительно"
+          }
+        }
+      }
+    },
+    "always" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "всегда"
+          }
+        }
+      }
+    },
+    "Appearance" : {
+      "comment" : "Settings page title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Внешний вид"
+          }
+        }
+      }
+    },
+    "Audio" : {
+      "comment" : "Settings tab title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Аудио"
+          }
+        }
+      }
+    },
+    "changes the volume" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "меняет громкость"
+          }
+        }
+      }
+    },
+    "cloud and local stations" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "из облака и локальные станции"
+          }
+        }
+      }
+    },
+    "cloud stations only (recommended)" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "только из облака (рекомендуется)"
+          }
+        }
+      }
+    },
+    "Controls" : {
+      "comment" : "Settings page title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Управление"
+          }
+        }
+      }
+    },
+    "does nothing" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ничего не делает"
+          }
+        }
+      }
+    },
+    "Global shortcut to show history" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Глобальные клавиши для отображения истории"
+          }
+        }
+      }
+    },
+    "Global shortcut to show stations" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Глобальные клавиши для отображения станций"
+          }
+        }
+      }
+    },
+    "Left mouse button:" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Левая кнопка мыши:"
+          }
+        }
+      }
+    },
+    "local stations only" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "тольео локальные станции"
+          }
+        }
+      }
+    },
+    "Media key handling:" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Медиа клавиши:"
+          }
+        }
+      }
+    },
+    "Middle mouse button:" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Средняя кнопка мыши:"
+          }
+        }
+      }
+    },
+    "Mouse wheel:" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Колесико мыши:"
+          }
+        }
+      }
+    },
+    "never" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "никогда"
+          }
+        }
+      }
+    },
+    "Play last station on startup" : {
+      "comment" : "Settings control title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Играть последнюю станцию при запуске программы"
+          }
+        }
+      }
+    },
+    "Previous and next track buttons:" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопки предыдущей и следующей трека:"
+          }
+        }
+      }
+    },
+    "Right mouse button:" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правая кнопка мыши:"
+          }
+        }
+      }
+    },
+    "Show station lists:" : {
+      "comment" : "Settings control title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показывать списки станций:"
+          }
+        }
+      }
+    },
+    "shows the history" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "показывает историю"
+          }
+        }
+      }
+    },
+    "shows the main window" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "показывает главное окно"
+          }
+        }
+      }
+    },
+    "shows the popup menu" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "показывает всплывающее меню"
+          }
+        }
+      }
+    },
+    "switch favorite stations" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "переключает любимые станции"
+          }
+        }
+      }
+    },
+    "toggles mute" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "включает и выключает звук"
+          }
+        }
+      }
+    },
+    "toggles playback and pause" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "переключает воспроизведение и паузу"
+          }
+        }
+      }
+    },
+    "Updates" : {
+      "comment" : "Settings tab title",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновления"
+          }
+        }
+      }
+    },
+    "when the main window is open" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "когда открыто главное окно"
+          }
+        }
+      }
+    },
+    "You can always open the menu with Control+Mouse Click" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы всегда можете открыть меню с помощью Control+Mouse Click"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

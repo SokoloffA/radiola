@@ -17,6 +17,7 @@ class InternetStation: Station, Identifiable {
     var bitrate: Bitrate?
     var votes: Int?
     var countryCode: String?
+    var isFavorite: Bool = false
 
     /* ****************************************
      *
@@ -29,13 +30,13 @@ class InternetStation: Station, Identifiable {
 
 // MARK: - InternetStationList
 
-class InternetStationList: ObservableObject, StationList {
+class InternetStationList: ObservableObject {
+
     let id = UUID()
     let title: String
     let icon: String
-    let help: String?
 
-    @Published var items = [InternetStation]()
+    var items = [InternetStation]()
 
     enum State {
         case notLoaded
@@ -51,10 +52,9 @@ class InternetStationList: ObservableObject, StationList {
     /* ****************************************
      *
      * ****************************************/
-    init(title: String, icon: String, help: String? = nil, provider: RadioBrowserProvider) {
+    init(title: String, icon: String, provider: RadioBrowserProvider) {
         self.title = title
         self.icon = icon
-        self.help = help
         self.provider = provider
     }
 
@@ -83,6 +83,13 @@ class InternetStationList: ObservableObject, StationList {
                 Alarm.show(title: "Couldn't download the stations from radio-browser.info", message: "\(error.localizedDescription)")
             }
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func first(byID: UUID) -> Station? {
+        return firstStation { $0.id == byID }
     }
 }
 

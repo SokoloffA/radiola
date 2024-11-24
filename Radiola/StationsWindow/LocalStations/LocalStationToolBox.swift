@@ -14,7 +14,7 @@ class LocalStationToolBox: NSView {
     let addGroupButton = NSButton()
     let delButton = NSButton()
 
-    private var list: LocalStationList?
+    private var list: (any StationList)?
 
     /* ****************************************
      *
@@ -27,24 +27,24 @@ class LocalStationToolBox: NSView {
 
         addStationButton.bezelStyle = .smallSquare
         addStationButton.setButtonType(.momentaryPushIn)
-        addStationButton.image = NSImage(systemSymbolName: NSImage.Name("plus.circle"), accessibilityDescription: "Add station")
-        addStationButton.title = "Add station"
+        addStationButton.title = NSLocalizedString("Add station", comment: "Button title")
+        addStationButton.image = NSImage(systemSymbolName: NSImage.Name("plus.circle"), accessibilityDescription: addStationButton.title)
         addStationButton.imagePosition = .imageLeft
         addStationButton.image?.isTemplate = true
         addStationButton.isBordered = false
 
         addGroupButton.bezelStyle = .smallSquare
         addGroupButton.setButtonType(.momentaryPushIn)
-        addGroupButton.image = NSImage(systemSymbolName: NSImage.Name("plus.circle"), accessibilityDescription: "Add group")
-        addGroupButton.title = "Add group"
+        addGroupButton.title = NSLocalizedString("Add group", comment: "Button title")
+        addGroupButton.image = NSImage(systemSymbolName: NSImage.Name("plus.circle"), accessibilityDescription: addGroupButton.title)
         addGroupButton.imagePosition = .imageLeft
         addGroupButton.image?.isTemplate = true
         addGroupButton.isBordered = false
 
         delButton.bezelStyle = .smallSquare
         delButton.setButtonType(.momentaryPushIn)
-        delButton.image = NSImage(systemSymbolName: NSImage.Name("minus.circle"), accessibilityDescription: "Delete station")
-        delButton.title = "Remove station"
+        delButton.title = NSLocalizedString("Remove station", comment: "Button title")
+        delButton.image = NSImage(systemSymbolName: NSImage.Name("minus.circle"), accessibilityDescription: delButton.title)
         delButton.imagePosition = .imageLeft
         delButton.image?.isTemplate = true
         delButton.isBordered = false

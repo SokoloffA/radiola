@@ -78,17 +78,6 @@ extension InternetStationDelegate: NSOutlineViewDataSource {
         return item!
     }
 
-//    /* ****************************************
-//     * We must specify if a given item should be expandable or not.
-//     * ****************************************/
-//    func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-//        if let group = item as? LocalStationGroup {
-//            return !group.items.isEmpty
-//        }
-//
-//        return false
-//    }
-
     /* ****************************************
      * Variable Row Heights
      * ****************************************/

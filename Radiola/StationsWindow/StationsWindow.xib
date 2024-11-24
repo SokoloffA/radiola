@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="22505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -56,8 +56,8 @@
                                             <constraint firstAttribute="trailing" secondItem="2x7-gi-IyC" secondAttribute="trailing" id="sMG-Q7-v07"/>
                                         </constraints>
                                     </customView>
-                                    <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B4I-qD-d8r" userLabel="SearchBox">
-                                        <rect key="frame" x="0.0" y="273" width="682" height="50"/>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="B4I-qD-d8r" userLabel="SearchBox">
+                                        <rect key="frame" x="0.0" y="277" width="682" height="46"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="46" id="0tz-K3-gVT"/>
                                         </constraints>
@@ -132,18 +132,18 @@
                                         </constraints>
                                     </customView>
                                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="Oq3-4l-d6M" userLabel="stateIndicator">
-                                        <rect key="frame" x="297" y="117" width="89" height="80"/>
+                                        <rect key="frame" x="292" y="117" width="99" height="80"/>
                                         <subviews>
                                             <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gpM-kz-DXL" userLabel="stateIndicatorText">
-                                                <rect key="frame" x="18" y="44" width="53" height="16"/>
-                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Loading" id="3G7-2F-cwo">
+                                                <rect key="frame" x="18" y="44" width="63" height="16"/>
+                                                <textFieldCell key="cell" lineBreakMode="clipping" title="Loading…" id="3G7-2F-cwo">
                                                     <font key="font" usesAppearanceFont="YES"/>
                                                     <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
                                             <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="aBa-WI-6bB" userLabel="stateIndicatorSpinner">
-                                                <rect key="frame" x="36" y="20" width="16" height="16"/>
+                                                <rect key="frame" x="41" y="20" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
                                         <constraints>
@@ -187,7 +187,7 @@
                     </splitView>
                 </subviews>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="E603DE99-C223-49D2-AC20-617FF561695E" autosavesConfiguration="NO" displayMode="iconOnly" sizeMode="regular" id="dvN-S5-4WP">
+            <toolbar key="toolbar" implicitIdentifier="E603DE99-C223-49D2-AC20-617FF561695E" autosavesConfiguration="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="dvN-S5-4WP">
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="9847B8CC-FB77-48AF-BB86-C525422033E6" label="Toggle sidebar" paletteLabel="Toggle sidebar" tag="-1" image="sidebar.left" catalog="system" bordered="YES" id="iyL-Mv-jxL">
                         <size key="minSize" width="31" height="25"/>

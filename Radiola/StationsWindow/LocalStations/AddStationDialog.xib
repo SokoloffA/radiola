@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="22690"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="AddStationDialog" customModule="Radiola" customModuleProvider="target">
             <connections>
                 <outlet property="cancelButton" destination="w8U-7I-AbI" id="wZS-cD-QLp"/>
+                <outlet property="messageLabel" destination="1bL-ei-Gpa" id="3cT-xD-NTO"/>
                 <outlet property="okButton" destination="7Vl-gq-Hgj" id="IQI-WT-RIG"/>
                 <outlet property="titleEdit" destination="ftE-SY-CXX" id="Z2n-lG-4s0"/>
+                <outlet property="titleEditLabel" destination="yQm-7t-Kci" id="bqQ-qV-vQc"/>
                 <outlet property="urlEdit" destination="ecF-h7-bPM" id="TTO-cO-Hgb"/>
+                <outlet property="urlEditLabel" destination="wZQ-Qe-zQx" id="xgO-WH-eRh"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -21,12 +24,12 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="480" height="198"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1415"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="198"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1bL-ei-Gpa">
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1bL-ei-Gpa">
                         <rect key="frame" x="18" y="162" width="444" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="To add a station, fill out the following information:" id="19Y-iO-yxt">
                             <font key="font" usesAppearanceFont="YES"/>
@@ -34,7 +37,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yQm-7t-Kci">
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yQm-7t-Kci">
                         <rect key="frame" x="18" y="118" width="35" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Title:" id="3jl-Qx-xPY">
                             <font key="font" metaFont="system"/>
@@ -42,7 +45,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ftE-SY-CXX">
+                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ftE-SY-CXX">
                         <rect key="frame" x="59" y="115" width="401" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="xGx-wC-EYo">
                             <font key="font" metaFont="system"/>
@@ -50,7 +53,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wZQ-Qe-zQx">
+                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wZQ-Qe-zQx">
                         <rect key="frame" x="24" y="81" width="26" height="16"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" title="Url:" id="V47-5Y-kRY">
                             <font key="font" metaFont="system"/>
@@ -58,7 +61,7 @@
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ecF-h7-bPM">
+                    <textField focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ecF-h7-bPM">
                         <rect key="frame" x="59" y="78" width="401" height="21"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" id="4xy-HL-FLD">
                             <font key="font" metaFont="system"/>
@@ -67,7 +70,7 @@
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7Vl-gq-Hgj">
-                        <rect key="frame" x="356" y="13" width="110" height="32"/>
+                        <rect key="frame" x="363" y="13" width="104" height="32"/>
                         <buttonCell key="cell" type="push" title="Add station" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zk4-aX-M4e">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -80,7 +83,7 @@ DQ
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w8U-7I-AbI">
-                        <rect key="frame" x="274" y="13" width="82" height="32"/>
+                        <rect key="frame" x="289" y="13" width="76" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="clL-kY-g23">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>

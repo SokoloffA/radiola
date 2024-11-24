@@ -19,7 +19,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     var qualityText = Label()
     var voteText = Label()
     var actionButton = ImageButton()
-    let menuButton = MenuButton()
+    let menuButton = StationMenuButton()
     let separator = Separator()
 
     private let actionButtonIcons = [
@@ -36,6 +36,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     init(station: InternetStation, list: InternetStationList) {
         self.station = station
         self.list = list
+        menuButton.station = station
 
         super.init(frame: NSRect())
         addSubview(nameEdit)
@@ -107,9 +108,6 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         separator.alignBottom(of: self)
 
         refreshActionButton()
-
-        menuButton.menu?.addItem(withTitle: "Copy station title", action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
-        menuButton.menu?.addItem(withTitle: "Copy station URL", action: #selector(copyUrlToClipboard), keyEquivalent: "").target = self
     }
 
     /* ****************************************
@@ -124,12 +122,12 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
      * ****************************************/
     @objc private func actionButtonClicked(sender: NSButton) {
         guard let list = AppState.shared.localStations.first else { return }
-        let inLocal = list.first(byURL: station.url) != nil
+        let inLocal = list.firstStation(byURL: station.url) != nil
 
         if !inLocal {
-            let s = LocalStation(title: station.title, url: station.url)
+            let s = list.createStation(title: station.title, url: station.url)
             list.append(s)
-            list.save()
+            list.trySave()
             refreshActionButton()
         }
     }
@@ -140,7 +138,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     private func refreshActionButton() {
         let inLocal = AppState.shared.localStation(byURL: station.url) != nil
         actionButton.image = actionButtonIcons[inLocal]!
-        actionButton.toolTip = inLocal ? "" : "Add the station to my stations list"
+        actionButton.toolTip = inLocal ? "" : NSLocalizedString("Add the station to my stations list", comment: "Button tooltip")
     }
 
     /* ****************************************
@@ -160,19 +158,19 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         switch votes {
             case 0:
-                res.append(format("no votes", normalFont))
+            res.append(format(NSLocalizedString("no votes", comment: "Internet station row"), normalFont))
 
             case 0 ..< 1000:
-                res.append(format("votes:", smallFont))
+                res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
                 res.append(format(" \(votes)", normalFont))
 
-            case 1000 ..< 1_000_000:
-                res.append(format("votes:", smallFont))
+            case 1000 ..< 1000000:
+                res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
                 res.append(format(" \(votes / 1000)", normalFont))
                 res.append(format("k", smallFont))
             default:
-                res.append(format("votes: ", smallFont))
-                res.append(format("\(votes / 10_000_000)", normalFont))
+                res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
+                res.append(format(" \(votes / 10000000)", normalFont))
                 res.append(format("M", smallFont))
         }
         return res
@@ -185,8 +183,8 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         let res = NSMutableAttributedString()
 
         if let codec = station.codec {
-            res.append(format("codec: ", smallFont))
-            res.append(format(codec.lowercased(), normalFont))
+            res.append(format(NSLocalizedString("codec:", comment: "Internet station row"), smallFont))
+            res.append(format(" \(codec.lowercased())", normalFont))
         }
 
         if let bitrate = station.bitrate {
@@ -201,23 +199,5 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
             }
         }
         return res
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func copyTitleToClipboard() {
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(station.title, forType: .string)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func copyUrlToClipboard() {
-        let pasteboard = NSPasteboard.general
-        pasteboard.declareTypes([.string], owner: nil)
-        pasteboard.setString(station.url, forType: .string)
     }
 }

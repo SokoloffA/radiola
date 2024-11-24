@@ -121,7 +121,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
                 player.toggle()
 
             case .showMainWindow:
-                _ = StationsWindow.show()
+                StationsWindow.show()
 
             case .showHistory:
                 _ = HistoryWindow.show()
@@ -165,7 +165,9 @@ class StatusBarController: NSObject, NSMenuDelegate {
         if settings.showMuteInMenu && !settings.showVolumeInMenu {
             menu.addItem(NSMenuItem.separator())
             let item = NSMenuItem(
-                title: player.isMuted ? "Unmute" : "Mute",
+                title: player.isMuted ?
+                    NSLocalizedString("Unmute", comment: "Status bar menu Item") :
+                    NSLocalizedString("Mute", comment: "Status bar menu Item"),
                 action: #selector(Player.toggleMute),
                 keyEquivalent: "m")
             item.target = player
@@ -192,22 +194,22 @@ class StatusBarController: NSObject, NSMenuDelegate {
         menu.addItem(NSMenuItem.separator())
 
         menu.addItem(NSMenuItem(
-            title: "Open Radiola",
+            title: NSLocalizedString("Open Radiola…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showStationView(_:)),
             keyEquivalent: "r"))
 
         menu.addItem(NSMenuItem(
-            title: "History...",
+            title: NSLocalizedString("History…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showHistory(_:)),
             keyEquivalent: "y"))
 
         menu.addItem(NSMenuItem(
-            title: "Settings...",
+            title: NSLocalizedString("Settings…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showPreferences(_:)),
             keyEquivalent: ","))
 
         menu.addItem(NSMenuItem(
-            title: "Quit".tr,
+            title: NSLocalizedString("Quit", comment: "Status bar menu item"),
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"))
 
@@ -234,7 +236,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
      *
      * ****************************************/
     func buildFlatFavoritesMenu(menu: NSMenu) {
-        menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
 
         for station in appState.favoritesStations() {
             menu.addItem(createStationMenuItem(station))
@@ -245,15 +247,15 @@ class StatusBarController: NSObject, NSMenuDelegate {
      *
      * ****************************************/
     func buildMarginFavoritesMenu(menu: NSMenu) {
-        func build(items: [LocalStationItem], menu: NSMenu, prefix: String = "") {
+        func build(items: [StationItem], menu: NSMenu, prefix: String = "") {
             for item in items {
-                if let station = item as? LocalStation {
+                if let station = item as? Station {
                     if station.isFavorite {
                         menu.addItem(createStationMenuItem(station, prefix: prefix))
                     }
                 }
 
-                if let group = item as? LocalStationGroup {
+                if let group = item as? StationGroup {
                     let n = menu.numberOfItems
 
                     build(items: group.items, menu: menu, prefix: prefix + menuPrefix + "  ")
@@ -265,7 +267,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
             }
         }
 
-        menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
         for list in AppState.shared.localStations {
             build(items: list.items, menu: menu, prefix: menuPrefix)
         }
@@ -275,15 +277,15 @@ class StatusBarController: NSObject, NSMenuDelegate {
      *
      * ****************************************/
     func buildSubmenuFavoritesMenu(menu: NSMenu) {
-        func build(items: [LocalStationItem], menu: NSMenu, prefix: String = "") {
+        func build(items: [StationItem], menu: NSMenu, prefix: String = "") {
             for item in items {
-                if let station = item as? LocalStation {
+                if let station = item as? Station {
                     if station.isFavorite {
                         menu.addItem(createStationMenuItem(station, prefix: prefix))
                     }
                 }
 
-                if let group = item as? LocalStationGroup {
+                if let group = item as? StationGroup {
                     let subMenu = NSMenu()
                     build(items: group.items, menu: subMenu)
                     if subMenu.numberOfItems > 0 {
@@ -295,7 +297,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
             }
         }
 
-        menu.addItem(NSMenuItem(title: "Favorite stations".tr, action: nil, keyEquivalent: ""))
+        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
         for list in AppState.shared.localStations {
             build(items: list.items, menu: menu, prefix: menuPrefix)
         }
@@ -340,7 +342,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
                 menuItem.button?.toolTip =
                     player.stationName +
                     "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                    "Connecting...".tr(withComment: "Tooltip text")
+                    NSLocalizedString("Connecting…", comment: "Tooltip text")
 
             case Player.Status.playing:
                 menuItem.button?.toolTip =

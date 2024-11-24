@@ -400,3 +400,121 @@ class ContextMenu: NSMenu {
         pasteboard.setString(view.stringValue, forType: .string)
     }
 }
+
+// MARK: - StationMenuButton
+
+class StationMenuButton: NSButton {
+    var station: Station?
+
+    init() {
+        super.init(frame: NSRect())
+        bezelStyle = .shadowlessSquare
+        isBordered = false
+        image = NSImage(systemSymbolName: NSImage.Name("ellipsis"), accessibilityDescription: "Context menu")?.tint(color: .lightGray)
+        target = self
+        action = #selector(onClicked)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func onClicked() {
+        guard let station = station else { return }
+
+        let p = NSPoint(x: frame.width / 2, y: frame.height / 2)
+        let menu = NSMenu()
+
+        menu.addItem(withTitle: NSLocalizedString("Copy station title to clipboard", comment: "Station action menu item"), action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
+        menu.addItem(withTitle: NSLocalizedString("Copy station URL  to clipboard", comment: "Station action menu item"), action: #selector(copyUrlToClipboard), keyEquivalent: "").target = self
+
+        menu.addItem(NSMenuItem.separator())
+
+        for list in AppState.shared.localStations {
+            if list.station(byURL: station.url) != nil {
+                continue
+            }
+
+            menu.addItem(withTitle: String(format: NSLocalizedString("Add station to \"%@\"", comment: "Station action menu item. %@ is station list title."),  list.title)) {
+                list.add(station)
+                list.trySave()
+            }
+        }
+        menu.popUp(positioning: nil, at: p, in: self)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copyTitleToClipboard() {
+        guard let station = station else { return }
+
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(station.title, forType: .string)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copyUrlToClipboard() {
+        guard let station = station else { return }
+
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(station.url, forType: .string)
+    }
+}
+
+// MARK: - StationGroupMenuButton
+
+class StationGroupMenuButton: NSButton {
+    var group: StationGroup?
+
+    init() {
+        super.init(frame: NSRect())
+        bezelStyle = .shadowlessSquare
+        isBordered = false
+        image = NSImage(systemSymbolName: NSImage.Name("ellipsis"), accessibilityDescription: "Context menu")?.tint(color: .lightGray)
+        target = self
+        action = #selector(onClicked)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc private func onClicked() {
+        guard let group = group else { return }
+
+        let p = NSPoint(x: frame.width / 2, y: frame.height / 2)
+        let menu = NSMenu()
+
+        menu.addItem(withTitle: "Copy group title to clipboard", action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
+
+        menu.addItem(NSMenuItem.separator())
+
+        for list in AppState.shared.localStations {
+            if list.firstGroup(byID: group.id) != nil {
+                continue
+            }
+
+            menu.addItem(withTitle: "Add group to \(list.title)") {
+                list.add(group)
+                list.trySave()
+            }
+        }
+        menu.popUp(positioning: nil, at: p, in: self)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copyTitleToClipboard() {
+        guard let group = group else { return }
+
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(group.title, forType: .string)
+    }
+}

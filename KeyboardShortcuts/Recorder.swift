@@ -166,7 +166,7 @@ extension KeyboardShortcuts.Recorder {
 		)
 	}
 }
-
+/*
 #Preview {
 	KeyboardShortcuts.Recorder("record_shortcut", name: .init("xcodePreview"))
 		.environment(\.locale, .init(identifier: "en"))
@@ -181,4 +181,5 @@ extension KeyboardShortcuts.Recorder {
 	KeyboardShortcuts.Recorder("record_shortcut", name: .init("xcodePreview"))
 		.environment(\.locale, .init(identifier: "ru"))
 }
+ */
 #endif

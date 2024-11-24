@@ -5,44 +5,80 @@
 //  Created by Aleksandr Sokolov on 01.12.2023.
 //
 
+import CoreData
 import Foundation
 
-// MARK: - AppState
+fileprivate class DefaultStation: Station {
+    var id: UUID = UUID()
+    var title: String
+    var url: String
+    var isFavorite: Bool
 
-fileprivate let oplDirectoryName = "com.github.SokoloffA.Radiola/"
-fileprivate let oplFileName = "bookmarks.opml"
+    init(title: String, url: String, isFavorite: Bool) {
+        self.title = title
+        self.url = url
+        self.isFavorite = isFavorite
+    }
+}
 
-fileprivate let defaultStations: [LocalStation] = [
-    LocalStation(
+// MARK: - Settings
+
+fileprivate let defaultCloudListTitle = NSLocalizedString("My stations", comment: "Station list name")
+fileprivate let defaultCloudListIcon = "music.house"
+
+fileprivate let defaultOpmlListTitle = NSLocalizedString("Local stations", comment: "Station list name")
+fileprivate let defaultOpmlListIcon = "music.house"
+
+fileprivate let opmlDirectoryName = "com.github.SokoloffA.Radiola/"
+fileprivate let opmlFileName = "bookmarks.opml"
+
+fileprivate func opmlFilePath() -> URL {
+    return URL(fileURLWithPath: opmlDirectoryName + "/" + opmlFileName,
+               relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+}
+
+fileprivate func opmlFileExists() -> Bool {
+    return FileManager.default.fileExists(atPath: opmlFilePath().path)
+}
+
+fileprivate func opmlFileDir() -> URL {
+    return URL(fileURLWithPath: opmlDirectoryName,
+               relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+}
+
+fileprivate let defaultStations: [Station] = [
+    DefaultStation(
         title: "Radio Caroline",
         url: "http://sc3.radiocaroline.net:8030",
         isFavorite: true
     ),
 
-    LocalStation(
+    DefaultStation(
         title: "Radio Caroline 319 Gold [ Hits from '60-'70 ]",
         url: "http://www.rcgoldserver.eu:8192",
         isFavorite: true
     ),
 
-    LocalStation(
+    DefaultStation(
         title: "Radio Caroline 259 Gold [ Happy Rock &amp; Album Station ]",
         url: "http://www.rcgoldserver.eu:8253",
         isFavorite: true
     ),
 ]
 
+// MARK: - AppState
+
 class AppState: ObservableObject {
     static let shared = AppState()
+    private var isCloudStationsVisible = false
+    private var isOpmlStationsVisible = false
 
-    @Published var localStations: [LocalStationList] = [
-        LocalStationList(title: "My stations", icon: "music.house", help: nil),
-    ]
+    @Published var localStations: [any StationList] = []
 
     @Published var internetStations: [InternetStationList] = [
-        InternetStationList(title: "By tag", icon: "globe", help: nil, provider: RadioBrowserProvider(.byTag)),
-        InternetStationList(title: "By name", icon: "globe", help: nil, provider: RadioBrowserProvider(.byName)),
-        InternetStationList(title: "By country", icon: "globe", help: nil, provider: RadioBrowserProvider(.byCountry)),
+        InternetStationList(title: NSLocalizedString("By tag", comment: "Internet station list"), icon: "globe", provider: RadioBrowserProvider(.byTag)),
+        InternetStationList(title: NSLocalizedString("By name", comment: "Internet station list"), icon: "globe", provider: RadioBrowserProvider(.byName)),
+        InternetStationList(title: NSLocalizedString("By country", comment: "Internet station list"), icon: "globe", provider: RadioBrowserProvider(.byCountry)),
     ]
 
     public var history = History()
@@ -51,13 +87,133 @@ class AppState: ObservableObject {
      *
      * ****************************************/
     init() {
-        let dirName = URL(
-            fileURLWithPath: oplDirectoryName,
-            relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+        // For debug ===================
+        // iCloud.deleteAll_UseOnlyForDebug()
+        // UserDefaults.standard.removeObject(forKey: "StationsListMode")
 
-        let fileName = URL(
-            fileURLWithPath: oplDirectoryName + "/" + oplFileName,
-            relativeTo: FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first)
+        initStationsLists()
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateStationLists),
+                                               name: Notification.Name.SettingsChanged,
+                                               object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func initStationsLists() {
+        // Not first run -> just load lists
+        if settings.isStationsListModeSet {
+            debug("StationsListMode is set -> load stations: settings.stationsListMode=", settings.stationsListMode)
+            updateCloudStations(show: settings.isShowCloudStations(), defaultStations: defaultStations)
+            updateOpmlStations(show: settings.isShowOpmlStations())
+            return
+        }
+
+        if !opmlFileExists() {
+            debug("This is the first run on this computer, no OPML file - using Cloud with default stations")
+            settings.stationsListMode = .cloud
+            updateCloudStations(show: settings.isShowCloudStations(), defaultStations: defaultStations)
+            return
+        }
+
+        debug("This is the first run on this computer, no OPML file - showing wizard")
+        settings.stationsListMode = StationListWizard.show()
+        debug("Wizard is done: settings.stationsListMode=", settings.stationsListMode)
+
+        updateCloudStations(show: settings.isShowCloudStations(), defaultStations: [])
+        updateOpmlStations(show: settings.isShowOpmlStations())
+
+        // Import stations only in .cloud mode
+        if settings.stationsListMode != .cloud {
+            return
+        }
+
+        debug("Importing stations from OPML to the cloud")
+        guard let cloudList = localStations.first(where: { $0 is CloudStationList }) else { return }
+
+        let opmlList = OpmlStations(title: "", icon: "", file: opmlFilePath())
+        do {
+            try opmlList.load()
+        } catch {
+            error.show()
+            return
+        }
+
+        let merger = StationsMerger(currentStations: cloudList, newStations: opmlList)
+        merger.run()
+        cloudList.trySave()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func updateStationLists() {
+        if isCloudStationsVisible != settings.isShowCloudStations() || isOpmlStationsVisible != settings.isShowOpmlStations() {
+            updateCloudStations(show: settings.isShowCloudStations())
+            updateOpmlStations(show: settings.isShowOpmlStations())
+
+            if StationsWindow.isActie() {
+                StationsWindow.close()
+                StationsWindow.show()
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateCloudStations(show: Bool, defaultStations: [Station] = []) {
+        if show == isCloudStationsVisible {
+            return
+        }
+        isCloudStationsVisible = show
+
+        if !show {
+            localStations.removeAll { $0 is CloudStationList }
+            return
+        }
+
+        // Read iCloud stations ..............................
+        do {
+            var cloudLists = [CloudStationList]()
+            try cloudLists.load()
+
+            for list in cloudLists {
+                try list.load()
+            }
+            debug("Successfully loaded \(cloudLists.count) station lists")
+
+            // Create lists
+            if cloudLists.isEmpty {
+                debug("Create a new list with \(defaultStations.count) stations")
+                try cloudLists.createList(title: defaultCloudListTitle, icon: defaultCloudListIcon, stations: defaultStations)
+            }
+
+            localStations.append(contentsOf: cloudLists)
+        } catch {
+            Alarm.show(title: "Sorry, we couldn't load iCloud stations.", message: error.localizedDescription)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateOpmlStations(show: Bool) {
+        if show == isOpmlStationsVisible {
+            return
+        }
+        isOpmlStationsVisible = show
+
+        if !show {
+            localStations.removeAll { $0 is OpmlStations }
+            return
+        }
+
+        // Read local stations .................................
+        let dirName = opmlFileDir()
+        let fileName = opmlFilePath()
 
         if !FileManager.default.fileExists(atPath: dirName.absoluteString) {
             do {
@@ -67,9 +223,10 @@ class AppState: ObservableObject {
             }
         }
 
-        // Read local stations .................................
         debug("Load stations from: \(fileName.path)")
-        localStations[0].load(file: fileName, defaultStations: defaultStations)
+        let opmlList = OpmlStations(title: defaultOpmlListTitle, icon: defaultOpmlListIcon, file: fileName)
+        opmlList.load(defaultStations: defaultStations)
+        localStations.append(opmlList)
     }
 
     /* ****************************************
@@ -91,7 +248,7 @@ class AppState: ObservableObject {
 
         if !url.isEmpty {
             for list in localStations {
-                if let res = list.first(byURL: url) {
+                if let res = list.firstStation(byURL: url) {
                     return res
                 }
             }
@@ -118,7 +275,7 @@ class AppState: ObservableObject {
 
         var res: Station?
         for sl in localStations {
-            res = sl.first(byID: byID)
+            res = sl.firstStation(byID: byID)
             if res != nil {
                 return res
             }
@@ -142,7 +299,7 @@ class AppState: ObservableObject {
 
         var res: Station?
         for sl in localStations {
-            res = sl.first(byID: byID)
+            res = sl.firstStation(byID: byID)
             if res != nil {
                 return res
             }
@@ -157,7 +314,7 @@ class AppState: ObservableObject {
     func localStation(byURL: String) -> Station? {
         var res: Station?
         for sl in localStations {
-            res = sl.first(byURL: byURL)
+            res = sl.firstStation(byURL: byURL)
             if res != nil {
                 return res
             }
