@@ -87,10 +87,14 @@ fileprivate class PlayItemView: NSView {
         songLabel.lineBreakMode = .byClipping
         stationLabel.font = NSFont.systemFont(ofSize: 13)
         songLabel.setFontWeight(.semibold)
+        songLabel.lineBreakMode = .byTruncatingTail
+        songLabel.usesSingleLineMode = true
 
         stationLabel.textColor = .labelColor
         stationLabel.lineBreakMode = .byClipping
         stationLabel.font = NSFont.systemFont(ofSize: 11)
+        stationLabel.lineBreakMode = .byTruncatingTail
+        stationLabel.usesSingleLineMode = true
 
         playIcon.translatesAutoresizingMaskIntoConstraints = false
         songLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -115,6 +119,9 @@ fileprivate class PlayItemView: NSView {
 
         songLabel.topAnchor.constraint(equalTo: topAnchor, constant: 7).isActive = true
         stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 4).isActive = true
+
+        songLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 400).isActive = true
+        stationLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 400).isActive = true
     }
 
     /* ****************************************
