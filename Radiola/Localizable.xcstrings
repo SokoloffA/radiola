@@ -387,6 +387,7 @@
     },
     "Local stations" : {
       "comment" : "Station list name",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {

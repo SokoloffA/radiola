@@ -58,6 +58,7 @@
     },
     "cloud and local stations" : {
       "comment" : "Settings combobox item",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -69,6 +70,7 @@
     },
     "cloud stations only (recommended)" : {
       "comment" : "Settings combobox item",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -135,6 +137,7 @@
     },
     "local stations only" : {
       "comment" : "Settings combobox item",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
@@ -223,6 +226,7 @@
     },
     "Show station lists:" : {
       "comment" : "Settings control title",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {

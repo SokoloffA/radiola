@@ -74,8 +74,6 @@
 		39B5494D2B5D7DAE00D1E423 /* AlarmPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
 		39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */; };
-		39C140AC2C8C3A7A00431773 /* iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C140AB2C8C3A7A00431773 /* iCloud.swift */; };
-		39C140AE2C8C3BC500431773 /* CloudStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C140AD2C8C3BC500431773 /* CloudStations.swift */; };
 		39D27F532BA36B2D00D5857A /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 39D27F522BA36B2D00D5857A /* Credits.html */; };
 		39D582C42C96B40400AE3A01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39D582C32C96B40400AE3A01 /* Localizable.xcstrings */; };
 		39D582C62C96C49B00AE3A01 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D582C52C96C49B00AE3A01 /* VolumeView.swift */; };
@@ -177,8 +175,6 @@
 		39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPopover.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
 		39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupDialog.swift; sourceTree = "<group>"; };
-		39C140AB2C8C3A7A00431773 /* iCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloud.swift; sourceTree = "<group>"; };
-		39C140AD2C8C3BC500431773 /* CloudStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStations.swift; sourceTree = "<group>"; };
 		39D27F522BA36B2D00D5857A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		39D582C32C96B40400AE3A01 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		39D582C52C96C49B00AE3A01 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
@@ -257,7 +253,6 @@
 				39950B9C2C7B2C4300C37952 /* OpmlStations.swift */,
 				39A7940D2B4B647E000D9875 /* RadioBrowserProvider.swift */,
 				39A794092B4B646D000D9875 /* InternetStations.swift */,
-				39C140AD2C8C3BC500431773 /* CloudStations.swift */,
 			);
 			path = Stations;
 			sourceTree = "<group>";
@@ -288,7 +283,6 @@
 				39F08E452A0CC582006B65D0 /* Types.swift */,
 				39A794112B4B65AF000D9875 /* AppState.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
-				39C140AB2C8C3A7A00431773 /* iCloud.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
 				3959DBB32C03327A0032A1BA /* TrackMetadata.swift */,
@@ -563,7 +557,6 @@
 				392C469B2A6C21BD0095DDA2 /* MediaKeysController.swift in Sources */,
 				3962D03E2BE689090014BCFB /* CarbonKeyboardShortcuts.swift in Sources */,
 				394ABCAB2A9CA25500E2B6E9 /* RadioBrowserStations.swift in Sources */,
-				39C140AC2C8C3A7A00431773 /* iCloud.swift in Sources */,
 				39950B9D2C7B2C4300C37952 /* OpmlStations.swift in Sources */,
 				392024B32A519FF900670ABD /* AppearancePage.swift in Sources */,
 				3975DD132C8310B0005432C7 /* HistoryData.xcdatamodeld in Sources */,
@@ -575,7 +568,6 @@
 				9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */,
 				39A794052B4B33F1000D9875 /* LocalStationDelegate.swift in Sources */,
 				39B5494D2B5D7DAE00D1E423 /* AlarmPopover.swift in Sources */,
-				39C140AE2C8C3BC500431773 /* CloudStations.swift in Sources */,
 				3964339D2B55A69C009BE1CE /* InternetStationSearchPanel.swift in Sources */,
 				39EEEEB82CE0BA86009F391B /* StationListWizard.swift in Sources */,
 				3962D03C2BE688DE0014BCFB /* Utilities.swift in Sources */,

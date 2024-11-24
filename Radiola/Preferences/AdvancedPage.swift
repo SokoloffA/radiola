@@ -9,8 +9,6 @@ import Cocoa
 
 class AdvancedPage: NSViewController {
     private let playLastStationCheckBox = Checkbox(title: NSLocalizedString("Play last station on startup", tableName: "Settings", comment: "Settings control title"))
-    private let stationListLabel = Label(text: NSLocalizedString("Show station lists:", tableName: "Settings", comment: "Settings control title"))
-    private let stationListComboBox = NSPopUpButton()
 
     /* ****************************************
      *
@@ -21,7 +19,6 @@ class AdvancedPage: NSViewController {
         view = createView()
 
         initPlayLastStationCbx()
-        initStationListComboBox()
     }
 
     /* ****************************************
@@ -39,21 +36,12 @@ class AdvancedPage: NSViewController {
         res.autoresizingMask = [.maxXMargin, .minYMargin]
 
         res.addSubview(playLastStationCheckBox)
-        res.addSubview(stationListLabel)
-        res.addSubview(stationListComboBox)
 
         playLastStationCheckBox.translatesAutoresizingMaskIntoConstraints = false
-        stationListLabel.translatesAutoresizingMaskIntoConstraints = false
-        stationListComboBox.translatesAutoresizingMaskIntoConstraints = false
 
-        playLastStationCheckBox.translatesAutoresizingMaskIntoConstraints = false
         playLastStationCheckBox.topAnchor.constraint(equalToSystemSpacingBelow: res.topAnchor, multiplier: 1).isActive = true
-        playLastStationCheckBox.leadingAnchor.constraint(equalTo: stationListComboBox.leadingAnchor).isActive = true
-        playLastStationCheckBox.centerXAnchor.constraint(equalTo: res.centerXAnchor).isActive = true
-
-        stationListComboBox.topAnchor.constraint(equalToSystemSpacingBelow: playLastStationCheckBox.bottomAnchor, multiplier: 1).isActive = true
-        stationListLabel.centerYAnchor.constraint(equalTo: stationListComboBox.centerYAnchor).isActive = true
-        playLastStationCheckBox.leadingAnchor.constraint(equalToSystemSpacingAfter: stationListLabel.trailingAnchor, multiplier: 1).isActive = true
+        playLastStationCheckBox.leadingAnchor.constraint(equalToSystemSpacingAfter: res.leadingAnchor, multiplier: 1).isActive = true
+        res.trailingAnchor.constraint(equalToSystemSpacingAfter: playLastStationCheckBox.trailingAnchor, multiplier: 1).isActive = true
 
         return res
     }
@@ -72,37 +60,6 @@ class AdvancedPage: NSViewController {
      * ****************************************/
     @objc private func playLastStationCbxChanged() {
         settings.playLastStation = playLastStationCheckBox.state == .on
-        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func initStationListComboBox() {
-        stationListComboBox.removeAllItems()
-
-        stationListComboBox.addItem(withTitle: NSLocalizedString("cloud stations only (recommended)", tableName: "Settings", comment: "Settings combobox item"))
-        stationListComboBox.lastItem?.tag = Settings.StationsListMode.cloud.rawValue
-
-        stationListComboBox.addItem(withTitle: NSLocalizedString("local stations only", tableName: "Settings", comment: "Settings combobox item"))
-        stationListComboBox.lastItem?.tag = Settings.StationsListMode.opml.rawValue
-
-        stationListComboBox.addItem(withTitle: NSLocalizedString("cloud and local stations", tableName: "Settings", comment: "Settings combobox item"))
-        stationListComboBox.lastItem?.tag = Settings.StationsListMode.both.rawValue
-
-        stationListComboBox.target = self
-        stationListComboBox.action = #selector(stationListComboBoxChanged)
-
-        stationListComboBox.selectItem(withTag: settings.stationsListMode.rawValue)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func stationListComboBoxChanged() {
-        guard let type = Settings.StationsListMode(rawValue: stationListComboBox.selectedTag()) else { return }
-
-        settings.stationsListMode = type
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 }

@@ -22,11 +22,7 @@ fileprivate class DefaultStation: Station {
 }
 
 // MARK: - Settings
-
-fileprivate let defaultCloudListTitle = NSLocalizedString("My stations", comment: "Station list name")
-fileprivate let defaultCloudListIcon = "music.house"
-
-fileprivate let defaultOpmlListTitle = NSLocalizedString("Local stations", comment: "Station list name")
+fileprivate let defaultOpmlListTitle = NSLocalizedString("My stations", comment: "Station list name")
 fileprivate let defaultOpmlListIcon = "music.house"
 
 fileprivate let opmlDirectoryName = "com.github.SokoloffA.Radiola/"
@@ -87,114 +83,7 @@ class AppState: ObservableObject {
      *
      * ****************************************/
     init() {
-        // For debug ===================
-        // iCloud.deleteAll_UseOnlyForDebug()
-        // UserDefaults.standard.removeObject(forKey: "StationsListMode")
-
-        initStationsLists()
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateStationLists),
-                                               name: Notification.Name.SettingsChanged,
-                                               object: nil)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func initStationsLists() {
-        // Not first run -> just load lists
-        if settings.isStationsListModeSet {
-            debug("StationsListMode is set -> load stations: settings.stationsListMode=", settings.stationsListMode)
-            updateCloudStations(show: settings.isShowCloudStations(), defaultStations: defaultStations)
-            updateOpmlStations(show: settings.isShowOpmlStations())
-            return
-        }
-
-        if !opmlFileExists() {
-            debug("This is the first run on this computer, no OPML file - using Cloud with default stations")
-            settings.stationsListMode = .cloud
-            updateCloudStations(show: settings.isShowCloudStations(), defaultStations: defaultStations)
-            return
-        }
-
-        debug("This is the first run on this computer, no OPML file - showing wizard")
-        settings.stationsListMode = StationListWizard.show()
-        debug("Wizard is done: settings.stationsListMode=", settings.stationsListMode)
-
-        updateCloudStations(show: settings.isShowCloudStations(), defaultStations: [])
-        updateOpmlStations(show: settings.isShowOpmlStations())
-
-        // Import stations only in .cloud mode
-        if settings.stationsListMode != .cloud {
-            return
-        }
-
-        debug("Importing stations from OPML to the cloud")
-        guard let cloudList = localStations.first(where: { $0 is CloudStationList }) else { return }
-
-        let opmlList = OpmlStations(title: "", icon: "", file: opmlFilePath())
-        do {
-            try opmlList.load()
-        } catch {
-            error.show()
-            return
-        }
-
-        let merger = StationsMerger(currentStations: cloudList, newStations: opmlList)
-        merger.run()
-        cloudList.trySave()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func updateStationLists() {
-        if isCloudStationsVisible != settings.isShowCloudStations() || isOpmlStationsVisible != settings.isShowOpmlStations() {
-            updateCloudStations(show: settings.isShowCloudStations())
-            updateOpmlStations(show: settings.isShowOpmlStations())
-
-            if StationsWindow.isActie() {
-                StationsWindow.close()
-                StationsWindow.show()
-            }
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func updateCloudStations(show: Bool, defaultStations: [Station] = []) {
-        if show == isCloudStationsVisible {
-            return
-        }
-        isCloudStationsVisible = show
-
-        if !show {
-            localStations.removeAll { $0 is CloudStationList }
-            return
-        }
-
-        // Read iCloud stations ..............................
-        do {
-            var cloudLists = [CloudStationList]()
-            try cloudLists.load()
-
-            for list in cloudLists {
-                try list.load()
-            }
-            debug("Successfully loaded \(cloudLists.count) station lists")
-
-            // Create lists
-            if cloudLists.isEmpty {
-                debug("Create a new list with \(defaultStations.count) stations")
-                try cloudLists.createList(title: defaultCloudListTitle, icon: defaultCloudListIcon, stations: defaultStations)
-            }
-
-            localStations.append(contentsOf: cloudLists)
-        } catch {
-            Alarm.show(title: "Sorry, we couldn't load iCloud stations.", message: error.localizedDescription)
-        }
+        updateOpmlStations(show: true)
     }
 
     /* ****************************************
