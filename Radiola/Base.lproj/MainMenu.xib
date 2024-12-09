@@ -142,19 +142,6 @@ CA
                     <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
                         <items>
                             <menuItem isSeparatorItem="YES" id="PyG-z3-5vb"/>
-                            <menuItem title="Show stations window…" id="tjG-Nl-eET">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showStationView:" target="-1" id="uGE-7t-fXu"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem title="Show history window…" id="Vjo-CD-d8I">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="showHistory:" target="-1" id="hRD-ds-uo7"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="uqi-Wh-0eY"/>
                             <menuItem title="Minimize" keyEquivalent="m" id="OY7-WF-poV">
                                 <connections>
                                     <action selector="performMiniaturize:" target="-1" id="VwT-WD-YPe"/>
@@ -164,6 +151,19 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="DIl-cC-cCs"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="uqi-Wh-0eY"/>
+                            <menuItem title="Show stations window" id="tjG-Nl-eET">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showStationView:" target="-1" id="uGE-7t-fXu"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Show history window" id="Vjo-CD-d8I">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="showHistory:" target="-1" id="hRD-ds-uo7"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="eu3-7i-yIM"/>
