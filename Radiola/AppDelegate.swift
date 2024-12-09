@@ -128,14 +128,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
-    @objc func showStationView(_ sender: Any?) {
+    @IBAction func showStationView(_ sender: Any?) {
         StationsWindow.show()
     }
 
     /* ****************************************
      *
      * ****************************************/
-    @objc func showHistory(_ sender: Any?) {
+    @IBAction func showHistory(_ sender: Any?) {
         _ = HistoryWindow.show()
     }
 

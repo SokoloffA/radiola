@@ -463,6 +463,18 @@
         }
       }
     },
+    "tjG-Nl-eET.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Show stations window…\"; ObjectID = \"tjG-Nl-eET\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show stations window…"
+          }
+        }
+      }
+    },
     "u4i-pF-Vz5.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Import stations from a file…\"; ObjectID = \"u4i-pF-Vz5\";",
       "extractionState" : "extracted_with_value",
@@ -513,6 +525,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Скрыть остальные"
+          }
+        }
+      }
+    },
+    "Vjo-CD-d8I.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Show history window…\"; ObjectID = \"Vjo-CD-d8I\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show history window…"
           }
         }
       }
