@@ -262,6 +262,12 @@
             "state" : "new",
             "value" : "Show logs"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать логи"
+          }
         }
       }
     },
@@ -472,6 +478,12 @@
             "state" : "new",
             "value" : "Show stations window"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать окно станций"
+          }
         }
       }
     },
@@ -537,6 +549,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Show history window"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показать окно истории"
           }
         }
       }

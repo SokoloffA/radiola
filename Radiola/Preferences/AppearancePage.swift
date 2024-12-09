@@ -8,12 +8,12 @@
 import Cocoa
 
 class AppearancePage: NSViewController {
-    private let favoritesMenuGroupTypeLabel = Label(text: "Show groups in favorites:")
+    private let favoritesMenuGroupTypeLabel = Label(text:  NSLocalizedString("Show groups in favorites:", tableName: "Settings", comment: "Settings label"))
     private let favoritesMenuGroupTypeCbx = NSPopUpButton()
-    private let showVolumeCheckBox = Checkbox(title: "Show the volume control in the menu")
-    private let showMuteCheckBox = Checkbox(title: "Show the mute item in the menu")
-    private let showCopyToClipboardCheckBox = Checkbox(title: "Show the \"Copy song title and artist\" item in the menu")
-    private let showToolTipCheckBox = Checkbox(title: "Show a tooltip with the radiostation and song")
+    private let showVolumeCheckBox = Checkbox(title: NSLocalizedString("Show the volume control in the menu", tableName: "Settings", comment: "Settings label"))
+    private let showMuteCheckBox = Checkbox(title: NSLocalizedString("Show the mute item in the menu", tableName: "Settings", comment: "Settings label"))
+    private let showCopyToClipboardCheckBox = Checkbox(title: NSLocalizedString("Show the \"Copy song title and artist\" item in the menu", tableName: "Settings", comment: "Settings label"))
+    private let showToolTipCheckBox = Checkbox(title: NSLocalizedString("Show a tooltip with the radiostation and song", tableName: "Settings", comment: "Settings label"))
 
     /* ****************************************
      *
@@ -109,13 +109,13 @@ class AppearancePage: NSViewController {
     private func initFavoritesMenuGroupTypeCbx() {
         favoritesMenuGroupTypeCbx.removeAllItems()
 
-        favoritesMenuGroupTypeCbx.addItem(withTitle: "as a flat list")
+        favoritesMenuGroupTypeCbx.addItem(withTitle: NSLocalizedString("as a flat list", tableName: "Settings", comment: "Settings label"))
         favoritesMenuGroupTypeCbx.lastItem?.tag = Settings.FavoritesMenuType.flat.rawValue
 
-        favoritesMenuGroupTypeCbx.addItem(withTitle: "with margins")
+        favoritesMenuGroupTypeCbx.addItem(withTitle: NSLocalizedString("with margins", tableName: "Settings", comment: "Settings label"))
         favoritesMenuGroupTypeCbx.lastItem?.tag = Settings.FavoritesMenuType.margin.rawValue
 
-        favoritesMenuGroupTypeCbx.addItem(withTitle: "as a submenu")
+        favoritesMenuGroupTypeCbx.addItem(withTitle: NSLocalizedString("as a submenu", tableName: "Settings", comment: "Settings label"))
         favoritesMenuGroupTypeCbx.lastItem?.tag = Settings.FavoritesMenuType.submenu.rawValue
 
         favoritesMenuGroupTypeCbx.target = self

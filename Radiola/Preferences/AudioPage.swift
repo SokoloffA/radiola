@@ -9,6 +9,7 @@ import Cocoa
 
 class AudioPage: NSViewController {
     @IBOutlet var deviceCombobox: NSPopUpButton!
+    @IBOutlet var deviceLabel: NSTextField!
 
     /* ****************************************
      *
@@ -16,6 +17,7 @@ class AudioPage: NSViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         title = NSLocalizedString("Audio", tableName: "Settings", comment: "Settings tab title")
+        deviceLabel.stringValue = NSLocalizedString("Device:",tableName: "Settings", comment: "Settings label")
     }
 
     /* ****************************************
