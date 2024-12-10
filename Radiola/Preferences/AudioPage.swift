@@ -17,7 +17,6 @@ class AudioPage: NSViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         title = NSLocalizedString("Audio", tableName: "Settings", comment: "Settings tab title")
-        deviceLabel.stringValue = NSLocalizedString("Device:",tableName: "Settings", comment: "Settings label")
     }
 
     /* ****************************************
@@ -32,6 +31,7 @@ class AudioPage: NSViewController {
      * ****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
+        deviceLabel.stringValue = NSLocalizedString("Device:", tableName: "Settings", comment: "Settings label")
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refreshDeviceCombo),

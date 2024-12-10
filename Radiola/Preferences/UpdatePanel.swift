@@ -17,8 +17,6 @@ class UpdatePanel: NSViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
         title = NSLocalizedString("Updates", tableName: "Settings", comment: "Settings tab title")
-        checkNowButton.title = NSLocalizedString("Check for Updates now", tableName: "Settings", comment: "Settings button title")
-        automaticallyChecksForUpdates.title = NSLocalizedString("Automatically check for updates", tableName: "Settings", comment: "Settings label")
     }
 
     /* ****************************************
@@ -33,6 +31,8 @@ class UpdatePanel: NSViewController {
      * ****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkNowButton.title = NSLocalizedString("Check for Updates now", tableName: "Settings", comment: "Settings button title")
+        automaticallyChecksForUpdates.title = NSLocalizedString("Automatically check for updates", tableName: "Settings", comment: "Settings label")
 
         checkNowButton.target = updater
         checkNowButton.action = #selector(Updater.checkForUpdates)
