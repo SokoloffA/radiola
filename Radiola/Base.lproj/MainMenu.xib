@@ -124,6 +124,23 @@ CA
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Edit" id="j2o-5y-Wge">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Edit" id="7xu-qE-PYX">
+                        <items>
+                            <menuItem title="Copy" keyEquivalent="c" id="GLP-tF-OjD">
+                                <connections>
+                                    <action selector="copy:" target="-1" id="DAt-u7-fZv"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Paste" keyEquivalent="v" id="jJf-Hr-J9V">
+                                <connections>
+                                    <action selector="paste:" target="-1" id="O45-EM-2An"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Control" id="aye-6h-PUN">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Control" id="orG-FP-eYf">

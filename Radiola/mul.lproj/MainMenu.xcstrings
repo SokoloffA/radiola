@@ -109,6 +109,18 @@
         }
       }
     },
+    "7xu-qE-PYX.title" : {
+      "comment" : "Class = \"NSMenu\"; title = \"Edit\"; ObjectID = \"7xu-qE-PYX\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
     "aUF-d1-5bR.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Window\"; ObjectID = \"aUF-d1-5bR\";",
       "extractionState" : "extracted_with_value",
@@ -397,6 +409,18 @@
         }
       }
     },
+    "GLP-tF-OjD.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Copy\"; ObjectID = \"GLP-tF-OjD\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Copy"
+          }
+        }
+      }
+    },
     "hgr-ce-v6k.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Show logs\"; ObjectID = \"hgr-ce-v6k\";",
       "extractionState" : "extracted_with_value",
@@ -453,6 +477,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dienste"
+          }
+        }
+      }
+    },
+    "j2o-5y-Wge.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Edit\"; ObjectID = \"j2o-5y-Wge\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Edit"
+          }
+        }
+      }
+    },
+    "jJf-Hr-J9V.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Paste\"; ObjectID = \"jJf-Hr-J9V\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Paste"
           }
         }
       }
