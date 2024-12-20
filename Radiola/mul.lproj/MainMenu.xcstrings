@@ -34,6 +34,18 @@
             "state" : "translated",
             "value" : "Добавить станцию в список «Мои станции»"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi Stazione alle mie stazioni"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender zu meinen Sendern hinzufügen"
+          }
         }
       }
     },
@@ -51,6 +63,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Завершить Радиолу"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esci da Radiola"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola beenden"
           }
         }
       }
@@ -70,6 +94,18 @@
             "state" : "translated",
             "value" : "О приложении «Radiola»"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informazioni su Radiola"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über Radiola"
+          }
         }
       }
     },
@@ -87,6 +123,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Окно"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenster"
           }
         }
       }
@@ -106,6 +154,18 @@
             "state" : "translated",
             "value" : "Управление"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controllo"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steuerung"
+          }
         }
       }
     },
@@ -123,6 +183,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Основное меню"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu Principale"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hauptmenü"
           }
         }
       }
@@ -142,6 +214,12 @@
             "state" : "translated",
             "value" : "Файл"
           }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei"
+          }
         }
       }
     },
@@ -159,6 +237,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Настройки…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impostazioni..."
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen…"
           }
         }
       }
@@ -178,6 +268,18 @@
             "state" : "translated",
             "value" : "Создать новую станцию"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuova Stazione"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neuer Sender"
+          }
         }
       }
     },
@@ -195,6 +297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Файл"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei"
           }
         }
       }
@@ -214,6 +322,18 @@
             "state" : "translated",
             "value" : "Закрыть"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiudi"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
+          }
         }
       }
     },
@@ -231,6 +351,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Справка"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe"
           }
         }
       }
@@ -250,6 +382,18 @@
             "state" : "translated",
             "value" : "Справка Радиолы"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto di Radiola"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola Hilfe"
+          }
         }
       }
     },
@@ -267,6 +411,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать логи"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra logs"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protokolle anzeigen"
           }
         }
       }
@@ -286,6 +442,18 @@
             "state" : "translated",
             "value" : "Службы"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servizi"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dienste"
+          }
         }
       }
     },
@@ -303,6 +471,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать все"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra tutte"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles anzeigen"
           }
         }
       }
@@ -322,6 +502,18 @@
             "state" : "translated",
             "value" : "Все окна — на передний план"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Porta tutto in primo piano"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle nach vorne bringen"
+          }
         }
       }
     },
@@ -339,6 +531,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Службы"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servizi"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dienste"
           }
         }
       }
@@ -358,6 +562,18 @@
             "state" : "translated",
             "value" : "Скрыть Радиолу"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi Radiola"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola ausblenden"
+          }
         }
       }
     },
@@ -375,6 +591,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Управление"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controllo"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steuerung"
           }
         }
       }
@@ -394,6 +622,18 @@
             "state" : "translated",
             "value" : "Скрыть Радиолу"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrai"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimieren"
+          }
         }
       }
     },
@@ -411,6 +651,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Воспроизвести"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riproduci"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abspielen"
           }
         }
       }
@@ -430,6 +682,12 @@
             "state" : "translated",
             "value" : "Изменить масштаб"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ridimensiona"
+          }
         }
       }
     },
@@ -447,6 +705,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Удалить станцию или группу"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina Stazione o Gruppo"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender oder Gruppe löschen"
           }
         }
       }
@@ -466,6 +736,18 @@
             "state" : "translated",
             "value" : "Окно"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finestra"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenster"
+          }
         }
       }
     },
@@ -484,6 +766,18 @@
             "state" : "translated",
             "value" : "Показать окно станций"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra finestra delle Stazioni"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senderfenster zeigen"
+          }
         }
       }
     },
@@ -501,6 +795,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Импортировать станции из файла…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importa stazioni da file..."
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender aus Datei importieren…"
           }
         }
       }
@@ -538,6 +844,18 @@
             "state" : "translated",
             "value" : "Скрыть остальные"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nascondi Altre"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andere ausblenden"
+          }
         }
       }
     },
@@ -555,6 +873,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать окно истории"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra finestra cronologia"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlaufsfenster zeigen"
           }
         }
       }
@@ -574,6 +904,18 @@
             "state" : "translated",
             "value" : "Экспортировать станции в файл…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esporta stazioni su file..."
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender in Datei exportieren…"
+          }
         }
       }
     },
@@ -591,6 +933,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Создать новую группу станций"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuovo Gruppo Stazioni"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Sendergruppe"
           }
         }
       }
@@ -610,6 +964,18 @@
             "state" : "translated",
             "value" : "Справка"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aiuto"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe"
+          }
         }
       }
     },
@@ -628,6 +994,18 @@
             "state" : "translated",
             "value" : "Проверить наличие обновлений…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controlla aggiornamenti..."
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Updates suchen…"
+          }
         }
       }
     },
@@ -645,6 +1023,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пауза"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausa"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausieren"
           }
         }
       }

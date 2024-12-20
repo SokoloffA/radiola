@@ -9,6 +9,18 @@
             "state" : "translated",
             "value" : "Дополнительно"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avanzate"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erweitert"
+          }
         }
       }
     },
@@ -19,6 +31,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "всегда"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sempre"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "immer"
           }
         }
       }
@@ -31,6 +55,18 @@
             "state" : "translated",
             "value" : "Внешний вид"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aspetto"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aussehen"
+          }
         }
       }
     },
@@ -42,6 +78,18 @@
             "state" : "translated",
             "value" : "как плоский список"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "come lista"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "als einfache Liste"
+          }
         }
       }
     },
@@ -52,6 +100,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "как вложенные меню"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "come sottomenu"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "als Untermenü"
           }
         }
       }
@@ -75,6 +135,12 @@
             "state" : "translated",
             "value" : "Автоматически проверять обновления"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca aggiornamenti automaticamente"
+          }
         }
       }
     },
@@ -86,6 +152,18 @@
             "state" : "translated",
             "value" : "меняет громкость"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regola il volume"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ändert die Lautstärke"
+          }
         }
       }
     },
@@ -96,6 +174,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проверить обновления сейчас"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca aggiornamenti"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jetzt nach Updates suchen"
           }
         }
       }
@@ -109,6 +199,18 @@
             "state" : "translated",
             "value" : "из облака и локальные станции"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "stazioni in cloud e in locale"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online und lokale Sender"
+          }
         }
       }
     },
@@ -121,6 +223,18 @@
             "state" : "translated",
             "value" : "только из облака (рекомендуется)"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solo stazioni in cloud (raccomandato)"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur Online-Sender (empfohlen)"
+          }
         }
       }
     },
@@ -131,6 +245,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Управление"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Controlli"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontrollelemente"
           }
         }
       }
@@ -143,6 +269,18 @@
             "state" : "translated",
             "value" : "Устройство:"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dispositivi:"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gerät:"
+          }
         }
       }
     },
@@ -153,6 +291,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ничего не делает"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nessuna azione"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tut nichts"
           }
         }
       }
@@ -165,6 +315,18 @@
             "state" : "translated",
             "value" : "Глобальные клавиши для отображения истории"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorciatoia mostra Cronologia"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Globaler Kurzbefehl zum Anzeigen des Verlaufs"
+          }
         }
       }
     },
@@ -176,6 +338,18 @@
             "state" : "translated",
             "value" : "Глобальные клавиши для отображения станций"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorciatoia mostra Stazioni"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Globaler Kurzbefehl zum Anzeigen der Sender"
+          }
         }
       }
     },
@@ -186,6 +360,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Левая кнопка мыши:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasto sinistro del mouse:"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linke Maustaste:"
           }
         }
       }
@@ -199,6 +385,18 @@
             "state" : "translated",
             "value" : "тольео локальные станции"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solo stazioni in locale"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nur lokale Sender"
+          }
         }
       }
     },
@@ -209,6 +407,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Медиа клавиши:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utilizza i tasti media della tastiera:"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handhabung der Medientasten:"
           }
         }
       }
@@ -221,6 +431,18 @@
             "state" : "translated",
             "value" : "Средняя кнопка мыши:"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasto centrale del mouse:"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mittlere Maustaste:"
+          }
         }
       }
     },
@@ -231,6 +453,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Колесико мыши:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rotellina del mouse:"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mausrad:"
           }
         }
       }
@@ -243,6 +477,18 @@
             "state" : "translated",
             "value" : "никогда"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mai"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "niemals"
+          }
         }
       }
     },
@@ -253,6 +499,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Играть последнюю станцию при запуске программы"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riproduci l'ultima stazione all'avvio"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bei Start den letzten Sender abspielen"
           }
         }
       }
@@ -265,6 +523,18 @@
             "state" : "translated",
             "value" : "Кнопки предыдущей и следующей трека:"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasti traccia precedente e successiva"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaltflächen für vorherigen und nächsten Titel:"
+          }
         }
       }
     },
@@ -275,6 +545,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Правая кнопка мыши:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tasto destro del mouse:"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rechte Maustaste"
           }
         }
       }
@@ -287,6 +569,18 @@
             "state" : "translated",
             "value" : "Показать всплывающую подсказку с радиостанцией и песней"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra etichetta nome stazione e brano"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tooltip mit Radiosender und Song anzeigen"
+          }
         }
       }
     },
@@ -297,6 +591,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показывать группы в «любимых станциях»:"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra i gruppi nei preferiti:"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruppen in Favoriten anzeigen:"
           }
         }
       }
@@ -310,6 +616,18 @@
             "state" : "translated",
             "value" : "Показывать списки станций:"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra lista stazioni:"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senderliste zeigen:"
+          }
         }
       }
     },
@@ -320,6 +638,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать в меню пункт «Копировать название песни и исполнителя»."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra il comando \"Copia titolo brano e artista\" nel menu"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den Eintrag „Songtitel und Interpret kopieren“ im Menü anzeigen"
           }
         }
       }
@@ -332,6 +662,18 @@
             "state" : "translated",
             "value" : "Показывать пункт «Выключить звук» в меню"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra il controllo \"Muto\" nel menu"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stummschaltungselement im Menü anzeigen"
+          }
         }
       }
     },
@@ -342,6 +684,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показывать регулятор громкости в меню"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra il controllo del volume nel menu"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lautstärkeregler im Menü anzeigen"
           }
         }
       }
@@ -354,6 +708,18 @@
             "state" : "translated",
             "value" : "показывает историю"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mostra cronologia"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlauf anzeigen"
+          }
         }
       }
     },
@@ -364,6 +730,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "показывает главное окно"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mostra la finestra principale"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "zeigt das Hauptfenster"
           }
         }
       }
@@ -376,6 +754,18 @@
             "state" : "translated",
             "value" : "показывает всплывающее меню"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mostra il menu a comparsa"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "zeigt das Popup-Menü"
+          }
         }
       }
     },
@@ -386,6 +776,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "переключает любимые станции"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cambia stazione preferita"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieblingssender wechseln"
           }
         }
       }
@@ -398,6 +800,18 @@
             "state" : "translated",
             "value" : "включает и выключает звук"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "attiva/disattiva muto"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "schaltet Stumm um"
+          }
         }
       }
     },
@@ -408,6 +822,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "переключает воспроизведение и паузу"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "attiva/disattiva riproduzione e pausa"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "schaltet Wiedergabe und Pause um"
           }
         }
       }
@@ -420,6 +846,18 @@
             "state" : "translated",
             "value" : "Обновления"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiornamenti"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualisierungen"
+          }
         }
       }
     },
@@ -430,6 +868,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "когда открыто главное окно"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "quando la finestra principale è aperta"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "wenn das Hauptfenster geöffnet ist"
           }
         }
       }
@@ -442,6 +892,18 @@
             "state" : "translated",
             "value" : "с отступами"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lista con margini"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mit Rändern"
+          }
         }
       }
     },
@@ -452,6 +914,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы всегда можете открыть меню с помощью Control+Mouse Click"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi aprire il menu con Control + Click"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können das Menü jederzeit mit Control+Mausklick öffnen"
           }
         }
       }
