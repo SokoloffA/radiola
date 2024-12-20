@@ -82,7 +82,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "come lista"
+            "value" : "lista semplice"
           }
         },
         "de_DE" : {
@@ -105,7 +105,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "come sottomenu"
+            "value" : "sottomenu"
           }
         },
         "de_DE" : {
@@ -140,6 +140,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerca aggiornamenti automaticamente"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatisch nach Updates suchen"
           }
         }
       }
@@ -203,7 +209,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "stazioni in cloud e in locale"
+            "value" : "stazioni in cloud e locali"
           }
         },
         "de_DE" : {
@@ -273,7 +279,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dispositivi:"
+            "value" : "Dispositivo:"
           }
         },
         "de_DE" : {
@@ -319,7 +325,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scorciatoia mostra Cronologia"
+            "value" : "Scorciatoia finestra Cronologia"
           }
         },
         "de_DE" : {
@@ -342,7 +348,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scorciatoia mostra Stazioni"
+            "value" : "Scorciatoia finestra Stazioni"
           }
         },
         "de_DE" : {
@@ -389,7 +395,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "solo stazioni in locale"
+            "value" : "solo stazioni locali"
           }
         },
         "de_DE" : {
@@ -418,7 +424,7 @@
         "de_DE" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Handhabung der Medientasten:"
+            "value" : "Benutzung der Medien-Tasten:"
           }
         }
       }
@@ -596,7 +602,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostra i gruppi nei preferiti:"
+            "value" : "Mostra i gruppi nei preferiti come:"
           }
         },
         "de_DE" : {
@@ -672,7 +678,7 @@
         "de_DE" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stummschaltungselement im Menü anzeigen"
+            "value" : "Stummschaltung im Menü anzeigen"
           }
         }
       }
@@ -827,7 +833,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "attiva/disattiva riproduzione e pausa"
+            "value" : "riproduci/pausa"
           }
         },
         "de_DE" : {

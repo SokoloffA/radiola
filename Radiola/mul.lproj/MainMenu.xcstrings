@@ -124,6 +124,18 @@
             "state" : "translated",
             "value" : "Правка"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
         }
       }
     },
@@ -430,6 +442,18 @@
             "state" : "translated",
             "value" : "Скопировать"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieren"
+          }
         }
       }
     },
@@ -508,6 +532,18 @@
             "state" : "translated",
             "value" : "Правка"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modifica"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
         }
       }
     },
@@ -525,6 +561,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вставить"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incolla"
+          }
+        },
+        "de_DE" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einfügen"
           }
         }
       }
@@ -950,7 +998,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostra finestra cronologia"
+            "value" : "Mostra finestra Cronologia"
           }
         },
         "de_DE" : {
