@@ -186,7 +186,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
             menu.addItem(NSMenuItem.separator())
 
             menu.addItem(NSMenuItem(
-                title: "Copy song title and artist",
+                title:  NSLocalizedString("Copy song title and artist", comment: "Status bar menu item"),
                 action: #selector(AppDelegate.copySongToClipboard(_:)),
                 keyEquivalent: "c"))
         }

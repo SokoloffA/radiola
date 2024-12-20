@@ -118,6 +118,12 @@
             "state" : "new",
             "value" : "Edit"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правка"
+          }
         }
       }
     },
@@ -418,6 +424,12 @@
             "state" : "new",
             "value" : "Copy"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировать"
+          }
         }
       }
     },
@@ -490,6 +502,12 @@
             "state" : "new",
             "value" : "Edit"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Правка"
+          }
         }
       }
     },
@@ -501,6 +519,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Paste"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставить"
           }
         }
       }
