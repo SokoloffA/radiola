@@ -54,6 +54,25 @@ def remove_stale_strings(xcstrings_file):
 
 ##################################
 #
+def remove_language(lang, xcstrings_file):
+    with open(xcstrings_file) as r:
+        xcstrings = json.load(r)
+
+    for key, value in xcstrings["strings"].items():
+        localizations = value["localizations"]
+
+        if lang in localizations:
+            #print(localizations[lang])
+            localizations.pop(lang, None)
+            #print(localizations[lang])
+            #localizations#value["localizations"].pop(lang, None)
+
+    with open(xcstrings_file, 'w', encoding='utf-8') as f:
+        json.dump(xcstrings, f, ensure_ascii=False, sort_keys=False, indent=2, separators=(',', ' : '))
+
+
+##################################
+#
 def parse_icu_plurals(str):
     res = {}
     level = 0
@@ -172,6 +191,7 @@ if __name__ == "__main__":
 
         for xcstrings_file in xcstrings_files:
             remove_stale_strings(xcstrings_file)
+            #remove_language("de_DE", xcstrings_file)
 
             for lang in glob.glob("*", root_dir=TMP_DIR):
 

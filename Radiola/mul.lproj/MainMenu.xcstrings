@@ -41,7 +41,7 @@
             "value" : "Aggiungi Stazione alle mie stazioni"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sender zu meinen Sendern hinzufügen"
@@ -71,7 +71,7 @@
             "value" : "Esci da Radiola"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Radiola beenden"
@@ -101,7 +101,7 @@
             "value" : "Informazioni su Radiola"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Über Radiola"
@@ -131,7 +131,7 @@
             "value" : "Modifica"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bearbeiten"
@@ -161,7 +161,7 @@
             "value" : "Finestra"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fenster"
@@ -191,7 +191,7 @@
             "value" : "Controllo"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Steuerung"
@@ -221,7 +221,7 @@
             "value" : "Menu Principale"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hauptmenü"
@@ -245,7 +245,7 @@
             "value" : "Файл"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Datei"
@@ -275,7 +275,7 @@
             "value" : "Impostazioni..."
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einstellungen…"
@@ -305,7 +305,7 @@
             "value" : "Nuova Stazione"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neuer Sender"
@@ -329,7 +329,7 @@
             "value" : "Файл"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Datei"
@@ -359,7 +359,7 @@
             "value" : "Chiudi"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schließen"
@@ -389,7 +389,7 @@
             "value" : "Aiuto"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hilfe"
@@ -419,7 +419,7 @@
             "value" : "Aiuto di Radiola"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Radiola Hilfe"
@@ -449,7 +449,7 @@
             "value" : "Copia"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kopieren"
@@ -479,7 +479,7 @@
             "value" : "Mostra logs"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Protokolle anzeigen"
@@ -509,7 +509,7 @@
             "value" : "Servizi"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dienste"
@@ -539,7 +539,7 @@
             "value" : "Modifica"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bearbeiten"
@@ -569,7 +569,7 @@
             "value" : "Incolla"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einfügen"
@@ -599,7 +599,7 @@
             "value" : "Mostra tutte"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alles anzeigen"
@@ -629,7 +629,7 @@
             "value" : "Porta tutto in primo piano"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alle nach vorne bringen"
@@ -659,7 +659,7 @@
             "value" : "Servizi"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dienste"
@@ -689,7 +689,7 @@
             "value" : "Nascondi Radiola"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Radiola ausblenden"
@@ -719,7 +719,7 @@
             "value" : "Controllo"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Steuerung"
@@ -749,7 +749,7 @@
             "value" : "Contrai"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minimieren"
@@ -779,7 +779,7 @@
             "value" : "Riproduci"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abspielen"
@@ -833,7 +833,7 @@
             "value" : "Elimina Stazione o Gruppo"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sender oder Gruppe löschen"
@@ -863,7 +863,7 @@
             "value" : "Finestra"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fenster"
@@ -893,7 +893,7 @@
             "value" : "Mostra finestra delle Stazioni"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Senderfenster zeigen"
@@ -923,7 +923,7 @@
             "value" : "Importa stazioni da file..."
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sender aus Datei importieren…"
@@ -971,7 +971,7 @@
             "value" : "Nascondi Altre"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Andere ausblenden"
@@ -1001,7 +1001,7 @@
             "value" : "Mostra finestra Cronologia"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verlaufsfenster zeigen"
@@ -1031,7 +1031,7 @@
             "value" : "Esporta stazioni su file..."
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sender in Datei exportieren…"
@@ -1061,7 +1061,7 @@
             "value" : "Nuovo Gruppo Stazioni"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neue Sendergruppe"
@@ -1091,7 +1091,7 @@
             "value" : "Aiuto"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hilfe"
@@ -1121,7 +1121,7 @@
             "value" : "Controlla aggiornamenti..."
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nach Updates suchen…"
@@ -1151,7 +1151,7 @@
             "value" : "Pausa"
           }
         },
-        "de_DE" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pausieren"
