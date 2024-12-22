@@ -23,16 +23,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Add Station to my stations\"; ObjectID = \"2eI-ve-OHp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender zu meinen Sendern hinzufügen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Add Station to my stations"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Добавить станцию в список «Мои станции»"
           }
         },
         "it" : {
@@ -41,10 +41,10 @@
             "value" : "Aggiungi Stazione alle mie stazioni"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sender zu meinen Sendern hinzufügen"
+            "value" : "Добавить станцию в список «Мои станции»"
           }
         }
       }
@@ -53,16 +53,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Quit Radiola\"; ObjectID = \"4sb-4s-VLi\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola beenden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Quit Radiola"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Завершить Радиолу"
           }
         },
         "it" : {
@@ -71,10 +71,10 @@
             "value" : "Esci da Radiola"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Radiola beenden"
+            "value" : "Завершить Радиолу"
           }
         }
       }
@@ -83,16 +83,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"About Radiola\"; ObjectID = \"5kV-Vb-QxS\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Über Radiola"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "About Radiola"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "О приложении «Radiola»"
           }
         },
         "it" : {
@@ -101,10 +101,10 @@
             "value" : "Informazioni su Radiola"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Über Radiola"
+            "value" : "О приложении «Radiola»"
           }
         }
       }
@@ -113,16 +113,16 @@
       "comment" : "Class = \"NSMenu\"; title = \"Edit\"; ObjectID = \"7xu-qE-PYX\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Edit"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Правка"
           }
         },
         "it" : {
@@ -131,10 +131,10 @@
             "value" : "Modifica"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bearbeiten"
+            "value" : "Правка"
           }
         }
       }
@@ -143,16 +143,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Window\"; ObjectID = \"aUF-d1-5bR\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenster"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Window"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Окно"
           }
         },
         "it" : {
@@ -161,10 +161,10 @@
             "value" : "Finestra"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fenster"
+            "value" : "Окно"
           }
         }
       }
@@ -173,16 +173,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Control\"; ObjectID = \"aye-6h-PUN\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steuerung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Control"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Управление"
           }
         },
         "it" : {
@@ -191,10 +191,10 @@
             "value" : "Controllo"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Steuerung"
+            "value" : "Управление"
           }
         }
       }
@@ -203,16 +203,16 @@
       "comment" : "Class = \"NSMenu\"; title = \"Main Menu\"; ObjectID = \"AYu-sK-qS6\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hauptmenü"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Main Menu"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Основное меню"
           }
         },
         "it" : {
@@ -221,10 +221,10 @@
             "value" : "Menu Principale"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hauptmenü"
+            "value" : "Основное меню"
           }
         }
       }
@@ -233,6 +233,12 @@
       "comment" : "Class = \"NSMenu\"; title = \"File\"; ObjectID = \"bib-Uj-vzu\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -243,12 +249,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Файл"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Datei"
           }
         }
       }
@@ -257,16 +257,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Settings…\"; ObjectID = \"BOF-NM-1cW\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen…"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Settings…"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Настройки…"
           }
         },
         "it" : {
@@ -275,10 +275,10 @@
             "value" : "Impostazioni..."
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Einstellungen…"
+            "value" : "Настройки…"
           }
         }
       }
@@ -287,16 +287,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"New Station\"; ObjectID = \"DcO-1r-sRD\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neuer Sender"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "New Station"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Создать новую станцию"
           }
         },
         "it" : {
@@ -305,10 +305,10 @@
             "value" : "Nuova Stazione"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neuer Sender"
+            "value" : "Создать новую станцию"
           }
         }
       }
@@ -317,6 +317,12 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"File\"; ObjectID = \"dMs-cI-mzQ\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datei"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -328,12 +334,6 @@
             "state" : "translated",
             "value" : "Файл"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Datei"
-          }
         }
       }
     },
@@ -341,16 +341,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Close\"; ObjectID = \"DVo-aG-piG\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Close"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Закрыть"
           }
         },
         "it" : {
@@ -359,10 +359,22 @@
             "value" : "Chiudi"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schließen"
+            "value" : "Закрыть"
+          }
+        }
+      }
+    },
+    "e6h-zl-bqy.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Float on top\"; ObjectID = \"e6h-zl-bqy\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Float on top"
           }
         }
       }
@@ -371,16 +383,16 @@
       "comment" : "Class = \"NSMenu\"; title = \"Help\"; ObjectID = \"F2S-fz-NVQ\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Help"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Справка"
           }
         },
         "it" : {
@@ -389,10 +401,10 @@
             "value" : "Aiuto"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hilfe"
+            "value" : "Справка"
           }
         }
       }
@@ -401,16 +413,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Radiola Help\"; ObjectID = \"FKE-Sm-Kum\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola Hilfe"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Radiola Help"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Справка Радиолы"
           }
         },
         "it" : {
@@ -419,10 +431,10 @@
             "value" : "Aiuto di Radiola"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Radiola Hilfe"
+            "value" : "Справка Радиолы"
           }
         }
       }
@@ -431,16 +443,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Copy\"; ObjectID = \"GLP-tF-OjD\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Copy"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Скопировать"
           }
         },
         "it" : {
@@ -449,10 +461,10 @@
             "value" : "Copia"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kopieren"
+            "value" : "Скопировать"
           }
         }
       }
@@ -461,16 +473,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Show logs\"; ObjectID = \"hgr-ce-v6k\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Protokolle anzeigen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Show logs"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Показать логи"
           }
         },
         "it" : {
@@ -479,10 +491,10 @@
             "value" : "Mostra logs"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Protokolle anzeigen"
+            "value" : "Показать логи"
           }
         }
       }
@@ -491,16 +503,16 @@
       "comment" : "Class = \"NSMenu\"; title = \"Services\"; ObjectID = \"hz9-B4-Xy5\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dienste"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Services"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Службы"
           }
         },
         "it" : {
@@ -509,10 +521,10 @@
             "value" : "Servizi"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dienste"
+            "value" : "Службы"
           }
         }
       }
@@ -521,16 +533,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Edit\"; ObjectID = \"j2o-5y-Wge\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bearbeiten"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Edit"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Правка"
           }
         },
         "it" : {
@@ -539,10 +551,10 @@
             "value" : "Modifica"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bearbeiten"
+            "value" : "Правка"
           }
         }
       }
@@ -551,16 +563,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Paste\"; ObjectID = \"jJf-Hr-J9V\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einfügen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Paste"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вставить"
           }
         },
         "it" : {
@@ -569,10 +581,10 @@
             "value" : "Incolla"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Einfügen"
+            "value" : "Вставить"
           }
         }
       }
@@ -581,16 +593,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Show All\"; ObjectID = \"Kd2-mp-pUS\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles anzeigen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Show All"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Показать все"
           }
         },
         "it" : {
@@ -599,10 +611,10 @@
             "value" : "Mostra tutte"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alles anzeigen"
+            "value" : "Показать все"
           }
         }
       }
@@ -611,16 +623,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Bring All to Front\"; ObjectID = \"LE2-aR-0XJ\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle nach vorne bringen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Bring All to Front"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Все окна — на передний план"
           }
         },
         "it" : {
@@ -629,10 +641,10 @@
             "value" : "Porta tutto in primo piano"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Alle nach vorne bringen"
+            "value" : "Все окна — на передний план"
           }
         }
       }
@@ -641,16 +653,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Services\"; ObjectID = \"NMo-om-nkz\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dienste"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Services"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Службы"
           }
         },
         "it" : {
@@ -659,10 +671,10 @@
             "value" : "Servizi"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dienste"
+            "value" : "Службы"
           }
         }
       }
@@ -671,16 +683,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Hide Radiola\"; ObjectID = \"Olw-nP-bQN\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola ausblenden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Hide Radiola"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Скрыть Радиолу"
           }
         },
         "it" : {
@@ -689,10 +701,10 @@
             "value" : "Nascondi Radiola"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Radiola ausblenden"
+            "value" : "Скрыть Радиолу"
           }
         }
       }
@@ -701,16 +713,16 @@
       "comment" : "Class = \"NSMenu\"; title = \"Control\"; ObjectID = \"orG-FP-eYf\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steuerung"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Control"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Управление"
           }
         },
         "it" : {
@@ -719,10 +731,10 @@
             "value" : "Controllo"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Steuerung"
+            "value" : "Управление"
           }
         }
       }
@@ -731,16 +743,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Minimize\"; ObjectID = \"OY7-WF-poV\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimieren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Minimize"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Скрыть Радиолу"
           }
         },
         "it" : {
@@ -749,10 +761,10 @@
             "value" : "Contrai"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Minimieren"
+            "value" : "Скрыть Радиолу"
           }
         }
       }
@@ -761,16 +773,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Play\"; ObjectID = \"pkP-Vg-BQh\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abspielen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Play"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Воспроизвести"
           }
         },
         "it" : {
@@ -779,10 +791,10 @@
             "value" : "Riproduci"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Abspielen"
+            "value" : "Воспроизвести"
           }
         }
       }
@@ -797,16 +809,16 @@
             "value" : "Zoom"
           }
         },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Изменить масштаб"
-          }
-        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ridimensiona"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Изменить масштаб"
           }
         }
       }
@@ -815,16 +827,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Delete Station or Group\"; ObjectID = \"SRc-Kl-kmc\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender oder Gruppe löschen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Delete Station or Group"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удалить станцию или группу"
           }
         },
         "it" : {
@@ -833,10 +845,10 @@
             "value" : "Elimina Stazione o Gruppo"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sender oder Gruppe löschen"
+            "value" : "Удалить станцию или группу"
           }
         }
       }
@@ -845,16 +857,16 @@
       "comment" : "Class = \"NSMenu\"; title = \"Window\"; ObjectID = \"Td7-aD-5lo\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenster"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Window"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Окно"
           }
         },
         "it" : {
@@ -863,10 +875,10 @@
             "value" : "Finestra"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fenster"
+            "value" : "Окно"
           }
         }
       }
@@ -875,16 +887,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Show stations window\"; ObjectID = \"tjG-Nl-eET\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Senderfenster zeigen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Show stations window"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Показать окно станций"
           }
         },
         "it" : {
@@ -893,10 +905,10 @@
             "value" : "Mostra finestra delle Stazioni"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Senderfenster zeigen"
+            "value" : "Показать окно станций"
           }
         }
       }
@@ -905,16 +917,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Import stations from a file…\"; ObjectID = \"u4i-pF-Vz5\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender aus Datei importieren…"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Import stations from a file…"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Импортировать станции из файла…"
           }
         },
         "it" : {
@@ -923,10 +935,10 @@
             "value" : "Importa stazioni da file..."
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sender aus Datei importieren…"
+            "value" : "Импортировать станции из файла…"
           }
         }
       }
@@ -953,16 +965,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Hide Others\"; ObjectID = \"Vdr-fp-XzO\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andere ausblenden"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Hide Others"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Скрыть остальные"
           }
         },
         "it" : {
@@ -971,10 +983,10 @@
             "value" : "Nascondi Altre"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Andere ausblenden"
+            "value" : "Скрыть остальные"
           }
         }
       }
@@ -983,16 +995,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Show history window\"; ObjectID = \"Vjo-CD-d8I\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlaufsfenster zeigen"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Show history window"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Показать окно истории"
           }
         },
         "it" : {
@@ -1001,10 +1013,10 @@
             "value" : "Mostra finestra Cronologia"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verlaufsfenster zeigen"
+            "value" : "Показать окно истории"
           }
         }
       }
@@ -1013,16 +1025,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Export stations to a file…\"; ObjectID = \"vU5-0L-qOr\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender in Datei exportieren…"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Export stations to a file…"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Экспортировать станции в файл…"
           }
         },
         "it" : {
@@ -1031,10 +1043,10 @@
             "value" : "Esporta stazioni su file..."
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sender in Datei exportieren…"
+            "value" : "Экспортировать станции в файл…"
           }
         }
       }
@@ -1043,16 +1055,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"New Station Group\"; ObjectID = \"wMs-Pa-zXE\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neue Sendergruppe"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "New Station Group"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Создать новую группу станций"
           }
         },
         "it" : {
@@ -1061,10 +1073,10 @@
             "value" : "Nuovo Gruppo Stazioni"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Neue Sendergruppe"
+            "value" : "Создать новую группу станций"
           }
         }
       }
@@ -1073,16 +1085,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Help\"; ObjectID = \"wpr-3q-Mcd\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hilfe"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Help"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Справка"
           }
         },
         "it" : {
@@ -1091,10 +1103,10 @@
             "value" : "Aiuto"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hilfe"
+            "value" : "Справка"
           }
         }
       }
@@ -1103,16 +1115,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Check For Updates…\"; ObjectID = \"XQ9-kA-ObC\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Updates suchen…"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Check For Updates…"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Проверить наличие обновлений…"
           }
         },
         "it" : {
@@ -1121,10 +1133,10 @@
             "value" : "Controlla aggiornamenti..."
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nach Updates suchen…"
+            "value" : "Проверить наличие обновлений…"
           }
         }
       }
@@ -1133,16 +1145,16 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Pause\"; ObjectID = \"ZaX-dn-1ol\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausieren"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Pause"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пауза"
           }
         },
         "it" : {
@@ -1151,10 +1163,10 @@
             "value" : "Pausa"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pausieren"
+            "value" : "Пауза"
           }
         }
       }

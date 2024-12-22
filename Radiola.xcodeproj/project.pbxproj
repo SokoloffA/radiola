@@ -71,6 +71,7 @@
 		39A794102B4B6483000D9875 /* Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7940F2B4B6483000D9875 /* Stations.swift */; };
 		39A794122B4B65AF000D9875 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A794112B4B65AF000D9875 /* AppState.swift */; };
 		39ADF3842C98D4C9009794C3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39ADF3832C98D4C9009794C3 /* MainMenu.xib */; };
+		39AFBE3F2D18370E008D4087 /* MainMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */; };
 		39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */; };
 		39B5494D2B5D7DAE00D1E423 /* AlarmPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
@@ -172,6 +173,7 @@
 		39A794112B4B65AF000D9875 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		39ADF3822C98D4C9009794C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		39ADF3852C98D4C9009794C3 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/MainMenu.xcstrings; sourceTree = "<group>"; };
+		39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuDelegate.swift; path = Radiola/MainMenuDelegate.swift; sourceTree = "<group>"; };
 		39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioBrowserStatus.swift; sourceTree = "<group>"; };
 		39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPopover.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 		394F8A2F28739339005EA7FA = {
 			isa = PBXGroup;
 			children = (
+				39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */,
 				394F8A3A28739339005EA7FA /* Radiola */,
 				3962D0322BE687EB0014BCFB /* KeyboardShortcuts */,
 				3959DBA72BFCE6A50032A1BA /* RadiolaTests */,
@@ -581,6 +584,7 @@
 				39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */,
 				39A794102B4B6483000D9875 /* Stations.swift in Sources */,
 				39E042D0293B3ACA00A2167E /* VolumeMenuItem.swift in Sources */,
+				39AFBE3F2D18370E008D4087 /* MainMenuDelegate.swift in Sources */,
 				3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */,
 				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
 				39FF07732933A59900751A03 /* StatuBarController.swift in Sources */,

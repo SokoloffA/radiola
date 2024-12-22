@@ -19,6 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private let oplFileName = "bookmarks.opml"
     private let audioSytstem = AudioSytstem()
     private let mediaKeys = MediaKeysController()
+    private let mainMenuDelegate = MainMenuDelegate()
 
     @IBOutlet var pauseMenuItem: NSMenuItem!
     @IBOutlet var playMenuItem: NSMenuItem!
@@ -31,6 +32,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSApp.setActivationPolicy(.accessory)
+
+        if let mainMenu = NSApp.mainMenu {
+            for menuItem in mainMenu.items {
+                menuItem.submenu?.delegate = mainMenuDelegate
+            }
+        }
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(processError),

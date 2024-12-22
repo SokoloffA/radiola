@@ -154,7 +154,7 @@ CA
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Window" id="aUF-d1-5bR">
+                <menuItem title="Window" identifier="window" id="aUF-d1-5bR">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Window" systemMenu="window" id="Td7-aD-5lo">
                         <items>
@@ -168,6 +168,12 @@ CA
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="performZoom:" target="-1" id="DIl-cC-cCs"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Float on top" identifier="window_floatOnTop" id="e6h-zl-bqy">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="windowFloatOnTop:" target="-1" id="efT-wX-Ecp"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="uqi-Wh-0eY"/>

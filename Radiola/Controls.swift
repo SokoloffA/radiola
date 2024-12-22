@@ -35,6 +35,14 @@ public extension NSWindow {
             }
         }
     }
+
+    @IBAction func windowFloatOnTop(_ sender: Any) {
+        if level == .floating {
+            level = .normal
+        } else {
+            level = .floating
+        }
+    }
 }
 
 // MARK: - NSView
@@ -435,7 +443,7 @@ class StationMenuButton: NSButton {
                 continue
             }
 
-            menu.addItem(withTitle: String(format: NSLocalizedString("Add station to \"%@\"", comment: "Station action menu item. %@ is station list title."),  list.title)) {
+            menu.addItem(withTitle: String(format: NSLocalizedString("Add station to \"%@\"", comment: "Station action menu item. %@ is station list title."), list.title)) {
                 list.add(station)
                 list.trySave()
             }
@@ -516,5 +524,22 @@ class StationGroupMenuButton: NSButton {
         let pasteboard = NSPasteboard.general
         pasteboard.declareTypes([.string], owner: nil)
         pasteboard.setString(group.title, forType: .string)
+    }
+}
+
+// MARK: - NSMenu
+
+public extension NSMenu {
+    func item(withIdentifier identifier: NSUserInterfaceItemIdentifier) -> NSMenuItem? {
+        for item in items {
+            if item.identifier == identifier {
+                return item
+            }
+
+            if let submenu = item.submenu, let foundItem = submenu.item(withIdentifier: identifier) {
+                return foundItem
+            }
+        }
+        return nil
     }
 }
