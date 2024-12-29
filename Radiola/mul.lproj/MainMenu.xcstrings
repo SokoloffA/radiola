@@ -376,6 +376,12 @@
             "state" : "new",
             "value" : "Float on top"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поверх всех окон"
+          }
         }
       }
     },
