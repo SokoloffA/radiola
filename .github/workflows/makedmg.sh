@@ -4,6 +4,7 @@
 APP_NAME=Radiola
 MAKE_DMG=true
 CERT_IDENTITY="Developer ID Application: Alex Sokolov (635H9TYSZJ)"
+KEYCHAIN_PROFILE="NotaryTool"
 
 #--------------------
 
@@ -24,6 +25,7 @@ tar xf ${TAR}
 
 VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" ${BUNDLE_PATH}/Contents/Info.plist)
 DMG_NAME="./${APP_NAME}-${VERSION}.dmg"
+ZIP_NAME="./${APP_NAME}-${VERSION}.zip"
 
 echo "***********************************"
 echo "* App     ${APP_NAME}"
@@ -35,10 +37,8 @@ echo "Remove quarantine flag ........................"
 xattr -r -d com.apple.quarantine "${BUNDLE_PATH}"
 echo "  OK"
 
-echo "Sign and verify ..............................."
-codesign --force --deep --verify --sign  "${CERT_IDENTITY}" "${BUNDLE_PATH}"
-codesign --all-architectures -v --strict --deep --verbose=1 "${BUNDLE_PATH}"
-spctl --assess --type execute "${BUNDLE_PATH}"
+echo "Sign .........................................."
+codesign --force --options runtime --deep --verify --sign  "${CERT_IDENTITY}" "${BUNDLE_PATH}"
 echo "  OK"
 echo ""
 
@@ -47,6 +47,15 @@ codesign --all-architectures -v --strict --deep --verbose=1 "${BUNDLE_PATH}"
 spctl --assess --type execute "${BUNDLE_PATH}"
 echo "  OK"
 echo ""
+
+echo " Notarize ....................................."
+ditto -c -k --keepParent "${BUNDLE_PATH}" "${ZIP_NAME}"
+xcrun notarytool submit --wait --keychain-profile "${KEYCHAIN_PROFILE}" "${ZIP_NAME}" | tee notarytool-submit.log
+echo "  OK"
+echo ""
+
+echo "Verify notarization ..........................."
+spctl -a -vvv -t install "${BUNDLE_PATH}"
 
 if [[ "$MAKE_DMG" == "true" ]]; then
     echo "Create DMG file .............................."
