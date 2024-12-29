@@ -11,6 +11,7 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet var tableView: NSTableView!
     @IBOutlet var placeholderLabel: NSTextField!
     @IBOutlet var onlyFavoriteCheckbox: NSButton!
+    @IBOutlet var bottomConstraint: NSLayoutConstraint!
 
     /* ****************************************
      *
@@ -50,6 +51,16 @@ class HistoryWindow: NSWindowController, NSWindowDelegate {
      * ****************************************/
     func windowWillClose(_ notification: Notification) {
         HistoryWindow.instance = nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func windowDidResize(_ notification: Notification) {
+        guard let window = notification.object as? NSWindow else { return }
+
+        bottomConstraint.isActive = window.frame.height > 250
+        onlyFavoriteCheckbox.isHidden = !bottomConstraint.isActive
     }
 
     /* ****************************************
