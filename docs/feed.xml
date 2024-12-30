@@ -5,6 +5,16 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 8.1.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Support for CMD+C and CMD+V in station window and station/group add dialogs.&lt;/li&gt;
+&lt;li&gt;German and Italian translations have been added.&lt;/li&gt;
+&lt;li&gt;Added an option to float the history window over of other windows.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Mon, 30 Dec 2024 10:51:02 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v8.1.0/Radiola-8.1.0.dmg" sparkle:version="8.1.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 8.0.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;The listening history is saved between program launches.&lt;/li&gt;
