@@ -382,6 +382,12 @@
             "state" : "translated",
             "value" : "Поверх всех окон"
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Im Vordergrund halten"
+          }
         }
       }
     },
