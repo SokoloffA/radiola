@@ -33,6 +33,10 @@ jobs:
           cat $GITHUB_ENV
           echo "==============================="
 
+      - name: Check tag
+        run: |
+          [[ "${GITHUB_REF_TYPE}"  = "tag" ]] && echo ${GITHUB_REF_NAME} | grep -q "^v[0-9]\.[0-9]\.[0-9]$" || ( echo "Incorrect tag ${GITHUB_REF_NAME}" ; false )
+
       - uses: actions/checkout@v4
 
       - name: Build
