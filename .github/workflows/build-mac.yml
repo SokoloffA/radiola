@@ -35,7 +35,9 @@ jobs:
 
       - name: Check tag
         run: |
-          [[ "${GITHUB_REF_TYPE}"  = "tag" ]] && echo ${GITHUB_REF_NAME} | grep -q "^v[0-9]\.[0-9]\.[0-9]$" || ( echo "Incorrect tag ${GITHUB_REF_NAME}" ; false )
+          if [[ "${GITHUB_REF_TYPE}"  = "tag" ]] ; then \
+            echo ${GITHUB_REF_NAME} | grep -q "^v[0-9]\+\.[0-9]\+\.[0-9]\+$" || ( echo "Incorrect tag ${GITHUB_REF_NAME}" ; false ) \
+          fi
 
       - uses: actions/checkout@v4
 
