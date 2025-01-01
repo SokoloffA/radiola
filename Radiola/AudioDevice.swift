@@ -89,7 +89,7 @@ struct AudioDevice {
         }
         UID = String(deviceUID)
 
-        // get deivce name
+        // get device name
         var deviceName = "" as CFString
         propertyAddress.mSelector = kAudioDevicePropertyDeviceNameCFString
         if AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, &deviceName) != noErr {
@@ -97,7 +97,7 @@ struct AudioDevice {
         }
         name = String(deviceName)
 
-        // get deivce manufacturer
+        // get device manufacturer
         var deviceManufacturer = "" as CFString
         propertyAddress.mSelector = kAudioDevicePropertyDeviceManufacturerCFString
         if AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, &deviceManufacturer) != noErr {

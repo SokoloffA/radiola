@@ -255,7 +255,7 @@ extension NSAlert {
 
 enum UnicodeSymbols {
 	/**
-	Represents the Function (Fn) key on the keybord.
+	Represents the Function (Fn) key on the keyboard.
 	*/
 	static let functionKey = "🌐\u{FE0E}"
 }

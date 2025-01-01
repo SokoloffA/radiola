@@ -84,7 +84,7 @@
 &lt;li&gt;You can search and listen to stations from radio-browser.info.&lt;/li&gt;
 &lt;li&gt;Improved work with multimedia keys.&lt;/li&gt;
 &lt;li&gt;The current station and track are displayed in the system Now Playing info center.&lt;/li&gt;
-&lt;li&gt;Buffering is enabled, now the sound is not interrupted in case of short internet interupts.&lt;/li&gt;
+&lt;li&gt;Buffering is enabled, now the sound is not interrupted in case of short internet interrupts.&lt;/li&gt;
 &lt;/ul&gt;</description>
       <pubDate>Sat, 09 Mar 2024 17:53:39 +0000</pubDate>
       <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v6.0/Radiola-6.0.dmg" sparkle:version="6.0" length="0" type="application/octet-stream"/>
