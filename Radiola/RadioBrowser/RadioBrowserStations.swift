@@ -25,7 +25,7 @@ extension RadioBrowser {
         var url: String
 
         /// An automatically "resolved" stream URL. Things resolved are playlists (M3U/PLS/ASX...), HTTP redirects (Code 301/302).
-        /// This link is especially usefull if you use this API from a platform that is not able to do a resolve on its own
+        /// This link is especially useful if you use this API from a platform that is not able to do a resolve on its own
         /// (e.g. JavaScript in browser) or you just don't want to invest the time in decoding playlists yourself.
         var url_resolved: String
 

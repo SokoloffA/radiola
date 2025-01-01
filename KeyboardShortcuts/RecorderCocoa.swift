@@ -300,7 +300,7 @@ extension KeyboardShortcuts {
 
 					self.focus()
 
-					// If the user has selected "Use Anyway" in the dialog (the second option), we'll continue setting the keyboard shorcut even though it's reserved by the system.
+					// If the user has selected "Use Anyway" in the dialog (the second option), we'll continue setting the keyboard shortcut even though it's reserved by the system.
 					guard modalResponse == .alertSecondButtonReturn else {
 						return nil
 					}
