@@ -30,28 +30,16 @@ ___
 ## Installation
 You can download the latest version of the program from the [Releases page](https://github.com/SokoloffA/radiola/releases).
 
-Or you can install the program using Homebrew. 
-The program has not currently reached the popularity threshold for inclusion in the official Homebrew repositories. You can help by giving the [Radiola](https://github.com/SokoloffA/radiola) project a star and/or start a watch. Right now you can use my *Tap* to install the program using Homebrew.
+Or you can install the program using [Homebrew](https://brew.sh/). 
+
+The program has reached the popularity threshold for inclusion in the official Homebrew repositories. Of course, you can still increase its popularity by giving the [Radiola](https://github.com/SokoloffA/radiola) project a star and/or starting a watch.
 
 First, make sure you have installed [`Homebrew`](https://brew.sh) if you haven't yet.
 
-Then add the Radiola tap. You only need to do this once.
-```
-brew tap sokoloffa/radiola
-```
-
 Install the program
 ```
-brew install --cask --no-quarantine radiola
+$ brew install --cask radiola
 ```
-
-*Why do you need the **"--no-quarantine"** parameter?
-macOS marks all files downloaded from the Internet as quarantined. When you run a quarantined program, macOS displays the message **"Radiola can’t be opened because Apple cannot check it for malicious software"**. 
-Of course, the new program is downloaded from the Internet, so don't mark it as quarantined using the **"--no-quarantine"** option. 
-The **"--no-quarantine"** option is also required when upgrading (`brew upgrade`) or reinstalling (`brew reinstall`).
-
-
-
 
 
 ## If you want to thank me
