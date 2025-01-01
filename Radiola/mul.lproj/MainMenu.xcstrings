@@ -388,6 +388,12 @@
             "state" : "translated",
             "value" : "Im Vordergrund halten"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mantieni in primo piano"
+          }
         }
       }
     },

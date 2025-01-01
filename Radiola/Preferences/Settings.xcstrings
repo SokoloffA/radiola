@@ -156,7 +156,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ändert die Lautstärke"
+            "value" : "Lautstärke ändern"
           }
         },
         "it" : {
@@ -296,7 +296,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "tut nichts"
+            "value" : "nicht benutzen"
           }
         },
         "it" : {
@@ -522,7 +522,15 @@
       }
     },
     "Press shortcut" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нажмите комбинацию клавиш"
+          }
+        }
+      }
     },
     "Previous and next track buttons:" : {
       "comment" : "Settings label",
@@ -548,7 +556,15 @@
       }
     },
     "Record shortcut" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Задать комбинацию клавиш"
+          }
+        }
+      }
     },
     "Right mouse button:" : {
       "comment" : "Settings label",
@@ -741,7 +757,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "zeigt das Hauptfenster"
+            "value" : "Hauptfenster anzeigen"
           }
         },
         "it" : {
@@ -764,7 +780,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "zeigt das Popup-Menü"
+            "value" : "Popup-Menü anzeigen"
           }
         },
         "it" : {
@@ -810,7 +826,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "schaltet Stumm um"
+            "value" : "Stumm umschalten"
           }
         },
         "it" : {
@@ -833,7 +849,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "schaltet Wiedergabe und Pause um"
+            "value" : "Wiedergabe und Pause umschalten"
           }
         },
         "it" : {
@@ -925,7 +941,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sie können das Menü jederzeit mit Control+Mausklick öffnen"
+            "value" : "Sie können das Menü jederzeit mit Control+Maus-Klick öffnen"
           }
         },
         "it" : {
