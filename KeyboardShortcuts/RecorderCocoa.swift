@@ -35,6 +35,9 @@ extension KeyboardShortcuts {
 		private var windowDidResignKeyObserver: NSObjectProtocol?
 		private var windowDidBecomeKeyObserver: NSObjectProtocol?
 
+		public var pressShortcutText = "Press shortcut"
+		public var recordShortcutText = "Record shortcut"
+
 		/**
 		The shortcut name for the recorder.
 
@@ -90,7 +93,7 @@ extension KeyboardShortcuts {
 
 			super.init(frame: .zero)
 			self.delegate = self
-			self.placeholderString = "record_shortcut".localized
+			self.placeholderString = recordShortcutText
 			self.alignment = .center
 			(cell as? NSSearchFieldCell)?.searchButtonCell = nil
 
@@ -134,7 +137,7 @@ extension KeyboardShortcuts {
 
 		private func endRecording() {
 			eventMonitor = nil
-			placeholderString = "record_shortcut".localized
+			placeholderString = recordShortcutText
 			showsCancelButton = !stringValue.isEmpty
 			restoreCaret()
 			KeyboardShortcuts.isPaused = false
@@ -207,7 +210,7 @@ extension KeyboardShortcuts {
 				return shouldBecomeFirstResponder
 			}
 
-			placeholderString = "press_shortcut".localized
+			placeholderString = pressShortcutText
 			showsCancelButton = !stringValue.isEmpty
 			hideCaret()
 			KeyboardShortcuts.isPaused = true // The position here matters.

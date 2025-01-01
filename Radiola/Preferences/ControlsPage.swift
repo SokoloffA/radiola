@@ -120,6 +120,12 @@ class ControlsPage: NSViewController {
         mediaPrevNextButtonLbl.stringValue = NSLocalizedString("Previous and next track buttons:", tableName: "Settings", comment: "Settings label")
         alignRow(lbl: mediaPrevNextButtonLbl, cbx: mediaPrevNextButtonCbx, prev: mediaKeysHandlingCbx)
 
+        globalKeyShowMainWindowCtrl.pressShortcutText = NSLocalizedString("Press shortcut", tableName: "Settings", comment: "Settings label")
+        globalKeyShowMainWindowCtrl.recordShortcutText = NSLocalizedString("Record shortcut", tableName: "Settings", comment: "Settings label")
+
+        globalKeyShowHistoryCtrl.pressShortcutText = globalKeyShowMainWindowCtrl.pressShortcutText
+        globalKeyShowHistoryCtrl.recordShortcutText = globalKeyShowMainWindowCtrl.recordShortcutText
+
         alignRow(lbl: globalKeyShowMainWindowLbl, cbx: globalKeyShowMainWindowCtrl, prev: mediaPrevNextButtonCbx)
         alignRow(lbl: globalKeyShowHistoryLbl, cbx: globalKeyShowHistoryCtrl, prev: globalKeyShowMainWindowCtrl)
 
