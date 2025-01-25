@@ -48,9 +48,9 @@ class OpmlStations: StationList {
     /* ****************************************
      *
      * ****************************************/
-    init(title: String, icon: String, file: URL) {
+    init(icon: String, file: URL) {
         self.file = file
-        self.title = title
+        title = ""
         self.icon = icon
     }
 
@@ -116,6 +116,8 @@ class OpmlStations: StationList {
         do {
             let xml = try XMLDocument(contentsOf: file)
             guard let xmlRoot = xml.rootElement() else { return }
+            title = xmlRoot.elements(forName: "head").first?.elements(forName: "title").first?.stringValue ?? ""
+
             let xmlBody = xmlRoot.elements(forName: "body")
             if xmlBody.isEmpty {
                 return

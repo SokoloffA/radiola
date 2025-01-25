@@ -541,7 +541,7 @@ extension StationsWindow: NSUserInterfaceValidations {
     private func doImportStations(url: URL, list: StationList) {
         guard let window = window else { return }
 
-        let new = OpmlStations(title: "", icon: "", file: url)
+        let new = OpmlStations(icon: "", file: url)
         do {
             try new.load()
         } catch {

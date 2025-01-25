@@ -22,6 +22,7 @@ fileprivate class DefaultStation: Station {
 }
 
 // MARK: - Settings
+
 fileprivate let defaultOpmlListTitle = NSLocalizedString("My stations", comment: "Station list name")
 fileprivate let defaultOpmlListIcon = "music.house"
 
@@ -100,11 +101,19 @@ class AppState: ObservableObject {
             return
         }
 
-        // Read local stations .................................
+        loadDefaultOpmlStations()
+        loadUserOpmlStations()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func loadDefaultOpmlStations() {
+        // Read local stations from bookmark.opml .................................
         let dirName = opmlFileDir()
         let fileName = opmlFilePath()
 
-        if !FileManager.default.fileExists(atPath: dirName.absoluteString) {
+        if !FileManager.default.fileExists(atPath: dirName.path) {
             do {
                 try FileManager.default.createDirectory(at: dirName, withIntermediateDirectories: true)
             } catch {
@@ -112,10 +121,40 @@ class AppState: ObservableObject {
             }
         }
 
+        debug("Dir of stations: \(dirName.path)")
         debug("Load stations from: \(fileName.path)")
-        let opmlList = OpmlStations(title: defaultOpmlListTitle, icon: defaultOpmlListIcon, file: fileName)
+
+        let opmlList = OpmlStations(icon: defaultOpmlListIcon, file: fileName)
         opmlList.load(defaultStations: defaultStations)
+        if opmlList.title.isEmpty {
+            opmlList.title = defaultOpmlListTitle
+        }
         localStations.append(opmlList)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func loadUserOpmlStations() {
+        guard let enumerator = FileManager.default.enumerator(at: opmlFileDir(), includingPropertiesForKeys: nil) else { return }
+
+        for case let file as URL in enumerator {
+            if file.pathExtension != "opml" || file.lastPathComponent == opmlFileName {
+                continue
+            }
+
+            let opmlList = OpmlStations(icon: defaultOpmlListIcon, file: file)
+
+            do {
+                try opmlList.load()
+                if opmlList.title.isEmpty {
+                    opmlList.title = file.lastPathComponent.replacingOccurrences(of: ".opml", with: "")
+                }
+                localStations.append(opmlList)
+            } catch {
+                error.show()
+            }
+        }
     }
 
     /* ****************************************
