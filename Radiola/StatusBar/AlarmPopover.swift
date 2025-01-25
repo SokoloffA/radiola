@@ -21,7 +21,9 @@ class AlarmPopover: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    override func viewDidLoad() {
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        view = NSView()
         imageView.image = NSImage(named: NSImage.cautionName)
         imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 251), for: .vertical)
         imageView.setContentHuggingPriority(NSLayoutConstraint.Priority(rawValue: 252), for: .horizontal)
@@ -67,6 +69,13 @@ class AlarmPopover: NSViewController {
             okButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
 
         ])
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     /* ****************************************
