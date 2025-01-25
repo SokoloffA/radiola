@@ -281,11 +281,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         }
 
         if let list = AppState.shared.localStations.find(byId: listId) {
-            do {
-                try list.load()
-            } catch {
-                Alarm.show(loadListErrot: error)
-            }
             setLocalStationList(list: list)
             setFocus(listId: listId, toTree: true)
             updateStateIndicator(state: .notLoaded)
