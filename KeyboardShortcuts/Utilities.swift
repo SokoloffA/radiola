@@ -306,7 +306,7 @@ extension NSEvent.ModifierFlags {
 }
 
 /// :nodoc:
-extension NSEvent.ModifierFlags: CustomStringConvertible {
+extension NSEvent.ModifierFlags: @retroactive CustomStringConvertible {
 	/**
 	The string representation of the modifier flags.
 

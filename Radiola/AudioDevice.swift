@@ -77,33 +77,36 @@ struct AudioDevice {
         self.deviceID = deviceID
 
         // property address
-        var propertyAddress = AudioObjectPropertyAddress(mSelector: kAudioDevicePropertyDeviceUID, mScope: kAudioObjectPropertyScopeGlobal, mElement: kAudioObjectPropertyElementMaster)
+        var propertyAddress = AudioObjectPropertyAddress(mSelector: kAudioDevicePropertyDeviceUID, mScope: kAudioObjectPropertyScopeGlobal, mElement: kAudioObjectPropertyElementMain)
 
         var size: UInt32 = UInt32(MemoryLayout<CFString>.size)
 
         // get device UID
-        var deviceUID = "" as CFString
+        var deviceUID: CFString = "" as CFString
         propertyAddress.mSelector = kAudioDevicePropertyDeviceUID
-        if AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, &deviceUID) != noErr {
-            return nil
+        let statusUID = withUnsafeMutablePointer(to: &deviceUID) { pointer in
+            AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, pointer)
         }
-        UID = String(deviceUID)
+        guard statusUID == noErr else { return nil }
+        UID = deviceUID as String
 
         // get device name
-        var deviceName = "" as CFString
+        var deviceName: CFString = "" as CFString
         propertyAddress.mSelector = kAudioDevicePropertyDeviceNameCFString
-        if AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, &deviceName) != noErr {
-            return nil
+        let statusName = withUnsafeMutablePointer(to: &deviceName) { pointer in
+            AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, pointer)
         }
-        name = String(deviceName)
+        guard statusName == noErr else { return nil }
+        name = deviceName as String
 
         // get device manufacturer
-        var deviceManufacturer = "" as CFString
+        var deviceManufacturer: CFString = "" as CFString
         propertyAddress.mSelector = kAudioDevicePropertyDeviceManufacturerCFString
-        if AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, &deviceManufacturer) != noErr {
-            return nil
+        let statusManufacturer = withUnsafeMutablePointer(to: &deviceManufacturer) { pointer in
+            AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, pointer)
         }
-        manufacturer = String(deviceManufacturer)
+        guard statusManufacturer == noErr else { return nil }
+        manufacturer = deviceManufacturer as String
 
         // get number of streams
         // LAST AS IT CHANGES THE SCOPE OF THE PROPERTY ADDRESS
@@ -131,29 +134,24 @@ struct AudioDevice {
                 return nil
             }
 
-            // allocate
-            // is it okay to assume binding? or should bind (but if so, what capacity)?
-            let bufferList = UnsafeMutableRawPointer.allocate(byteCount: Int(size), alignment: MemoryLayout<AudioBufferList>.alignment).assumingMemoryBound(to: AudioBufferList.self)
-            let ok = AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, bufferList)
+            // allocate memory for buffer list
+            let bufferList = UnsafeMutablePointer<AudioBufferList>.allocate(capacity: Int(size))
             defer {
-                free(bufferList)
+                bufferList.deallocate()
             }
-            guard ok == noErr else { return nil }
+            guard AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, bufferList) == noErr else {
+                return nil
+            }
 
-            // turn into something swift usable
+            // convert to Swift usable buffer list
             let usableBufferList = UnsafeMutableAudioBufferListPointer(bufferList)
-
-            // add device buffers
-            var buffersInput = [AudioBuffer]()
-            for ab in usableBufferList {
-                buffersInput.append(ab)
-            }
-            self.buffersInput = buffersInput
+            self.buffersInput = Array(usableBufferList)
         } else {
             buffersInput = []
             sampleRateInput = 0.0
         }
 
+        // get number of output streams
         propertyAddress.mSelector = kAudioDevicePropertyStreams
         propertyAddress.mScope = kAudioDevicePropertyScopeOutput
         if AudioObjectGetPropertyDataSize(deviceID, &propertyAddress, 0, nil, &size) != noErr {
@@ -178,24 +176,18 @@ struct AudioDevice {
                 return nil
             }
 
-            // allocate
-            // is it okay to assume binding? or should bind (but if so, what capacity)?
-            let bufferList = UnsafeMutableRawPointer.allocate(byteCount: Int(size), alignment: MemoryLayout<AudioBufferList>.alignment).assumingMemoryBound(to: AudioBufferList.self)
-            let ok = AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, bufferList)
+            // allocate memory for buffer list
+            let bufferList = UnsafeMutablePointer<AudioBufferList>.allocate(capacity: Int(size))
             defer {
-                free(bufferList)
+                bufferList.deallocate()
             }
-            guard ok == noErr else { return nil }
+            guard AudioObjectGetPropertyData(deviceID, &propertyAddress, 0, nil, &size, bufferList) == noErr else {
+                return nil
+            }
 
-            // turn into something swift usable
+            // convert to Swift usable buffer list
             let usableBufferList = UnsafeMutableAudioBufferListPointer(bufferList)
-
-            // add device buffers
-            var buffersOutput = [AudioBuffer]()
-            for ab in usableBufferList {
-                buffersOutput.append(ab)
-            }
-            self.buffersOutput = buffersOutput
+            self.buffersOutput = Array(usableBufferList)
         } else {
             buffersOutput = []
             sampleRateOutput = 0.0
