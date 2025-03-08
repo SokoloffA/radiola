@@ -5,6 +5,15 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 8.1.1</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fixed the program crashing on older versions of macOS.&lt;/li&gt;
+&lt;li&gt;Translations updated.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 08 Mar 2025 11:25:56 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v8.1.1/Radiola-8.1.1.dmg" sparkle:version="8.1.1" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 8.1.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Support for CMD+C and CMD+V in station window and station/group add dialogs.&lt;/li&gt;
@@ -65,7 +74,7 @@
 &lt;li&gt;Fix: The search bar was partially displayed at small window width.&lt;/li&gt;
 &lt;li&gt;Fix: Due to a bug it was not possible to change the output audio device.&lt;/li&gt;
 &lt;li&gt;In paused state the program does not consume network traffic.&lt;/li&gt;
-&lt;li&gt;Links to the home page and issue tracker have been added to the &quot;About Radiola&quot; dialog.&lt;/li&gt;
+&lt;li&gt;Links to the home page and issue tracker have been added to the "About Radiola" dialog.&lt;/li&gt;
 &lt;/ul&gt;</description>
       <pubDate>Thu, 14 Mar 2024 20:08:58 +0000</pubDate>
       <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v6.1.0/Radiola-6.1.0.dmg" sparkle:version="6.1.0" length="0" type="application/octet-stream"/>
@@ -84,7 +93,7 @@
 &lt;li&gt;You can search and listen to stations from radio-browser.info.&lt;/li&gt;
 &lt;li&gt;Improved work with multimedia keys.&lt;/li&gt;
 &lt;li&gt;The current station and track are displayed in the system Now Playing info center.&lt;/li&gt;
-&lt;li&gt;Buffering is enabled, now the sound is not interrupted in case of short internet interrupts.&lt;/li&gt;
+&lt;li&gt;Buffering is enabled, now the sound is not interrupted in case of short internet interupts.&lt;/li&gt;
 &lt;/ul&gt;</description>
       <pubDate>Sat, 09 Mar 2024 17:53:39 +0000</pubDate>
       <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v6.0/Radiola-6.0.dmg" sparkle:version="6.0" length="0" type="application/octet-stream"/>
@@ -104,7 +113,7 @@
     <item>
       <title>Radiola 5.1.1</title>
       <description>&lt;ul&gt;
-&lt;li&gt;Fixed the direction of volume change when the &quot;Natural Scrolling&quot; mode is enabled&lt;/li&gt;
+&lt;li&gt;Fixed the direction of volume change when the "Natural Scrolling" mode is enabled&lt;/li&gt;
 &lt;/ul&gt;</description>
       <pubDate>Sun, 04 Jun 2023 20:27:08 +0000</pubDate>
       <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v5.1.1/Radiola-5.1.1.dmg" sparkle:version="5.1.1" length="0" type="application/octet-stream"/>
