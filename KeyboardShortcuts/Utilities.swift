@@ -305,8 +305,7 @@ extension NSEvent.ModifierFlags {
 	}
 }
 
-/// :nodoc:
-extension NSEvent.ModifierFlags: @retroactive CustomStringConvertible {
+
 	/**
 	The string representation of the modifier flags.
 
@@ -315,32 +314,32 @@ extension NSEvent.ModifierFlags: @retroactive CustomStringConvertible {
 	//=> "⇧⌘"
 	```
 	*/
-	public var description: String {
-		var description = ""
+func modifierDescription(_ modifier: NSEvent.ModifierFlags) -> String {
+    var description = ""
 
-		if contains(.control) {
-			description += "⌃"
-		}
+    if modifier.contains(.control) {
+        description += "⌃"
+    }
 
-		if contains(.option) {
-			description += "⌥"
-		}
+    if modifier.contains(.option) {
+        description += "⌥"
+    }
 
-		if contains(.shift) {
-			description += "⇧"
-		}
+    if modifier.contains(.shift) {
+        description += "⇧"
+    }
 
-		if contains(.command) {
-			description += "⌘"
-		}
+    if modifier.contains(.command) {
+        description += "⌘"
+    }
 
-		if contains(.function) {
-			description += UnicodeSymbols.functionKey
-		}
+    if modifier.contains(.function) {
+        description += UnicodeSymbols.functionKey
+    }
 
-		return description
-	}
+    return description
 }
+
 
 
 extension NSEvent.SpecialKey {
