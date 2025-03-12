@@ -114,7 +114,8 @@ class StatusBarController: NSObject, NSMenuDelegate {
 
         switch action {
             case .showMenu:
-                menuItem.popUpMenu(buildMenu())
+                menuItem.menu = buildMenu()
+                menuItem.button?.performClick(nil) // Optional: Programmatically trigger the menu
                 break
 
             case .playPause:
