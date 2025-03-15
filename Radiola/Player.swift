@@ -90,6 +90,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         self.audioDeviceUID = settings.audioDevice
 
         super.init()
+
+        debugAudioDevices()
     }
 
     /* ****************************************
@@ -133,6 +135,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
                                                name: Notification.Name.AudioDeviceChanged,
                                                object: nil)
         self.player = player
+        debugAudioDevices()
 
         let playerItem = AVPlayerItem(url: url)
 
@@ -353,5 +356,19 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         rec.isFavorite = favorite
         NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": songTitle])
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func debugAudioDevices() {
+        debug("Player audio device ID: \(player?.audioOutputDeviceUniqueID ?? "nil")")
+        debug("Available audio devices:")
+        let devices = AudioSytstem.devices()
+
+        let nameLen = devices.map { $0.name.count }.max() ?? 0
+        for d in devices {
+            debug(String(format: "    * %@  UID: '%@'", d.name.padding(toLength: nameLen, withPad: " ", startingAt: 0), d.UID))
+        }
     }
 }
