@@ -285,6 +285,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     @objc private func updateAudioDevice() {
         let uid = player?.audioOutputDeviceUniqueID
 
+        debug("Audio device changed: current ID: \(uid ?? "nil")")
         if uid == nil {
             return
         }
@@ -295,6 +296,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
             }
         }
 
+        debug("Change player device ID from \(uid ?? "nil") to nil")
         audioDeviceUID = nil
     }
 
@@ -363,12 +365,24 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     private func debugAudioDevices() {
         debug("Player audio device ID: \(player?.audioOutputDeviceUniqueID ?? "nil")")
+        if let ID = AudioSytstem.defaultOutputDeviceID() {
+            debug("System default device ID: \(ID)")
+        } else {
+            debug("System default device ID: ERROR")
+        }
+
         debug("Available audio devices:")
         let devices = AudioSytstem.devices()
-
-        let nameLen = devices.map { $0.name.count }.max() ?? 0
         for d in devices {
-            debug(String(format: "    * %@  UID: '%@'", d.name.padding(toLength: nameLen, withPad: " ", startingAt: 0), d.UID))
+            debug("  * UID: \(d.UID)")
+            debug("    name: \(d.name)")
+            debug("    deviceID: \(d.deviceID)")
+            debug("    manufacturer: \(d.manufacturer)")
+            debug("    streamsInput: \(d.streamsInput)")
+            debug("    streamsOutput: \(d.streamsOutput)")
+            debug("    sampleRateInput: \(d.sampleRateInput)")
+            debug("    sampleRateOutput: \(d.sampleRateOutput)")
+            debug("")
         }
     }
 }

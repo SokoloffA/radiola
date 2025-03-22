@@ -56,6 +56,28 @@ class AudioSytstem {
             return AudioDevice(deviceID: $0)
         }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func defaultOutputDeviceID() -> AudioDeviceID? {
+        var deviceID = kAudioObjectUnknown
+        var propertyAddress = AudioObjectPropertyAddress(
+            mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+            mScope: kAudioObjectPropertyScopeGlobal,
+            mElement: kAudioObjectPropertyElementMaster
+        )
+
+        var size = UInt32(MemoryLayout<AudioDeviceID>.size)
+        let status = AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &propertyAddress, 0, nil, &size, &deviceID)
+
+        guard status == noErr else {
+            warning("Error receiving the default device: \(status)")
+            return nil
+        }
+
+        return deviceID
+    }
 }
 
 struct AudioDevice {
@@ -145,7 +167,7 @@ struct AudioDevice {
 
             // convert to Swift usable buffer list
             let usableBufferList = UnsafeMutableAudioBufferListPointer(bufferList)
-            self.buffersInput = Array(usableBufferList)
+            buffersInput = Array(usableBufferList)
         } else {
             buffersInput = []
             sampleRateInput = 0.0
@@ -187,7 +209,7 @@ struct AudioDevice {
 
             // convert to Swift usable buffer list
             let usableBufferList = UnsafeMutableAudioBufferListPointer(bufferList)
-            self.buffersOutput = Array(usableBufferList)
+            buffersOutput = Array(usableBufferList)
         } else {
             buffersOutput = []
             sampleRateOutput = 0.0
