@@ -134,6 +134,12 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
                                                selector: #selector(updateAudioDevice),
                                                name: Notification.Name.AudioDeviceChanged,
                                                object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(failedToPlay),
+                                               name: .AVPlayerItemFailedToPlayToEndTime,
+                                               object: player.currentItem)
+
         self.player = player
         debugAudioDevices()
 
@@ -232,6 +238,10 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     private func statusChenged(status: AVPlayer.TimeControlStatus) {
         debug("Player status changed \(status.description) for \(station?.url ?? "nil")")
+
+        if let error = player?.currentItem?.error {
+            warning("Player: Loading or preparation error: \(error.localizedDescription)")
+        }
 
         switch status {
             case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
@@ -358,6 +368,14 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
         rec.isFavorite = favorite
         NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": songTitle])
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func failedToPlay(_ notification: Notification) {
+        guard let error = notification.userInfo?[AVPlayerItemFailedToPlayToEndTimeErrorKey] as? Error else { return }
+        warning("Player: Playing error : \(error.localizedDescription)")
     }
 
     /* ****************************************
