@@ -61,6 +61,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         internetStationsDelegate = InternetStationDelegate(outlineView: stationsTree)
 
         stationsTree.style = .inset
+        stationsTree.allowsMultipleSelection = true
         stationsTree.doubleAction = #selector(doubleClickRow)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(selectionChanged),
@@ -381,7 +382,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     @objc func doubleClickRow(sender: AnyObject) {
-        guard let station = stationsTree.item(atRow: stationsTree.selectedRow) as? Station else { return }
+        guard let station = stationsTree.item(atRow: stationsTree.clickedRow) as? Station else { return }
 
         if player.station?.id == station.id && player.isPlaying {
             return
@@ -444,24 +445,68 @@ extension StationsWindow: NSUserInterfaceValidations {
     /* ****************************************
      *
      * ****************************************/
+    private func getRemoveStationMessage(selection: IndexSet) -> String? {
+        if selection.count == 1 {
+            let item = stationsTree.item(atRow: selection.first!)
+
+            if let station = item as? Station {
+                return String(format: NSLocalizedString("Are you sure you want to remove the station \"%@\"?", comment: "Remove station dialog text. %@ is station title."), station.title)
+            }
+
+            if let group = item as? StationGroup {
+                if group.items.isEmpty {
+                    return String(format: NSLocalizedString("Are you sure you want to remove the group \"%@\"?", comment: "Remove group dialog text. %@ is group title."), group.title)
+                } else {
+                    return String(format: NSLocalizedString("Are you sure you want to remove the group \"%@\", and all of its children?", comment: "Remove group dialog text. %@ is group title."), group.title)
+                }
+            }
+
+            return nil
+        }
+
+        var stationCnt = 0
+        var groupCnt = 0
+
+        for i in selection {
+            let item = stationsTree.item(atRow: i)
+            if item is Station { stationCnt += 1 }
+            if item is StationGroup { groupCnt += 1 }
+        }
+
+        if (stationCnt > 0) && (groupCnt == 0) {
+            return String(format: NSLocalizedString(
+                "Are you sure you want to remove %lld stations?",
+                comment: "Remove station dialog text. %lld is the number of stations."),
+            stationCnt)
+        }
+
+        if (groupCnt > 0) && (stationCnt == 0) {
+            return String(format: NSLocalizedString(
+                "Are you sure you want to remove the %lld groups and all their children?",
+                comment: "Remove station dialog text. %lld is the number of groups."),
+            groupCnt)
+        }
+
+        if (stationCnt > 0) && (groupCnt > 0) {
+            return String(format: NSLocalizedString(
+                "Are you sure you want to remove %lld stations and groups and all their children?",
+                comment: "Remove station dialog text. The %lld is the number of stations and groups"),
+            stationCnt + groupCnt)
+        }
+
+        return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @objc func removeStation(_ sender: Any) {
         guard
             let delegate = stationsTree.delegate as? LocalStationDelegate,
             let window = window,
-            let item = stationsTree.item(atRow: stationsTree.selectedRow)
+            let messageText = getRemoveStationMessage(selection: stationsTree.selectedRowIndexes)
         else {
             return
-        }
-
-        var messageText = ""
-        if let station = item as? Station {
-            messageText = String(format: NSLocalizedString("Are you sure you want to remove the station \"%@\"?", comment: "Remove station dialog text. %@ is station title."), station.title)
-        } else if let group = item as? StationGroup {
-            if group.items.isEmpty {
-                messageText = String(format: NSLocalizedString("Are you sure you want to remove the group \"%@\"?", comment: "Remove group dialog text. %@ is group title."), group.title)
-            } else {
-                messageText = String(format: NSLocalizedString("Are you sure you want to remove the group \"%@\", and all of its children?", comment: "Remove group dialog text. %@ is group title."), group.title)
-            }
         }
 
         let alert = NSAlert()
@@ -471,7 +516,7 @@ extension StationsWindow: NSUserInterfaceValidations {
         alert.messageText = messageText
         alert.beginSheetModal(for: window, completionHandler: { response in
             if response == NSApplication.ModalResponse.alertFirstButtonReturn {
-                delegate.remove(item: item)
+                delegate.remove(indexes: self.stationsTree.selectedRowIndexes)
             }
         })
     }

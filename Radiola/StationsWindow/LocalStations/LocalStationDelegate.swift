@@ -315,26 +315,48 @@ extension LocalStationDelegate {
     /* ****************************************
      *
      * ****************************************/
-    func remove(item: Any) {
+    func remove(indexes: IndexSet) {
+        guard let list = list else { return }
+
+        var itemsToRemove: [StationItem] = []
+        for index in indexes {
+            guard let item = outlineView.item(atRow: index) as? StationItem else { return }
+            itemsToRemove.append(item)
+        }
+
+        outlineView.beginUpdates()
+        for item in itemsToRemove {
+            guard let parent = list.itemParent(item: item) else { continue }
+            let index = outlineView.childIndex(forItem: item)
+            if index < 0 { continue }
+
+            outlineView.removeItems(
+                at: IndexSet(integer: index),
+                inParent: parent !== list ? parent : nil,
+                withAnimation: .effectFade)
+        }
+        outlineView.endUpdates()
+
+        for item in itemsToRemove {
+            guard
+                let parent = list.itemParent(item: item),
+                let index = parent.index(item.id)
+            else {
+                continue
+            }
+            debug("Remove \(item.title)")
+            parent.items.remove(at: index)
+        }
+        list.trySave()
+
         guard
-            let list = list,
-            let item = item as? StationItem,
+            let idx = indexes.first,
+            let item = outlineView.item(atRow: idx) as? StationItem,
             let parent = list.itemParent(item: item)
         else {
             return
         }
         let index = outlineView.childIndex(forItem: item)
-
-        parent.items.remove(at: index)
-        list.trySave()
-
-        outlineView.beginUpdates()
-        outlineView.removeItems(
-            at: IndexSet(integer: index),
-            inParent: parent !== list ? parent : nil,
-            withAnimation: .effectFade)
-        outlineView.endUpdates()
-
         let row = parent.items.isEmpty ? outlineView.row(forItem: parent) : outlineView.row(forItem: parent.items[min(index, parent.items.count - 1)])
         outlineView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
         outlineView.scrollRowToVisible(row)

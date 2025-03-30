@@ -4,6 +4,24 @@
     "%lld stations will be added." : {
       "comment" : "Merger dialog informativeText",
       "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Sender wird hinzugefügt."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Sender werden hinzugefügt."
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -75,30 +93,30 @@
               }
             }
           }
-        },
-        "de" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld Sender wird hinzugefügt."
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld Sender werden hinzugefügt."
-                }
-              }
-            }
-          }
         }
       }
     },
     "%lld stations will be updated." : {
       "comment" : "Merger dialog informativeText",
       "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Sender wird aktualisiert."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld Sender werden aktualisiert."
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -170,30 +188,18 @@
               }
             }
           }
-        },
-        "de" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld Sender wird aktualisiert."
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "%lld Sender werden aktualisiert."
-                }
-              }
-            }
-          }
         }
       }
     },
     "Add group" : {
       "comment" : "Add group dialog button\nButton title",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruppe hinzufügen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -205,18 +211,18 @@
             "state" : "translated",
             "value" : "Добавить группу"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gruppe hinzufügen"
-          }
         }
       }
     },
     "Add station" : {
       "comment" : "Add station dialog button\nButton title",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender hinzufügen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -228,18 +234,18 @@
             "state" : "translated",
             "value" : "Добавить станцию"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sender hinzufügen"
-          }
         }
       }
     },
     "Add station to \"%@\"" : {
       "comment" : "Station action menu item. %@ is station list title.",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender zu „%@“ hinzufügen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -251,18 +257,18 @@
             "state" : "translated",
             "value" : "Добавить станцию в «%@»"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sender zu „%@“ hinzufügen"
-          }
         }
       }
     },
     "Add the station to my stations list" : {
       "comment" : "Button tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den Sender zu meiner Senderliste hinzufügen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -274,18 +280,18 @@
             "state" : "translated",
             "value" : "Добавить станцию в список «Мои станции»"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Den Sender zu meiner Senderliste hinzufügen"
-          }
         }
       }
     },
     "Are you sure you want to continue?" : {
       "comment" : "Merger dialog message",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wirklich fortfahren?"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -297,18 +303,105 @@
             "state" : "translated",
             "value" : "Вы уверены что хотите продолжить?"
           }
-        },
-        "de" : {
+        }
+      }
+    },
+    "Are you sure you want to remove %1$lld stations and %2$lld groups and all their children?" : {
+      "comment" : "Remove station dialog text. The %1$lld is the number of stations, the %2$lld is the number of groups",
+      "extractionState" : "stale",
+      "localizations" : {
+        "ru" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wirklich fortfahren?"
+            "state" : "needs_review",
+            "value" : "Are you sure you want to remove %1$lld stations and %#@arg2@ groups and all their children?"
+          },
+          "substitutions" : {
+            "arg2" : {
+              "argNum" : 2,
+              "formatSpecifier" : "lld",
+              "variations" : {
+                "plural" : {
+                  "few" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "many" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "needs_review",
+                      "value" : "%arg"
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
     },
+    "Are you sure you want to remove %lld stations and groups and all their children?" : {
+      "comment" : "Remove station dialog text. The %lld is the number of stations and groups"
+    },
+    "Are you sure you want to remove %lld stations?" : {
+      "comment" : "Remove station dialog text. %lld is the number of stations.",
+      "localizations" : {
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены, что хотите удалить %lld станции?"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены, что хотите удалить %lld станций?"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены, что хотите удалить %lld станцию?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены, что хотите удалить %lld станций?"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Are you sure you want to remove the %lld groups and all their children?" : {
+      "comment" : "Remove station dialog text. %lld is the number of groups."
+    },
     "Are you sure you want to remove the group \"%@\", and all of its children?" : {
       "comment" : "Remove group dialog text. %@ is group title.",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soll die Gruppe  „%@“ sowie alle untergeordneten Elemente wirklich entfernt werden?"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -320,18 +413,18 @@
             "state" : "translated",
             "value" : "Вы уверены что хотите удалить группу «%@» со всем ее содержимым?"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Soll die Gruppe  „%@“ sowie alle untergeordneten Elemente wirklich entfernt werden?"
-          }
         }
       }
     },
     "Are you sure you want to remove the group \"%@\"?" : {
       "comment" : "Remove group dialog text. %@ is group title.",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soll die Gruppe „%@“ wirklich entfernt werden?"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -343,18 +436,18 @@
             "state" : "translated",
             "value" : "Вы уверены что хотите удалить группу «%@»?"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Soll die Gruppe „%@“ wirklich entfernt werden?"
-          }
         }
       }
     },
     "Are you sure you want to remove the station \"%@\"?" : {
       "comment" : "Remove station dialog text. %@ is station title.",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soll der Sender „%@“ wirklich entfernt werden?"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -366,18 +459,18 @@
             "state" : "translated",
             "value" : "Вы уверены что хотите удалить станцию «%@»?"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Soll der Sender „%@“ wirklich entfernt werden?"
-          }
         }
       }
     },
     "By country" : {
       "comment" : "Internet station list",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Land"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -389,18 +482,18 @@
             "state" : "translated",
             "value" : "По странам"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nach Land"
-          }
         }
       }
     },
     "By name" : {
       "comment" : "Internet station list",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Name"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -412,18 +505,18 @@
             "state" : "translated",
             "value" : "По имени"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nach Name"
-          }
         }
       }
     },
     "By tag" : {
       "comment" : "Internet station list",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nach Tag"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -435,18 +528,18 @@
             "state" : "translated",
             "value" : "По тэгу"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nach Tag"
-          }
         }
       }
     },
     "Cancel" : {
       "comment" : "Cancel button",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abbrechen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -458,28 +551,22 @@
             "state" : "translated",
             "value" : "Отмена"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abbrechen"
-          }
         }
       }
     },
     "codec:" : {
       "comment" : "Internet station row",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "кодек:"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Codec:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "кодек:"
           }
         }
       }
@@ -487,6 +574,12 @@
     "Connecting…" : {
       "comment" : "Station label text\nTooltip text",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbinden…"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -498,18 +591,18 @@
             "state" : "translated",
             "value" : "Подключение…"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verbinden…"
-          }
         }
       }
     },
     "contains" : {
       "comment" : "Internet station search panel",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "enthält"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -521,18 +614,18 @@
             "state" : "translated",
             "value" : "содержит"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "enthält"
-          }
         }
       }
     },
     "Copy song title and artist" : {
       "comment" : "Status bar menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Songtitel und Interpret kopieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -544,18 +637,18 @@
             "state" : "translated",
             "value" : "Копировать название песни и исполнителя"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Songtitel und Interpret kopieren"
-          }
         }
       }
     },
     "Copy station title to clipboard" : {
       "comment" : "Station action menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sendertitel in die Zwischenablage kopieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -567,18 +660,18 @@
             "state" : "translated",
             "value" : "Копировать название станции в буфер обмена"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sendertitel in die Zwischenablage kopieren"
-          }
         }
       }
     },
     "Copy station URL  to clipboard" : {
       "comment" : "Station action menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender-URL in die Zwischenablage kopieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -590,18 +683,18 @@
             "state" : "translated",
             "value" : "Копировать URL станции в буфер обмена"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sender-URL in die Zwischenablage kopieren"
-          }
         }
       }
     },
     "Copy to clipboard" : {
       "comment" : "Button label",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In die Zwischenablage kopieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -613,18 +706,18 @@
             "state" : "translated",
             "value" : "Копировать в буфер обмена"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "In die Zwischenablage kopieren"
-          }
         }
       }
     },
     "Decrease the volume" : {
       "comment" : "Volume button tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lautstärke verringern"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -636,18 +729,18 @@
             "state" : "translated",
             "value" : "Уменьшить громкость"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lautstärke verringern"
-          }
         }
       }
     },
     "Favorite stations" : {
       "comment" : "Status bar menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lieblingssender"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -659,18 +752,18 @@
             "state" : "translated",
             "value" : "Любимые станции"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lieblingssender"
-          }
         }
       }
     },
     "History" : {
       "comment" : "History window title",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlauf"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -682,18 +775,18 @@
             "state" : "translated",
             "value" : "История"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verlauf"
-          }
         }
       }
     },
     "History…" : {
       "comment" : "Status bar menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlauf…"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -705,18 +798,18 @@
             "state" : "translated",
             "value" : "История…"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verlauf…"
-          }
         }
       }
     },
     "Increase the volume" : {
       "comment" : "Volume button tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lautstärke erhöhen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -728,18 +821,18 @@
             "state" : "translated",
             "value" : "Увеличить громкость"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lautstärke erhöhen"
-          }
         }
       }
     },
     "less than a minute ago" : {
       "comment" : "History window song status",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vor weniger als einer Minute"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -751,18 +844,18 @@
             "state" : "translated",
             "value" : "меньше минуты назад"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "vor weniger als einer Minute"
-          }
         }
       }
     },
     "Loading…" : {
       "comment" : "Internet stations placeholder",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laden…"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -774,12 +867,6 @@
             "state" : "translated",
             "value" : "Загрузка…"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Laden…"
-          }
         }
       }
     },
@@ -787,6 +874,12 @@
       "comment" : "Station list name",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokale Sender"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -798,18 +891,18 @@
             "state" : "translated",
             "value" : "Локальные станции"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lokale Sender"
-          }
         }
       }
     },
     "Looks like \"%@\" is not a valid URL." : {
       "comment" : "Player error message. %@ is URL of station.",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anscheinend ist „%@“ keine gültige URL."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -821,18 +914,18 @@
             "state" : "translated",
             "value" : "«%@» не похож на правильный URL."
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Anscheinend ist „%@“ keine gültige URL."
-          }
         }
       }
     },
     "Mark current song as favorite" : {
       "comment" : "Button tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuelles Lied als Favorit markieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -844,18 +937,18 @@
             "state" : "translated",
             "value" : "Пометить текущую песню как любимую"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktuelles Lied als Favorit markieren"
-          }
         }
       }
     },
     "matches with" : {
       "comment" : "Internet station search panel",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "stimmt überein mit"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -867,18 +960,18 @@
             "state" : "translated",
             "value" : "совпадает с"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "stimmt überein mit"
-          }
         }
       }
     },
     "Mute" : {
       "comment" : "Mute button tooltip\nStatus bar menu Item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stumm"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -890,18 +983,18 @@
             "state" : "translated",
             "value" : "Выключить звук"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stumm"
-          }
         }
       }
     },
     "My lists" : {
       "comment" : "Sidebar group",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meine Listen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -913,18 +1006,18 @@
             "state" : "translated",
             "value" : "Мои списки"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Meine Listen"
-          }
         }
       }
     },
     "My stations" : {
       "comment" : "Station list name",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meine Sender"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -936,18 +1029,18 @@
             "state" : "translated",
             "value" : "Мои станции"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Meine Sender"
-          }
         }
       }
     },
     "No records yet" : {
       "comment" : "History window placeholder",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noch keine Einträge"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -959,18 +1052,18 @@
             "state" : "translated",
             "value" : "Пока нет записей"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Noch keine Einträge"
-          }
         }
       }
     },
     "No results" : {
       "comment" : "Internet stations placeholder",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Ergebnisse"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -982,18 +1075,18 @@
             "state" : "translated",
             "value" : "Нет результатов"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Ergebnisse"
-          }
         }
       }
     },
     "no votes" : {
       "comment" : "Internet station row",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "keine Votes"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1005,18 +1098,18 @@
             "state" : "translated",
             "value" : "нет голосов"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "keine Votes"
-          }
         }
       }
     },
     "Open Radiola…" : {
       "comment" : "Status bar menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola öffnen…"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1028,18 +1121,18 @@
             "state" : "translated",
             "value" : "Открыть Radiola…"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Radiola öffnen…"
-          }
         }
       }
     },
     "Pause" : {
       "comment" : "Toolbar button toolTip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pausieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1051,18 +1144,18 @@
             "state" : "translated",
             "value" : "Остановить"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pausieren"
-          }
         }
       }
     },
     "Play" : {
       "comment" : "Toolbar button toolTip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abspielen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1074,18 +1167,18 @@
             "state" : "translated",
             "value" : "Играть"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Abspielen"
-          }
         }
       }
     },
     "playing now" : {
       "comment" : "History window song status",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "gerade läuft"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1097,18 +1190,18 @@
             "state" : "translated",
             "value" : "играет сейчас"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "gerade läuft"
-          }
         }
       }
     },
     "Quit" : {
       "comment" : "Status bar menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beenden"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1120,28 +1213,22 @@
             "state" : "translated",
             "value" : "Выйти"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Beenden"
-          }
         }
       }
     },
     "Radio browser" : {
       "comment" : "Sidebar group",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Radio browser"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Radiosuche"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radio browser"
           }
         }
       }
@@ -1149,6 +1236,12 @@
     "Radiola logs" : {
       "comment" : "Window title",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola Protokolle"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1160,18 +1253,18 @@
             "state" : "translated",
             "value" : "Логи Radiola"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Radiola Protokolle"
-          }
         }
       }
     },
     "Remove station" : {
       "comment" : "Button title",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sender entfernen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1183,18 +1276,18 @@
             "state" : "translated",
             "value" : "Удалить станцию"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sender entfernen"
-          }
         }
       }
     },
     "Settings…" : {
       "comment" : "Status bar menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen…"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1206,18 +1299,18 @@
             "state" : "translated",
             "value" : "Настройки…"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Einstellungen…"
-          }
         }
       }
     },
     "Show only your favorite songs" : {
       "comment" : "History window checkbox title",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur Lieblingssongs anzeigen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1229,18 +1322,18 @@
             "state" : "translated",
             "value" : "Показывать только любимые песни"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nur Lieblingssongs anzeigen"
-          }
         }
       }
     },
     "sort by bitrate" : {
       "comment" : "Internet station search panel",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nach Bitrate sortieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1252,18 +1345,18 @@
             "state" : "translated",
             "value" : "сортировать по битрейту"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nach Bitrate sortieren"
-          }
         }
       }
     },
     "sort by country" : {
       "comment" : "Internet station search panel",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nach Land sortieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1275,18 +1368,18 @@
             "state" : "translated",
             "value" : "сортировать по стране"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nach Land sortieren"
-          }
         }
       }
     },
     "sort by name" : {
       "comment" : "Internet station search panel",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nach Name sortieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1298,18 +1391,18 @@
             "state" : "translated",
             "value" : "сортировать по названию"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nach Name sortieren"
-          }
         }
       }
     },
     "sort by votes" : {
       "comment" : "Internet station search panel",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nach Votes sortieren"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1321,18 +1414,18 @@
             "state" : "translated",
             "value" : "сортировать по голосам"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nach Votes sortieren"
-          }
         }
       }
     },
     "The current song has been marked as a favorite" : {
       "comment" : "History window icon tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das aktuelle Lied wurde als Favorit markiert"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1344,18 +1437,18 @@
             "state" : "translated",
             "value" : "Песня была помечена как любимая"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Das aktuelle Lied wurde als Favorit markiert"
-          }
         }
       }
     },
     "The current song has been marked as a favorite." : {
       "comment" : "History window icon tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das aktuelle Lied wurde als Favorit markiert."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1367,18 +1460,18 @@
             "state" : "translated",
             "value" : "Песня была помечена как любимая."
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Das aktuelle Lied wurde als Favorit markiert."
-          }
         }
       }
     },
     "The file does not contain any new or changed radio stations." : {
       "comment" : "Merger dialog message",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Datei enthält keine neuen oder geänderten Radiosender."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1390,18 +1483,18 @@
             "state" : "translated",
             "value" : "Файл не содержит новых или отличающихся станций."
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die Datei enthält keine neuen oder geänderten Radiosender."
-          }
         }
       }
     },
     "This operation cannot be undone." : {
       "comment" : "Remove dialog informativeText",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dieser Vorgang kann nicht rückgängig gemacht werden."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1413,18 +1506,18 @@
             "state" : "translated",
             "value" : "Это действие нельзя будет отменить."
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieser Vorgang kann nicht rückgängig gemacht werden."
-          }
         }
       }
     },
     "Title:" : {
       "comment" : "Add group dialog label for TileEdit\nAdd station dialog label for Tile edit",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel:"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1436,18 +1529,18 @@
             "state" : "translated",
             "value" : "Название:"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Titel:"
-          }
         }
       }
     },
     "To add a group, fill out the following information:" : {
       "comment" : "Add group dialog message",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um eine Gruppe hinzuzufügen, folgende Informationen eingeben:"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1459,18 +1552,18 @@
             "state" : "translated",
             "value" : "Чтобы добавить группу, заполните следующую информацию:"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Um eine Gruppe hinzuzufügen, folgende Informationen eingeben:"
-          }
         }
       }
     },
     "To add a station, fill out the following information:" : {
       "comment" : "Add station dialog message",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Um einen Sender hinzuzufügen, folgende Informationen eingeben:"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1482,18 +1575,18 @@
             "state" : "translated",
             "value" : "Чтобы добавить станцию, заполните следующую информацию:"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Um einen Sender hinzuzufügen, folgende Informationen eingeben:"
-          }
         }
       }
     },
     "Unmute" : {
       "comment" : "Mute button tooltip\nStatus bar menu Item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stummschaltung aufheben"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1504,12 +1597,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Включить звук"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Stummschaltung aufheben"
           }
         }
       }
@@ -1528,16 +1615,16 @@
     "Volume" : {
       "comment" : "Status bar menu item",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Громкость"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lautstärke"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Громкость"
           }
         }
       }
@@ -1545,6 +1632,12 @@
     "votes:" : {
       "comment" : "Internet station row",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Votes:"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1556,18 +1649,18 @@
             "state" : "translated",
             "value" : "голосов:"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Votes:"
-          }
         }
       }
     },
     "Yes" : {
       "comment" : "Yes button",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ja"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1579,18 +1672,18 @@
             "state" : "translated",
             "value" : "Да"
           }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ja"
-          }
         }
       }
     },
     "You may have already exported it before." : {
       "comment" : "Merger dialog informativeText",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möglicherweise wurde dies bereits zuvor exportiert."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1601,12 +1694,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Возможно, вы уже экспортировали его ранее."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Möglicherweise wurde dies bereits zuvor exportiert."
           }
         }
       }
