@@ -247,6 +247,10 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         if let listId = sideBar.selectedListId {
             selectedRows[listId] = stationsTree.selectedRowIndexes.first
         }
+
+        for button in toolBox?.findSubviews(ofType: NSButton.self) ?? [] {
+            button.isEnabled = validateAction(action: button.action)
+        }
     }
 
     /* ****************************************
@@ -398,10 +402,19 @@ extension StationsWindow: NSUserInterfaceValidations {
      *
      * ****************************************/
     func validateUserInterfaceItem(_ item: NSValidatedUserInterfaceItem) -> Bool {
-        switch item.action {
-            case #selector(addStation): return stationsTree.delegate is LocalStationDelegate
-            case #selector(addGroup): return stationsTree.delegate is LocalStationDelegate
-            case #selector(removeStation): return stationsTree.delegate is LocalStationDelegate
+        return validateAction(action: item.action)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func validateAction(action: Selector?) -> Bool {
+        let selCount = stationsTree.selectedRowIndexes.count
+
+        switch action {
+            case #selector(addStation): return stationsTree.delegate is LocalStationDelegate && selCount == 1
+            case #selector(addGroup): return stationsTree.delegate is LocalStationDelegate && selCount == 1
+            case #selector(removeStation): return stationsTree.delegate is LocalStationDelegate && selCount > 0
             case #selector(exportStations): return stationsTree.delegate is LocalStationDelegate
             case #selector(importStations): return stationsTree.delegate is LocalStationDelegate
            // case #selector(copySongToClipboard): return player.songTitle != ""

@@ -48,6 +48,9 @@ public extension NSWindow {
 // MARK: - NSView
 
 public extension NSView {
+    /* ****************************************
+     *
+     * ****************************************/
     func load(fromNIBNamed nibName: String) -> NSView? {
         var nibObjects: NSArray?
         let nibName = NSNib.Name(stringLiteral: nibName)
@@ -74,15 +77,37 @@ public extension NSView {
         return nil
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     func setBackgroundColor(_ color: NSColor) {
         wantsLayer = true
         layer?.backgroundColor = color.cgColor
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     func addSubview(_ view: NSView?) {
         if let view = view {
             addSubview(view)
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func findSubviews<T: NSView>(ofType type: T.Type) -> [T] {
+        var result: [T] = []
+
+        for subview in subviews {
+            if let matchedView = subview as? T {
+                result.append(matchedView)
+            }
+            result.append(contentsOf: subview.findSubviews(ofType: type))
+        }
+
+        return result
     }
 }
 
