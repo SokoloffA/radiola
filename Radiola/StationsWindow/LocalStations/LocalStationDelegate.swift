@@ -178,17 +178,53 @@ extension LocalStationDelegate {
     func outlineView(_ outlineView: NSOutlineView, acceptDrop info: NSDraggingInfo, item: Any?, childIndex index: Int) -> Bool {
         guard
             let list = list,
-            let srcId = UUID(uuidString: info.draggingPasteboard.pasteboardItems?.first?.string(forType: StationItemPasteboardType) ?? ""),
+            let pasteboardItems = info.draggingPasteboard.pasteboardItems
+        else {
+            return false
+        }
+
+        for pasteboardItem in pasteboardItems {
+            guard
+                let srcId = UUID(uuidString: pasteboardItem.string(forType: StationItemPasteboardType) ?? ""),
+                let srcItem = list.item(byID: srcId),
+                let destGroup = item == nil ? list : item as? StationGroup
+            else {
+                return false
+            }
+
+            if !canDragAndDrop(src: srcItem, dest: destGroup) {
+                return false
+            }
+        }
+
+        outlineView.beginUpdates()
+        var destIndex = index
+        for pasteboardItem in pasteboardItems /* .reversed() */ {
+            destIndex = moveItem(pasteboardItem: pasteboardItem, item: item, childIndex: destIndex)
+            if destIndex < 0 {
+                outlineView.endUpdates()
+                return false
+            }
+            destIndex += 1
+        }
+        outlineView.endUpdates()
+
+        return true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func moveItem(pasteboardItem: NSPasteboardItem, item: Any?, childIndex index: Int) -> Int {
+        guard
+            let list = list,
+            let srcId = UUID(uuidString: pasteboardItem.string(forType: StationItemPasteboardType) ?? ""),
             let srcItem = list.item(byID: srcId),
             let srcParent = list.itemParent(item: srcItem),
             let srcIndex = srcParent.items.firstIndex(where: { $0.id == srcId }),
             let destGroup = item == nil ? list : item as? StationGroup
         else {
-            return false
-        }
-
-        if !canDragAndDrop(src: srcItem, dest: destGroup) {
-            return false
+            return -1
         }
 
         var destIndex = index
@@ -203,7 +239,7 @@ extension LocalStationDelegate {
             }
         } else {
             if destIndex == NSOutlineViewDropOnItemIndex {
-                return false
+                return -1
             }
 
             // When you drag an item downwards, the "new row" index is actually --1. Remember dragging operation is `.above`.
@@ -212,7 +248,7 @@ extension LocalStationDelegate {
             }
 
             if destIndex == srcIndex {
-                return false
+                return -1
             }
 
             let node = srcParent.items.remove(at: srcIndex)
@@ -234,7 +270,7 @@ extension LocalStationDelegate {
         outlineView.expandItem(destGroup)
 
         // stationsStore.dump()
-        return true
+        return destIndex
     }
 }
 
