@@ -25,6 +25,7 @@ class LogsWindow: NSWindowController, NSWindowDelegate {
     override func windowDidLoad() {
         super.windowDidLoad()
 
+        windowFrameAutosaveName = "LogsWindow"
         window?.delegate = self
         window?.title = NSLocalizedString("Radiola logs", comment: "Window title")
 
