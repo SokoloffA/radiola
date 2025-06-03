@@ -1,5 +1,15 @@
 {
+  "originHash" : "8a26e923af640e6e7e2609c6b03d9e8c820aee21e3e5b6e5c0eaf59e945315a2",
   "pins" : [
+    {
+      "identity" : "ffaudioplayer",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SokoloffA/FFAudioPlayer",
+      "state" : {
+        "branch" : "main",
+        "revision" : "1dfa37d4aa077c49a7e0f3486d8c5c5258cf34d3"
+      }
+    },
     {
       "identity" : "sparkle",
       "kind" : "remoteSourceControl",
@@ -10,5 +20,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }
