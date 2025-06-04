@@ -6,26 +6,15 @@
 //  Copyright © 2020 Alex Sokolov. All rights reserved.
 //
 
-import AVFoundation
 import Cocoa
+import Combine
 import Foundation
-
-extension AVPlayer.TimeControlStatus {
-    var description: String {
-        switch self {
-            case .paused: return "paused"
-            case .waitingToPlayAtSpecifiedRate: return "waitingToPlayAtSpecifiedRate"
-            case .playing: return "playing"
-            @unknown default: return "unknown"
-        }
-    }
-}
 
 // MARK: - Player
 
 var player = Player()
 
-class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
+class Player: NSObject {
     var station: Station?
     public var songTitle = String()
     public var stationName: String { station?.title ?? "" }
@@ -42,15 +31,17 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
     public var status = Status.paused
     private var playerItemContext = 0
-    private var player: AVPlayer?
+    private var player = FFPlayer()
     private var timer: Timer?
     private let connectDelay = 15.0
+    private var stateWatch: AnyCancellable?
+    private var metaWatch: AnyCancellable?
 
     /* ****************************************
      *
      * ****************************************/
     var volume: Float { didSet {
-        player?.volume = max(0, min(1, volume))
+        player.volume = max(0, min(1, volume))
         settings.volumeLevel = volume
         NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
     }}
@@ -59,7 +50,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     var isMuted: Bool { didSet {
-        player?.isMuted = isMuted
+        player.isMuted = isMuted
         settings.volumeIsMuted = isMuted
         NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
     }}
@@ -69,14 +60,12 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      * ****************************************/
     var audioDeviceUID: String? { didSet {
         settings.audioDevice = audioDeviceUID
-        if let player = player {
-            if player.audioOutputDeviceUniqueID != audioDeviceUID {
-                player.audioOutputDeviceUniqueID = audioDeviceUID
+        if player.audioOutputDeviceUniqueID != audioDeviceUID {
+            player.audioOutputDeviceUniqueID = audioDeviceUID
 
-                if isPlaying {
-                    stop()
-                    play()
-                }
+            if isPlaying {
+                stop()
+                play()
             }
         }
     }}
@@ -90,6 +79,14 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         self.audioDeviceUID = settings.audioDevice
 
         super.init()
+
+        stateWatch = player.$state.receive(on: RunLoop.main).sink { self.stateChenged($0) }
+        metaWatch = player.$nowPlaing.receive(on: RunLoop.main).sink { self.metadataChanged($0) }
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateAudioDevice),
+                                               name: Notification.Name.AudioDeviceChanged,
+                                               object: nil)
 
         debugAudioDevices()
     }
@@ -119,39 +116,15 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         debug("Play \(station.url) \(url)")
 
         stop()
+        stateChenged(FFPlayer.State.loading)
 
-        let player = AVPlayer()
         player.volume = self.volume
         player.isMuted = self.isMuted
         player.audioOutputDeviceUniqueID = self.audioDeviceUID
 
-        player.addObserver(self,
-                           forKeyPath: #keyPath(AVPlayer.timeControlStatus),
-                           options: [.old, .new],
-                           context: &playerItemContext)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateAudioDevice),
-                                               name: Notification.Name.AudioDeviceChanged,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(failedToPlay),
-                                               name: .AVPlayerItemFailedToPlayToEndTime,
-                                               object: player.currentItem)
-
-        self.player = player
         debugAudioDevices()
 
-        let playerItem = AVPlayerItem(url: url)
-
-        let metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
-        metadataOutput.setDelegate(self, queue: DispatchQueue.main)
-        playerItem.add(metadataOutput)
-        player.replaceCurrentItem(with: playerItem)
-
-        statusChenged(status: AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate)
-        player.play()
+        player.play(url: url)
         settings.lastStationUrl = station.url
 
         timer = Timer.scheduledTimer(
@@ -166,8 +139,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     @objc func stop() {
-        player?.pause()
-        player = nil
+        player.stop()
     }
 
     /* ****************************************
@@ -217,45 +189,28 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     /* ****************************************
      *
      * ****************************************/
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
-        guard context == &playerItemContext else {
-            super.observeValue(forKeyPath: keyPath,
-                               of: object,
-                               change: change,
-                               context: context)
-            return
-        }
+    private func stateChenged(_ state: FFPlayer.State) {
+        debug("Player status changed \(state.description) for \(station?.url ?? "nil")")
 
-        if keyPath == #keyPath(AVPlayer.timeControlStatus) {
-            if let statusNumber = change?[.newKey] as? NSNumber {
-                self.statusChenged(status: AVPlayer.TimeControlStatus(rawValue: statusNumber.intValue)!)
-            }
-        }
-    }
+        switch state {
+            case .stoped:
+                self.status = .paused
+                metadataChanged("")
 
-    /* ****************************************
-     *
-     * ****************************************/
-    private func statusChenged(status: AVPlayer.TimeControlStatus) {
-        debug("Player status changed \(status.description) for \(station?.url ?? "nil")")
-
-        if let error = player?.currentItem?.error {
-            warning("Player: Loading or preparation error: \(error.localizedDescription)")
-        }
-
-        switch status {
-            case AVPlayer.TimeControlStatus.waitingToPlayAtSpecifiedRate:
+            case .loading:
                 self.status = .connecting
-                songTitle = ""
-                NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": ""])
+                metadataChanged("")
 
-            case AVPlayer.TimeControlStatus.playing:
+            case .playing:
                 self.status = .playing
 
-            default:
+            case .error:
                 self.status = .paused
-                songTitle = ""
-                NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": ""])
+                metadataChanged("")
+
+                if let error = player.error {
+                    warning("Player: Loading or preparation error: \(error.localizedDescription)")
+                }
         }
 
         NotificationCenter.default.post(name: Notification.Name.PlayerStatusChanged, object: nil)
@@ -264,15 +219,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     // ****************************************
     // Metadata
     // ****************************************
-    func metadataOutput(_ output: AVPlayerItemMetadataOutput, didOutputTimedMetadataGroups groups: [AVTimedMetadataGroup], from track: AVPlayerItemTrack?) {
-        guard
-            let item = groups.first?.items.first,
-            let value = item.value(forKeyPath: #keyPath(AVMetadataItem.value))
-        else {
-            return
-        }
-
-        songTitle = cleanTrackMetadata(raw: "\(value)")
+    func metadataChanged(_ nowPlaing: String?) {
+        songTitle = cleanTrackMetadata(raw: nowPlaing ?? "")
         addHistory()
 
         NotificationCenter.default.post(
@@ -293,7 +241,7 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
      *
      * ****************************************/
     @objc private func updateAudioDevice() {
-        let uid = player?.audioOutputDeviceUniqueID
+        let uid = player.audioOutputDeviceUniqueID
 
         debug("Audio device changed: current ID: \(uid ?? "nil")")
         if uid == nil {
@@ -373,16 +321,8 @@ class Player: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     /* ****************************************
      *
      * ****************************************/
-    @objc private func failedToPlay(_ notification: Notification) {
-        guard let error = notification.userInfo?[AVPlayerItemFailedToPlayToEndTimeErrorKey] as? Error else { return }
-        warning("Player: Playing error : \(error.localizedDescription)")
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     private func debugAudioDevices() {
-        debug("Player audio device ID: \(player?.audioOutputDeviceUniqueID ?? "nil")")
+        debug("Player audio device ID: \(player.audioOutputDeviceUniqueID ?? "nil")")
         if let ID = AudioSytstem.defaultOutputDeviceID() {
             debug("System default device ID: \(ID)")
         } else {

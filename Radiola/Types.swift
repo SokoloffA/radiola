@@ -177,3 +177,12 @@ extension NSMenu {
         addItem(NSMenuItem(title: withTitle, keyEquivalent: keyEquivalent, action: action))
     }
 }
+
+// MARK: - String
+
+extension String {
+    init? (cString: UnsafePointer<CChar>?) {
+        guard let cString = cString else { return nil }
+        self.init(cString: cString)
+    }
+}
