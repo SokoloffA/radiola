@@ -88,6 +88,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /* ****************************************
      *
      * ****************************************/
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if settings.playLastStation {
+            debug("Auto play \(settings.lastStationUrl ?? "nil")")
+            player.play()
+        }
+        return true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
