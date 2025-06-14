@@ -10,26 +10,27 @@ import Foundation
 
 fileprivate actor Backend {
     unowned let frontend: FFPlayer
-    private var handle: OpaquePointer?
+    private let handle: OpaquePointer
 
     /* ****************************************
      *
      * ****************************************/
     init(frontend: FFPlayer) {
         self.frontend = frontend
+        handle = ffplayer_create()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    deinit {
+        ffplayer_free(handle)
+    }
 
     /* ****************************************
      *
      * ****************************************/
     func start(url: URL, volume: Float, deviceUID: String?) async {
-        if handle != nil {
-            await stop()
-        }
-
-        let handle = ffplayer_create()
-        self.handle = handle
         let opaqueSelf = Unmanaged.passUnretained(self).toOpaque()
 
         ffplayer_set_state_callback(handle, opaqueSelf) { userData, state in
@@ -41,8 +42,7 @@ fileprivate actor Backend {
         ffplayer_set_now_plaing_callback(handle, opaqueSelf) { userData, nowPlaing in
             guard let userData = userData else { return }
             let backend = Unmanaged<Backend>.fromOpaque(userData).takeUnretainedValue()
-            let nowPlaing = String(cString: nowPlaing)
-            Task { await backend.updateNowPlaing(nowPlaing) }
+            Task { await backend.updateNowPlaing(String(cString: nowPlaing)) }
         }
 
         if ffplayer_load(handle, url.absoluteString) != 0 {
@@ -56,19 +56,7 @@ fileprivate actor Backend {
     /* ****************************************
      *
      * ****************************************/
-    func stop() async {
-        if let h = handle {
-            handle = nil
-            ffplayer_free(h)
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     private func updateState(_ state: FFPlayerState) async {
-        guard let handle = handle else { return }
-
         var errCode = 0
         var errStr = ""
         if state == FFPlayer_Error {
@@ -113,7 +101,6 @@ fileprivate actor Backend {
      *
      * ****************************************/
     func setVolume(volume: Float) async {
-        guard let handle = handle else { return }
         ffplayer_set_volume(handle, volume)
     }
 }
@@ -137,7 +124,7 @@ extension FFPlayer {
 }
 
 public class FFPlayer: ObservableObject {
-    private var backend: Backend!
+    private var backend: Backend?
 
     @Published fileprivate(set) var state = State.stoped
     @Published fileprivate(set) var nowPlaing: String?
@@ -161,17 +148,11 @@ public class FFPlayer: ObservableObject {
     /* ****************************************
      *
      * ****************************************/
-    init() {
-        backend = Backend(frontend: self)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     func play(url: URL) {
         let vol = isMuted ? 0.0 : volume
+        backend = Backend(frontend: self)
         Task {
-            await backend.start(url: url, volume: vol, deviceUID: audioOutputDeviceUniqueID)
+            await backend!.start(url: url, volume: vol, deviceUID: audioOutputDeviceUniqueID)
         }
     }
 
@@ -181,9 +162,7 @@ public class FFPlayer: ObservableObject {
     func stop() {
         nowPlaing = ""
         state = .stoped
-        Task {
-            await backend.stop()
-        }
+        backend = nil
     }
 
     /* ****************************************
@@ -191,8 +170,10 @@ public class FFPlayer: ObservableObject {
      * ****************************************/
     private func updateVolume() {
         let vol = isMuted ? 0.0 : volume
-        Task {
-            await backend.setVolume(volume: vol)
+        if let backend = backend {
+            Task {
+                await backend.setVolume(volume: vol)
+            }
         }
     }
 
