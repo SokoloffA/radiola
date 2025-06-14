@@ -1495,7 +1495,7 @@
         }
       }
     },
-    "The URL does not contain or contains unsupported audio." : {
+    "The URL does not contain or contains unsupported audio.." : {
       "comment" : "Player error message"
     },
     "This operation cannot be undone." : {

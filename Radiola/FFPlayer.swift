@@ -13,7 +13,7 @@ fileprivate let NUM_BUFFERS = 50
 fileprivate let BUFFER_SIZE = 8192
 
 fileprivate let internalErrorDescription = NSLocalizedString("Internal error.\nSee logs for more information.", comment: "Player error message")
-fileprivate let invalidURLErrorDescription = NSLocalizedString("The URL does not contain or contains unsupported audio.", comment: "Player error message")
+fileprivate let invalidURLErrorDescription = NSLocalizedString("The URL does not contain or contains unsupported audio..", comment: "Player error message")
 
 extension FFPlayer {
     enum ErrorCode: Int32 {
