@@ -1,5 +1,5 @@
 {
-  "originHash" : "964e5538e5fb04948c6b8b8971935c08fecedbe6c8305c8f0e6eaa45b3cbf890",
+  "originHash" : "8a26e923af640e6e7e2609c6b03d9e8c820aee21e3e5b6e5c0eaf59e945315a2",
   "pins" : [
     {
       "identity" : "ffaudioplayer",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/SokoloffA/FFAudioPlayer",
       "state" : {
         "branch" : "main",
-        "revision" : "ca8fd00fa8922c86b09ec559d5b34ea5b9df0d01"
+        "revision" : "7886937d6021e6448525cddb4288debb0a38e6a6"
       }
     },
     {
