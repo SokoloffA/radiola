@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		390C3CFC2DF08E640062A1F2 /* FFAudioPlayer in Frameworks */ = {isa = PBXBuildFile; productRef = 390C3CFB2DF08E640062A1F2 /* FFAudioPlayer */; };
-		390C3D012DF08F660062A1F2 /* FFPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C3D002DF08F660062A1F2 /* FFPlayer.swift */; };
 		390C7294287B213200E17BAE /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7293287B213200E17BAE /* Controls.swift */; };
 		390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7296287B237B00E17BAE /* HistoryRow.swift */; };
 		39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */; };
@@ -106,7 +104,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		390C3D002DF08F660062A1F2 /* FFPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFPlayer.swift; sourceTree = "<group>"; };
 		390C7293287B213200E17BAE /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
 		390C7296287B237B00E17BAE /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
@@ -202,7 +199,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				390C3CFC2DF08E640062A1F2 /* FFAudioPlayer in Frameworks */,
 				39E8DFD5288F316A00082467 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,7 +289,6 @@
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
-				390C3D002DF08F660062A1F2 /* FFPlayer.swift */,
 				3959DBB32C03327A0032A1BA /* TrackMetadata.swift */,
 				3962D0292BE0E39F0014BCFB /* History.swift */,
 				39D27F522BA36B2D00D5857A /* Credits.html */,
@@ -449,7 +444,6 @@
 			name = Radiola;
 			packageProductDependencies = (
 				39E8DFD4288F316A00082467 /* Sparkle */,
-				390C3CFB2DF08E640062A1F2 /* FFAudioPlayer */,
 			);
 			productName = Radiola;
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
@@ -503,7 +497,6 @@
 			mainGroup = 394F8A2F28739339005EA7FA;
 			packageReferences = (
 				39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */,
-				390C3CFA2DF08E640062A1F2 /* XCRemoteSwiftPackageReference "FFAudioPlayer" */,
 			);
 			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
@@ -553,7 +546,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				390C3D012DF08F660062A1F2 /* FFPlayer.swift in Sources */,
 				3962D0362BE688440014BCFB /* KeyboardShortcuts.swift in Sources */,
 				3962D0462BE6891E0014BCFB /* ViewModifiers.swift in Sources */,
 				394ABC9B2A97AD9C00E2B6E9 /* SidebarSecondLevelView.swift in Sources */,
@@ -915,14 +907,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		390C3CFA2DF08E640062A1F2 /* XCRemoteSwiftPackageReference "FFAudioPlayer" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SokoloffA/FFAudioPlayer";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -934,11 +918,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		390C3CFB2DF08E640062A1F2 /* FFAudioPlayer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 390C3CFA2DF08E640062A1F2 /* XCRemoteSwiftPackageReference "FFAudioPlayer" */;
-			productName = FFAudioPlayer;
-		};
 		39E8DFD4288F316A00082467 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */;
