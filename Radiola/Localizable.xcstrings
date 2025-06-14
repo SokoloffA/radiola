@@ -594,6 +594,9 @@
         }
       }
     },
+    "Connection time has expired" : {
+      "comment" : "Player error message."
+    },
     "contains" : {
       "comment" : "Internet station search panel",
       "localizations" : {
@@ -1324,6 +1327,9 @@
           }
         }
       }
+    },
+    "Sorry, I couldn't play \"%@\"." : {
+      "comment" : "Player error title. %@ is a station name"
     },
     "sort by bitrate" : {
       "comment" : "Internet station search panel",

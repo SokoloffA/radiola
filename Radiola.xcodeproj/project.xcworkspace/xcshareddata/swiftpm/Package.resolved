@@ -1,5 +1,15 @@
 {
+  "originHash" : "8e897c62e3b69fac277be152de5cd763c88578ea9ae2b4a8d85aa04feff79e72",
   "pins" : [
+    {
+      "identity" : "ffaudio",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SokoloffA/FFAudio",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6cb4cfc58ee64c4490c32d4ee354d0136f29c19f"
+      }
+    },
     {
       "identity" : "sparkle",
       "kind" : "remoteSourceControl",
@@ -10,5 +20,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

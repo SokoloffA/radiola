@@ -15,6 +15,8 @@
 		3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3926FF112AD4687A0094D875 /* AddStationDialog.xib */; };
 		392C469B2A6C21BD0095DDA2 /* MediaKeysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */; };
 		393B221F2CE951380035233D /* Settings.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 393B221E2CE951380035233D /* Settings.xcstrings */; };
+		393F9C0E2DFDA81700870055 /* FFAudio in Frameworks */ = {isa = PBXBuildFile; productRef = 393F9C0D2DFDA81700870055 /* FFAudio */; };
+		393F9C102DFDA8C400870055 /* FFPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393F9C0F2DFDA8C400870055 /* FFPlayer.swift */; };
 		394ABC972A97AC9B00E2B6E9 /* SidebarTopLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394ABC952A97AC9B00E2B6E9 /* SidebarTopLevelView.swift */; };
 		394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 394ABC962A97AC9B00E2B6E9 /* SidebarTopLevelView.xib */; };
 		394ABC9B2A97AD9C00E2B6E9 /* SidebarSecondLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394ABC992A97AD9C00E2B6E9 /* SidebarSecondLevelView.swift */; };
@@ -112,6 +114,7 @@
 		3926FF112AD4687A0094D875 /* AddStationDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
 		392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeysController.swift; sourceTree = "<group>"; };
 		393B221E2CE951380035233D /* Settings.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Settings.xcstrings; sourceTree = "<group>"; };
+		393F9C0F2DFDA8C400870055 /* FFPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFPlayer.swift; sourceTree = "<group>"; };
 		394ABC952A97AC9B00E2B6E9 /* SidebarTopLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTopLevelView.swift; sourceTree = "<group>"; };
 		394ABC962A97AC9B00E2B6E9 /* SidebarTopLevelView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SidebarTopLevelView.xib; sourceTree = "<group>"; };
 		394ABC992A97AD9C00E2B6E9 /* SidebarSecondLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarSecondLevelView.swift; sourceTree = "<group>"; };
@@ -200,6 +203,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				39E8DFD5288F316A00082467 /* Sparkle in Frameworks */,
+				393F9C0E2DFDA81700870055 /* FFAudio in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -289,6 +293,7 @@
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
+				393F9C0F2DFDA8C400870055 /* FFPlayer.swift */,
 				3959DBB32C03327A0032A1BA /* TrackMetadata.swift */,
 				3962D0292BE0E39F0014BCFB /* History.swift */,
 				39D27F522BA36B2D00D5857A /* Credits.html */,
@@ -444,6 +449,7 @@
 			name = Radiola;
 			packageProductDependencies = (
 				39E8DFD4288F316A00082467 /* Sparkle */,
+				393F9C0D2DFDA81700870055 /* FFAudio */,
 			);
 			productName = Radiola;
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
@@ -497,6 +503,7 @@
 			mainGroup = 394F8A2F28739339005EA7FA;
 			packageReferences = (
 				39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				393F9C0C2DFDA81700870055 /* XCRemoteSwiftPackageReference "FFAudio" */,
 			);
 			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
@@ -546,6 +553,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				393F9C102DFDA8C400870055 /* FFPlayer.swift in Sources */,
 				3962D0362BE688440014BCFB /* KeyboardShortcuts.swift in Sources */,
 				3962D0462BE6891E0014BCFB /* ViewModifiers.swift in Sources */,
 				394ABC9B2A97AD9C00E2B6E9 /* SidebarSecondLevelView.swift in Sources */,
@@ -907,6 +915,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		393F9C0C2DFDA81700870055 /* XCRemoteSwiftPackageReference "FFAudio" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SokoloffA/FFAudio";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -918,6 +934,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		393F9C0D2DFDA81700870055 /* FFAudio */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 393F9C0C2DFDA81700870055 /* XCRemoteSwiftPackageReference "FFAudio" */;
+			productName = FFAudio;
+		};
 		39E8DFD4288F316A00082467 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */;
