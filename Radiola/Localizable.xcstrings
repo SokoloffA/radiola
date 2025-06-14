@@ -827,6 +827,9 @@
         }
       }
     },
+    "Internal error.\nSee logs for more information." : {
+      "comment" : "Player error message"
+    },
     "less than a minute ago" : {
       "comment" : "History window song status",
       "localizations" : {
@@ -1491,6 +1494,9 @@
           }
         }
       }
+    },
+    "The URL does not contain or contains unsupported audio." : {
+      "comment" : "Player error message"
     },
     "This operation cannot be undone." : {
       "comment" : "Remove dialog informativeText",

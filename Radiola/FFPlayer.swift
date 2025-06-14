@@ -12,6 +12,9 @@ import Foundation
 fileprivate let NUM_BUFFERS = 50
 fileprivate let BUFFER_SIZE = 8192
 
+fileprivate let internalErrorDescription = NSLocalizedString("Internal error.\nSee logs for more information.", comment: "Player error message")
+fileprivate let invalidURLErrorDescription = NSLocalizedString("The URL does not contain or contains unsupported audio.", comment: "Player error message")
+
 extension FFPlayer {
     enum ErrorCode: Int32 {
         case noError = 0
@@ -225,11 +228,11 @@ fileprivate class Backend {
      * ****************************************/
     func load(url: URL) throws {
         if frame == nil {
-            throw NSError(code: .alocError_avframe, message: "Error calling av_frame_alloc")
+            throw NSError(code: .alocError_avframe, message: internalErrorDescription, debug: "Error calling av_frame_alloc")
         }
 
         if packet == nil {
-            throw NSError(code: .alocError_avpacket, message: "Error calling av_packet_alloc")
+            throw NSError(code: .alocError_avpacket, message: internalErrorDescription, debug: "Error calling av_packet_alloc")
         }
 
         var options: OpaquePointer?
@@ -237,12 +240,12 @@ fileprivate class Backend {
 
         err = av_dict_set(&options, "icy", "1", 0)
         if err < 0 {
-            throw NSError(ffCode: err, message: "Error calling av_dict_set")
+            throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_dict_set")
         }
 
         formatContext = avformat_alloc_context()
         guard formatContext != nil else {
-            throw NSError(code: .alocError_avformat, message: "Error calling avformat_alloc_context")
+            throw NSError(code: .alocError_avformat, message: internalErrorDescription, debug: "Error calling avformat_alloc_context")
         }
 
         formatContext.pointee.interrupt_callback = interruptCB
@@ -250,47 +253,47 @@ fileprivate class Backend {
         err = avformat_open_input(&formatContext, url.absoluteString, nil, &options)
         if err < 0 {
             av_dict_free(&options)
-            throw NSError(ffCode: err, message: "Error calling avformat_open_input")
+            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling avformat_open_input")
         }
         av_dict_free(&options)
 
         err = avformat_find_stream_info(formatContext, nil)
         if err < 0 {
-            throw NSError(ffCode: err, message: "Error calling avformat_find_stream_info")
+            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling avformat_find_stream_info")
         }
 
         // Find the first audio stream
         streamIndex = Int(av_find_best_stream(formatContext, AVMEDIA_TYPE_AUDIO, -1, -1, nil, 0))
         if streamIndex < 0 {
-            throw NSError(code: .noStreamFoundError, message: "No audio stream found.")
+            throw NSError(code: .noStreamFoundError, message: invalidURLErrorDescription, debug: "No audio stream found.")
         }
 
         guard let stream = formatContext.pointee.streams[streamIndex] else {
-            throw NSError(code: .noStreamFoundError, message: "No input stream found.")
+            throw NSError(code: .noStreamFoundError, message: invalidURLErrorDescription, debug: "No input stream found.")
         }
 
         guard
             let codecParams = stream.pointee.codecpar, // formatContext.pointee.streams[streamIndex]!.pointee.codecpar,
             let codec = avcodec_find_decoder(codecParams.pointee.codec_id)
         else {
-            throw NSError(code: .noCodecFoundError, message: "No input codec found.")
+            throw NSError(code: .noCodecFoundError, message: invalidURLErrorDescription, debug: "No input codec found.")
         }
 
         codecContext = avcodec_alloc_context3(codec)
         if codecContext == nil {
-            throw NSError(code: .alocError_avcodec, message: "Error calling avcodec_alloc_context3")
+            throw NSError(code: .alocError_avcodec, message: invalidURLErrorDescription, debug: "Error calling avcodec_alloc_context3")
         }
 
         codecContext.pointee.pkt_timebase = stream.pointee.time_base
 
         err = avcodec_parameters_to_context(codecContext, stream.pointee.codecpar)
         if err < 0 {
-            throw NSError(ffCode: err, message: "Error calling avcodec_parameters_to_context")
+            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling avcodec_parameters_to_context")
         }
 
         err = avcodec_open2(codecContext, codec, nil)
         if err < 0 {
-            throw NSError(ffCode: err, message: "Error calling avcodec_open2")
+            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling avcodec_open2")
         }
 
         // Define output format ................
@@ -308,12 +311,12 @@ fileprivate class Backend {
                                       0, nil)
         }
         if err < 0 {
-            throw NSError(ffCode: err, message: "Error calling swr_alloc_set_opts2")
+            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling swr_alloc_set_opts2")
         }
 
         err = swr_init(swrContext)
         if err < 0 {
-            throw NSError(ffCode: err, message: "Error calling swr_init")
+            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling swr_init")
         }
 
         var format = makeASBD(outFmt: outFmt, outChannels: UInt32(outChannels), outSampleRate: Double(outSampleRate))
@@ -328,7 +331,7 @@ fileprivate class Backend {
             &audioQueue)
 
         if err < 0 {
-            throw NSError(code: .alocError_AudioQueue, message: "Error calling AudioQueueNewOutput")
+            throw NSError(code: .alocError_AudioQueue, message: internalErrorDescription, debug: "Error calling AudioQueueNewOutput")
         }
 
         for i in 0 ..< NUM_BUFFERS {
@@ -336,7 +339,7 @@ fileprivate class Backend {
             err = AudioQueueAllocateBuffer(audioQueue!, UInt32(BUFFER_SIZE), &buffer)
 
             if err != noErr || buffer == nil {
-                throw NSError(code: .alocError_AudioQueueBuffer, message: "Error calling AudioQueueAllocateBuffer")
+                throw NSError(code: .alocError_AudioQueueBuffer, message: internalErrorDescription, debug: "Error calling AudioQueueAllocateBuffer")
             }
 
             buffers[i] = buffer
@@ -398,14 +401,14 @@ fileprivate class Backend {
                 let err = AudioQueueSetProperty(audioQueue, kAudioQueueProperty_CurrentDevice, rawPtr, UInt32(MemoryLayout<CFString?>.size))
 
                 if err != noErr {
-                    throw NSError(code: .setDeviceError, message: "Error setting audio device")
+                    throw NSError(code: .setDeviceError, message: internalErrorDescription, debug: "Error setting audio device")
                 }
             }
         }
 
         let err = AudioQueueStart(audioQueue, nil)
         if err != noErr {
-            throw NSError(code: .audioQueueStartError, message: "Error calling AudioQueueStart")
+            throw NSError(code: .audioQueueStartError, message: internalErrorDescription, debug: "Error calling AudioQueueStart")
         }
     }
 
@@ -426,7 +429,7 @@ fileprivate class Backend {
 
         let err = AudioQueueSetParameter(audioQueue, kAudioQueueParam_Volume, volume)
         if err != noErr {
-            setError(NSError(code: .setVolumeError, message: "Error calling AudioQueueSetParameter"))
+            setError(NSError(code: .setVolumeError, message: internalErrorDescription, debug: "Error calling AudioQueueSetParameter"))
         }
     }
 
@@ -464,7 +467,7 @@ fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: Audi
         while backend.pcmBuffer.count < BUFFER_SIZE {
             err = av_read_frame(backend.formatContext, backend.packet)
             if err < 0 {
-                throw NSError(ffCode: err, message: "Error calling av_read_frame")
+                throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_read_frame")
             }
 
             defer {
@@ -478,14 +481,14 @@ fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: Audi
 
             err = avcodec_send_packet(backend.codecContext, backend.packet)
             if err < 0 {
-                throw NSError(ffCode: err, message: "Error calling avcodec_send_packet")
+                throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_send_packet")
             }
 
             err = avcodec_receive_frame(backend.codecContext, backend.frame)
             if err == -EAGAIN {
                 continue
             } else if err < 0 {
-                throw NSError(ffCode: err, message: "Error calling avcodec_receive_frame")
+                throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_receive_frame")
             }
 
             let dstNbSamples = av_rescale_rnd(
@@ -501,7 +504,7 @@ fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: Audi
                 err >= 0,
                 var outBuf = outBuf
             else {
-                throw NSError(ffCode: err, message: "Error calling av_samples_alloc")
+                throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_samples_alloc")
             }
             defer {
                 av_freep(&outBuf)
@@ -525,12 +528,12 @@ fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: Audi
                                                backend.frame.pointee.nb_samples)
 
             if samplesConverted < 0 {
-                throw NSError(ffCode: samplesConverted, message: "Error calling swr_convert")
+                throw NSError(ffCode: samplesConverted, message: internalErrorDescription, debug: "Error calling swr_convert")
             }
 
             let outSize = av_samples_get_buffer_size(nil, backend.outChannels, samplesConverted, backend.outFmt, 1)
             if outSize < 0 {
-                throw NSError(ffCode: outSize, message: "Error calling av_samples_get_buffer_size")
+                throw NSError(ffCode: outSize, message: internalErrorDescription, debug: "Error calling av_samples_get_buffer_size")
             }
 
             backend.pcmBuffer.append(contentsOf: UnsafeBufferPointer(start: outBuf, count: Int(outSize)))
@@ -592,21 +595,35 @@ fileprivate extension NSError {
     /* ****************************************
      *
      * ****************************************/
-    convenience init(code: FFPlayer.ErrorCode, message: String) {
-        self.init(domain: "FFPlayer", code: Int(code.rawValue), userInfo: [NSLocalizedDescriptionKey: message])
+    convenience init(code: Int, message: String, debug: String) {
+        self.init(
+            domain: "FFPlayer",
+            code: Int(code),
+            userInfo: [
+                NSLocalizedDescriptionKey: message,
+                NSDebugDescriptionErrorKey: debug,
+            ]
+        )
     }
 
     /* ****************************************
      *
      * ****************************************/
-    convenience init(ffCode: Int32, message: String) {
+    convenience init(code: FFPlayer.ErrorCode, message: String, debug: String) {
+        self.init(code: Int(code.rawValue), message: message, debug: debug)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    convenience init(ffCode: Int32, message: String, debug: String) {
         var errorBuffer = [CChar](repeating: 0, count: 1024)
         av_make_error_string(&errorBuffer, 1024, ffCode)
 
         let ffmpegError = String(cString: errorBuffer)
-        let msg = "\(message). error code = \(ffCode) : \(ffmpegError)"
+        let dbg = "\(debug). error code = \(ffCode) : \(ffmpegError)"
 
-        self.init(domain: "FFPlayer", code: Int(ffCode), userInfo: [NSLocalizedDescriptionKey: msg])
+        self.init(code: Int(ffCode), message: message, debug: dbg)
     }
 }
 
