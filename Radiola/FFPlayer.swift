@@ -517,8 +517,8 @@ fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: Audi
                 outBufPointer.deallocate()
             }
 
-            let srcData = withUnsafePointer(to: backend.frame.pointee.data) { ptr -> UnsafePointer<UnsafePointer<UInt8>?> in
-                UnsafeRawPointer(ptr).assumingMemoryBound(to: UnsafePointer<UInt8>?.self)
+            let srcData = withUnsafePointer(to: &backend.frame.pointee.data) {
+                UnsafeRawPointer($0).assumingMemoryBound(to: UnsafePointer<UInt8>?.self)
             }
 
             let samplesConverted = swr_convert(backend.swrContext,
