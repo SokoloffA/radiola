@@ -43,6 +43,7 @@ jobs:
 
       - name: Build
         run: |
+          .github/workflows/bumpversion.sh Radiola.xcodeproj/project.pbxproj
           sed -i '' "s|<build-info>|Commit: <a href='${COMMIT_URL}'>${COMMIT_TXT}</a>  Build: <a href='${BUILD_URL}'>#${BUILD_TXT}</a>|" Radiola/Credits.html
           xcodebuild clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
 
