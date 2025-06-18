@@ -306,54 +306,76 @@
         }
       }
     },
-    "Are you sure you want to remove %1$lld stations and %2$lld groups and all their children?" : {
-      "comment" : "Remove station dialog text. The %1$lld is the number of stations, the %2$lld is the number of groups",
-      "extractionState" : "stale",
+    "Are you sure you want to remove %lld stations and groups and all their children?" : {
+      "comment" : "Remove station dialog text. The %lld is the number of stations and groups",
       "localizations" : {
+        "it" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                }
+              }
+            }
+          }
+        },
         "ru" : {
-          "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Are you sure you want to remove %1$lld stations and %#@arg2@ groups and all their children?"
-          },
-          "substitutions" : {
-            "arg2" : {
-              "argNum" : 2,
-              "formatSpecifier" : "lld",
-              "variations" : {
-                "plural" : {
-                  "few" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
-                    }
-                  },
-                  "many" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
-                    }
-                  },
-                  "one" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
-                    }
-                  },
-                  "other" : {
-                    "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
-                    }
-                  }
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены что хотите удалить %lld станции и группы со всем их содержимым?"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены что хотите удалить %lld станций и групп со всем их содержимым?"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены что хотите удалить %lld станцю и группу со всем ее содержимым?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены что хотите удалить %lld станций и групп со всем их содержимым?"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
                 }
               }
             }
           }
         }
       }
-    },
-    "Are you sure you want to remove %lld stations and groups and all their children?" : {
-      "comment" : "Remove station dialog text. The %lld is the number of stations and groups"
     },
     "Are you sure you want to remove %lld stations?" : {
       "comment" : "Remove station dialog text. %lld is the number of stations.",
@@ -364,25 +386,61 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вы уверены, что хотите удалить %lld станции?"
+                  "value" : "Вы уверены что хотите удалить %lld станции?"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вы уверены, что хотите удалить %lld станций?"
+                  "value" : "Вы уверены что хотите удалить %lld станций?"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вы уверены, что хотите удалить %lld станцию?"
+                  "value" : "Вы уверены что хотите удалить %lld станцию?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вы уверены, что хотите удалить %lld станций?"
+                  "value" : "Вы уверены что хотите удалить %lld станций?"
+                }
+              }
+            }
+          }
+        },
+        "it" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
                 }
               }
             }
@@ -391,7 +449,75 @@
       }
     },
     "Are you sure you want to remove the %lld groups and all their children?" : {
-      "comment" : "Remove station dialog text. %lld is the number of groups."
+      "comment" : "Remove station dialog text. %lld is the number of groups.",
+      "localizations" : {
+        "it" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                }
+              }
+            }
+          }
+        },
+        "ru" : {
+          "variations" : {
+            "plural" : {
+              "few" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены что хотите удалить %lld группы со всем их содержимым?"
+                }
+              },
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены что хотите удалить %lld групп со всем их содержимым?"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены что хотите удалить %lld группу со всем ее содержимым?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Вы уверены что хотите удалить %lld групп со всем их содержимым?"
+                }
+              }
+            }
+          }
+        },
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                }
+              }
+            }
+          }
+        }
+      }
     },
     "Are you sure you want to remove the group \"%@\", and all of its children?" : {
       "comment" : "Remove group dialog text. %@ is group title.",
@@ -595,7 +721,15 @@
       }
     },
     "Connection time has expired" : {
-      "comment" : "Player error message."
+      "comment" : "Player error message.",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время соединения истекло"
+          }
+        }
+      }
     },
     "contains" : {
       "comment" : "Internet station search panel",
@@ -828,7 +962,15 @@
       }
     },
     "Internal error.\nSee logs for more information." : {
-      "comment" : "Player error message"
+      "comment" : "Player error message",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Внутренняя ошибка.\nДополнительные сведения см. в логах."
+          }
+        }
+      }
     },
     "less than a minute ago" : {
       "comment" : "History window song status",
@@ -1332,7 +1474,15 @@
       }
     },
     "Sorry, I couldn't play \"%@\"." : {
-      "comment" : "Player error title. %@ is a station name"
+      "comment" : "Player error title. %@ is a station name",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Извините, я не смог воспроизвести «%@»."
+          }
+        }
+      }
     },
     "sort by bitrate" : {
       "comment" : "Internet station search panel",
@@ -1495,8 +1645,16 @@
         }
       }
     },
-    "The URL does not contain or contains unsupported audio.." : {
-      "comment" : "Player error message"
+    "The URL does not contain or contains unsupported audio." : {
+      "comment" : "Player error message",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL-адрес не содержит или содержит неподдерживаемое аудио."
+          }
+        }
+      }
     },
     "This operation cannot be undone." : {
       "comment" : "Remove dialog informativeText",
