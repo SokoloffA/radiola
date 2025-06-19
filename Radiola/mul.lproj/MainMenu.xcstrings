@@ -148,6 +148,12 @@
             "state" : "new",
             "value" : "Select All"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать все"
+          }
         }
       }
     },
@@ -1167,18 +1173,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проверить наличие обновлений…"
-          }
-        }
-      }
-    },
-    "XS6-55-dM9.title" : {
-      "comment" : "Class = \"NSMenuItem\"; title = \"Delete\"; ObjectID = \"XS6-55-dM9\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Delete"
           }
         }
       }
