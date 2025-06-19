@@ -139,6 +139,18 @@
         }
       }
     },
+    "aRk-7g-NpN.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Select All\"; ObjectID = \"aRk-7g-NpN\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Select All"
+          }
+        }
+      }
+    },
     "aUF-d1-5bR.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"Window\"; ObjectID = \"aUF-d1-5bR\";",
       "extractionState" : "extracted_with_value",
@@ -371,28 +383,28 @@
       "comment" : "Class = \"NSMenuItem\"; title = \"Float on top\"; ObjectID = \"e6h-zl-bqy\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Float on top"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Поверх всех окон"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Im Vordergrund halten"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Float on top"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mantieni in primo piano"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поверх всех окон"
           }
         }
       }
@@ -1155,6 +1167,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проверить наличие обновлений…"
+          }
+        }
+      }
+    },
+    "XS6-55-dM9.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Delete\"; ObjectID = \"XS6-55-dM9\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Delete"
           }
         }
       }
