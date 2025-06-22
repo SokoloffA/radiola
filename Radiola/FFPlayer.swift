@@ -13,7 +13,8 @@ fileprivate let NUM_BUFFERS = 50
 fileprivate let BUFFER_SIZE = 8192
 
 fileprivate let internalErrorDescription = NSLocalizedString("Internal error.\nSee logs for more information.", comment: "Player error message")
-fileprivate let invalidURLErrorDescription = NSLocalizedString("The URL does not contain or contains unsupported audio.", comment: "Player error message")
+fileprivate let invalidURLErrorDescription = NSLocalizedString("The station is temporarily unavailable. Check URL or try again later.", comment: "Player error message")
+fileprivate let timeoutErrorDescription = NSLocalizedString("Cannot play station. Your internet connection may be too slow or unstable.", comment: "Player error message")
 
 extension FFPlayer {
     enum ErrorCode: Int32 {
@@ -30,6 +31,7 @@ extension FFPlayer {
         case audioQueueStopError
         case setVolumeError
         case setDeviceError
+        case timeoutError
     }
 }
 
@@ -455,6 +457,9 @@ fileprivate class Backend {
  *
  * ****************************************/
 fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: AudioQueueRef, outBuffer: AudioQueueBufferRef) {
+    var timeoutCount = 0
+    let maxTimeouts = 10
+
     guard let userData = userData else { return }
     let backend = Unmanaged<Backend>.fromOpaque(userData).takeUnretainedValue()
 
@@ -466,9 +471,20 @@ fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: Audi
 
         while backend.pcmBuffer.count < BUFFER_SIZE {
             err = av_read_frame(backend.formatContext, backend.packet)
+            if err == -ETIMEDOUT {
+                debug("Error calling av_read_frame: ETIMEDOUT")
+                timeoutCount += 1
+                if timeoutCount >= maxTimeouts {
+                    throw NSError(ffCode: err, message: timeoutErrorDescription, debug: "Too many timeouts from av_read_frame")
+                }
+                continue
+            }
+
             if err < 0 {
                 throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_read_frame")
             }
+
+            timeoutCount = 0
 
             defer {
                 av_packet_unref(backend.packet)
@@ -655,4 +671,46 @@ fileprivate class AtomicBool {
             pthread_mutex_unlock(&mutex)
         }
     }
+}
+
+func printFFErrors() {
+    func dump(_ code: Int32, _ name: String) {
+        var errorBuffer = [CChar](repeating: 0, count: 1024)
+        av_make_error_string(&errorBuffer, 1024, code)
+        let ffError = String(cString: errorBuffer)
+
+        print(String(format: "%-5d - %@ %@", code, name, ffError))
+    }
+
+    dump(-ETIMEDOUT, "ETIMEDOUT")
+    dump(averror_bsf_not_found, "AVERROR_BSF_NOT_FOUND")
+    dump(averror_bsf_not_found, "AVERROR_BSF_NOT_FOUND")
+    dump(averror_bug, "AVERROR_BUG")
+    dump(averror_buffer_too_small, "AVERROR_BUFFER_TOO_SMALL")
+    dump(averror_decoder_not_found, "AVERROR_DECODER_NOT_FOUND")
+    dump(averror_demuxer_not_found, "AVERROR_DEMUXER_NOT_FOUND")
+    dump(averror_encoder_not_found, "AVERROR_ENCODER_NOT_FOUND")
+    dump(averror_eof, "AVERROR_EOF")
+    dump(averror_exit, "AVERROR_EXIT")
+    dump(averror_external, "AVERROR_EXTERNAL")
+    dump(averror_filter_not_found, "AVERROR_FILTER_NOT_FOUND")
+    dump(averror_invaliddata, "AVERROR_INVALIDDATA")
+    dump(averror_muxer_not_found, "AVERROR_MUXER_NOT_FOUND")
+    dump(averror_option_not_found, "AVERROR_OPTION_NOT_FOUND")
+    dump(averror_patchwelcome, "AVERROR_PATCHWELCOME")
+    dump(averror_protocol_not_found, "AVERROR_PROTOCOL_NOT_FOUND")
+    dump(averror_stream_not_found, "AVERROR_STREAM_NOT_FOUND")
+    dump(averror_bug2, "AVERROR_BUG2")
+    dump(averror_unknown, "AVERROR_UNKNOWN")
+    dump(averror_experimental, "AVERROR_EXPERIMENTAL")
+    dump(averror_input_changed, "AVERROR_INPUT_CHANGED")
+    dump(averror_output_changed, "AVERROR_OUTPUT_CHANGED")
+    dump(averror_http_bad_request, "AVERROR_HTTP_BAD_REQUEST")
+    dump(averror_http_unauthorized, "AVERROR_HTTP_UNAUTHORIZED")
+    dump(averror_http_forbidden, "AVERROR_HTTP_FORBIDDEN")
+    dump(averror_http_not_found, "AVERROR_HTTP_NOT_FOUND")
+    dump(averror_http_too_many_requests, "AVERROR_HTTP_TOO_MANY_REQUESTS")
+    dump(averror_http_other_4xx, "AVERROR_HTTP_OTHER_4XX")
+    dump(averror_http_server_error, "AVERROR_HTTP_SERVER_ERROR")
+    dump(av_error_max_string_size, "AV_ERROR_MAX_STRING_SIZE")
 }
