@@ -309,6 +309,24 @@
     "Are you sure you want to remove %lld stations and groups and all their children?" : {
       "comment" : "Remove station dialog text. The %lld is the number of stations and groups",
       "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                }
+              }
+            }
+          }
+        },
         "it" : {
           "variations" : {
             "plural" : {
@@ -356,30 +374,48 @@
               }
             }
           }
-        },
-        "de" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
-                }
-              }
-            }
-          }
         }
       }
     },
     "Are you sure you want to remove %lld stations?" : {
       "comment" : "Remove station dialog text. %lld is the number of stations.",
       "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              }
+            }
+          }
+        },
+        "it" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              }
+            }
+          }
+        },
         "ru" : {
           "variations" : {
             "plural" : {
@@ -409,48 +445,30 @@
               }
             }
           }
-        },
-        "it" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations?"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations?"
-                }
-              }
-            }
-          }
-        },
-        "de" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations?"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations?"
-                }
-              }
-            }
-          }
         }
       }
     },
     "Are you sure you want to remove the %lld groups and all their children?" : {
       "comment" : "Remove station dialog text. %lld is the number of groups.",
       "localizations" : {
+        "de" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                }
+              }
+            }
+          }
+        },
         "it" : {
           "variations" : {
             "plural" : {
@@ -494,24 +512,6 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Вы уверены что хотите удалить %lld групп со всем их содержимым?"
-                }
-              }
-            }
-          }
-        },
-        "de" : {
-          "variations" : {
-            "plural" : {
-              "one" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
-                }
-              },
-              "other" : {
-                "stringUnit" : {
-                  "state" : "translated",
-                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
                 }
               }
             }
@@ -676,6 +676,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
+          }
+        }
+      }
+    },
+    "Cannot play station. Your internet connection may be too slow or unstable." : {
+      "comment" : "Player error message",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удается воспроизвести станцию. Возможно, ваше интернет-соединение слишком медленное или нестабильное."
           }
         }
       }
@@ -1645,8 +1656,20 @@
         }
       }
     },
+    "The station is temporarily unavailable. Check URL or try again later." : {
+      "comment" : "Player error message",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Радиостанция временно недоступна. Проверьте URL-адрес или повторите попытку позже."
+          }
+        }
+      }
+    },
     "The URL does not contain or contains unsupported audio." : {
       "comment" : "Player error message",
+      "extractionState" : "stale",
       "localizations" : {
         "ru" : {
           "stringUnit" : {
