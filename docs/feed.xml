@@ -5,6 +5,16 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 9.0.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;The program uses ffmpeg library to read and decode audio. So now the program supports all common codecs, in particular FLAC.&lt;/li&gt;
+&lt;li&gt;The program shows ICY metadata from HTTPS streams.&lt;/li&gt;
+&lt;li&gt;Added multiple selections to the radio station list.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 28 Jun 2025 09:26:40 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v9.0.0/Radiola-9.0.0.dmg" sparkle:version="9.0.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 8.1.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Fixed the program crashing on older versions of macOS.&lt;/li&gt;
