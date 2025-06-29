@@ -330,16 +330,22 @@
         "it" : {
           "variations" : {
             "plural" : {
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Sei sicuro di voler eliminare %lld stazioni e gruppi e il loro contenuto?"
+                }
+              },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                  "value" : "Sei sicuro di voler eliminare %lld stazioni e gruppi e il loro contenuto?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                  "value" : "Sei sicuro di voler eliminare %lld stazioni e gruppi e il loro contenuto?"
                 }
               }
             }
@@ -404,19 +410,19 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Sei sicuro di voler eliminare le stazioni %lld ?"
+                  "value" : "Sei sicuro di voler eliminare %lld stazioni?"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Sei sicuro di voler eliminare la stazione %lld ?"
+                  "value" : "Sei sicuro di voler eliminare %lld stazioni?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Sei sicuro di voler eliminare le stazioni %lld ?"
+                  "value" : "Sei sicuro di voler eliminare %lld stazioni?"
                 }
               }
             }
@@ -478,16 +484,22 @@
         "it" : {
           "variations" : {
             "plural" : {
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Sei sicuro di voler eliminare %lld gruppi e il loro contenuto?"
+                }
+              },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                  "value" : "Sei sicuro di voler eliminare %lld gruppi e il loro contenuto?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                  "value" : "Sei sicuro di voler eliminare %lld gruppi e il loro contenuto?"
                 }
               }
             }
@@ -1520,7 +1532,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Spiacente, non è possibile riprodurre \"%@\""
+            "value" : "Impossibile riprodurre \"%@\""
           }
         }
       }
@@ -1716,7 +1728,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'URL non contiene o contiene audio non supportato."
+            "value" : "L'URL non contiene audio o contiene audio non supportato."
           }
         }
       }
