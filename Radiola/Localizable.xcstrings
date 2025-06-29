@@ -401,16 +401,22 @@
         "it" : {
           "variations" : {
             "plural" : {
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Sei sicuro di voler eliminare le stazioni %lld ?"
+                }
+              },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations?"
+                  "value" : "Sei sicuro di voler eliminare la stazione %lld ?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations?"
+                  "value" : "Sei sicuro di voler eliminare le stazioni %lld ?"
                 }
               }
             }
@@ -688,6 +694,12 @@
             "state" : "translated",
             "value" : "Не удается воспроизвести станцию. Возможно, ваше интернет-соединение слишком медленное или нестабильное."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile riprodurre la stazione. La tua connessione potrebbe essere molto lenta o instabile."
+          }
         }
       }
     },
@@ -738,6 +750,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Время соединения истекло"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tempo di connessione è scaduto"
           }
         }
       }
@@ -979,6 +997,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Внутренняя ошибка.\nДополнительные сведения см. в логах."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errore interno. \nControlla i log per maggiori informazioni."
           }
         }
       }
@@ -1492,6 +1516,12 @@
             "state" : "translated",
             "value" : "Извините, я не смог воспроизвести «%@»."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spiacente, non è possibile riprodurre \"%@\""
+          }
         }
       }
     },
@@ -1664,6 +1694,12 @@
             "state" : "translated",
             "value" : "Радиостанция временно недоступна. Проверьте URL-адрес или повторите попытку позже."
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La stazione è temporaneamente indisponibile. Controlla l'URL o riprova più tardi."
+          }
         }
       }
     },
@@ -1675,6 +1711,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "URL-адрес не содержит или содержит неподдерживаемое аудио."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'URL non contiene o contiene audio non supportato."
           }
         }
       }

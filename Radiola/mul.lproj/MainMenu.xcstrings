@@ -154,6 +154,12 @@
             "state" : "translated",
             "value" : "Выбрать все"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleziona tutto"
+          }
         }
       }
     },
