@@ -60,6 +60,7 @@
 		3967046D2944961500012FFD /* AudioPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3967046B2944961500012FFD /* AudioPage.xib */; };
 		3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD0C2C7B7BAB005432C7 /* Radiola.xcdatamodeld */; };
 		3975DD132C8310B0005432C7 /* HistoryData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD112C8310B0005432C7 /* HistoryData.xcdatamodeld */; };
+		3985C9062E1163CD00C96D83 /* PlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985C9052E1163CD00C96D83 /* PlayList.swift */; };
 		3987B99D2A9635930077EB03 /* SideBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B99B2A9635930077EB03 /* SideBar.swift */; };
 		3987B99E2A9635930077EB03 /* SideBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3987B99C2A9635930077EB03 /* SideBar.xib */; };
 		3987B9AB2A9F8A190077EB03 /* ToolbarPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */; };
@@ -162,6 +163,7 @@
 		3967046B2944961500012FFD /* AudioPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPage.xib; sourceTree = "<group>"; };
 		3975DD0D2C7B7BAB005432C7 /* Radiola.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Radiola.xcdatamodel; sourceTree = "<group>"; };
 		3975DD122C8310B0005432C7 /* HistoryData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HistoryData.xcdatamodel; sourceTree = "<group>"; };
+		3985C9052E1163CD00C96D83 /* PlayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayList.swift; sourceTree = "<group>"; };
 		3987B99B2A9635930077EB03 /* SideBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideBar.swift; sourceTree = "<group>"; };
 		3987B99C2A9635930077EB03 /* SideBar.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideBar.xib; sourceTree = "<group>"; };
 		3987B9A92A9F8A190077EB03 /* ToolbarPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPlayView.swift; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
 				393F9C0F2DFDA8C400870055 /* FFPlayer.swift */,
+				3985C9052E1163CD00C96D83 /* PlayList.swift */,
 				3959DBB32C03327A0032A1BA /* TrackMetadata.swift */,
 				3962D0292BE0E39F0014BCFB /* History.swift */,
 				39D27F522BA36B2D00D5857A /* Credits.html */,
@@ -610,6 +613,7 @@
 				39A794082B4B5381000D9875 /* LocalStationRows.swift in Sources */,
 				3962D0422BE689130014BCFB /* Recorder.swift in Sources */,
 				3962D0382BE6885A0014BCFB /* Shortcut.swift in Sources */,
+				3985C9062E1163CD00C96D83 /* PlayList.swift in Sources */,
 				394C687A2CFC7D30004EAE1C /* LogsWindow.swift in Sources */,
 				3962D02A2BE0E39F0014BCFB /* History.swift in Sources */,
 				394ABCA92A9CA1F800E2B6E9 /* RadioBrowser.swift in Sources */,

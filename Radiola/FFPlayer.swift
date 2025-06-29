@@ -12,9 +12,9 @@ import Foundation
 fileprivate let NUM_BUFFERS = 50
 fileprivate let BUFFER_SIZE = 8192
 
-fileprivate let internalErrorDescription = NSLocalizedString("Internal error.\nSee logs for more information.", comment: "Player error message")
-fileprivate let invalidURLErrorDescription = NSLocalizedString("The station is temporarily unavailable. Check URL or try again later.", comment: "Player error message")
-fileprivate let timeoutErrorDescription = NSLocalizedString("Cannot play station. Your internet connection may be too slow or unstable.", comment: "Player error message")
+let internalErrorDescription = NSLocalizedString("Internal error.\nSee logs for more information.", comment: "Player error message")
+let invalidURLErrorDescription = NSLocalizedString("The station is temporarily unavailable. Check URL or try again later.", comment: "Player error message")
+let timeoutErrorDescription = NSLocalizedString("Cannot play station. Your internet connection may be too slow or unstable.", comment: "Player error message")
 
 extension FFPlayer {
     enum ErrorCode: Int32 {
@@ -32,6 +32,9 @@ extension FFPlayer {
         case setVolumeError
         case setDeviceError
         case timeoutError
+        case playlistDownloadError
+        case playlistEmptyResponse
+        case playlistInvalidData
     }
 }
 
@@ -180,7 +183,15 @@ fileprivate class Backend {
         do {
             setState(.connecting)
 
-            try load(url: url)
+            if PlayList.isPlayListURL(url) {
+                let playList = PlayList()
+                try playList.download(url: url)
+
+                try load(url: playList.urls[0])
+            } else {
+                try load(url: url)
+            }
+
             setVolume(volume)
             try startAudioQueue(deviceUID: deviceUID)
 
@@ -229,6 +240,8 @@ fileprivate class Backend {
      *
      * ****************************************/
     func load(url: URL) throws {
+        debug("FFplayer load \(url)")
+
         if frame == nil {
             throw NSError(code: .alocError_avframe, message: internalErrorDescription, debug: "Error calling av_frame_alloc")
         }
@@ -607,7 +620,7 @@ let interruptCallback: FFmpegInterruptCallback = { opaque in
 
 // MARK: -  NSError
 
-fileprivate extension NSError {
+extension NSError {
     /* ****************************************
      *
      * ****************************************/
