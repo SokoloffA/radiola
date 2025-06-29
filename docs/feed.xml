@@ -5,6 +5,14 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 9.1.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Added support for playlists in .pls, .m3u, .xspf and asx formats.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sun, 29 Jun 2025 20:30:50 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v9.1.0/Radiola-9.1.0.dmg" sparkle:version="9.1.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 9.0.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;The program uses ffmpeg library to read and decode audio. So now the program supports all common codecs, in particular FLAC.&lt;/li&gt;
