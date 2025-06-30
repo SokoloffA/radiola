@@ -5,6 +5,14 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 9.2.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fix: If.pls the file contains only one line, then it was not detected as a playlist.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Mon, 30 Jun 2025 17:16:42 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v9.2.0/Radiola-9.2.0.dmg" sparkle:version="9.2.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 9.1.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Added support for playlists in .pls, .m3u, .xspf and asx formats.&lt;/li&gt;
