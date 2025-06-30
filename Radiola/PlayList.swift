@@ -56,13 +56,17 @@ class PlayList {
                 return
             }
 
-            switch self.getFormat(content) {
+            guard let format = Format(rawValue: url.pathExtension.lowercased()) else {
+                self.urls = [url]
+                return
+            }
+
+            switch format {
                 case .hls: self.urls = [url]
                 case .m3u: self.urls = self.parseM3u(baseURL: url, content: content)
                 case .pls: self.urls = self.parsePls(baseURL: url, content: content)
                 case .asx: self.urls = self.parseAsx(baseURL: url, content: content)
                 case .xspf: self.urls = self.parseXspf(baseURL: url, content: content)
-                case .none: self.urls = [url]
             }
         }
         task.resume()
