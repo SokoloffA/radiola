@@ -359,6 +359,9 @@
         }
       }
     },
+    "Global shortcut to toggle play and pause" : {
+      "comment" : "Settings label"
+    },
     "Left mouse button:" : {
       "comment" : "Settings label",
       "localizations" : {
@@ -524,10 +527,10 @@
     "Press shortcut" : {
       "comment" : "Settings label",
       "localizations" : {
-        "ru" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нажмите комбинацию клавиш"
+            "value" : "Kurzbefehl ausführen"
           }
         },
         "it" : {
@@ -536,10 +539,10 @@
             "value" : "Digita scorciatoia"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kurzbefehl ausführen"
+            "value" : "Нажмите комбинацию клавиш"
           }
         }
       }
@@ -570,10 +573,10 @@
     "Record shortcut" : {
       "comment" : "Settings label",
       "localizations" : {
-        "ru" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Задать комбинацию клавиш"
+            "value" : "Kurzbefehl aufzeichnen"
           }
         },
         "it" : {
@@ -582,10 +585,10 @@
             "value" : "Registra scorciatoia"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kurzbefehl aufzeichnen"
+            "value" : "Задать комбинацию клавиш"
           }
         }
       }

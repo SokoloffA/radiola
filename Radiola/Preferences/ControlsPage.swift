@@ -7,6 +7,11 @@
 
 import Cocoa
 
+fileprivate struct GlobalKeyDef {
+    var key: KeyboardShortcuts.Name
+    var label: String
+}
+
 class ControlsPage: NSViewController {
     private var leftMouseButtonLbl = Label()
     private var middleMouseButtonLbl = Label()
@@ -26,11 +31,13 @@ class ControlsPage: NSViewController {
     private var mediaPrevNextButtonLbl = Label()
     private var mediaPrevNextButtonCbx = NSPopUpButton()
 
-    private var globalKeyShowMainWindowLbl = Label(text: NSLocalizedString("Global shortcut to show stations", tableName: "Settings", comment: "Settings label"))
-    private var globalKeyShowMainWindowCtrl = KeyboardShortcuts.RecorderCocoa(for: .showMainWindow)
+    private var globalKeys: [GlobalKeyDef] = [
+        GlobalKeyDef(key: .showMainWindow, label: NSLocalizedString("Global shortcut to show stations", tableName: "Settings", comment: "Settings label")),
+        GlobalKeyDef(key: .showHistoryWindow, label: NSLocalizedString("Global shortcut to show history", tableName: "Settings", comment: "Settings label")),
+        GlobalKeyDef(key: .togglePlayPuse, label: NSLocalizedString("Global shortcut to toggle play and pause", tableName: "Settings", comment: "Settings label")),
+    ]
 
-    private var globalKeyShowHistoryLbl = Label(text: NSLocalizedString("Global shortcut to show history", tableName: "Settings", comment: "Settings label"))
-    private var globalKeyShowHistoryCtrl = KeyboardShortcuts.RecorderCocoa(for: .showHistoryWindow)
+    private var views: [NSView] = []
 
     /* ****************************************
      *
@@ -40,7 +47,6 @@ class ControlsPage: NSViewController {
 
         title = NSLocalizedString("Controls", tableName: "Settings", comment: "Settings page title")
         view = createView()
-
         initButtonCbx(leftMouseButtonCbx, button: .left)
         initButtonCbx(middleMouseButtonCbx, button: .middle)
         initButtonCbx(rightMouseButtonCbx, button: .right)
@@ -78,10 +84,6 @@ class ControlsPage: NSViewController {
         res.addSubview(mediaKeysHandlingCbx)
         res.addSubview(mediaPrevNextButtonLbl)
         res.addSubview(mediaPrevNextButtonCbx)
-        res.addSubview(globalKeyShowMainWindowLbl)
-        res.addSubview(globalKeyShowMainWindowCtrl)
-        res.addSubview(globalKeyShowHistoryLbl)
-        res.addSubview(globalKeyShowHistoryCtrl)
 
         leftMouseButtonLbl.stringValue = NSLocalizedString("Left mouse button:", tableName: "Settings", comment: "Settings label")
         leftMouseButtonLbl.alignment = .right
@@ -120,16 +122,24 @@ class ControlsPage: NSViewController {
         mediaPrevNextButtonLbl.stringValue = NSLocalizedString("Previous and next track buttons:", tableName: "Settings", comment: "Settings label")
         alignRow(lbl: mediaPrevNextButtonLbl, cbx: mediaPrevNextButtonCbx, prev: mediaKeysHandlingCbx)
 
-        globalKeyShowMainWindowCtrl.pressShortcutText = NSLocalizedString("Press shortcut", tableName: "Settings", comment: "Settings label")
-        globalKeyShowMainWindowCtrl.recordShortcutText = NSLocalizedString("Record shortcut", tableName: "Settings", comment: "Settings label")
+        var prev: NSView = mediaPrevNextButtonCbx
+        for globKeyDef in globalKeys {
+            let lbl = Label(text: globKeyDef.label)
+            let ctrl = KeyboardShortcuts.RecorderCocoa(for: globKeyDef.key)
 
-        globalKeyShowHistoryCtrl.pressShortcutText = globalKeyShowMainWindowCtrl.pressShortcutText
-        globalKeyShowHistoryCtrl.recordShortcutText = globalKeyShowMainWindowCtrl.recordShortcutText
+            views.append(lbl)
+            views.append(ctrl)
 
-        alignRow(lbl: globalKeyShowMainWindowLbl, cbx: globalKeyShowMainWindowCtrl, prev: mediaPrevNextButtonCbx)
-        alignRow(lbl: globalKeyShowHistoryLbl, cbx: globalKeyShowHistoryCtrl, prev: globalKeyShowMainWindowCtrl)
+            ctrl.pressShortcutText = NSLocalizedString("Press shortcut", tableName: "Settings", comment: "Settings label")
+            ctrl.recordShortcutText = NSLocalizedString("Record shortcut", tableName: "Settings", comment: "Settings label")
 
-        res.bottomAnchor.constraint(equalTo: globalKeyShowHistoryCtrl.bottomAnchor, constant: 32).isActive = true
+            res.addSubview(lbl)
+            res.addSubview(ctrl)
+
+            alignRow(lbl: lbl, cbx: ctrl, prev: prev)
+            prev = ctrl
+        }
+        res.bottomAnchor.constraint(equalTo: prev.bottomAnchor, constant: 32).isActive = true
 
         for v in res.subviews {
             res.trailingAnchor.constraint(greaterThanOrEqualTo: v.trailingAnchor, constant: 20).isActive = true
