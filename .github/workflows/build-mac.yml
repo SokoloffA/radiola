@@ -45,11 +45,18 @@ jobs:
         run: |
           #.github/workflows/bumpversion.sh Radiola.xcodeproj/project.pbxproj
           sed -i '' "s|<build-info>|Commit: <a href='${COMMIT_URL}'>${COMMIT_TXT}</a>  Build: <a href='${BUILD_URL}'>#${BUILD_TXT}</a>|" Radiola/Credits.html
-          xcodebuild clean build CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          xcodebuild \
+            -project Radiola.xcodeproj \
+            -scheme Radiola \
+            -configuration Release clean build \
+            -derivedDataPath ./build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Prepare artifacts
-        run : |
-          tar -C build/Release -cf ${{env.TAR_NAME}} Radiola.app
+        run: |
+          tar -C ./build/Build/Products/Release/ -cf ${{env.TAR_NAME}} Radiola.app
           cp ${{github.workspace}}/.github/workflows/makedmg.sh makedmg.sh
           cp ${{github.workspace}}/.github/workflows/dmg_settings.json dmg_settings.json
 
