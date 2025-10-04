@@ -6,6 +6,7 @@
 //
 
 import CoreData
+import CSV
 import Foundation
 
 // MARK: - HistoryRecord
@@ -125,6 +126,46 @@ class History {
      * ****************************************/
     func favorites() -> [HistoryRecord] {
         return records.filter { $0.favorite }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func exportToCSV(file: URL) throws {
+        guard
+            let stream = OutputStream(url: file, append: false)
+        else {
+            throw Alarm(title: "Can't write the history file '\(file.path)'", message: "The file is corrupted or has an incorrect format")
+        }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd HH:mm:ss"
+
+        let csv: CSVWriter
+        do {
+            csv = try CSVWriter(stream: stream)
+        } catch {
+            throw Alarm(title: "Can't write the history file '\(file.path)'", message: stream.streamError?.localizedDescription ?? "The file is corrupted or has an incorrect format", parentError: error)
+        }
+
+        do {
+            try csv.write(field: "Date")
+            try csv.write(field: "Song")
+            try csv.write(field: "Station title")
+            try csv.write(field: "Station URL")
+            try csv.write(field: "Favorite")
+
+            for rec in records {
+                csv.beginNewRow()
+                try csv.write(field: formatter.string(from: rec.date))
+                try csv.write(field: rec.song)
+                try csv.write(field: rec.stationTitle)
+                try csv.write(field: rec.stationURL)
+                try csv.write(field: rec.favorite ? "favorite" : "")
+            }
+        } catch {
+            throw Alarm(title: "Can't write the history file '\(file.path)'", message: error.localizedDescription, parentError: error)
+        }
     }
 }
 

@@ -149,16 +149,16 @@
             "value" : "Select All"
           }
         },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Выбрать все"
-          }
-        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seleziona tutto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбрать все"
           }
         }
       }
@@ -837,6 +837,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Воспроизвести"
+          }
+        }
+      }
+    },
+    "qlB-d3-SsH.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Export history to a file…\"; ObjectID = \"qlB-d3-SsH\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Export history to a file…"
           }
         }
       }

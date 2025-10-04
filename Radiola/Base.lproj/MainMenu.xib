@@ -115,6 +115,12 @@ CA
                                     <action selector="importStations:" target="-1" id="uN6-Gj-Yws"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Export history to a file…" id="qlB-d3-SsH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportHistory:" target="-1" id="o5D-1N-WKJ"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="agl-e5-wrm"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>

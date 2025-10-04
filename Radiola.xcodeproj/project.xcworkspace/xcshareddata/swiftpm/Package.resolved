@@ -1,6 +1,15 @@
 {
-  "originHash" : "8e897c62e3b69fac277be152de5cd763c88578ea9ae2b4a8d85aa04feff79e72",
+  "originHash" : "36c39bd2428902be8e2aa2707ee7d2b742792c143aab5d1b1fe87347934590f4",
   "pins" : [
+    {
+      "identity" : "csv.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/yaslab/CSV.swift",
+      "state" : {
+        "revision" : "b4371dc833ba22ab6ead90fb63d267c3cf9ce773",
+        "version" : "2.5.2"
+      }
+    },
     {
       "identity" : "ffaudio",
       "kind" : "remoteSourceControl",

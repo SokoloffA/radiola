@@ -109,6 +109,37 @@ extension HistoryWindow: NSTableViewDelegate {
 
         return HistoryRow(history: list[list.count - row - 1])
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func exportHistory(_ sender: Any?) {
+        guard
+            let window = window
+        else {
+            return
+        }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd-HH.mm.ss"
+        let dateStr = formatter.string(from: Date())
+
+        let dialog = NSSavePanel()
+        dialog.allowedFileTypes = ["csv"]
+        dialog.allowsOtherFileTypes = true
+        dialog.canCreateDirectories = true
+        dialog.isExtensionHidden = false
+        dialog.nameFieldStringValue = "RadiolaHistory-\(dateStr)"
+
+        dialog.beginSheetModal(for: window) { result in
+            guard result == .OK, let url = dialog.url else { return }
+            do {
+                try AppState.shared.history.exportToCSV(file: url)
+            } catch {
+                error.show()
+            }
+        }
+    }
 }
 
 extension HistoryWindow: NSTableViewDataSource {

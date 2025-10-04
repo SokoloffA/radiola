@@ -58,6 +58,7 @@
 		396704692943AD2700012FFD /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396704682943AD2700012FFD /* AudioDevice.swift */; };
 		3967046C2944961500012FFD /* AudioPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3967046A2944961500012FFD /* AudioPage.swift */; };
 		3967046D2944961500012FFD /* AudioPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3967046B2944961500012FFD /* AudioPage.xib */; };
+		3970F46C2E910852001A9AC1 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 3970F46B2E910852001A9AC1 /* CSV */; };
 		3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD0C2C7B7BAB005432C7 /* Radiola.xcdatamodeld */; };
 		3975DD132C8310B0005432C7 /* HistoryData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD112C8310B0005432C7 /* HistoryData.xcdatamodeld */; };
 		3985C9062E1163CD00C96D83 /* PlayList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3985C9052E1163CD00C96D83 /* PlayList.swift */; };
@@ -204,6 +205,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3970F46C2E910852001A9AC1 /* CSV in Frameworks */,
 				39E8DFD5288F316A00082467 /* Sparkle in Frameworks */,
 				393F9C0E2DFDA81700870055 /* FFAudio in Frameworks */,
 			);
@@ -273,6 +275,7 @@
 				394F8A3A28739339005EA7FA /* Radiola */,
 				3962D0322BE687EB0014BCFB /* KeyboardShortcuts */,
 				3959DBA72BFCE6A50032A1BA /* RadiolaTests */,
+				3970F46A2E910852001A9AC1 /* Frameworks */,
 				394F8A3928739339005EA7FA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -383,6 +386,13 @@
 			path = InternetStations;
 			sourceTree = "<group>";
 		};
+		3970F46A2E910852001A9AC1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3987B9A42A9F80B90077EB03 /* Toolbar */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,6 +463,7 @@
 			packageProductDependencies = (
 				39E8DFD4288F316A00082467 /* Sparkle */,
 				393F9C0D2DFDA81700870055 /* FFAudio */,
+				3970F46B2E910852001A9AC1 /* CSV */,
 			);
 			productName = Radiola;
 			productReference = 394F8A3828739339005EA7FA /* Radiola.app */;
@@ -507,6 +518,7 @@
 			packageReferences = (
 				39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				393F9C0C2DFDA81700870055 /* XCRemoteSwiftPackageReference "FFAudio" */,
+				3970F4692E910778001A9AC1 /* XCRemoteSwiftPackageReference "CSV" */,
 			);
 			productRefGroup = 394F8A3928739339005EA7FA /* Products */;
 			projectDirPath = "";
@@ -927,6 +939,14 @@
 				kind = branch;
 			};
 		};
+		3970F4692E910778001A9AC1 /* XCRemoteSwiftPackageReference "CSV" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yaslab/CSV.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.2;
+			};
+		};
 		39E8DFD3288F316A00082467 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
@@ -942,6 +962,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 393F9C0C2DFDA81700870055 /* XCRemoteSwiftPackageReference "FFAudio" */;
 			productName = FFAudio;
+		};
+		3970F46B2E910852001A9AC1 /* CSV */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3970F4692E910778001A9AC1 /* XCRemoteSwiftPackageReference "CSV" */;
+			productName = CSV;
 		};
 		39E8DFD4288F316A00082467 /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
