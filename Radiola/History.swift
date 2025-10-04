@@ -18,6 +18,8 @@ class HistoryRecord: NSManagedObject {
     @NSManaged fileprivate(set) var date: Date
     @NSManaged fileprivate var favorite: Bool
 
+    var isLast = false
+
     var isFavorite: Bool {
         get {
             return favorite
@@ -70,6 +72,8 @@ class History {
             Alarm.show(title: "Unable to load history records", message: error.localizedDescription)
             return
         }
+
+        records.last?.isLast = true
     }
 
     /* ****************************************
@@ -103,12 +107,15 @@ class History {
             return
         }
 
+        last?.isLast = false
+
         let rec = HistoryRecord(context: context)
         rec.date = Date()
         rec.song = songTitle
         rec.stationURL = station.url
         rec.stationTitle = station.title
         rec.favorite = false
+        rec.isLast = true
 
         records.append(rec)
         save()

@@ -197,18 +197,18 @@ class Player: NSObject {
         switch state {
             case .stoped:
                 self.status = .paused
-                metadataChanged("")
+                metadataChanged(nil)
 
             case .connecting:
                 self.status = .connecting
-                metadataChanged("")
+                metadataChanged(nil)
 
             case .playing:
                 self.status = .playing
 
             case .error:
                 self.status = .paused
-                metadataChanged("")
+                metadataChanged(nil)
 
                 if let error = player.error {
                     warning("Player: FFPlaying error : \(error.localizedDescription)")
@@ -226,7 +226,9 @@ class Player: NSObject {
     // ****************************************
     func metadataChanged(_ nowPlaing: String?) {
         songTitle = cleanTrackMetadata(raw: nowPlaing ?? "")
-        addHistory()
+        if isPlaying  && nowPlaing != nil {
+            addHistory()
+        }
 
         NotificationCenter.default.post(
             name: Notification.Name.PlayerMetadataChanged,
