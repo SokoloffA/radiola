@@ -26,6 +26,9 @@ class AddStationDialog: NSWindowController, NSTextFieldDelegate {
         return "AddStationDialog"
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     override func windowDidLoad() {
         super.windowDidLoad()
 
@@ -36,22 +39,54 @@ class AddStationDialog: NSWindowController, NSTextFieldDelegate {
         cancelButton.title = NSLocalizedString("Cancel", comment: "Cancel button")
         okButton.title = NSLocalizedString("Add station", comment: "Add station dialog button")
 
+        urlEdit.stringValue = getUrlFromPasteboard() ?? ""
+
         urlEdit.delegate = self
         titleEdit.delegate = self
-        okButton.isEnabled = false
+        updateButtons()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     func controlTextDidChange(_ obj: Notification) {
+        updateButtons()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateButtons() {
         okButton.isEnabled =
             !urlEdit.stringValue.isEmpty &&
             !titleEdit.stringValue.isEmpty
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     @IBAction func cancelClicked(_ sender: Any) {
         window?.sheetParent?.endSheet(window!, returnCode: .cancel)
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     @IBAction func okClick(_ sender: Any) {
         window?.sheetParent?.endSheet(window!, returnCode: .OK)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func getUrlFromPasteboard() -> String? {
+        guard
+            let s = NSPasteboard.general.string(forType: .string),
+            let url = URL(string: s),
+            url.scheme == "http" || url.scheme == "https"
+        else {
+            return nil
+        }
+        return s
     }
 }
