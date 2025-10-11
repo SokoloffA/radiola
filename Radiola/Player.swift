@@ -35,7 +35,7 @@ class Player: NSObject {
     private var stateWatch: AnyCancellable?
     private var metaWatch: AnyCancellable?
     private var timer: Timer?
-    private let connectDelay = 10.0
+    private let connectDelay = 20.0
 
     /* ****************************************
      *

@@ -9,7 +9,7 @@ import AudioToolbox
 import FFAudio
 import Foundation
 
-fileprivate let NUM_BUFFERS = 50
+fileprivate let NUM_BUFFERS = 500
 fileprivate let BUFFER_SIZE = 8192
 
 let internalErrorDescription = NSLocalizedString("Internal error.\nSee logs for more information.", comment: "Player error message")
@@ -120,6 +120,124 @@ public class FFPlayer: ObservableObject {
     }
 }
 
+// MARK: - RingBuffer
+
+fileprivate class RingBuffer {
+    class Buffer {
+        var audioData = [UInt8](repeating: 0, count: BUFFER_SIZE)
+        var audioDataByteSize: Int = 0
+    }
+
+    var buffers: [Buffer]
+    var tmpBuffer = [UInt8]()
+
+    private var _readIndex: Int64 = 0
+    private var _writeIndex: Int64 = 0
+    private var mutex = pthread_mutex_t()
+    private var condMutex = pthread_mutex_t()
+    private var cond = pthread_cond_t()
+    // let writeSemaphore = DispatchSemaphore(value: 0)
+
+    init() {
+        buffers = (0 ..< NUM_BUFFERS).map { _ in Buffer() }
+        pthread_mutex_init(&mutex, nil)
+        pthread_mutex_init(&condMutex, nil)
+        pthread_cond_init(&cond, nil)
+    }
+
+    deinit {
+        pthread_mutex_destroy(&mutex)
+        pthread_mutex_destroy(&condMutex)
+        pthread_cond_destroy(&cond)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func readIndex() -> Int? {
+        pthread_mutex_lock(&mutex)
+        defer { pthread_mutex_unlock(&mutex) }
+
+        if _readIndex < _writeIndex {
+            return Int(_readIndex % Int64(buffers.count))
+        }
+
+        return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func writeIndex() -> Int? {
+        pthread_mutex_lock(&mutex)
+        defer { pthread_mutex_unlock(&mutex) }
+
+        if _writeIndex - _readIndex < buffers.count {
+            return Int(_writeIndex % Int64(buffers.count))
+        }
+
+        return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func waitWriteIndex() -> Int {
+        var index = writeIndex()
+        while index == nil {
+            // pthread_mutex_lock(&condMutex)
+            // pthread_cond_wait(&cond, &condMutex)
+            // pthread_mutex_unlock(&condMutex)
+
+            index = writeIndex()
+        }
+
+        return index!
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @discardableResult
+    func incReadIndex() -> Int {
+        pthread_mutex_lock(&mutex)
+        defer { pthread_mutex_unlock(&mutex) }
+        _readIndex += 1
+        return Int(_readIndex % Int64(buffers.count))
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @discardableResult
+    func incWriteIndex() -> Int {
+        pthread_mutex_lock(&mutex)
+        defer { pthread_mutex_unlock(&mutex) }
+        _writeIndex += 1
+        return Int(_writeIndex % Int64(buffers.count))
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func unlockWriter() {
+        pthread_mutex_lock(&condMutex)
+        pthread_cond_signal(&cond)
+        pthread_mutex_unlock(&condMutex)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func debug(_ prefix: String) {
+        pthread_mutex_lock(&mutex)
+        defer { pthread_mutex_unlock(&mutex) }
+        let r = Int(_readIndex % Int64(buffers.count))
+        let w = Int(_writeIndex % Int64(buffers.count))
+        print("\(Date()) [\(pthread_mach_thread_np(pthread_self()))]  \(prefix): read: \(_readIndex) write:\(_writeIndex) ready: \(_writeIndex - _readIndex) [r: \(r) w: \(w)]")
+    }
+}
+
 // MARK: - Backend
 
 fileprivate class Backend {
@@ -140,14 +258,16 @@ fileprivate class Backend {
     var frame: UnsafeMutablePointer<AVFrame>!
     var packet: UnsafeMutablePointer<AVPacket>!
 
-    let pcmMutex = NSLock()
     var pcmBuffer = [UInt8]()
-    private var buffers = [AudioQueueBufferRef?](repeating: nil, count: NUM_BUFFERS)
+    private var audioQueueBuffers = [AudioQueueBufferRef?](repeating: nil, count: NUM_BUFFERS)
 
     var prevNowPlaying = ""
 
     let shouldInterrupt = AtomicBool()
     var interruptCB: AVIOInterruptCB!
+
+    let ringBuffer = RingBuffer()
+    private var ffmpegThread: Thread?
 
     /* ****************************************
      *
@@ -209,6 +329,10 @@ fileprivate class Backend {
             AudioQueueStop(audioQueue, true)
             AudioQueueDispose(audioQueue, true)
             self.audioQueue = nil
+        }
+
+        while let thread = ffmpegThread, thread.isExecuting {
+            Thread.sleep(forTimeInterval: 0.01)
         }
 
         if swrContext != nil {
@@ -338,7 +462,7 @@ fileprivate class Backend {
 
         err = AudioQueueNewOutput(
             &format,
-            fillAudioBuffer,
+            readBuffer,
             Unmanaged.passUnretained(self).toOpaque(),
             nil,
             nil,
@@ -349,6 +473,23 @@ fileprivate class Backend {
             throw NSError(code: .alocError_AudioQueue, message: internalErrorDescription, debug: "Error calling AudioQueueNewOutput")
         }
 
+        for i in 0 ..< ringBuffer.buffers.count {
+            writeBuffer(backend: self, outBuffer: ringBuffer.buffers[i])
+            ringBuffer.incWriteIndex()
+        }
+        debug("@@@ LOADED ==================================")
+
+        let delay = bufferDuration(format: format)
+
+        ffmpegThread = Thread { [weak self, delay] in
+            self?.decode(delay: delay)
+        }
+
+        debug("@@@ START THREAD ==================================")
+        ffmpegThread?.qualityOfService = .userInitiated
+        ffmpegThread?.start()
+        debug("@@@ THREAD STARTED ================================")
+
         for i in 0 ..< NUM_BUFFERS {
             var buffer: AudioQueueBufferRef?
             err = AudioQueueAllocateBuffer(audioQueue!, UInt32(BUFFER_SIZE), &buffer)
@@ -357,8 +498,8 @@ fileprivate class Backend {
                 throw NSError(code: .alocError_AudioQueueBuffer, message: internalErrorDescription, debug: "Error calling AudioQueueAllocateBuffer")
             }
 
-            buffers[i] = buffer
-            fillAudioBuffer(userData: Unmanaged.passUnretained(self).toOpaque(), outAQ: audioQueue!, outBuffer: buffer!)
+            audioQueueBuffers[i] = buffer
+            readBuffer(userData: Unmanaged.passUnretained(self).toOpaque(), outAQ: audioQueue!, outBuffer: buffer!)
         }
     }
 
@@ -401,6 +542,19 @@ fileprivate class Backend {
         format.mReserved = 0
 
         return format
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func bufferDuration(format: AudioStreamBasicDescription) -> TimeInterval {
+        var bytesPerFrame = Int(format.mBytesPerFrame)
+        if bytesPerFrame == 0 {
+            bytesPerFrame = 44100 * 2
+        }
+
+        let frames = Double(BUFFER_SIZE) / Double(bytesPerFrame)
+        return frames / format.mSampleRate
     }
 
     /* ****************************************
@@ -462,6 +616,25 @@ fileprivate class Backend {
             self.frontend.state = .error
         }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func decode(delay: TimeInterval) {
+        while true {
+            if shouldInterrupt.value {
+                return
+            }
+
+            guard let index = ringBuffer.writeIndex() else {
+                Thread.sleep(forTimeInterval: delay)
+                continue
+            }
+
+            writeBuffer(backend: self, outBuffer: ringBuffer.buffers[index])
+            ringBuffer.incWriteIndex()
+        }
+    }
 }
 
 // MARK: - Callbacks
@@ -469,17 +642,11 @@ fileprivate class Backend {
 /* ****************************************
  *
  * ****************************************/
-fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: AudioQueueRef, outBuffer: AudioQueueBufferRef) {
+fileprivate func writeBuffer(backend: Backend, outBuffer: RingBuffer.Buffer) {
     var timeoutCount = 0
     let maxTimeouts = 10
 
-    guard let userData = userData else { return }
-    let backend = Unmanaged<Backend>.fromOpaque(userData).takeUnretainedValue()
-
     do {
-        backend.pcmMutex.lock()
-        defer { backend.pcmMutex.unlock() }
-
         var err: Int32 = 0
 
         while backend.pcmBuffer.count < BUFFER_SIZE {
@@ -569,11 +736,16 @@ fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: Audi
         }
 
         let toCopy = min(BUFFER_SIZE, backend.pcmBuffer.count)
-        outBuffer.pointee.mAudioDataByteSize = UInt32(toCopy)
 
-        let dest = outBuffer.pointee.mAudioData
-        memcpy(dest, backend.pcmBuffer, toCopy)
-        AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
+        outBuffer.audioDataByteSize = toCopy
+
+        backend.pcmBuffer.withUnsafeBytes { srcRaw in
+            outBuffer.audioData.withUnsafeMutableBytes { dstRaw in
+                let srcPtr = srcRaw.baseAddress!
+                let dstPtr = dstRaw.baseAddress!
+                memcpy(dstPtr, srcPtr, toCopy)
+            }
+        }
 
         if backend.pcmBuffer.count > toCopy {
             backend.pcmBuffer.replaceSubrange(0 ..< toCopy, with: [])
@@ -583,6 +755,39 @@ fileprivate func fillAudioBuffer(userData: UnsafeMutableRawPointer?, outAQ: Audi
     } catch {
         backend.setError(error as NSError)
     }
+}
+
+/* ****************************************
+ *
+ * ****************************************/
+fileprivate func readBuffer(userData: UnsafeMutableRawPointer?, outAQ: AudioQueueRef, outBuffer: AudioQueueBufferRef) {
+    guard let userData = userData else { return }
+    let backend = Unmanaged<Backend>.fromOpaque(userData).takeUnretainedValue()
+
+    guard let index = backend.ringBuffer.readIndex() else {
+        let silent = Array(repeating: UInt8(0), count: Int(BUFFER_SIZE))
+        let dest = outBuffer.pointee.mAudioData
+
+        outBuffer.pointee.mAudioDataByteSize = UInt32(silent.count)
+        memcpy(dest, silent, silent.count)
+        AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
+
+        backend.ringBuffer.unlockWriter()
+
+        backend.ringBuffer.debug("@@@ READER EMPTY")
+        return
+    }
+
+    let src = backend.ringBuffer.buffers[index]
+    let dest = outBuffer.pointee.mAudioData
+
+    outBuffer.pointee.mAudioDataByteSize = UInt32(src.audioDataByteSize)
+    memcpy(dest, src.audioData, src.audioDataByteSize)
+    AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
+    backend.ringBuffer.incReadIndex()
+    backend.ringBuffer.unlockWriter()
+
+    backend.ringBuffer.debug("@@@ READER OK")
 }
 
 /* ****************************************
@@ -686,6 +891,9 @@ fileprivate class AtomicBool {
     }
 }
 
+/* ****************************************
+ *
+ * ****************************************/
 func printFFErrors() {
     func dump(_ code: Int32, _ name: String) {
         var errorBuffer = [CChar](repeating: 0, count: 1024)
@@ -727,3 +935,52 @@ func printFFErrors() {
     dump(averror_http_server_error, "AVERROR_HTTP_SERVER_ERROR")
     dump(av_error_max_string_size, "AV_ERROR_MAX_STRING_SIZE")
 }
+
+/* ****************************************
+ *
+ * ****************************************/
+fileprivate func hexDump(_ data: [UInt8], bytesPerLine: Int = 32) {
+    for i in stride(from: 0, to: data.count, by: bytesPerLine) {
+        let chunk = data[i ..< min(i + bytesPerLine, data.count)]
+        let hex = chunk.map { String(format: "%02X", $0) }.joined(separator: " ")
+        print(String(format: "%04X: %@", i, hex))
+    }
+}
+
+/* ****************************************
+ *
+ * ****************************************/
+fileprivate func hexDump(_ buffer: AudioQueueBufferRef, bytesPerLine: Int = 32) {
+    let size = Int(buffer.pointee.mAudioDataByteSize)
+    guard size > 0 else {
+        print("(empty AudioQueue buffer)")
+        return
+    }
+
+    let ptr = buffer.pointee.mAudioData.assumingMemoryBound(to: UInt8.self)
+
+    for i in stride(from: 0, to: size, by: bytesPerLine) {
+        let lineSize = min(bytesPerLine, size - i)
+        var hexPart = ""
+
+        for j in 0 ..< lineSize {
+            let byte = ptr[i + j]
+            hexPart += String(format: "%02X ", byte)
+        }
+
+        print(String(format: "%04X: %@", i, hexPart))
+    }
+}
+
+// struct PThreadLocker {
+//    private let mutex: PThreadMutex
+//
+//    init(_ mutex: PThreadMutex) {
+//        self.mutex = mutex
+//        pthread_mutex_lock(mutex.pointer)
+//    }
+//
+//    deinit {
+//        pthread_mutex_unlock(mutex.pointer)
+//    }
+// }
