@@ -134,21 +134,14 @@ fileprivate class RingBuffer {
     private var _readIndex: Int64 = 0
     private var _writeIndex: Int64 = 0
     private var mutex = pthread_mutex_t()
-    private var condMutex = pthread_mutex_t()
-    private var cond = pthread_cond_t()
-    // let writeSemaphore = DispatchSemaphore(value: 0)
 
     init() {
         buffers = (0 ..< NUM_BUFFERS).map { _ in Buffer() }
         pthread_mutex_init(&mutex, nil)
-        pthread_mutex_init(&condMutex, nil)
-        pthread_cond_init(&cond, nil)
     }
 
     deinit {
         pthread_mutex_destroy(&mutex)
-        pthread_mutex_destroy(&condMutex)
-        pthread_cond_destroy(&cond)
     }
 
     /* ****************************************
@@ -182,22 +175,6 @@ fileprivate class RingBuffer {
     /* ****************************************
      *
      * ****************************************/
-    func waitWriteIndex() -> Int {
-        var index = writeIndex()
-        while index == nil {
-            // pthread_mutex_lock(&condMutex)
-            // pthread_cond_wait(&cond, &condMutex)
-            // pthread_mutex_unlock(&condMutex)
-
-            index = writeIndex()
-        }
-
-        return index!
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     @discardableResult
     func incReadIndex() -> Int {
         pthread_mutex_lock(&mutex)
@@ -215,15 +192,6 @@ fileprivate class RingBuffer {
         defer { pthread_mutex_unlock(&mutex) }
         _writeIndex += 1
         return Int(_writeIndex % Int64(buffers.count))
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func unlockWriter() {
-        pthread_mutex_lock(&condMutex)
-        pthread_cond_signal(&cond)
-        pthread_mutex_unlock(&condMutex)
     }
 
     /* ****************************************
@@ -477,7 +445,6 @@ fileprivate class Backend {
             writeBuffer(backend: self, outBuffer: ringBuffer.buffers[i])
             ringBuffer.incWriteIndex()
         }
-        debug("@@@ LOADED ==================================")
 
         let delay = bufferDuration(format: format)
 
@@ -485,10 +452,8 @@ fileprivate class Backend {
             self?.decode(delay: delay)
         }
 
-        debug("@@@ START THREAD ==================================")
         ffmpegThread?.qualityOfService = .userInitiated
         ffmpegThread?.start()
-        debug("@@@ THREAD STARTED ================================")
 
         for i in 0 ..< NUM_BUFFERS {
             var buffer: AudioQueueBufferRef?
@@ -771,10 +736,6 @@ fileprivate func readBuffer(userData: UnsafeMutableRawPointer?, outAQ: AudioQueu
         outBuffer.pointee.mAudioDataByteSize = UInt32(silent.count)
         memcpy(dest, silent, silent.count)
         AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
-
-        backend.ringBuffer.unlockWriter()
-
-        backend.ringBuffer.debug("@@@ READER EMPTY")
         return
     }
 
@@ -785,9 +746,6 @@ fileprivate func readBuffer(userData: UnsafeMutableRawPointer?, outAQ: AudioQueu
     memcpy(dest, src.audioData, src.audioDataByteSize)
     AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
     backend.ringBuffer.incReadIndex()
-    backend.ringBuffer.unlockWriter()
-
-    backend.ringBuffer.debug("@@@ READER OK")
 }
 
 /* ****************************************
@@ -971,16 +929,3 @@ fileprivate func hexDump(_ buffer: AudioQueueBufferRef, bytesPerLine: Int = 32) 
         print(String(format: "%04X: %@", i, hexPart))
     }
 }
-
-// struct PThreadLocker {
-//    private let mutex: PThreadMutex
-//
-//    init(_ mutex: PThreadMutex) {
-//        self.mutex = mutex
-//        pthread_mutex_lock(mutex.pointer)
-//    }
-//
-//    deinit {
-//        pthread_mutex_unlock(mutex.pointer)
-//    }
-// }
