@@ -9,7 +9,8 @@ import AudioToolbox
 import FFAudio
 import Foundation
 
-fileprivate let NUM_BUFFERS = 500
+fileprivate let NUM_AUDIO_BUFFERS = 50
+fileprivate let NUM_RING_BUFFERS = 500
 fileprivate let BUFFER_SIZE = 8192
 
 let internalErrorDescription = NSLocalizedString("Internal error.\nSee logs for more information.", comment: "Player error message")
@@ -129,19 +130,35 @@ fileprivate class RingBuffer {
     }
 
     var buffers: [Buffer]
-    var tmpBuffer = [UInt8]()
 
     private var _readIndex: Int64 = 0
     private var _writeIndex: Int64 = 0
     private var mutex = pthread_mutex_t()
 
+    /* ****************************************
+     *
+     * ****************************************/
     init() {
-        buffers = (0 ..< NUM_BUFFERS).map { _ in Buffer() }
+        buffers = (0 ..< NUM_RING_BUFFERS).map { _ in Buffer() }
         pthread_mutex_init(&mutex, nil)
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     deinit {
         pthread_mutex_destroy(&mutex)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func reset() {
+        pthread_mutex_lock(&mutex)
+        defer { pthread_mutex_unlock(&mutex) }
+
+        _readIndex = 0
+        _writeIndex = 0
     }
 
     /* ****************************************
@@ -170,6 +187,15 @@ fileprivate class RingBuffer {
         }
 
         return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func readyNum() -> Int {
+        pthread_mutex_lock(&mutex)
+        defer { pthread_mutex_unlock(&mutex) }
+        return Int(_writeIndex - _readIndex)
     }
 
     /* ****************************************
@@ -227,7 +253,7 @@ fileprivate class Backend {
     var packet: UnsafeMutablePointer<AVPacket>!
 
     var pcmBuffer = [UInt8]()
-    private var audioQueueBuffers = [AudioQueueBufferRef?](repeating: nil, count: NUM_BUFFERS)
+    private var audioQueueBuffers = [AudioQueueBufferRef?](repeating: nil, count: NUM_AUDIO_BUFFERS)
 
     var prevNowPlaying = ""
 
@@ -334,6 +360,8 @@ fileprivate class Backend {
     func load(url: URL) throws {
         debug("FFplayer load \(url)")
 
+        ringBuffer.reset()
+
         if frame == nil {
             throw NSError(code: .alocError_avframe, message: internalErrorDescription, debug: "Error calling av_frame_alloc")
         }
@@ -430,7 +458,7 @@ fileprivate class Backend {
 
         err = AudioQueueNewOutput(
             &format,
-            readBuffer,
+            fillAudioQueueBuffer,
             Unmanaged.passUnretained(self).toOpaque(),
             nil,
             nil,
@@ -441,21 +469,8 @@ fileprivate class Backend {
             throw NSError(code: .alocError_AudioQueue, message: internalErrorDescription, debug: "Error calling AudioQueueNewOutput")
         }
 
-        for i in 0 ..< ringBuffer.buffers.count {
-            writeBuffer(backend: self, outBuffer: ringBuffer.buffers[i])
-            ringBuffer.incWriteIndex()
-        }
-
-        let delay = bufferDuration(format: format)
-
-        ffmpegThread = Thread { [weak self, delay] in
-            self?.decode(delay: delay)
-        }
-
-        ffmpegThread?.qualityOfService = .userInitiated
-        ffmpegThread?.start()
-
-        for i in 0 ..< NUM_BUFFERS {
+        // Preload audio
+        for i in 0 ..< NUM_AUDIO_BUFFERS {
             var buffer: AudioQueueBufferRef?
             err = AudioQueueAllocateBuffer(audioQueue!, UInt32(BUFFER_SIZE), &buffer)
 
@@ -463,9 +478,22 @@ fileprivate class Backend {
                 throw NSError(code: .alocError_AudioQueueBuffer, message: internalErrorDescription, debug: "Error calling AudioQueueAllocateBuffer")
             }
 
+            try decodeBuffer(backend: self, outBuffer: ringBuffer.buffers[i])
+            ringBuffer.incWriteIndex()
+
             audioQueueBuffers[i] = buffer
-            readBuffer(userData: Unmanaged.passUnretained(self).toOpaque(), outAQ: audioQueue!, outBuffer: buffer!)
+            fillAudioQueueBuffer(userData: Unmanaged.passUnretained(self).toOpaque(), outAQ: audioQueue!, outBuffer: buffer!)
         }
+
+        // Start ffmpeg decoder thread
+        let delay = bufferDuration(format: format)
+
+        ffmpegThread = Thread { [weak self, delay] in
+            decode(backend: self!, delay: delay)
+        }
+
+        ffmpegThread?.qualityOfService = .userInitiated
+        ffmpegThread?.start()
     }
 
     /* ****************************************
@@ -572,6 +600,7 @@ fileprivate class Backend {
      * ****************************************/
     fileprivate func setError(_ error: NSError) {
         if shouldInterrupt.value || error.code == averror_exit {
+            stop()
             setState(.stoped)
             return
         }
@@ -580,144 +609,32 @@ fileprivate class Backend {
             self.frontend.error = error
             self.frontend.state = .error
         }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func decode(delay: TimeInterval) {
-        while true {
-            if shouldInterrupt.value {
-                return
-            }
-
-            guard let index = ringBuffer.writeIndex() else {
-                Thread.sleep(forTimeInterval: delay)
-                continue
-            }
-
-            writeBuffer(backend: self, outBuffer: ringBuffer.buffers[index])
-            ringBuffer.incWriteIndex()
-        }
+        stop()
     }
 }
 
-// MARK: - Callbacks
+// MARK: - FFMpeg callbacks
 
 /* ****************************************
  *
  * ****************************************/
-fileprivate func writeBuffer(backend: Backend, outBuffer: RingBuffer.Buffer) {
-    var timeoutCount = 0
-    let maxTimeouts = 10
-
+fileprivate func decode(backend: Backend, delay: TimeInterval) {
     do {
-        var err: Int32 = 0
+        while true {
+            if backend.shouldInterrupt.value {
+                return
+            }
 
-        while backend.pcmBuffer.count < BUFFER_SIZE {
-            err = av_read_frame(backend.formatContext, backend.packet)
-            if err == -ETIMEDOUT {
-                debug("Error calling av_read_frame: ETIMEDOUT")
-                timeoutCount += 1
-                if timeoutCount >= maxTimeouts {
-                    throw NSError(ffCode: err, message: timeoutErrorDescription, debug: "Too many timeouts from av_read_frame")
-                }
+            guard let index = backend.ringBuffer.writeIndex() else {
+                Thread.sleep(forTimeInterval: delay)
                 continue
             }
 
-            if err < 0 {
-                throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_read_frame")
-            }
-
-            timeoutCount = 0
-
-            defer {
-                av_packet_unref(backend.packet)
-            }
-            readMetadta(backend: backend, tag: av_dict_get(backend.formatContext.pointee.metadata, "StreamTitle", nil, 0))
-
-            if backend.packet.pointee.stream_index != backend.streamIndex {
-                continue
-            }
-
-            err = avcodec_send_packet(backend.codecContext, backend.packet)
-            if err < 0 {
-                throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_send_packet")
-            }
-
-            err = avcodec_receive_frame(backend.codecContext, backend.frame)
-            if err == -EAGAIN {
-                continue
-            } else if err < 0 {
-                throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_receive_frame")
-            }
-
-            let dstNbSamples = av_rescale_rnd(
-                swr_get_delay(backend.swrContext, Int64(backend.codecContext.pointee.sample_rate)) + Int64(backend.frame.pointee.nb_samples),
-                Int64(backend.outSampleRate),
-                Int64(backend.codecContext.pointee.sample_rate),
-                AV_ROUND_UP)
-
-            var outLinesize: Int32 = 0
-            var outBuf: UnsafeMutablePointer<UInt8>?
-            err = av_samples_alloc(&outBuf, &outLinesize, backend.outChannels, Int32(dstNbSamples), backend.outFmt, 0)
-            guard
-                err >= 0,
-                var outBuf = outBuf
-            else {
-                throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_samples_alloc")
-            }
-            defer {
-                av_freep(&outBuf)
-            }
-
-            let outBufPointer = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>.allocate(capacity: 1)
-            outBufPointer.initialize(to: outBuf)
-            defer {
-                outBufPointer.deinitialize(count: 1)
-                outBufPointer.deallocate()
-            }
-
-            let srcData = withUnsafePointer(to: &backend.frame.pointee.data) {
-                UnsafeRawPointer($0).assumingMemoryBound(to: UnsafePointer<UInt8>?.self)
-            }
-
-            let samplesConverted = swr_convert(backend.swrContext,
-                                               outBufPointer,
-                                               Int32(dstNbSamples),
-                                               srcData,
-                                               backend.frame.pointee.nb_samples)
-
-            if samplesConverted < 0 {
-                throw NSError(ffCode: samplesConverted, message: internalErrorDescription, debug: "Error calling swr_convert")
-            }
-
-            let outSize = av_samples_get_buffer_size(nil, backend.outChannels, samplesConverted, backend.outFmt, 1)
-            if outSize < 0 {
-                throw NSError(ffCode: outSize, message: internalErrorDescription, debug: "Error calling av_samples_get_buffer_size")
-            }
-
-            backend.pcmBuffer.append(contentsOf: UnsafeBufferPointer(start: outBuf, count: Int(outSize)))
-        }
-
-        let toCopy = min(BUFFER_SIZE, backend.pcmBuffer.count)
-
-        outBuffer.audioDataByteSize = toCopy
-
-        backend.pcmBuffer.withUnsafeBytes { srcRaw in
-            outBuffer.audioData.withUnsafeMutableBytes { dstRaw in
-                let srcPtr = srcRaw.baseAddress!
-                let dstPtr = dstRaw.baseAddress!
-                memcpy(dstPtr, srcPtr, toCopy)
-            }
-        }
-
-        if backend.pcmBuffer.count > toCopy {
-            backend.pcmBuffer.replaceSubrange(0 ..< toCopy, with: [])
-        } else {
-            backend.pcmBuffer.removeAll()
+            try decodeBuffer(backend: backend, outBuffer: backend.ringBuffer.buffers[index])
+            backend.ringBuffer.incWriteIndex()
         }
     } catch {
+        warning(error)
         backend.setError(error as NSError)
     }
 }
@@ -725,27 +642,115 @@ fileprivate func writeBuffer(backend: Backend, outBuffer: RingBuffer.Buffer) {
 /* ****************************************
  *
  * ****************************************/
-fileprivate func readBuffer(userData: UnsafeMutableRawPointer?, outAQ: AudioQueueRef, outBuffer: AudioQueueBufferRef) {
-    guard let userData = userData else { return }
-    let backend = Unmanaged<Backend>.fromOpaque(userData).takeUnretainedValue()
+fileprivate func decodeBuffer(backend: Backend, outBuffer: RingBuffer.Buffer) throws {
+    var timeoutCount = 0
+    let maxTimeouts = 10
 
-    guard let index = backend.ringBuffer.readIndex() else {
-        let silent = Array(repeating: UInt8(0), count: Int(BUFFER_SIZE))
-        let dest = outBuffer.pointee.mAudioData
+    var err: Int32 = 0
 
-        outBuffer.pointee.mAudioDataByteSize = UInt32(silent.count)
-        memcpy(dest, silent, silent.count)
-        AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
-        return
+    while backend.pcmBuffer.count < BUFFER_SIZE {
+        err = av_read_frame(backend.formatContext, backend.packet)
+        if err == -ETIMEDOUT {
+            debug("Error calling av_read_frame: ETIMEDOUT")
+            timeoutCount += 1
+            if timeoutCount >= maxTimeouts {
+                throw NSError(ffCode: err, message: timeoutErrorDescription, debug: "Too many timeouts from av_read_frame")
+            }
+            continue
+        }
+
+        if err < 0 {
+            throw NSError(ffCode: err, message: timeoutErrorDescription, debug: "Error calling av_read_frame")
+        }
+
+        timeoutCount = 0
+
+        defer {
+            av_packet_unref(backend.packet)
+        }
+        readMetadta(backend: backend, tag: av_dict_get(backend.formatContext.pointee.metadata, "StreamTitle", nil, 0))
+
+        if backend.packet.pointee.stream_index != backend.streamIndex {
+            continue
+        }
+
+        err = avcodec_send_packet(backend.codecContext, backend.packet)
+        if err < 0 {
+            throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_send_packet")
+        }
+
+        err = avcodec_receive_frame(backend.codecContext, backend.frame)
+        if err == -EAGAIN {
+            continue
+        } else if err < 0 {
+            throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_receive_frame")
+        }
+
+        let dstNbSamples = av_rescale_rnd(
+            swr_get_delay(backend.swrContext, Int64(backend.codecContext.pointee.sample_rate)) + Int64(backend.frame.pointee.nb_samples),
+            Int64(backend.outSampleRate),
+            Int64(backend.codecContext.pointee.sample_rate),
+            AV_ROUND_UP)
+
+        var outLinesize: Int32 = 0
+        var outBuf: UnsafeMutablePointer<UInt8>?
+        err = av_samples_alloc(&outBuf, &outLinesize, backend.outChannels, Int32(dstNbSamples), backend.outFmt, 0)
+        guard
+            err >= 0,
+            var outBuf = outBuf
+        else {
+            throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_samples_alloc")
+        }
+        defer {
+            av_freep(&outBuf)
+        }
+
+        let outBufPointer = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>.allocate(capacity: 1)
+        outBufPointer.initialize(to: outBuf)
+        defer {
+            outBufPointer.deinitialize(count: 1)
+            outBufPointer.deallocate()
+        }
+
+        let srcData = withUnsafePointer(to: &backend.frame.pointee.data) {
+            UnsafeRawPointer($0).assumingMemoryBound(to: UnsafePointer<UInt8>?.self)
+        }
+
+        let samplesConverted = swr_convert(backend.swrContext,
+                                           outBufPointer,
+                                           Int32(dstNbSamples),
+                                           srcData,
+                                           backend.frame.pointee.nb_samples)
+
+        if samplesConverted < 0 {
+            throw NSError(ffCode: samplesConverted, message: internalErrorDescription, debug: "Error calling swr_convert")
+        }
+
+        let outSize = av_samples_get_buffer_size(nil, backend.outChannels, samplesConverted, backend.outFmt, 1)
+        if outSize < 0 {
+            throw NSError(ffCode: outSize, message: internalErrorDescription, debug: "Error calling av_samples_get_buffer_size")
+        }
+
+        backend.pcmBuffer.append(contentsOf: UnsafeBufferPointer(start: outBuf, count: Int(outSize)))
     }
 
-    let src = backend.ringBuffer.buffers[index]
-    let dest = outBuffer.pointee.mAudioData
+    let toCopy = min(BUFFER_SIZE, backend.pcmBuffer.count)
 
-    outBuffer.pointee.mAudioDataByteSize = UInt32(src.audioDataByteSize)
-    memcpy(dest, src.audioData, src.audioDataByteSize)
-    AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
-    backend.ringBuffer.incReadIndex()
+    outBuffer.audioDataByteSize = toCopy
+
+    backend.pcmBuffer.withUnsafeBytes { srcRaw in
+        outBuffer.audioData.withUnsafeMutableBytes { dstRaw in
+            let srcPtr = srcRaw.baseAddress!
+            let dstPtr = dstRaw.baseAddress!
+            memcpy(dstPtr, srcPtr, toCopy)
+        }
+    }
+
+    if backend.pcmBuffer.count > toCopy {
+        backend.pcmBuffer.replaceSubrange(0 ..< toCopy, with: [])
+    } else {
+        backend.pcmBuffer.removeAll()
+    }
 }
 
 /* ****************************************
@@ -779,6 +784,34 @@ let interruptCallback: FFmpegInterruptCallback = { opaque in
     let backend = Unmanaged<Backend>.fromOpaque(opaque).takeUnretainedValue()
 
     return backend.shouldInterrupt.value ? 1 : 0
+}
+
+// MARK: - AudioQueue callback
+
+fileprivate func fillAudioQueueBuffer(userData: UnsafeMutableRawPointer?, outAQ: AudioQueueRef, outBuffer: AudioQueueBufferRef) {
+    guard let userData = userData else { return }
+    let backend = Unmanaged<Backend>.fromOpaque(userData).takeUnretainedValue()
+
+    // print("Buffers: \(backend.ringBuffer.readyNum())")
+
+    guard let index = backend.ringBuffer.readIndex() else {
+        let silent = Array(repeating: UInt8(0), count: Int(BUFFER_SIZE))
+        let dest = outBuffer.pointee.mAudioData
+
+        outBuffer.pointee.mAudioDataByteSize = UInt32(silent.count)
+        memcpy(dest, silent, silent.count)
+        AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
+        // backend.ringBuffer.debug("@@@ Buffer is empty")
+        return
+    }
+
+    let src = backend.ringBuffer.buffers[index]
+    let dest = outBuffer.pointee.mAudioData
+
+    outBuffer.pointee.mAudioDataByteSize = UInt32(src.audioDataByteSize)
+    memcpy(dest, src.audioData, src.audioDataByteSize)
+    AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
+    backend.ringBuffer.incReadIndex()
 }
 
 // MARK: -  NSError
