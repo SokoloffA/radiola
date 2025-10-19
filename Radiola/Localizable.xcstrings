@@ -214,6 +214,9 @@
         }
       }
     },
+    "Add group to \"%@\"" : {
+      "comment" : "Group action menu item. %@ is station list title."
+    },
     "Add station" : {
       "comment" : "Add station dialog button\nButton title",
       "localizations" : {
@@ -701,16 +704,16 @@
     "Cannot play station. Your internet connection may be too slow or unstable." : {
       "comment" : "Player error message",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не удается воспроизвести станцию. Возможно, ваше интернет-соединение слишком медленное или нестабильное."
-          }
-        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impossibile riprodurre la stazione. La tua connessione potrebbe essere molto lenta o instabile."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удается воспроизвести станцию. Возможно, ваше интернет-соединение слишком медленное или нестабильное."
           }
         }
       }
@@ -758,16 +761,16 @@
     "Connection time has expired" : {
       "comment" : "Player error message.",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Время соединения истекло"
-          }
-        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Il tempo di connessione è scaduto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Время соединения истекло"
           }
         }
       }
@@ -794,6 +797,9 @@
           }
         }
       }
+    },
+    "Copy group title to clipboard" : {
+      "comment" : "Group action menu item"
     },
     "Copy song title and artist" : {
       "comment" : "Status bar menu item",
@@ -1005,16 +1011,16 @@
     "Internal error.\nSee logs for more information." : {
       "comment" : "Player error message",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Внутренняя ошибка.\nДополнительные сведения см. в логах."
-          }
-        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Errore interno. \nControlla i log per maggiori informazioni."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Внутренняя ошибка.\nДополнительные сведения см. в логах."
           }
         }
       }
@@ -1523,16 +1529,16 @@
     "Sorry, I couldn't play \"%@\"." : {
       "comment" : "Player error title. %@ is a station name",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Извините, я не смог воспроизвести «%@»."
-          }
-        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impossibile riprodurre \"%@\""
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Извините, я не смог воспроизвести «%@»."
           }
         }
       }
@@ -1701,16 +1707,16 @@
     "The station is temporarily unavailable. Check URL or try again later." : {
       "comment" : "Player error message",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Радиостанция временно недоступна. Проверьте URL-адрес или повторите попытку позже."
-          }
-        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "La stazione è temporaneamente indisponibile. Controlla l'URL o riprova più tardi."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Радиостанция временно недоступна. Проверьте URL-адрес или повторите попытку позже."
           }
         }
       }
@@ -1719,16 +1725,16 @@
       "comment" : "Player error message",
       "extractionState" : "stale",
       "localizations" : {
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "URL-адрес не содержит или содержит неподдерживаемое аудио."
-          }
-        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "L'URL non contiene audio o contiene audio non supportato."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL-адрес не содержит или содержит неподдерживаемое аудио."
           }
         }
       }
