@@ -127,7 +127,7 @@ func allLogs() -> [String] {
  *
  * ****************************************/
 fileprivate func logMsg(prefix: String, _ items: Any..., separator: String = " ", terminator: String = "\n") {
-    let s = prefix + ": \(Date()) " + items.map { "\($0)" }.joined(separator: separator)
+    let s = prefix + ": \(Date()) [\(pthread_mach_thread_np(pthread_self()))] " + items.map { "\($0)" }.joined(separator: separator)
     logsData.append(s)
     print(s)
 }
