@@ -24,29 +24,6 @@
         }
       }
     },
-    "always" : {
-      "comment" : "Settings combobox item",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "immer"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "sempre"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "всегда"
-          }
-        }
-      }
-    },
     "Appearance" : {
       "comment" : "Settings page title",
       "localizations" : {
@@ -66,52 +43,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Внешний вид"
-          }
-        }
-      }
-    },
-    "as a flat list" : {
-      "comment" : "Settings label",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "als einfache Liste"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "lista semplice"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "как плоский список"
-          }
-        }
-      }
-    },
-    "as a submenu" : {
-      "comment" : "Settings label",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "als Untermenü"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "sottomenu"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "как вложенные меню"
           }
         }
       }
@@ -150,29 +81,6 @@
         }
       }
     },
-    "changes the volume" : {
-      "comment" : "Settings combobox item",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lautstärke ändern"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Regola il volume"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "меняет громкость"
-          }
-        }
-      }
-    },
     "Check for Updates now" : {
       "comment" : "Settings button title",
       "localizations" : {
@@ -192,54 +100,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проверить обновления сейчас"
-          }
-        }
-      }
-    },
-    "cloud and local stations" : {
-      "comment" : "Settings combobox item",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Online und lokale Sender"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "stazioni in cloud e locali"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "из облака и локальные станции"
-          }
-        }
-      }
-    },
-    "cloud stations only (recommended)" : {
-      "comment" : "Settings combobox item",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nur Online-Sender (empfohlen)"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "solo stazioni in cloud (raccomandato)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "только из облака (рекомендуется)"
           }
         }
       }
@@ -286,29 +146,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Устройство:"
-          }
-        }
-      }
-    },
-    "does nothing" : {
-      "comment" : "Settings combobox item",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nicht benutzen"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nessuna azione"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ничего не делает"
           }
         }
       }
@@ -360,7 +197,15 @@
       }
     },
     "Global shortcut to toggle play and pause" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Глобальные клавиши для переключения между воспроизведением и паузой"
+          }
+        }
+      }
     },
     "Left mouse button:" : {
       "comment" : "Settings label",
@@ -381,30 +226,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Левая кнопка мыши:"
-          }
-        }
-      }
-    },
-    "local stations only" : {
-      "comment" : "Settings combobox item",
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nur lokale Sender"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "solo stazioni locali"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "тольео локальные станции"
           }
         }
       }
@@ -474,29 +295,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Колесико мыши:"
-          }
-        }
-      }
-    },
-    "never" : {
-      "comment" : "Settings combobox item",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "niemals"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "mai"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "никогда"
           }
         }
       }
@@ -755,6 +553,262 @@
         }
       }
     },
+    "Updates" : {
+      "comment" : "Settings tab title",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktualisierungen"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiornamenti"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Обновления"
+          }
+        }
+      }
+    },
+    "You can always open the menu with Control+Mouse Click" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können das Menü jederzeit mit Control+Maus-Klick öffnen"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puoi aprire il menu con Control + Click"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вы всегда можете открыть меню с помощью Control+Mouse Click"
+          }
+        }
+      }
+    },
+    "always" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "immer"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sempre"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "всегда"
+          }
+        }
+      }
+    },
+    "as a flat list" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "als einfache Liste"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lista semplice"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "как плоский список"
+          }
+        }
+      }
+    },
+    "as a submenu" : {
+      "comment" : "Settings label",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "als Untermenü"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sottomenu"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "как вложенные меню"
+          }
+        }
+      }
+    },
+    "changes the volume" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lautstärke ändern"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regola il volume"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "меняет громкость"
+          }
+        }
+      }
+    },
+    "cloud and local stations" : {
+      "comment" : "Settings combobox item",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Online und lokale Sender"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "stazioni in cloud e locali"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "из облака и локальные станции"
+          }
+        }
+      }
+    },
+    "cloud stations only (recommended)" : {
+      "comment" : "Settings combobox item",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur Online-Sender (empfohlen)"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solo stazioni in cloud (raccomandato)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "только из облака (рекомендуется)"
+          }
+        }
+      }
+    },
+    "does nothing" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nicht benutzen"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nessuna azione"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ничего не делает"
+          }
+        }
+      }
+    },
+    "local stations only" : {
+      "comment" : "Settings combobox item",
+      "extractionState" : "stale",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nur lokale Sender"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solo stazioni locali"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "тольео локальные станции"
+          }
+        }
+      }
+    },
+    "never" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "niemals"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mai"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "никогда"
+          }
+        }
+      }
+    },
     "shows the history" : {
       "comment" : "Settings combobox item",
       "localizations" : {
@@ -893,29 +947,6 @@
         }
       }
     },
-    "Updates" : {
-      "comment" : "Settings tab title",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aktualisierungen"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aggiornamenti"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Обновления"
-          }
-        }
-      }
-    },
     "when the main window is open" : {
       "comment" : "Settings combobox item",
       "localizations" : {
@@ -958,29 +989,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "с отступами"
-          }
-        }
-      }
-    },
-    "You can always open the menu with Control+Mouse Click" : {
-      "comment" : "Settings label",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sie können das Menü jederzeit mit Control+Maus-Klick öffnen"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puoi aprire il menu con Control + Click"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вы всегда можете открыть меню с помощью Control+Mouse Click"
           }
         }
       }

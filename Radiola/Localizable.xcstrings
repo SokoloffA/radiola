@@ -215,7 +215,15 @@
       }
     },
     "Add group to \"%@\"" : {
-      "comment" : "Group action menu item. %@ is station list title."
+      "comment" : "Group action menu item. %@ is station list title.",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить группу в «%@»"
+          }
+        }
+      }
     },
     "Add station" : {
       "comment" : "Add station dialog button\nButton title",
@@ -318,13 +326,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                  "value" : "Möchten Sie wirklich %lld Sender und Gruppe und alle untergeordneten Elemente entfernen?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                  "value" : "Möchten Sie wirklich %lld Sender und Gruppen und alle untergeordneten Elemente entfernen?"
                 }
               }
             }
@@ -395,13 +403,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations?"
+                  "value" : "Soll wirklich %lld Sender entfernt werden?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove %lld stations?"
+                  "value" : "Soll wirklich %lld Sender entfernt werden?"
                 }
               }
             }
@@ -472,13 +480,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                  "value" : "Möchten Sie wirklich %lld Gruppe und alle untergeordneten Elemente entfernen?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                  "value" : "Möchten Sie wirklich %lld Gruppen und alle untergeordneten Elemente entfernen?"
                 }
               }
             }
@@ -704,6 +712,12 @@
     "Cannot play station. Your internet connection may be too slow or unstable." : {
       "comment" : "Player error message",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Sender kann nicht abgespielt werden. Ihre Internetverbindung ist eventuell zu langsam oder instabil."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -761,6 +775,12 @@
     "Connection time has expired" : {
       "comment" : "Player error message.",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verbindungszeit ist abgelaufen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -799,7 +819,15 @@
       }
     },
     "Copy group title to clipboard" : {
-      "comment" : "Group action menu item"
+      "comment" : "Group action menu item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Копировать название группы в буфер обмена"
+          }
+        }
+      }
     },
     "Copy song title and artist" : {
       "comment" : "Status bar menu item",
@@ -1011,6 +1039,12 @@
     "Internal error.\nSee logs for more information." : {
       "comment" : "Player error message",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interner Fehler.\nFür weitere Informationen Protokolle prüfen."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1417,6 +1451,9 @@
         }
       }
     },
+    "Qwerty" : {
+      "comment" : "Group action menu item"
+    },
     "Radio browser" : {
       "comment" : "Sidebar group",
       "localizations" : {
@@ -1529,6 +1566,12 @@
     "Sorry, I couldn't play \"%@\"." : {
       "comment" : "Player error title. %@ is a station name",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entschuldigung, „%@“ konnte nicht nicht abgespielt werden."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1707,6 +1750,12 @@
     "The station is temporarily unavailable. Check URL or try again later." : {
       "comment" : "Player error message",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Sender ist vorübergehend nicht verfügbar. Überprüfen Sie die URL oder versuchen Sie es später erneut."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1725,6 +1774,12 @@
       "comment" : "Player error message",
       "extractionState" : "stale",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die URL enthält kein oder nicht unterstütztes Audio."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
