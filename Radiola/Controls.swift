@@ -523,7 +523,7 @@ class StationGroupMenuButton: NSButton {
         let p = NSPoint(x: frame.width / 2, y: frame.height / 2)
         let menu = NSMenu()
 
-        menu.addItem(withTitle: "Copy group title to clipboard", action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
+        menu.addItem(withTitle:  NSLocalizedString("Copy group title to clipboard", comment: "Group action menu item"), action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
 
         menu.addItem(NSMenuItem.separator())
 
@@ -532,7 +532,7 @@ class StationGroupMenuButton: NSButton {
                 continue
             }
 
-            menu.addItem(withTitle: "Add group to \(list.title)") {
+            menu.addItem(withTitle: String(format: NSLocalizedString("Add group to \"%@\"", comment: "Group action menu item. %@ is station list title."), list.title)) {
                 list.add(group)
                 list.trySave()
             }
