@@ -23,6 +23,9 @@ fileprivate class DefaultStation: Station {
 
 // MARK: - Settings
 
+fileprivate let defaultCloudListTitle = "ICloud" // NSLocalizedString("My stations", comment: "Station list name")
+fileprivate let defaultCloudListIcon = "apple.haptics.and.music.note"
+
 fileprivate let defaultOpmlListTitle = NSLocalizedString("My stations", comment: "Station list name")
 fileprivate let defaultOpmlListIcon = "music.house"
 
@@ -84,6 +87,7 @@ class AppState: ObservableObject {
      *
      * ****************************************/
     init() {
+        updateCloudStations(show: true)
         updateOpmlStations(show: true)
     }
 
@@ -154,6 +158,42 @@ class AppState: ObservableObject {
             } catch {
                 error.show()
             }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateCloudStations(show: Bool, defaultStations: [Station] = []) {
+        if show == isCloudStationsVisible {
+            return
+        }
+        isCloudStationsVisible = show
+
+        if !show {
+            localStations.removeAll { $0 is CloudStationList }
+            return
+        }
+
+        // Read iCloud stations ..............................
+        do {
+            var cloudLists = [CloudStationList]()
+            try cloudLists.load()
+
+            for list in cloudLists {
+                try list.load()
+            }
+            debug("Successfully loaded \(cloudLists.count) station lists")
+
+            // Create lists
+            if cloudLists.isEmpty {
+                debug("Create a new list with \(defaultStations.count) stations")
+                try cloudLists.createList(title: defaultCloudListTitle, icon: defaultCloudListIcon, stations: defaultStations)
+            }
+
+            localStations.append(contentsOf: cloudLists)
+        } catch {
+            Alarm.show(title: "Sorry, we couldn't load iCloud stations.", message: error.localizedDescription)
         }
     }
 

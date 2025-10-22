@@ -1451,9 +1451,6 @@
         }
       }
     },
-    "Qwerty" : {
-      "comment" : "Group action menu item"
-    },
     "Radio browser" : {
       "comment" : "Sidebar group",
       "localizations" : {
