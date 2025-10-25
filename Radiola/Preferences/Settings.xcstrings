@@ -204,6 +204,12 @@
             "state" : "translated",
             "value" : "Глобальные клавиши для переключения между воспроизведением и паузой"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorciatoia di controllo play e pausa"
+          }
         }
       }
     },

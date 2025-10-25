@@ -1066,6 +1066,12 @@
             "state" : "translated",
             "value" : "Экспортировать историю в файл…"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esporta cronologia su file..."
+          }
         }
       }
     },

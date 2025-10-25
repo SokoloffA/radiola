@@ -222,6 +222,12 @@
             "state" : "translated",
             "value" : "Добавить группу в «%@»"
           }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi gruppo a \"%@\""
+          }
         }
       }
     },
@@ -825,6 +831,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Копировать название группы в буфер обмена"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia titolo del gruppo negli appunti"
           }
         }
       }
