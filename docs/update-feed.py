@@ -28,9 +28,9 @@ class Error(Exception):
     pass
 
 class Version(tuple):
-    def __init__(self, str) -> None:
-        super().__init__()
-        self = map(int, (str.split(".")))
+    def __new__(cls, s):
+        parts = tuple(map(int, s.split(".")))
+        return super().__new__(cls, parts)
 
 
 def versiontuple(str):
