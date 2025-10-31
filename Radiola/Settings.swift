@@ -245,6 +245,15 @@ class Settings {
         get { data.bool(forKey: showCopyToClipboardInMenuKey) }
         set { data.set(newValue, forKey: showCopyToClipboardInMenuKey) }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private let showCloudStationsKey = "ShowCloudStations"
+    var showCloudStations: Bool {
+        get { data.bool(forKey: showCloudStationsKey) }
+        set { data.set(newValue, forKey: showCloudStationsKey) }
+    }
 }
 
 let settings = Settings()

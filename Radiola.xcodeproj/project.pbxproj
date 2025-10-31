@@ -84,6 +84,8 @@
 		39D582C42C96B40400AE3A01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39D582C32C96B40400AE3A01 /* Localizable.xcstrings */; };
 		39D582C62C96C49B00AE3A01 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D582C52C96C49B00AE3A01 /* VolumeView.swift */; };
 		39D79E632933BEAB00210D94 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D79E622933BEAB00210D94 /* Settings.swift */; };
+		39D9AA272EA948E500A072DF /* CloudStations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D9AA262EA948E500A072DF /* CloudStations.swift */; };
+		39D9AA292EA94A1800A072DF /* iCloud.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D9AA282EA94A1800A072DF /* iCloud.swift */; };
 		39E042D0293B3ACA00A2167E /* VolumeMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E042CE293B3AC900A2167E /* VolumeMenuItem.swift */; };
 		39E70DE62AD9E1CA00BF3059 /* RadioBrowserServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */; };
 		39E8DFD5288F316A00082467 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 39E8DFD4288F316A00082467 /* Sparkle */; };
@@ -179,7 +181,7 @@
 		39A794112B4B65AF000D9875 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		39ADF3822C98D4C9009794C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		39ADF3852C98D4C9009794C3 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/MainMenu.xcstrings; sourceTree = "<group>"; };
-		39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuDelegate.swift; path = Radiola/MainMenuDelegate.swift; sourceTree = "<group>"; };
+		39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuDelegate.swift; sourceTree = "<group>"; };
 		39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioBrowserStatus.swift; sourceTree = "<group>"; };
 		39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPopover.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
@@ -188,6 +190,8 @@
 		39D582C32C96B40400AE3A01 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		39D582C52C96C49B00AE3A01 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
 		39D79E622933BEAB00210D94 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		39D9AA262EA948E500A072DF /* CloudStations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudStations.swift; sourceTree = "<group>"; };
+		39D9AA282EA94A1800A072DF /* iCloud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iCloud.swift; sourceTree = "<group>"; };
 		39E042CE293B3AC900A2167E /* VolumeMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMenuItem.swift; sourceTree = "<group>"; };
 		39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioBrowserServer.swift; sourceTree = "<group>"; };
 		39E8DFD62890839500082467 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
@@ -258,6 +262,7 @@
 		394ABCAE2AA359E600E2B6E9 /* Stations */ = {
 			isa = PBXGroup;
 			children = (
+				39D9AA262EA948E500A072DF /* CloudStations.swift */,
 				39A7940F2B4B6483000D9875 /* Stations.swift */,
 				39950B9E2C7B327600C37952 /* StationList.swift */,
 				3959DBB12BFCE7580032A1BA /* StationsMerger.swift */,
@@ -271,7 +276,6 @@
 		394F8A2F28739339005EA7FA = {
 			isa = PBXGroup;
 			children = (
-				39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */,
 				394F8A3A28739339005EA7FA /* Radiola */,
 				3962D0322BE687EB0014BCFB /* KeyboardShortcuts */,
 				3959DBA72BFCE6A50032A1BA /* RadiolaTests */,
@@ -294,6 +298,7 @@
 			children = (
 				394ABCAE2AA359E600E2B6E9 /* Stations */,
 				39F08E452A0CC582006B65D0 /* Types.swift */,
+				39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */,
 				39A794112B4B65AF000D9875 /* AppState.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
@@ -309,6 +314,7 @@
 				394F8A56287394F1005EA7FA /* Notifications.swift */,
 				39D79E622933BEAB00210D94 /* Settings.swift */,
 				39E8DFD62890839500082467 /* Updater.swift */,
+				39D9AA282EA94A1800A072DF /* iCloud.swift */,
 				39ADF3832C98D4C9009794C3 /* MainMenu.xib */,
 				394F8A402873933A005EA7FA /* Assets.xcassets */,
 				394F8A6C2873A2FE005EA7FA /* Info.plist */,
@@ -587,6 +593,7 @@
 				9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */,
 				39A794052B4B33F1000D9875 /* LocalStationDelegate.swift in Sources */,
 				39B5494D2B5D7DAE00D1E423 /* AlarmPopover.swift in Sources */,
+				39D9AA292EA94A1800A072DF /* iCloud.swift in Sources */,
 				3964339D2B55A69C009BE1CE /* InternetStationSearchPanel.swift in Sources */,
 				3962D03C2BE688DE0014BCFB /* Utilities.swift in Sources */,
 				396704692943AD2700012FFD /* AudioDevice.swift in Sources */,
@@ -603,6 +610,7 @@
 				3987B99D2A9635930077EB03 /* SideBar.swift in Sources */,
 				394F8A59287394FD005EA7FA /* Player.swift in Sources */,
 				394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */,
+				39D9AA272EA948E500A072DF /* CloudStations.swift in Sources */,
 				3962D03A2BE6889B0014BCFB /* Key.swift in Sources */,
 				39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */,
 				39A794102B4B6483000D9875 /* Stations.swift in Sources */,
@@ -799,7 +807,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10.0.0;
+				CURRENT_PROJECT_VERSION = 10.0.99;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 635H9TYSZJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -815,6 +823,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.SokoloffA.Radiola;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -830,7 +839,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10.0.0;
+				CURRENT_PROJECT_VERSION = 10.0.99;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 635H9TYSZJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -846,6 +855,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.github.SokoloffA.Radiola;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
