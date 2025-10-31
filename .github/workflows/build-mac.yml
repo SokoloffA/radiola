@@ -21,12 +21,14 @@ jobs:
           echo "BUILD_URL=https://github.com/SokoloffA/radiola/actions/runs/${GITHUB_RUN_ID}"  >> $GITHUB_ENV
           echo "BUILD_TXT=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
-          [[ "${GITHUB_REF_TYPE}"  = "tag" ]] && echo ARTIFACT_NAME="Radiola-${GITHUB_REF_NAME:1}.app" >> $GITHUB_ENV
-          [[ "${GITHUB_REF_TYPE}" != "tag" ]] && echo ARTIFACT_NAME="Radiola-$(date +%Y.%m.%d_%H.%M.%S).app" >> $GITHUB_ENV
+          [[ "${GITHUB_REF_TYPE}"  = "tag" ]] && echo ARTIFACT_NAME="Radiola-${GITHUB_REF_NAME:1}" >> $GITHUB_ENV
+          [[ "${GITHUB_REF_TYPE}" != "tag" ]] && echo ARTIFACT_NAME="Radiola-$(date +%Y.%m.%d_%H.%M.%S)" >> $GITHUB_ENV
 
           [[ "${GITHUB_REF_TYPE}"  = "tag" ]] && echo TAR_NAME="Radiola-${GITHUB_REF_NAME:1}.tar" >> $GITHUB_ENV
           [[ "${GITHUB_REF_TYPE}" != "tag" ]] && echo TAR_NAME="Radiola-$(date +%Y.%m.%d_%H.%M.%S).tar" >> $GITHUB_ENV
 
+          echo "==============================="
+          uname -a
           echo "==============================="
           export
           echo "-------------------------------"
@@ -41,30 +43,64 @@ jobs:
 
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-      - name: Build
+      - name: Update Credits.html
         run: |
-          #.github/workflows/bumpversion.sh Radiola.xcodeproj/project.pbxproj
           sed -i '' "s|<build-info>|Commit: <a href='${COMMIT_URL}'>${COMMIT_TXT}</a>  Build: <a href='${BUILD_URL}'>#${BUILD_TXT}</a>|" Radiola/Credits.html
-          xcodebuild \
-            -project Radiola.xcodeproj \
-            -scheme Radiola \
-            -configuration Release clean build \
-            -derivedDataPath ./build \
-            CODE_SIGN_IDENTITY="" \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_ALLOWED=NO
+
+      - name: Create temporary keychain and import cert
+        run: |
+          echo "${{ secrets.CERT_P12_BASE64 }}" | base64 --decode > ./cert.p12
+          KEYCHAIN_NAME=build.keychain
+          KEYCHAIN_PASS=secretpass123
+          security create-keychain -p "$KEYCHAIN_PASS" "$KEYCHAIN_NAME"
+          security default-keychain -s "$KEYCHAIN_NAME"
+          security unlock-keychain -p "$KEYCHAIN_PASS" "$KEYCHAIN_NAME"
+          security set-keychain-settings -t 3600 -l "$KEYCHAIN_NAME"
+          security import ./cert.p12 -k "$KEYCHAIN_NAME" -P "${{ secrets.CERT_P12_PASSWORD }}" -T /usr/bin/codesign -T /usr/bin/security >/dev/null
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$KEYCHAIN_PASS" "$KEYCHAIN_NAME" >/dev/null
+          rm -rf ./cert.p12
+
+          mkdir -p ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/
+          echo "${{ secrets.PROVISIONING_PROFILE_BASE64 }}" | base64 --decode > ~/Library/Developer/Xcode/UserData/Provisioning\ Profiles/current.provisionprofile
+
+          echo "${{ secrets.AC_PRIVATE_KEY_BASE64 }}" | base64 --decode > ./AuthKey.p8
+
+      - name: Prepare
+        run: ./build.sh prepare
+
+      - name: Archive
+        run: ./build.sh archive
+
+      - name: Export archive
+        run: ./build.sh exportArchive
+
+      - name: Verify codesign
+        run: ./build.sh verifyCodesign
+
+      - name: Create DMG
+        run: ./build.sh createDmg
+
+      - name: Notarize
+        run: ./build.sh notarize
+        env:
+          AC_KEY_ID: "${{ secrets.AC_KEY_ID }}"
+          AC_ISSUER_ID: "${{ secrets.AC_ISSUER_ID }}"
+
 
       - name: Prepare artifacts
         run: |
-          tar -C ./build/Build/Products/Release/ -cf ${{env.TAR_NAME}} Radiola.app
-          cp ${{github.workspace}}/.github/workflows/makedmg.sh makedmg.sh
-          cp ${{github.workspace}}/.github/workflows/dmg_settings.json dmg_settings.json
+          echo "RELEASE_DATE=${RELEASE_DATE}"       >> build/metadata.txt
+          echo "RELEASE_VERSION=${RELEASE_VERSION}" >> build/metadata.txt
+          echo "COMMIT_URL=${COMMIT_URL}"           >> build/metadata.txt
+          echo "COMMIT_TXT=${COMMIT_TXT}"           >> build/metadata.txt
+          echo "BUILD_URL=${BUILD_URL}"             >> build/metadata.txt
+          echo "BUILD_TXT=${BUILD_TXT}"             >> build/metadata.txt
+          echo "ARTIFACT_NAME=${ARTIFACT_NAME}"     >> build/metadata.txt
 
       - name: Upload artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: |
-            ${{env.TAR_NAME}}
-            makedmg.sh
-            dmg_settings.json
+            build/*.dmg
+            build/metadata.txt
