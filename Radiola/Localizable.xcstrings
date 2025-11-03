@@ -228,6 +228,12 @@
             "state" : "translated",
             "value" : "Aggiungi gruppo a \"%@\""
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruppe zu „%@“ hinzufügen"
+          }
         }
       }
     },
@@ -837,6 +843,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copia titolo del gruppo negli appunti"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruppenname in die Zwischenablage kopieren"
           }
         }
       }

@@ -1072,6 +1072,12 @@
             "state" : "translated",
             "value" : "Esporta cronologia su file..."
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verlauf in eine Datei exportieren…"
+          }
         }
       }
     },

@@ -210,6 +210,12 @@
             "state" : "translated",
             "value" : "Scorciatoia di controllo play e pausa"
           }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Globaler Kurzbefehl zum Umschalten von Wiedergabe und Pause"
+          }
         }
       }
     },
