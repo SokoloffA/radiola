@@ -10,6 +10,7 @@
 		390C7294287B213200E17BAE /* Controls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7293287B213200E17BAE /* Controls.swift */; };
 		390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7296287B237B00E17BAE /* HistoryRow.swift */; };
 		39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */; };
+		391500312EB89EB700060015 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391500302EB89EB700060015 /* NotificationManager.swift */; };
 		392024AF2A51953600670ABD /* ControlsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024AD2A51953600670ABD /* ControlsPage.swift */; };
 		392024B32A519FF900670ABD /* AppearancePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024B12A519FF900670ABD /* AppearancePage.swift */; };
 		3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3926FF112AD4687A0094D875 /* AddStationDialog.xib */; };
@@ -77,7 +78,6 @@
 		39ADF3842C98D4C9009794C3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39ADF3832C98D4C9009794C3 /* MainMenu.xib */; };
 		39AFBE3F2D18370E008D4087 /* MainMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */; };
 		39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */; };
-		39B5494D2B5D7DAE00D1E423 /* AlarmPopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
 		39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */; };
 		39D27F532BA36B2D00D5857A /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 39D27F522BA36B2D00D5857A /* Credits.html */; };
@@ -111,6 +111,7 @@
 		390C7293287B213200E17BAE /* Controls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Controls.swift; sourceTree = "<group>"; };
 		390C7296287B237B00E17BAE /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
+		391500302EB89EB700060015 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		392024AD2A51953600670ABD /* ControlsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsPage.swift; sourceTree = "<group>"; };
 		392024B12A519FF900670ABD /* AppearancePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePage.swift; sourceTree = "<group>"; };
 		3926FF112AD4687A0094D875 /* AddStationDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
@@ -181,7 +182,6 @@
 		39ADF3852C98D4C9009794C3 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/MainMenu.xcstrings; sourceTree = "<group>"; };
 		39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuDelegate.swift; path = Radiola/MainMenuDelegate.swift; sourceTree = "<group>"; };
 		39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioBrowserStatus.swift; sourceTree = "<group>"; };
-		39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmPopover.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
 		39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupDialog.swift; sourceTree = "<group>"; };
 		39D27F522BA36B2D00D5857A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
@@ -294,6 +294,7 @@
 			children = (
 				394ABCAE2AA359E600E2B6E9 /* Stations */,
 				39F08E452A0CC582006B65D0 /* Types.swift */,
+				391500302EB89EB700060015 /* NotificationManager.swift */,
 				39A794112B4B65AF000D9875 /* AppState.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
@@ -436,7 +437,6 @@
 			isa = PBXGroup;
 			children = (
 				39FF07722933A59900751A03 /* StatuBarController.swift */,
-				39B5494C2B5D7DAE00D1E423 /* AlarmPopover.swift */,
 				39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */,
 				39EF8B9D2BCC151A00733571 /* PlayMenuItem.swift */,
 				39E042CE293B3AC900A2167E /* VolumeMenuItem.swift */,
@@ -586,7 +586,6 @@
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
 				9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */,
 				39A794052B4B33F1000D9875 /* LocalStationDelegate.swift in Sources */,
-				39B5494D2B5D7DAE00D1E423 /* AlarmPopover.swift in Sources */,
 				3964339D2B55A69C009BE1CE /* InternetStationSearchPanel.swift in Sources */,
 				3962D03C2BE688DE0014BCFB /* Utilities.swift in Sources */,
 				396704692943AD2700012FFD /* AudioDevice.swift in Sources */,
@@ -607,6 +606,7 @@
 				39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */,
 				39A794102B4B6483000D9875 /* Stations.swift in Sources */,
 				39E042D0293B3ACA00A2167E /* VolumeMenuItem.swift in Sources */,
+				391500312EB89EB700060015 /* NotificationManager.swift in Sources */,
 				39AFBE3F2D18370E008D4087 /* MainMenuDelegate.swift in Sources */,
 				3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */,
 				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
