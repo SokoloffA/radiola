@@ -217,10 +217,10 @@
     "Add group to \"%@\"" : {
       "comment" : "Group action menu item. %@ is station list title.",
       "localizations" : {
-        "ru" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Добавить группу в «%@»"
+            "value" : "Gruppe zu „%@“ hinzufügen"
           }
         },
         "it" : {
@@ -229,10 +229,10 @@
             "value" : "Aggiungi gruppo a \"%@\""
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gruppe zu „%@“ hinzufügen"
+            "value" : "Добавить группу в «%@»"
           }
         }
       }
@@ -833,10 +833,10 @@
     "Copy group title to clipboard" : {
       "comment" : "Group action menu item",
       "localizations" : {
-        "ru" : {
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Копировать название группы в буфер обмена"
+            "value" : "Gruppenname in die Zwischenablage kopieren"
           }
         },
         "it" : {
@@ -845,10 +845,10 @@
             "value" : "Copia titolo del gruppo negli appunti"
           }
         },
-        "de" : {
+        "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gruppenname in die Zwischenablage kopieren"
+            "value" : "Копировать название группы в буфер обмена"
           }
         }
       }
@@ -1474,9 +1474,6 @@
           }
         }
       }
-    },
-    "Qwerty" : {
-      "comment" : "Group action menu item"
     },
     "Radio browser" : {
       "comment" : "Sidebar group",
