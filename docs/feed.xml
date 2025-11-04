@@ -5,6 +5,14 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 10.1.1</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fix. Release 10.1.0 runs in the sandbox, so it doesn't read saved stations.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Tue, 04 Nov 2025 21:23:12 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v10.1.1/Radiola-10.1.1.dmg" sparkle:version="10.1.1" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 10.1.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;System notifications are used for error messages.&lt;/li&gt;
@@ -210,20 +218,6 @@
 &lt;/ul&gt;</description>
       <pubDate>Sat, 17 Dec 2022 14:30:50 +0000</pubDate>
       <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v4.0/Radiola-4.0.dmg" sparkle:version="4.0" length="0" type="application/octet-stream"/>
-    </item>
-    <item>
-      <title>Radiola 3.0</title>
-      <description>&lt;ul&gt;
-&lt;li&gt;Redesigned station window&lt;ul&gt;
-&lt;li&gt;Nice looking stations table&lt;/li&gt;
-&lt;li&gt;The current station and song are displayed in the window title bar&lt;/li&gt;
-&lt;li&gt;Added volume control&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;A history window has been added. Now you can see the names of songs you recently listened to&lt;/li&gt;
-&lt;/ul&gt;</description>
-      <pubDate>Sat, 30 Jul 2022 06:10:23 +0000</pubDate>
-      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v3.0/Radiola-3.0.dmg" sparkle:version="3.0" length="0" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>
