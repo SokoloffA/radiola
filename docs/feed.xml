@@ -5,6 +5,15 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 10.1.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;System notifications are used for error messages.&lt;/li&gt;
+&lt;li&gt;Translations updated.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Tue, 04 Nov 2025 12:32:41 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v10.1.0/Radiola-10.1.0.dmg" sparkle:version="10.1.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 10.0.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Improved playback of slow stations. The buffering algorithm has been improved and the audio data buffer size has been increased.&lt;/li&gt;
