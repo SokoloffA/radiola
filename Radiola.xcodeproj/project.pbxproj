@@ -180,7 +180,7 @@
 		39A794112B4B65AF000D9875 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		39ADF3822C98D4C9009794C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		39ADF3852C98D4C9009794C3 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/MainMenu.xcstrings; sourceTree = "<group>"; };
-		39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMenuDelegate.swift; path = Radiola/MainMenuDelegate.swift; sourceTree = "<group>"; };
+		39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuDelegate.swift; sourceTree = "<group>"; };
 		39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioBrowserStatus.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
 		39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupDialog.swift; sourceTree = "<group>"; };
@@ -271,7 +271,6 @@
 		394F8A2F28739339005EA7FA = {
 			isa = PBXGroup;
 			children = (
-				39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */,
 				394F8A3A28739339005EA7FA /* Radiola */,
 				3962D0322BE687EB0014BCFB /* KeyboardShortcuts */,
 				3959DBA72BFCE6A50032A1BA /* RadiolaTests */,
@@ -302,6 +301,7 @@
 				393F9C0F2DFDA8C400870055 /* FFPlayer.swift */,
 				3985C9052E1163CD00C96D83 /* PlayList.swift */,
 				3959DBB32C03327A0032A1BA /* TrackMetadata.swift */,
+				39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */,
 				3962D0292BE0E39F0014BCFB /* History.swift */,
 				39D27F522BA36B2D00D5857A /* Credits.html */,
 				396704682943AD2700012FFD /* AudioDevice.swift */,
