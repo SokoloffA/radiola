@@ -1,0 +1,70 @@
+name: Build macOS Legacy
+
+on: [push]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Set env
+        run: |
+          echo "RELEASE_DATE=$(date +%Y.%m.%d_%H.%M.%S)" >> ${GITHUB_ENV}
+          echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
+          echo "COMMIT_URL=https://github.com/SokoloffA/radiola/commit/${{ github.sha }}"  >> $GITHUB_ENV
+          echo "COMMIT_TXT=$(echo ${{ github.sha }} | cut -c-7)"  >> $GITHUB_ENV
+
+          echo "BUILD_URL=https://github.com/SokoloffA/radiola/actions/runs/${GITHUB_RUN_ID}"  >> $GITHUB_ENV
+          echo "BUILD_TXT=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+
+          [[ "${GITHUB_REF_TYPE}"  = "tag" ]] && echo ARTIFACT_NAME="Radiola-${GITHUB_REF_NAME:1}.app" >> $GITHUB_ENV
+          [[ "${GITHUB_REF_TYPE}" != "tag" ]] && echo ARTIFACT_NAME="Radiola-$(date +%Y.%m.%d_%H.%M.%S).app" >> $GITHUB_ENV
+
+          [[ "${GITHUB_REF_TYPE}"  = "tag" ]] && echo TAR_NAME="Radiola-${GITHUB_REF_NAME:1}.tar" >> $GITHUB_ENV
+          [[ "${GITHUB_REF_TYPE}" != "tag" ]] && echo TAR_NAME="Radiola-$(date +%Y.%m.%d_%H.%M.%S).tar" >> $GITHUB_ENV
+
+          echo "==============================="
+          export
+          echo "-------------------------------"
+          cat $GITHUB_ENV
+          echo "==============================="
+
+      - name: Check tag
+        run: |
+          if [[ "${GITHUB_REF_TYPE}"  = "tag" ]] ; then \
+            echo ${GITHUB_REF_NAME} | grep -q "^v[0-9]\+\.[0-9]\+\.[0-9]\+$" || ( echo "Incorrect tag ${GITHUB_REF_NAME}" ; false ) \
+          fi
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Build
+        run: |
+          #.github/workflows/bumpversion.sh Radiola.xcodeproj/project.pbxproj
+          sed -i '' "s|<build-info>|Commit: <a href='${COMMIT_URL}'>${COMMIT_TXT}</a>  Build: <a href='${BUILD_URL}'>#${BUILD_TXT}</a>|" Radiola/Credits.html
+          xcodebuild \
+            -project Radiola.xcodeproj \
+            -scheme Radiola \
+            -configuration Release clean build \
+            -derivedDataPath ./build \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Prepare artifacts
+        run: |
+          tar -C ./build/Build/Products/Release/ -cf ${{env.TAR_NAME}} Radiola.app
+          cp ${{github.workspace}}/.github/workflows/makedmg.sh makedmg.sh
+          cp ${{github.workspace}}/.github/workflows/dmg_settings.json dmg_settings.json
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+        with:
+          name: ${{ env.ARTIFACT_NAME }}
+          path: |
+            ${{env.TAR_NAME}}
+            makedmg.sh
+            dmg_settings.json

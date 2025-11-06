@@ -160,6 +160,7 @@ def update_file(lang, xcstrings_file, json_file):
             continue
 
         set_deep(xcstrings, ["strings", key, "localizations", lang], js_to_xscting(tr["string"]))
+        xcstrings["strings"][key]["localizations"] = dict(sorted(xcstrings["strings"][key]["localizations"].items()))
 
 
     with open(xcstrings_file, 'w', encoding='utf-8') as f:
@@ -191,7 +192,6 @@ if __name__ == "__main__":
 
         for xcstrings_file in xcstrings_files:
             remove_stale_strings(xcstrings_file)
-            #remove_language("de_DE", xcstrings_file)
 
             for lang in glob.glob("*", root_dir=TMP_DIR):
 

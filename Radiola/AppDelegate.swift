@@ -32,6 +32,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        NotificationManager.shared.requestAuthorization { granted in
+            debug(granted ? "Notifications allowed" : "Notifications denied")
+        }
+
         NSApp.setActivationPolicy(.accessory)
 
         if let mainMenu = NSApp.mainMenu {
@@ -187,15 +191,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @objc private func processError(_ notification: Notification) {
         guard let alarm = notification.object as? Alarm else { return }
 
-        DispatchQueue.main.async {
-            warning("Alarm: \(alarm.title), \(alarm.message ?? "")")
-            guard let button = self.statusBar.menuItem.button else { return }
-
-            let dialog = AlarmPopover()
-            dialog.messageText = alarm.title
-            dialog.informativeText = alarm.message ?? ""
-            dialog.show(of: button)
-        }
+        NotificationManager.shared.postNotification(
+            title: alarm.title,
+            body: alarm.message ?? ""
+        )
     }
 }
 
