@@ -7,7 +7,7 @@
 
 import Cocoa
 
-class PreferencesWindow: NSWindowController, NSTabViewDelegate {
+class PreferencesWindow: NSWindowController, NSTabViewDelegate, NSWindowDelegate {
     private let viewController: NSTabViewController!
 
     /* ****************************************
@@ -50,6 +50,8 @@ class PreferencesWindow: NSWindowController, NSTabViewDelegate {
 
         viewController.tabStyle = .toolbar
         contentViewController = viewController
+
+        window?.delegate = self
     }
 
     /* ****************************************

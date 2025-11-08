@@ -184,7 +184,7 @@ class AppState: ObservableObject {
 
             for list in cloudLists {
                 try list.load()
-                list.title = list.title + " [iCloud]"
+                list.title = list.title
             }
             debug("Successfully loaded \(cloudLists.count) station lists")
 

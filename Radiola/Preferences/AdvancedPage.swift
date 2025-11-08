@@ -9,6 +9,7 @@ import Cocoa
 
 class AdvancedPage: NSViewController {
     private let playLastStationCheckBox = Checkbox(title: NSLocalizedString("Play last station on startup", tableName: "Settings", comment: "Settings control title"))
+    private let showCloudListCheckBox = Checkbox(title: "Show iCloud stations")
 
     /* ****************************************
      *
@@ -19,6 +20,7 @@ class AdvancedPage: NSViewController {
         view = createView()
 
         initPlayLastStationCbx()
+        initShowCloudListCheckBox()
     }
 
     /* ****************************************
@@ -43,6 +45,14 @@ class AdvancedPage: NSViewController {
         playLastStationCheckBox.leadingAnchor.constraint(equalToSystemSpacingAfter: res.leadingAnchor, multiplier: 1).isActive = true
         res.trailingAnchor.constraint(equalToSystemSpacingAfter: playLastStationCheckBox.trailingAnchor, multiplier: 1).isActive = true
 
+        if isAdvanced() {
+            res.addSubview(showCloudListCheckBox)
+            showCloudListCheckBox.translatesAutoresizingMaskIntoConstraints = false
+            showCloudListCheckBox.topAnchor.constraint(equalToSystemSpacingBelow: playLastStationCheckBox.bottomAnchor, multiplier: 1).isActive = true
+            showCloudListCheckBox.leadingAnchor.constraint(equalToSystemSpacingAfter: res.leadingAnchor, multiplier: 1).isActive = true
+            res.trailingAnchor.constraint(equalToSystemSpacingAfter: showCloudListCheckBox.trailingAnchor, multiplier: 1).isActive = true
+        }
+
         return res
     }
 
@@ -60,6 +70,31 @@ class AdvancedPage: NSViewController {
      * ****************************************/
     @objc private func playLastStationCbxChanged() {
         settings.playLastStation = playLastStationCheckBox.state == .on
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func isAdvanced() -> Bool {
+        let flags = NSEvent.modifierFlags.intersection(.deviceIndependentFlagsMask)
+        return flags.contains(.shift)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func initShowCloudListCheckBox() {
+        showCloudListCheckBox.state = settings.showCloudStations ? .on : .off
+        showCloudListCheckBox.target = self
+        showCloudListCheckBox.action = #selector(showCloudListCheckBoxChanged)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func showCloudListCheckBoxChanged() {
+        settings.showCloudStations = showCloudListCheckBox.state == .on
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 }
