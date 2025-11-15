@@ -89,6 +89,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             debug("Auto play \(settings.lastStationUrl ?? "nil")")
             player.play()
         }
+
+        if settings.showMainWindowOnStartup {
+            showStationView(nil)
+        }
     }
 
     /* ****************************************

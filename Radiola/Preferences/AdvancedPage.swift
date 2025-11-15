@@ -8,7 +8,9 @@
 import Cocoa
 
 class AdvancedPage: NSViewController {
+    private let startupLabel = Label(text: NSLocalizedString("Startup:", tableName: "Settings", comment: "Settings label"))
     private let playLastStationCheckBox = Checkbox(title: NSLocalizedString("Play last station on startup", tableName: "Settings", comment: "Settings control title"))
+    private let showMainWindowOnStartupCheckBox = Checkbox(title: NSLocalizedString("Open the main window on startup", tableName: "Settings", comment: "Settings control title"))
 
     /* ****************************************
      *
@@ -19,6 +21,10 @@ class AdvancedPage: NSViewController {
         view = createView()
 
         initPlayLastStationCbx()
+
+        showMainWindowOnStartupCheckBox.state = settings.showMainWindowOnStartup ? .on : .off
+        showMainWindowOnStartupCheckBox.target = self
+        showMainWindowOnStartupCheckBox.action = #selector(showMainWindowOnStartupCheckBoxChanged)
     }
 
     /* ****************************************
@@ -35,13 +41,23 @@ class AdvancedPage: NSViewController {
         let res = NSView()
         res.autoresizingMask = [.maxXMargin, .minYMargin]
 
+        res.addSubview(startupLabel)
+        startupLabel.alignment = .right
+        startupLabel.translatesAutoresizingMaskIntoConstraints = false
+        startupLabel.topAnchor.constraint(equalToSystemSpacingBelow: res.topAnchor, multiplier: 1).isActive = true
+        startupLabel.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 16).isActive = true
+
         res.addSubview(playLastStationCheckBox)
-
         playLastStationCheckBox.translatesAutoresizingMaskIntoConstraints = false
+        playLastStationCheckBox.centerYAnchor.constraint(equalTo: startupLabel.centerYAnchor).isActive = true
+        playLastStationCheckBox.leadingAnchor.constraint(equalToSystemSpacingAfter: startupLabel.trailingAnchor, multiplier: 1).isActive = true
+        res.trailingAnchor.constraint(greaterThanOrEqualTo: playLastStationCheckBox.trailingAnchor, constant: 16).isActive = true
 
-        playLastStationCheckBox.topAnchor.constraint(equalToSystemSpacingBelow: res.topAnchor, multiplier: 1).isActive = true
-        playLastStationCheckBox.leadingAnchor.constraint(equalToSystemSpacingAfter: res.leadingAnchor, multiplier: 1).isActive = true
-        res.trailingAnchor.constraint(equalToSystemSpacingAfter: playLastStationCheckBox.trailingAnchor, multiplier: 1).isActive = true
+        res.addSubview(showMainWindowOnStartupCheckBox)
+        showMainWindowOnStartupCheckBox.translatesAutoresizingMaskIntoConstraints = false
+        showMainWindowOnStartupCheckBox.topAnchor.constraint(equalToSystemSpacingBelow: playLastStationCheckBox.bottomAnchor, multiplier: 1).isActive = true
+        showMainWindowOnStartupCheckBox.leadingAnchor.constraint(equalTo: playLastStationCheckBox.leadingAnchor).isActive = true
+        showMainWindowOnStartupCheckBox.trailingAnchor.constraint(equalTo: playLastStationCheckBox.trailingAnchor).isActive = true
 
         return res
     }
@@ -60,6 +76,14 @@ class AdvancedPage: NSViewController {
      * ****************************************/
     @objc private func playLastStationCbxChanged() {
         settings.playLastStation = playLastStationCheckBox.state == .on
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func showMainWindowOnStartupCheckBoxChanged(_ sender: NSButton) {
+        settings.showMainWindowOnStartup = sender.state == .on
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 }

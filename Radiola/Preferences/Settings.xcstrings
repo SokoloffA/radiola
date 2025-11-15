@@ -524,6 +524,9 @@
     "Notifications:" : {
       "comment" : "Settings label"
     },
+    "Open the main window on startup" : {
+      "comment" : "Settings control title"
+    },
     "Play last station on startup" : {
       "comment" : "Settings control title",
       "localizations" : {
@@ -846,6 +849,9 @@
           }
         }
       }
+    },
+    "Startup:" : {
+      "comment" : "Settings label"
     },
     "switch favorite stations" : {
       "comment" : "Settings combobox item",

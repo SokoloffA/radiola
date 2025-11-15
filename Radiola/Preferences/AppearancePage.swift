@@ -103,7 +103,7 @@ class AppearancePage: NSViewController {
         separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
         separator.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
 
-        var last = initNotificationViews(tab: res, prev: separator)
+        let last = initNotificationViews(tab: res, prev: separator)
 
         res.bottomAnchor.constraint(equalTo: last.bottomAnchor, constant: 32).isActive = true
 

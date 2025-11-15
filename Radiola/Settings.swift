@@ -251,6 +251,12 @@ class Settings {
      * ****************************************/
     @Setting("ShowNotificationWhenPlaybackStarts", default: false)
     var showNotificationWhenPlaybackStarts: Bool
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @Setting("ShowMainWindowOnStartup", default: false)
+    var showMainWindowOnStartup: Bool
 }
 
 let settings = Settings()
