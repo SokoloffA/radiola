@@ -7,8 +7,6 @@
 
 import Foundation
 
-fileprivate let oplDirectoryName = "com.github.SokoloffA.Radiola/"
-
 // MARK: - OpmlStation
 
 class OpmlStation: Station {
@@ -138,6 +136,40 @@ class OpmlStations: StationList {
      * ****************************************/
     func save() {
         do {
+            try saveAsOpml(file: file)
+        } catch {
+        }
+
+        saveToSandbox()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func saveToSandbox() {
+        let home = FileManager.default.homeDirectoryForCurrentUser
+
+        if home.absoluteString.contains("/Containers/") {
+            debug("Running in sandbox, skipping sync to sandbox")
+            return
+        }
+
+        let container = "com.github.SokoloffA.Radiola"
+        let dir = home
+            .appendingPathComponent("Library")
+            .appendingPathComponent("Containers")
+            .appendingPathComponent(container)
+            .appendingPathComponent("Data")
+            .appendingPathComponent("Library")
+            .appendingPathComponent("Application Support")
+            .appendingPathComponent(container)
+
+        let file = dir.appendingPathComponent("\(self.file.lastPathComponent) .bak")
+
+        debug("Sync to sandbox file \(file)")
+
+        do {
+            try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
             try saveAsOpml(file: file)
         } catch {
         }

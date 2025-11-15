@@ -129,6 +129,7 @@ class AppState: ObservableObject {
         if opmlList.title.isEmpty {
             opmlList.title = defaultOpmlListTitle
         }
+        opmlList.saveToSandbox()
         localStations.append(opmlList)
     }
 
