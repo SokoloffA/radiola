@@ -38,6 +38,24 @@ final class NotificationManager: NSObject {
     /* ****************************************
      *
      * ****************************************/
+    func postNotification(title: String, subtitle: String? = nil, body: String? = nil, userInfo: [AnyHashable: Any]? = nil, identifier: String = UUID().uuidString) {
+        let content = UNMutableNotificationContent()
+        content.title = title
+        if let subtitle = subtitle {
+            content.subtitle = subtitle
+        }
+        if let body = body {
+            content.body = body
+        }
+
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 0.1, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func postNotification(title: String, body: String, userInfo: [AnyHashable: Any]? = nil, identifier: String = UUID().uuidString) {
         let content = UNMutableNotificationContent()
         content.body = title + "\n" + body

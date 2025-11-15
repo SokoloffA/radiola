@@ -245,6 +245,36 @@ class Settings {
         get { data.bool(forKey: showCopyToClipboardInMenuKey) }
         set { data.set(newValue, forKey: showCopyToClipboardInMenuKey) }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @Setting("ShowNotificationWhenPlaybackStarts", default: false)
+    var showNotificationWhenPlaybackStarts: Bool
 }
 
 let settings = Settings()
+
+@propertyWrapper
+struct Setting<Value> {
+    private let key: String
+    private let defaultValue: Value
+    private let data: UserDefaults
+
+    /* ****************************************
+     *
+     * ****************************************/
+    init(_ key: String, default defaultValue: Value, data: UserDefaults = .standard) {
+        self.key = key
+        self.defaultValue = defaultValue
+        self.data = data
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var wrappedValue: Value {
+        get { data.object(forKey: key) as? Value ?? defaultValue }
+        set { data.set(newValue, forKey: key) }
+    }
+}

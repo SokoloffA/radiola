@@ -8,12 +8,15 @@
 import Cocoa
 
 class AppearancePage: NSViewController {
-    private let favoritesMenuGroupTypeLabel = Label(text:  NSLocalizedString("Show groups in favorites:", tableName: "Settings", comment: "Settings label"))
+    private let favoritesMenuGroupTypeLabel = Label(text: NSLocalizedString("Show groups in favorites:", tableName: "Settings", comment: "Settings label"))
     private let favoritesMenuGroupTypeCbx = NSPopUpButton()
     private let showVolumeCheckBox = Checkbox(title: NSLocalizedString("Show the volume control in the menu", tableName: "Settings", comment: "Settings label"))
     private let showMuteCheckBox = Checkbox(title: NSLocalizedString("Show the mute item in the menu", tableName: "Settings", comment: "Settings label"))
     private let showCopyToClipboardCheckBox = Checkbox(title: NSLocalizedString("Show the \"Copy song title and artist\" item in the menu", tableName: "Settings", comment: "Settings label"))
     private let showToolTipCheckBox = Checkbox(title: NSLocalizedString("Show a tooltip with the radiostation and song", tableName: "Settings", comment: "Settings label"))
+
+    private let notifiactionsLabel = Label(text: NSLocalizedString("Notifications:", tableName: "Settings", comment: "Settings label"))
+    private let notificationsWhenPlaybackStarts = Checkbox(title: NSLocalizedString("When playback starts.", tableName: "Settings", comment: "Settings label"))
 
     /* ****************************************
      *
@@ -84,7 +87,7 @@ class AppearancePage: NSViewController {
         showCopyToClipboardCheckBox.topAnchor.constraint(equalTo: showMuteCheckBox.bottomAnchor, constant: 10).isActive = true
         showCopyToClipboardCheckBox.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.leadingAnchor).isActive = true
 
-        let separator = Separator()
+        var separator = Separator()
         res.addSubview(separator)
         separator.topAnchor.constraint(equalTo: showCopyToClipboardCheckBox.bottomAnchor, constant: 24).isActive = true
         separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
@@ -94,13 +97,45 @@ class AppearancePage: NSViewController {
         showToolTipCheckBox.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 10).isActive = true
         showToolTipCheckBox.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.leadingAnchor).isActive = true
 
-        res.bottomAnchor.constraint(equalTo: showToolTipCheckBox.bottomAnchor, constant: 32).isActive = true
+        separator = Separator()
+        res.addSubview(separator)
+        separator.topAnchor.constraint(equalTo: showToolTipCheckBox.bottomAnchor, constant: 24).isActive = true
+        separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
+        separator.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
+
+        var last = initNotificationViews(tab: res, prev: separator)
+
+        res.bottomAnchor.constraint(equalTo: last.bottomAnchor, constant: 32).isActive = true
 
         for v in res.subviews {
             res.trailingAnchor.constraint(greaterThanOrEqualTo: v.trailingAnchor, constant: 20).isActive = true
         }
 
         return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func initNotificationViews(tab: NSView, prev: NSView) -> NSView {
+        tab.addSubview(notifiactionsLabel)
+
+        notifiactionsLabel.alignment = .right
+        notifiactionsLabel.translatesAutoresizingMaskIntoConstraints = false
+        notifiactionsLabel.topAnchor.constraint(equalToSystemSpacingBelow: prev.bottomAnchor, multiplier: 1).isActive = true
+        notifiactionsLabel.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeLabel.leadingAnchor).isActive = true
+        notifiactionsLabel.trailingAnchor.constraint(equalTo: favoritesMenuGroupTypeLabel.trailingAnchor).isActive = true
+
+        tab.addSubview(notificationsWhenPlaybackStarts)
+        notificationsWhenPlaybackStarts.translatesAutoresizingMaskIntoConstraints = false
+        notificationsWhenPlaybackStarts.centerYAnchor.constraint(equalTo: notifiactionsLabel.centerYAnchor).isActive = true
+        notificationsWhenPlaybackStarts.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.leadingAnchor).isActive = true
+
+        notificationsWhenPlaybackStarts.state = settings.showNotificationWhenPlaybackStarts ? .on : .off
+        notificationsWhenPlaybackStarts.target = self
+        notificationsWhenPlaybackStarts.action = #selector(notificationsWhenPlaybackStartsChanged)
+
+        return notificationsWhenPlaybackStarts
     }
 
     /* ****************************************
@@ -162,6 +197,14 @@ class AppearancePage: NSViewController {
      * ****************************************/
     @objc func showCopyToClipboardChanged(_ sender: NSButton) {
         settings.showCopyToClipboardInMenu = sender.state == .on
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func notificationsWhenPlaybackStartsChanged(_ sender: NSButton) {
+        settings.showNotificationWhenPlaybackStarts = sender.state == .on
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 }

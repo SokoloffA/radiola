@@ -1360,6 +1360,9 @@
         }
       }
     },
+    "Now plaing" : {
+      "comment" : "Player notification title."
+    },
     "Open Radiola…" : {
       "comment" : "Status bar menu item",
       "localizations" : {

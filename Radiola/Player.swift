@@ -132,6 +132,15 @@ class Player: NSObject {
             selector: #selector(connectTimeout),
             userInfo: nil,
             repeats: false)
+
+        if settings.showNotificationWhenPlaybackStarts {
+            let title = NSLocalizedString("Now plaing", comment: "Player notification title.")
+            NotificationManager.shared.postNotification(
+                title: title,
+                subtitle: station.title,
+                identifier: "Now plaing"
+            )
+        }
     }
 
     /* ****************************************
@@ -226,7 +235,7 @@ class Player: NSObject {
     // ****************************************
     func metadataChanged(_ nowPlaing: String?) {
         songTitle = cleanTrackMetadata(raw: nowPlaing ?? "")
-        if isPlaying  && nowPlaing != nil {
+        if isPlaying && nowPlaing != nil {
             addHistory()
         }
 
@@ -335,6 +344,8 @@ class Player: NSObject {
         } else {
             debug("System default device ID: ERROR")
         }
+
+        debug("Config device UID: \(settings.audioDevice ?? "nil")")
 
         debug("Available audio devices:")
         let devices = AudioSytstem.devices()
