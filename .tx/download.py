@@ -134,6 +134,21 @@ def js_to_xscting(str):
         }
     }
 
+##################################
+#
+def sort_xcstrings(obj):
+    def key_func(kv):
+        return kv[0].lower()
+
+    if isinstance(obj, dict):
+        return {
+            k: sort_xcstrings(v)
+            for k, v in sorted(obj.items(), key=key_func)
+        }
+    elif isinstance(obj, list):
+        return [sort_xcstrings(v, key_func) for v in obj]
+    else:
+        return obj
 
 ##################################
 #
@@ -156,13 +171,19 @@ def update_file(lang, xcstrings_file, json_file):
         except KeyError:
             src = key
 
-        if tr["string"] == src:
+        try:
+            old = value["localizations"][lang]["stringUnit"]["value"]
+        except KeyError:
+            old = None
+
+        if old == None and tr["string"] == src:
             continue
 
         set_deep(xcstrings, ["strings", key, "localizations", lang], js_to_xscting(tr["string"]))
         xcstrings["strings"][key]["localizations"] = dict(sorted(xcstrings["strings"][key]["localizations"].items()))
 
 
+    xcstrings = sort_xcstrings(xcstrings)
     with open(xcstrings_file, 'w', encoding='utf-8') as f:
         json.dump(xcstrings, f, ensure_ascii=False, sort_keys=False, indent=2, separators=(',', ' : '))
 
