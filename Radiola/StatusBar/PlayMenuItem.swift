@@ -33,6 +33,7 @@ fileprivate class PlayItemView: NSView {
     var songLabel = Label()
     var stationLabel = Label()
     var favoriteButton = FavButton()
+    var onlyStationLabel = Label()
 
     weak var menuItem: NSMenuItem?
 
@@ -74,6 +75,7 @@ fileprivate class PlayItemView: NSView {
         addSubview(songLabel)
         addSubview(stationLabel)
         addSubview(favoriteButton)
+        addSubview(onlyStationLabel)
 
         playIcon.imageScaling = .scaleProportionallyUpOrDown
 
@@ -96,10 +98,17 @@ fileprivate class PlayItemView: NSView {
         stationLabel.lineBreakMode = .byTruncatingTail
         stationLabel.usesSingleLineMode = true
 
+        onlyStationLabel.textColor = .labelColor
+        onlyStationLabel.lineBreakMode = .byClipping
+        onlyStationLabel.font = NSFont.systemFont(ofSize: 14)
+        onlyStationLabel.lineBreakMode = .byTruncatingTail
+        onlyStationLabel.usesSingleLineMode = true
+
         playIcon.translatesAutoresizingMaskIntoConstraints = false
         songLabel.translatesAutoresizingMaskIntoConstraints = false
         stationLabel.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        onlyStationLabel.translatesAutoresizingMaskIntoConstraints = false
 
         playIcon.heightAnchor.constraint(equalToConstant: 18).isActive = true
         playIcon.widthAnchor.constraint(equalTo: playIcon.heightAnchor).isActive = true
@@ -110,15 +119,20 @@ fileprivate class PlayItemView: NSView {
         songLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 53).isActive = true
         songLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -10).isActive = true
 
+        favoriteButton.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
+        favoriteButton.widthAnchor.constraint(equalToConstant: 25.0).isActive = true
         favoriteButton.centerYAnchor.constraint(equalTo: songLabel.centerYAnchor).isActive = true
-        favoriteButton.widthAnchor.constraint(equalTo: favoriteButton.heightAnchor).isActive = true
-        trailingAnchor.constraint(equalToSystemSpacingAfter: favoriteButton.trailingAnchor, multiplier: 1.0).isActive = true
+        favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8).isActive = true
 
         stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor).isActive = true
         stationLabel.trailingAnchor.constraint(equalTo: songLabel.trailingAnchor).isActive = true
 
         songLabel.topAnchor.constraint(equalTo: topAnchor, constant: 7).isActive = true
         stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 4).isActive = true
+
+        onlyStationLabel.leadingAnchor.constraint(equalTo: stationLabel.leadingAnchor).isActive = true
+        onlyStationLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor).isActive = true
+        onlyStationLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
 
         songLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 400).isActive = true
         stationLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 400).isActive = true
@@ -168,6 +182,17 @@ fileprivate class PlayItemView: NSView {
                 playIcon.image?.isTemplate = true
                 stationLabel.stringValue = player.stationName
                 songLabel.stringValue = player.songTitle
+        }
+
+        if songLabel.stringValue.isEmpty {
+            onlyStationLabel.stringValue = stationLabel.stringValue
+            onlyStationLabel.isHidden = false
+            songLabel.isHidden = true
+            stationLabel.isHidden = true
+        } else {
+            onlyStationLabel.isHidden = true
+            songLabel.isHidden = false
+            stationLabel.isHidden = false
         }
 
         favoriteButton.state = player.isFavoriteSong ? .on : .off
