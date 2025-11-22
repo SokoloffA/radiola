@@ -27,6 +27,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var checkForUpdatesMenuItem: NSMenuItem!
 
     private var statusBar: StatusBarController!
+    private var argURL: URL?
+    private var applicationLaunched: Bool = false
 
     /* ****************************************
      *
@@ -85,14 +87,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         playerStatusChanged()
 
-        if settings.playLastStation {
-            debug("Auto play \(settings.lastStationUrl ?? "nil")")
-            player.play()
+        if let url = argURL {
+            playUrl(url)
+        } else {
+            if settings.playLastStation {
+                debug("Auto play \(settings.lastStationUrl ?? "nil")")
+                player.play()
+            }
         }
 
         if settings.showMainWindowOnStartup {
             showStationView(nil)
         }
+
+        applicationLaunched = true
     }
 
     /* ****************************************
@@ -111,6 +119,63 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func application(_ application: NSApplication, open urls: [URL]) {
+        guard let url = clearURL(urls.first) else { return }
+
+        if !applicationLaunched {
+            argURL = url
+            return
+        }
+
+        playUrl(url)
+    }
+
+    /* ****************************************
+     * Remove radiola+ part from URL's scheme
+     * ****************************************/
+    private func clearURL(_ url: URL?) -> URL? {
+        guard
+            let url = url,
+            var items = URLComponents(url: url, resolvingAgainstBaseURL: false),
+            let scheme = items.scheme
+        else {
+            return nil
+        }
+
+        let parts = scheme.split(separator: "+", maxSplits: 1)
+        if parts.count == 2 {
+            items.scheme = String(parts[1])
+        }
+
+        return items.url
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func playUrl(_ url: URL) {
+        debug("Play passed URL \(url)")
+        var title: String?
+
+        if #available(macOS 13.0, *) {
+            title = url.fragment()
+        }
+
+        if title == nil {
+            title = AppState.shared.localStation(byURL: url.absoluteString)?.title
+        }
+
+        if title == nil {
+            title = url.absoluteString
+        }
+
+        player.station = OpmlStation(title: title ?? "", url: url.absoluteString)
+        player.play()
     }
 
     /* ****************************************
