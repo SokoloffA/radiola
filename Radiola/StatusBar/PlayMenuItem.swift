@@ -29,11 +29,11 @@ class PlayMenuItem: NSMenuItem {
 // MARK: - PlayItemView
 
 fileprivate class PlayItemView: NSView {
-    var playIcon = PlayButtonImage()
-    var songLabel = Label()
-    var stationLabel = Label()
-    var favoriteButton = FavButton()
-    var onlyStationLabel = Label()
+    private let playIcon = PlayButtonImage()
+    private let songLabel = Label()
+    private let stationLabel = Label()
+    private let favoriteButton = FavButton()
+    private let onlyStationLabel = Label()
 
     weak var menuItem: NSMenuItem?
 
@@ -101,6 +101,7 @@ fileprivate class PlayItemView: NSView {
         onlyStationLabel.textColor = .labelColor
         onlyStationLabel.lineBreakMode = .byClipping
         onlyStationLabel.font = NSFont.systemFont(ofSize: 14)
+        onlyStationLabel.setFontWeight(.semibold)
         onlyStationLabel.lineBreakMode = .byTruncatingTail
         onlyStationLabel.usesSingleLineMode = true
 
@@ -184,19 +185,14 @@ fileprivate class PlayItemView: NSView {
                 songLabel.stringValue = player.songTitle
         }
 
-        if songLabel.stringValue.isEmpty {
-            onlyStationLabel.stringValue = stationLabel.stringValue
-            onlyStationLabel.isHidden = false
-            songLabel.isHidden = true
-            stationLabel.isHidden = true
-        } else {
-            onlyStationLabel.isHidden = true
-            songLabel.isHidden = false
-            stationLabel.isHidden = false
-        }
+        onlyStationLabel.stringValue = stationLabel.stringValue
 
+        onlyStationLabel.isVisible = songLabel.stringValue.isEmpty
+        songLabel.isVisible = !onlyStationLabel.isVisible
+        stationLabel.isVisible = !onlyStationLabel.isVisible
+
+        favoriteButton.isVisible = songLabel.isVisible && player.status == .playing
         favoriteButton.state = player.isFavoriteSong ? .on : .off
-        favoriteButton.isEnabled = player.status == .playing
     }
 
     /* ****************************************

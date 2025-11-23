@@ -109,6 +109,14 @@ public extension NSView {
 
         return result
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var isVisible: Bool {
+        get { return !isHidden }
+        set { isHidden = !newValue }
+    }
 }
 
 // MARK: - NSImage
@@ -523,7 +531,7 @@ class StationGroupMenuButton: NSButton {
         let p = NSPoint(x: frame.width / 2, y: frame.height / 2)
         let menu = NSMenu()
 
-        menu.addItem(withTitle:  NSLocalizedString("Copy group title to clipboard", comment: "Group action menu item"), action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
+        menu.addItem(withTitle: NSLocalizedString("Copy group title to clipboard", comment: "Group action menu item"), action: #selector(copyTitleToClipboard), keyEquivalent: "").target = self
 
         menu.addItem(NSMenuItem.separator())
 

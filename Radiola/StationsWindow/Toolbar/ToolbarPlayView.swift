@@ -11,12 +11,26 @@ class ToolbarPlayView: NSViewController {
     @IBOutlet var playButton: NSButton!
     @IBOutlet var songLabel: NSTextField!
     @IBOutlet var stationLabel: NSTextField!
+    private let onlyStationLabel = Label()
 
     /* ****************************************
      *
      * ****************************************/
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.addSubview(onlyStationLabel)
+        onlyStationLabel.textColor = stationLabel.textColor
+        onlyStationLabel.lineBreakMode = .byClipping
+        onlyStationLabel.font = NSFont.systemFont(ofSize: 14)
+        onlyStationLabel.setFontWeight(.semibold)
+        onlyStationLabel.lineBreakMode = .byTruncatingTail
+        onlyStationLabel.usesSingleLineMode = true
+        onlyStationLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        onlyStationLabel.leadingAnchor.constraint(equalTo: stationLabel.leadingAnchor).isActive = true
+        onlyStationLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor).isActive = true
+        onlyStationLabel.centerYAnchor.constraint(equalTo: playButton.centerYAnchor).isActive = true
 
         songLabel.lineBreakMode = .byTruncatingMiddle
         songLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -94,6 +108,11 @@ class ToolbarPlayView: NSViewController {
                 playButton.image?.isTemplate = true
                 playButton.toolTip = NSLocalizedString("Pause", comment: "Toolbar button toolTip")
         }
+
+        onlyStationLabel.stringValue = stationLabel.stringValue
+        onlyStationLabel.isVisible = songLabel.stringValue.isEmpty
+        songLabel.isVisible = !onlyStationLabel.isVisible
+        stationLabel.isVisible = !onlyStationLabel.isVisible
     }
 
     /* ****************************************

@@ -335,21 +335,27 @@ class StatusBarController: NSObject, NSMenuDelegate {
             return
         }
 
+        // "⏸  ⏵ https://www.compart.com/en/unicode/block/U+2300"
+        var firstString = ""
+        let secondString = player.stationName
         switch player.status {
             case Player.Status.paused:
-                menuItem.button?.toolTip = player.stationName
+                firstString = ""
 
             case Player.Status.connecting:
-                menuItem.button?.toolTip =
-                    player.stationName +
-                    "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                    NSLocalizedString("Connecting…", comment: "Tooltip text")
+                firstString = NSLocalizedString("Connecting…", comment: "Tooltip text")
 
             case Player.Status.playing:
-                menuItem.button?.toolTip =
-                    player.songTitle +
-                    "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
-                    player.stationName
+                firstString = player.songTitle
+        }
+
+        if firstString.isEmpty {
+            menuItem.button?.toolTip = secondString
+        } else {
+            menuItem.button?.toolTip =
+                firstString +
+                "\n⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺\n" +
+                secondString
         }
     }
 
