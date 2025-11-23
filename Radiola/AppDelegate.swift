@@ -160,21 +160,25 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     private func playUrl(_ url: URL) {
         debug("Play passed URL \(url)")
-        var title: String?
 
-        if #available(macOS 13.0, *) {
-            title = url.fragment()
+        var station: Station?
+
+        station = AppState.shared.localStation(byURL: url.absoluteString)
+        if station == nil {
+            var title: String?
+
+            if #available(macOS 13.0, *) {
+                title = url.fragment()
+            }
+
+            if title == nil {
+                title = url.absoluteString
+            }
+
+            station = OpmlStation(title: title ?? "", url: url.absoluteString)
         }
 
-        if title == nil {
-            title = AppState.shared.localStation(byURL: url.absoluteString)?.title
-        }
-
-        if title == nil {
-            title = url.absoluteString
-        }
-
-        player.station = OpmlStation(title: title ?? "", url: url.absoluteString)
+        player.station = station
         player.play()
     }
 
