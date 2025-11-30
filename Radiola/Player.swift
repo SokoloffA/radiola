@@ -134,11 +134,11 @@ class Player: NSObject {
             repeats: false)
 
         if settings.showNotificationWhenPlaybackStarts {
-            let title = NSLocalizedString("Now plaing", comment: "Player notification title.")
+            let title = NSLocalizedString("Now playing", comment: "Player notification title.")
             NotificationManager.shared.postNotification(
                 title: title,
                 subtitle: station.title,
-                identifier: "Now plaing"
+                identifier: "Now playing"
             )
         }
     }
