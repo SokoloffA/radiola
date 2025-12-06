@@ -255,6 +255,12 @@ class Settings {
     /* ****************************************
      *
      * ****************************************/
+    @Setting("ShowSongInStatusBar", default: false)
+    var showSongInStatusBar: Bool
+
+    /* ****************************************
+     *
+     * ****************************************/
     @Setting("ShowMainWindowOnStartup", default: false)
     var showMainWindowOnStartup: Bool
 }

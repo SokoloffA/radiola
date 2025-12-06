@@ -14,6 +14,7 @@ class AppearancePage: NSViewController {
     private let showMuteCheckBox = Checkbox(title: NSLocalizedString("Show the mute item in the menu", tableName: "Settings", comment: "Settings label"))
     private let showCopyToClipboardCheckBox = Checkbox(title: NSLocalizedString("Show the \"Copy song title and artist\" item in the menu", tableName: "Settings", comment: "Settings label"))
     private let showToolTipCheckBox = Checkbox(title: NSLocalizedString("Show a tooltip with the radiostation and song", tableName: "Settings", comment: "Settings label"))
+    private let showSongInStatusBarCheckBox = Checkbox(title: NSLocalizedString("Show song title in menu bar", tableName: "Settings", comment: "Settings label"))
 
     private let notifiactionsLabel = Label(text: NSLocalizedString("Notifications:", tableName: "Settings", comment: "Settings label"))
     private let notificationsWhenPlaybackStarts = Checkbox(title: NSLocalizedString("When playback starts.", tableName: "Settings", comment: "Settings label"))
@@ -41,6 +42,10 @@ class AppearancePage: NSViewController {
         showToolTipCheckBox.target = self
         showToolTipCheckBox.action = #selector(showTooltipChanged)
 
+        showSongInStatusBarCheckBox.state = settings.showSongInStatusBar ? .on : .off
+        showSongInStatusBarCheckBox.target = self
+        showSongInStatusBarCheckBox.action = #selector(showSongInStatusBarCheckBoxChanged)
+
         showCopyToClipboardCheckBox.state = settings.showCopyToClipboardInMenu ? .on : .off
         showCopyToClipboardCheckBox.target = self
         showCopyToClipboardCheckBox.action = #selector(showCopyToClipboardChanged)
@@ -59,6 +64,7 @@ class AppearancePage: NSViewController {
     private func createView() -> NSView {
         let res = NSView()
         res.autoresizingMask = [.maxXMargin, .minYMargin]
+        view = res
 
         res.addSubview(favoritesMenuGroupTypeLabel)
         res.addSubview(favoritesMenuGroupTypeCbx)
@@ -66,6 +72,7 @@ class AppearancePage: NSViewController {
         res.addSubview(showMuteCheckBox)
         res.addSubview(showCopyToClipboardCheckBox)
         res.addSubview(showToolTipCheckBox)
+        res.addSubview(showSongInStatusBarCheckBox)
 
         favoritesMenuGroupTypeLabel.alignment = .right
         favoritesMenuGroupTypeLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -75,35 +82,20 @@ class AppearancePage: NSViewController {
         favoritesMenuGroupTypeCbx.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeLabel.trailingAnchor, constant: 20).isActive = true
         favoritesMenuGroupTypeLabel.centerYAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.centerYAnchor).isActive = true
 
-        showVolumeCheckBox.translatesAutoresizingMaskIntoConstraints = false
-        showVolumeCheckBox.topAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.bottomAnchor, constant: 10).isActive = true
-        showVolumeCheckBox.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.leadingAnchor).isActive = true
+        var prev: NSView = favoritesMenuGroupTypeLabel
 
-        showMuteCheckBox.translatesAutoresizingMaskIntoConstraints = false
-        showMuteCheckBox.topAnchor.constraint(equalTo: showVolumeCheckBox.bottomAnchor, constant: 10).isActive = true
-        showMuteCheckBox.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.leadingAnchor).isActive = true
+        prev = addView(view: showVolumeCheckBox, prev: prev)
+        prev = addView(view: showMuteCheckBox, prev: prev)
+        prev = addView(view: showCopyToClipboardCheckBox, prev: prev)
 
-        showCopyToClipboardCheckBox.translatesAutoresizingMaskIntoConstraints = false
-        showCopyToClipboardCheckBox.topAnchor.constraint(equalTo: showMuteCheckBox.bottomAnchor, constant: 10).isActive = true
-        showCopyToClipboardCheckBox.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.leadingAnchor).isActive = true
+        prev = addSeparator(prev: showCopyToClipboardCheckBox)
 
-        var separator = Separator()
-        res.addSubview(separator)
-        separator.topAnchor.constraint(equalTo: showCopyToClipboardCheckBox.bottomAnchor, constant: 24).isActive = true
-        separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
-        separator.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
+        prev = addView(view: showToolTipCheckBox, prev: prev)
+        prev = addView(view: showSongInStatusBarCheckBox, prev: prev)
 
-        showToolTipCheckBox.translatesAutoresizingMaskIntoConstraints = false
-        showToolTipCheckBox.topAnchor.constraint(equalTo: separator.bottomAnchor, constant: 10).isActive = true
-        showToolTipCheckBox.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.leadingAnchor).isActive = true
+        prev = addSeparator(prev: prev)
 
-        separator = Separator()
-        res.addSubview(separator)
-        separator.topAnchor.constraint(equalTo: showToolTipCheckBox.bottomAnchor, constant: 24).isActive = true
-        separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
-        separator.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
-
-        let last = initNotificationViews(tab: res, prev: separator)
+        let last = initNotificationViews(tab: res, prev: prev)
 
         res.bottomAnchor.constraint(equalTo: last.bottomAnchor, constant: 32).isActive = true
 
@@ -112,6 +104,31 @@ class AppearancePage: NSViewController {
         }
 
         return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func addSeparator(prev: NSView) -> Separator {
+        let separator = Separator()
+        view.addSubview(separator)
+        separator.topAnchor.constraint(equalTo: prev.bottomAnchor, constant: 24).isActive = true
+        separator.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        separator.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        return separator
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func addView(view: NSView, prev: NSView) -> NSView {
+        self.view.addSubview(showSongInStatusBarCheckBox)
+
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.topAnchor.constraint(equalTo: prev.bottomAnchor, constant: 10).isActive = true
+        view.leadingAnchor.constraint(equalTo: favoritesMenuGroupTypeCbx.leadingAnchor).isActive = true
+
+        return view
     }
 
     /* ****************************************
@@ -189,6 +206,14 @@ class AppearancePage: NSViewController {
      * ****************************************/
     @objc func showTooltipChanged(_ sender: NSButton) {
         settings.showTooltip = sender.state == .on
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func showSongInStatusBarCheckBoxChanged(_ sender: NSButton) {
+        settings.showSongInStatusBar = sender.state == .on
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 

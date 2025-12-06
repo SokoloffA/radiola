@@ -688,6 +688,9 @@
         }
       }
     },
+    "Show song title in menu bar" : {
+      "comment" : "Settings label"
+    },
     "Show station lists:" : {
       "comment" : "Settings control title",
       "extractionState" : "stale",

@@ -15,6 +15,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
     let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let menuPrefix = "  "
     private let icon = StatusBarIcon(size: 16)
+    private let padding: CGFloat = 2
 
     private var middleMouseMonitor: Any?
     private var scrollWheelMonitor: Any?
@@ -35,7 +36,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateTooltip),
+                                               selector: #selector(updateTexts),
                                                name: Notification.Name.PlayerMetadataChanged,
                                                object: nil)
 
@@ -45,13 +46,14 @@ class StatusBarController: NSObject, NSMenuDelegate {
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateTooltip),
+                                               selector: #selector(updateTexts),
                                                name: Notification.Name.SettingsChanged,
                                                object: nil)
 
         menuItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp, .otherMouseUp])
         menuItem.button?.target = self
         menuItem.button?.action = #selector(leftRightMouseAction)
+        menuItem.button?.imagePosition = .imageRight
         middleMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.otherMouseDown, .otherMouseUp], handler: middleMouseDown)
 
         playerStatusChanged()
@@ -316,7 +318,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
      * ****************************************/
     @objc func playerStatusChanged() {
         icon.playerStatus = player.status
-        updateTooltip()
+        updateTexts()
     }
 
     /* ****************************************
@@ -324,6 +326,14 @@ class StatusBarController: NSObject, NSMenuDelegate {
      * ****************************************/
     @objc func playerVolumeChanged() {
         icon.muted = player.isMuted
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func updateTexts() {
+        updateTooltip()
+        updateItemText()
     }
 
     /* ****************************************
@@ -357,6 +367,50 @@ class StatusBarController: NSObject, NSMenuDelegate {
                 "\n⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺⎺\n" +
                 secondString
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateItemText() {
+        var str = ""
+        if settings.showSongInStatusBar {
+            switch player.status {
+                case Player.Status.paused:
+                    str = ""
+
+                case Player.Status.connecting:
+                    str = ""
+
+                case Player.Status.playing:
+                    str = player.songTitle
+            }
+        }
+
+        setItemText(str)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func setItemText(_ str: String) {
+        guard let button = menuItem.button else { return }
+
+        if str.isEmpty {
+            button.attributedTitle = NSAttributedString()
+            menuItem.length = CGFloat(icon.size) + padding * 2
+            return
+        }
+
+        let label = NSMutableAttributedString()
+        label.append(NSAttributedString(string: str))
+        label.append(NSAttributedString(
+            string: " ",
+            attributes: [.kern: 16] // the distance between the image and the text
+        ))
+
+        menuItem.length = NSStatusItem.variableLength
+        button.attributedTitle = label
     }
 
     /* ****************************************
