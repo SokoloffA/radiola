@@ -11,7 +11,15 @@ import Cocoa
 
 class HistoryDelegate: NSObject {
     private weak var outlineView: NSOutlineView!
+
+    // Search and filter properties
+    var searchText: String = ""
+    var isExactMatch: Bool = false
+    var sortOrder: HistorySearchPanel.Order = .byRecent
     var showOnlyFavorites: Bool = false
+
+    // Cached filtered records
+    private var filteredRecords: [HistoryRecord] = []
 
     /* ****************************************
      *
@@ -31,17 +39,58 @@ class HistoryDelegate: NSObject {
      *
      * ****************************************/
     @objc func refresh() {
+        updateFilteredRecords()
         outlineView?.reloadData()
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private var records: [HistoryRecord] {
+    private func updateFilteredRecords() {
+        var records = AppState.shared.history.records
+
+        // Filter by favorites
         if showOnlyFavorites {
-            return AppState.shared.history.favorites()
+            records = records.filter { $0.isFavorite }
         }
-        return AppState.shared.history.records
+
+        // Filter by search text
+        if !searchText.isEmpty {
+            records = records.filter { matchesSearch($0) }
+        }
+
+        // Sort
+        filteredRecords = applySort(records: records)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func matchesSearch(_ record: HistoryRecord) -> Bool {
+        let searchLower = searchText.lowercased()
+
+        if isExactMatch {
+            return record.song.lowercased() == searchLower ||
+                   record.stationTitle.lowercased() == searchLower
+        } else {
+            return record.song.lowercased().contains(searchLower) ||
+                   record.stationTitle.lowercased().contains(searchLower)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func applySort(records: [HistoryRecord]) -> [HistoryRecord] {
+        switch sortOrder {
+        case .byRecent:
+            // Newest first (reverse order)
+            return records.reversed()
+        case .byName:
+            return records.sorted { $0.song.localizedCaseInsensitiveCompare($1.song) == .orderedAscending }
+        case .byStation:
+            return records.sorted { $0.stationTitle.localizedCaseInsensitiveCompare($1.stationTitle) == .orderedAscending }
+        }
     }
 }
 
@@ -71,9 +120,8 @@ extension HistoryDelegate: NSOutlineViewDataSource {
      * Returns the number of child items each item in the outline
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        // Root item - show records in reverse order (newest first)
         if item == nil {
-            return records.count
+            return filteredRecords.count
         }
         return 0
     }
@@ -82,10 +130,8 @@ extension HistoryDelegate: NSOutlineViewDataSource {
      * Returns the actual item
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        // Root item - return records in reverse order (newest first)
-        if item == nil {
-            let list = records
-            return list[list.count - index - 1]
+        if item == nil && index < filteredRecords.count {
+            return filteredRecords[index]
         }
         return item!
     }

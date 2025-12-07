@@ -329,11 +329,14 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         stationsTree.delegate = localStationsDelegate
         stationsTree.dataSource = localStationsDelegate
         localStationsDelegate.list = list
+        localStationsDelegate.searchText = ""
+        localStationsDelegate.sortOrder = .myOrdering
+        localStationsDelegate.refresh()
 
-        stationsTree.reloadItem(nil, reloadChildren: true)
-        stationsTree.expandItem(nil, expandChildren: true)
-
-        searchPanel = nil
+        let localSearchPanel = LocalStationSearchPanel()
+        localSearchPanel.target = self
+        localSearchPanel.action = #selector(localStationSearchChanged)
+        searchPanel = localSearchPanel
 
         let toolBox = LocalStationToolBox()
         toolBox.addStationButton.target = self
@@ -351,18 +354,31 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
+    @objc private func localStationSearchChanged() {
+        guard let panel = searchPanel as? LocalStationSearchPanel else { return }
+        localStationsDelegate.searchText = panel.searchText
+        localStationsDelegate.isExactMatch = panel.isExactMatch
+        localStationsDelegate.sortOrder = panel.order
+        localStationsDelegate.refresh()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     private func setHistoryList() {
         stationsTree.delegate = historyDelegate
         stationsTree.dataSource = historyDelegate
+        historyDelegate.searchText = ""
+        historyDelegate.sortOrder = .byRecent
+        historyDelegate.showOnlyFavorites = false
+        historyDelegate.refresh()
 
-        stationsTree.reloadItem(nil, reloadChildren: true)
-
-        searchPanel = nil
+        let historySearchPanel = HistorySearchPanel()
+        historySearchPanel.target = self
+        historySearchPanel.action = #selector(historySearchChanged)
+        searchPanel = historySearchPanel
 
         let toolBox = HistoryToolBox()
-        toolBox.onlyFavoriteCheckbox.target = self
-        toolBox.onlyFavoriteCheckbox.action = #selector(historyFilterChanged)
-
         toolBox.exportButton.target = self
         toolBox.exportButton.action = #selector(exportHistory)
 
@@ -372,9 +388,12 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    @objc private func historyFilterChanged() {
-        guard let toolBox = toolBox as? HistoryToolBox else { return }
-        historyDelegate.showOnlyFavorites = toolBox.onlyFavoriteCheckbox.state == .on
+    @objc private func historySearchChanged() {
+        guard let panel = searchPanel as? HistorySearchPanel else { return }
+        historyDelegate.searchText = panel.searchText
+        historyDelegate.isExactMatch = panel.isExactMatch
+        historyDelegate.sortOrder = panel.order
+        historyDelegate.showOnlyFavorites = panel.showOnlyFavorites
         historyDelegate.refresh()
     }
 
