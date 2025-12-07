@@ -968,6 +968,9 @@
         }
       }
     },
+    "Export…" : {
+      "comment" : "History export button"
+    },
     "Favorite stations" : {
       "comment" : "Status bar menu item",
       "localizations" : {
@@ -992,7 +995,7 @@
       }
     },
     "History" : {
-      "comment" : "History window title",
+      "comment" : "Sidebar item",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1293,6 +1296,7 @@
     },
     "No records yet" : {
       "comment" : "History window placeholder",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
