@@ -107,10 +107,24 @@ class LocalStationDelegate: NSObject {
      * ****************************************/
     private func matchesSearch(_ text: String) -> Bool {
         if isExactMatch {
-            return text.lowercased() == searchText.lowercased()
+            // "Matches with" - whole word match (search term appears as a complete word)
+            return matchesWholeWord(text, searchText)
         } else {
+            // "Contains" - substring match
             return text.lowercased().contains(searchText.lowercased())
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func matchesWholeWord(_ text: String, _ word: String) -> Bool {
+        let pattern = "\\b\(NSRegularExpression.escapedPattern(for: word))\\b"
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {
+            return text.lowercased().contains(word.lowercased())
+        }
+        let range = NSRange(text.startIndex..., in: text)
+        return regex.firstMatch(in: text, options: [], range: range) != nil
     }
 
     /* ****************************************

@@ -96,7 +96,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
             sideBar.addItem(id: list.id, title: list.title, icon: list.icon)
         }
 
-        sideBar.addGroup(title: "")
+        sideBar.addGroup(title: NSLocalizedString("History", comment: "Sidebar group"))
         sideBar.addItem(id: historyListId, title: NSLocalizedString("History", comment: "Sidebar item"), icon: "clock")
 
         sideBar.selectedListId = selectedListId
@@ -357,7 +357,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     @objc private func localStationSearchChanged() {
         guard let panel = searchPanel as? LocalStationSearchPanel else { return }
         localStationsDelegate.searchText = panel.searchText
-        localStationsDelegate.isExactMatch = panel.isExactMatch
+        localStationsDelegate.isExactMatch = false  // Always use contains search
         localStationsDelegate.sortOrder = panel.order
         localStationsDelegate.refresh()
     }
@@ -391,7 +391,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     @objc private func historySearchChanged() {
         guard let panel = searchPanel as? HistorySearchPanel else { return }
         historyDelegate.searchText = panel.searchText
-        historyDelegate.isExactMatch = panel.isExactMatch
+        historyDelegate.isExactMatch = false  // Always use contains search
         historyDelegate.sortOrder = panel.order
         historyDelegate.showOnlyFavorites = panel.showOnlyFavorites
         historyDelegate.refresh()

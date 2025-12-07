@@ -29,7 +29,6 @@
 		394C687A2CFC7D30004EAE1C /* LogsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394C68772CFC7D30004EAE1C /* LogsWindow.swift */; };
 		394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A3B28739339005EA7FA /* AppDelegate.swift */; };
 		394F8A412873933A005EA7FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 394F8A402873933A005EA7FA /* Assets.xcassets */; };
-
 		394F8A57287394F1005EA7FA /* Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A56287394F1005EA7FA /* Notifications.swift */; };
 		394F8A59287394FD005EA7FA /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A58287394FD005EA7FA /* Player.swift */; };
 		394F8A6328739A15005EA7FA /* StationsWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394F8A6128739A15005EA7FA /* StationsWindow.swift */; };
@@ -96,6 +95,8 @@
 		9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */; };
 		AAAA00012024120600000001 /* HistoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA00012024120600000002 /* HistoryDelegate.swift */; };
 		AAAA00012024120600000003 /* HistoryToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA00012024120600000004 /* HistoryToolBox.swift */; };
+		AAAA00012024120600000006 /* HistorySearchPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA00012024120600000007 /* HistorySearchPanel.swift */; };
+		AAAA00012024120600000008 /* LocalStationSearchPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA00012024120600000009 /* LocalStationSearchPanel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,7 +133,6 @@
 		394F8A3B28739339005EA7FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		394F8A402873933A005EA7FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		394F8A452873933A005EA7FA /* Radiola.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Radiola.entitlements; sourceTree = "<group>"; };
-
 		394F8A56287394F1005EA7FA /* Notifications.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Notifications.swift; sourceTree = "<group>"; };
 		394F8A58287394FD005EA7FA /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		394F8A6128739A15005EA7FA /* StationsWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsWindow.swift; sourceTree = "<group>"; };
@@ -200,6 +200,8 @@
 		9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedPage.swift; sourceTree = "<group>"; };
 		AAAA00012024120600000002 /* HistoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDelegate.swift; sourceTree = "<group>"; };
 		AAAA00012024120600000004 /* HistoryToolBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryToolBox.swift; sourceTree = "<group>"; };
+		AAAA00012024120600000007 /* HistorySearchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySearchPanel.swift; sourceTree = "<group>"; };
+		AAAA00012024120600000009 /* LocalStationSearchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStationSearchPanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,7 +330,6 @@
 			path = Radiola;
 			sourceTree = "<group>";
 		};
-
 		394F8A6528739A1D005EA7FA /* StationsWindow */ = {
 			isa = PBXGroup;
 			children = (
@@ -341,16 +342,6 @@
 				AAAA00012024120600000005 /* History */,
 			);
 			path = StationsWindow;
-			sourceTree = "<group>";
-		};
-		AAAA00012024120600000005 /* History */ = {
-			isa = PBXGroup;
-			children = (
-				AAAA00012024120600000002 /* HistoryDelegate.swift */,
-				390C7296287B237B00E17BAE /* HistoryRow.swift */,
-				AAAA00012024120600000004 /* HistoryToolBox.swift */,
-			);
-			path = History;
 			sourceTree = "<group>";
 		};
 		3959DBA72BFCE6A50032A1BA /* RadiolaTests */ = {
@@ -412,6 +403,7 @@
 				39541B32287623F200A2A5CB /* AddStationDialog.swift */,
 				39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */,
 				39A794042B4B33F1000D9875 /* LocalStationDelegate.swift */,
+				AAAA00012024120600000009 /* LocalStationSearchPanel.swift */,
 				396433952B502AE9009BE1CE /* LocalStationToolBox.swift */,
 				39A794072B4B5381000D9875 /* LocalStationRows.swift */,
 				39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */,
@@ -445,6 +437,17 @@
 				39E042CE293B3AC900A2167E /* VolumeMenuItem.swift */,
 			);
 			path = StatusBar;
+			sourceTree = "<group>";
+		};
+		AAAA00012024120600000005 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				AAAA00012024120600000002 /* HistoryDelegate.swift */,
+				390C7296287B237B00E17BAE /* HistoryRow.swift */,
+				AAAA00012024120600000007 /* HistorySearchPanel.swift */,
+				AAAA00012024120600000004 /* HistoryToolBox.swift */,
+			);
+			path = History;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -548,7 +551,6 @@
 				3967046D2944961500012FFD /* AudioPage.xib in Resources */,
 				394F8A412873933A005EA7FA /* Assets.xcassets in Resources */,
 				393B221F2CE951380035233D /* Settings.xcstrings in Resources */,
-
 				394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */,
 				394C68792CFC7D30004EAE1C /* LogsWindow.xib in Resources */,
 				3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */,
@@ -621,7 +623,6 @@
 				3959DBB22BFCE7580032A1BA /* StationsMerger.swift in Sources */,
 				394ABCA72A9BBD4E00E2B6E9 /* RadioBrowserTags.swift in Sources */,
 				3959DBB42C03327A0032A1BA /* TrackMetadata.swift in Sources */,
-
 				39F08E462A0CC582006B65D0 /* Types.swift in Sources */,
 				39A794122B4B65AF000D9875 /* AppState.swift in Sources */,
 				392024AF2A51953600670ABD /* ControlsPage.swift in Sources */,
@@ -639,6 +640,8 @@
 				39E8DFD72890839500082467 /* Updater.swift in Sources */,
 				AAAA00012024120600000001 /* HistoryDelegate.swift in Sources */,
 				AAAA00012024120600000003 /* HistoryToolBox.swift in Sources */,
+				AAAA00012024120600000006 /* HistorySearchPanel.swift in Sources */,
+				AAAA00012024120600000008 /* LocalStationSearchPanel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,7 +809,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 10.1.1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 635H9TYSZJ;
+				DEVELOPMENT_TEAM = 8Q693ZG5RN;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Radiola/Info.plist;
@@ -838,7 +841,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 10.1.1;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 635H9TYSZJ;
+				DEVELOPMENT_TEAM = 8Q693ZG5RN;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Radiola/Info.plist;
