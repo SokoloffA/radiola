@@ -16,12 +16,10 @@ class LocalStationSearchPanel: NSControl {
     }
 
     private var searchTextView = NSSearchField()
-    private var matchTypeCombo = NSPopUpButton()
     private var sortCombo = NSPopUpButton()
     private var separator = Separator()
 
     var searchText: String { searchTextView.stringValue }
-    var isExactMatch: Bool { matchTypeCombo.selectedItem?.tag == 1 }
     var order: Order { Order(rawValue: sortCombo.selectedTag()) ?? .myOrdering }
 
     /* ****************************************
@@ -46,7 +44,6 @@ class LocalStationSearchPanel: NSControl {
         wantsLayer = true
         layer?.backgroundColor = NSColor.textBackgroundColor.cgColor
 
-        addSubview(matchTypeCombo)
         addSubview(searchTextView)
         addSubview(sortCombo)
         addSubview(separator)
@@ -56,38 +53,27 @@ class LocalStationSearchPanel: NSControl {
         searchTextView.target = self
         searchTextView.action = #selector(searchChanged)
 
-        matchTypeCombo.target = self
-        matchTypeCombo.action = #selector(searchChanged)
-        matchTypeCombo.isBordered = false
-
         sortCombo.target = self
         sortCombo.action = #selector(sortChanged)
         sortCombo.isBordered = false
 
-        matchTypeCombo.translatesAutoresizingMaskIntoConstraints = false
         searchTextView.translatesAutoresizingMaskIntoConstraints = false
         sortCombo.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            matchTypeCombo.centerYAnchor.constraint(equalTo: centerYAnchor),
             searchTextView.centerYAnchor.constraint(equalTo: centerYAnchor),
             sortCombo.centerYAnchor.constraint(equalTo: centerYAnchor),
 
-            searchTextView.leadingAnchor.constraint(equalTo: matchTypeCombo.trailingAnchor, constant: 8),
+            searchTextView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 20),
             sortCombo.leadingAnchor.constraint(equalTo: searchTextView.trailingAnchor, constant: 20),
-            sortCombo.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            sortCombo.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -20),
 
             searchTextView.widthAnchor.constraint(equalToConstant: 400),
-
-            matchTypeCombo.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 20),
         ])
 
-        separator.alignBottom(of: self)
+        sortCombo.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 
-        matchTypeCombo.removeAllItems()
-        matchTypeCombo.addItem(withTitle: NSLocalizedString("matches with", comment: "Station search panel"), tag: 1)
-        matchTypeCombo.addItem(withTitle: NSLocalizedString("contains", comment: "Station search panel"), tag: 0)
-        matchTypeCombo.selectItem(withTag: 0)
+        separator.alignBottom(of: self)
 
         sortCombo.removeAllItems()
         sortCombo.addItem(withTitle: NSLocalizedString("my ordering", comment: "Station search panel"), tag: Order.myOrdering.rawValue)

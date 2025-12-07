@@ -70,12 +70,26 @@ class HistoryDelegate: NSObject {
         let searchLower = searchText.lowercased()
 
         if isExactMatch {
-            return record.song.lowercased() == searchLower ||
-                   record.stationTitle.lowercased() == searchLower
+            // "Matches with" - whole word match (search term appears as a complete word)
+            return matchesWholeWord(record.song, searchLower) ||
+                   matchesWholeWord(record.stationTitle, searchLower)
         } else {
+            // "Contains" - substring match
             return record.song.lowercased().contains(searchLower) ||
                    record.stationTitle.lowercased().contains(searchLower)
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func matchesWholeWord(_ text: String, _ word: String) -> Bool {
+        let pattern = "\\b\(NSRegularExpression.escapedPattern(for: word))\\b"
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive) else {
+            return text.lowercased().contains(word)
+        }
+        let range = NSRange(text.startIndex..., in: text)
+        return regex.firstMatch(in: text, options: [], range: range) != nil
     }
 
     /* ****************************************

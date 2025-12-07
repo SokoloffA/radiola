@@ -994,8 +994,31 @@
         }
       }
     },
+    "favorites only" : {
+      "comment" : "History search panel",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nur Favoriten"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "solo preferiti"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "только избранное"
+          }
+        }
+      }
+    },
     "History" : {
-      "comment" : "Sidebar item",
+      "comment" : "Sidebar group\nSidebar item",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1267,6 +1290,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Мои списки"
+          }
+        }
+      }
+    },
+    "my ordering" : {
+      "comment" : "Station search panel",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "meine Reihenfolge"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "il mio ordinamento"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "мой порядок"
           }
         }
       }
@@ -1584,6 +1630,7 @@
     },
     "Show only your favorite songs" : {
       "comment" : "History window checkbox title",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1675,7 +1722,7 @@
       }
     },
     "sort by name" : {
-      "comment" : "Internet station search panel",
+      "comment" : "History search panel\nInternet station search panel\nStation search panel",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1693,6 +1740,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "сортировать по названию"
+          }
+        }
+      }
+    },
+    "sort by recent" : {
+      "comment" : "History search panel",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nach Datum sortieren"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ordina per data"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "сортировать по дате"
+          }
+        }
+      }
+    },
+    "sort by station" : {
+      "comment" : "History search panel",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nach Sender sortieren"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ordina per stazione"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "сортировать по станции"
           }
         }
       }
