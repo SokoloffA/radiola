@@ -7,6 +7,29 @@
 
 import Cocoa
 
+// MARK: - FilteredGroup
+
+/// A wrapper for StationGroup that holds filtered children for display during search
+private class FilteredGroup: StationGroup {
+    let original: StationGroup
+    var filteredItems: [StationItem]
+
+    var id: UUID { original.id }
+    var title: String {
+        get { original.title }
+        set { original.title = newValue }
+    }
+    var items: [StationItem] {
+        get { filteredItems }
+        set { filteredItems = newValue }
+    }
+
+    init(original: StationGroup, filteredItems: [StationItem]) {
+        self.original = original
+        self.filteredItems = filteredItems
+    }
+}
+
 // MARK: - LocalStationDelegate
 
 class LocalStationDelegate: NSObject {
@@ -14,12 +37,121 @@ class LocalStationDelegate: NSObject {
 
     var list: (any StationList)?
 
+    // Search and filter properties
+    var searchText: String = ""
+    var isExactMatch: Bool = false
+    var sortOrder: LocalStationSearchPanel.Order = .myOrdering
+
+    // Cached filtered items
+    private var filteredItems: [StationItem] = []
+
     /* ****************************************
      *
      * ****************************************/
     init(outlineView: NSOutlineView) {
         self.outlineView = outlineView
         list = nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func refresh() {
+        updateFilteredItems()
+        outlineView?.reloadData()
+        outlineView?.expandItem(nil, expandChildren: true)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateFilteredItems() {
+        guard let list = list else {
+            filteredItems = []
+            return
+        }
+
+        if searchText.isEmpty {
+            filteredItems = applySort(items: Array(list.items))
+        } else {
+            filteredItems = applySort(items: filterItems(list.items))
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func filterItems(_ items: [StationItem]) -> [StationItem] {
+        var result: [StationItem] = []
+
+        for item in items {
+            if let station = item as? Station {
+                if matchesSearch(station.title) {
+                    result.append(station)
+                }
+            } else if let group = item as? StationGroup {
+                let filteredChildren = filterItems(group.items)
+                if !filteredChildren.isEmpty || matchesSearch(group.title) {
+                    // Create a filtered copy of the group
+                    let filteredGroup = FilteredGroup(original: group, filteredItems: filteredChildren)
+                    result.append(filteredGroup)
+                }
+            }
+        }
+
+        return result
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func matchesSearch(_ text: String) -> Bool {
+        if isExactMatch {
+            return text.lowercased() == searchText.lowercased()
+        } else {
+            return text.lowercased().contains(searchText.lowercased())
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func applySort(items: [StationItem]) -> [StationItem] {
+        switch sortOrder {
+        case .myOrdering:
+            return items
+        case .byName:
+            return items.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var isFiltering: Bool {
+        return !searchText.isEmpty || sortOrder != .myOrdering
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func currentItems(for item: Any?) -> [StationItem] {
+        if isFiltering {
+            if item == nil {
+                return filteredItems
+            } else if let filteredGroup = item as? FilteredGroup {
+                return filteredGroup.filteredItems
+            } else if let group = item as? StationGroup {
+                return applySort(items: Array(group.items))
+            }
+        } else {
+            if item == nil {
+                return list?.items ?? []
+            } else if let group = item as? StationGroup {
+                return Array(group.items)
+            }
+        }
+        return []
     }
 }
 
@@ -51,34 +183,16 @@ extension LocalStationDelegate: NSOutlineViewDataSource {
      * Returns the number of child items each item in the outline
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: Any?) -> Int {
-        // Root item
-        if item == nil {
-            return list?.items.count ?? 0
-        }
-
-        if let group = item as? StationGroup {
-            return group.items.count
-        }
-
-        return 0
+        return currentItems(for: item).count
     }
 
     /* ****************************************
      * Returns the actual item
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: Any?) -> Any {
-        guard let list = list else { return "" }
-
-        // Root item
-        if item == nil {
-            return list.items[index]
-        }
-
-        if let group = item as? StationGroup {
-            return group.items[index]
-        }
-
-        return item!
+        let items = currentItems(for: item)
+        guard index < items.count else { return "" }
+        return items[index]
     }
 
     /* ****************************************
@@ -86,7 +200,7 @@ extension LocalStationDelegate: NSOutlineViewDataSource {
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
         if let group = item as? StationGroup {
-            return !group.items.isEmpty
+            return !currentItems(for: item).isEmpty
         }
 
         return false
@@ -125,6 +239,11 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, pasteboardWriterForItem item: Any) -> NSPasteboardWriting? {
+        // Disable drag when filtering or sorting by name
+        if isFiltering {
+            return nil
+        }
+
         outlineView.registerForDraggedTypes([StationItemPasteboardType])
         if let station = item as? Station {
             let res = NSPasteboardItem()
@@ -145,6 +264,11 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     private func canDragAndDrop(src: StationItem, dest: StationGroup) -> Bool {
+        // Disable drag when filtering or sorting by name
+        if isFiltering {
+            return false
+        }
+
         var node: StationGroup? = dest
         while node != nil {
             if node?.id == src.id {
@@ -160,6 +284,11 @@ extension LocalStationDelegate {
      *
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, validateDrop info: NSDraggingInfo, proposedItem item: Any?, proposedChildIndex index: Int) -> NSDragOperation {
+        // Disable drop when filtering or sorting by name
+        if isFiltering {
+            return []
+        }
+
         if info.draggingSource as? NSOutlineView != outlineView {
             return []
         }
