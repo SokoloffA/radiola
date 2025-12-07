@@ -11,10 +11,7 @@ class HistoryRow: NSView {
     private var songLabel = Label()
     private var stationLabel = Label()
     private var dateLabel = Label()
-    private let favoriteSong = IconView(
-        onImage: NSImage(systemSymbolName: NSImage.Name("heart.fill"), accessibilityDescription: NSLocalizedString("The current song has been marked as a favorite", comment: "History window icon tooltip")),
-        offImage: nil
-    )
+    private let favoriteButton = ImageButton()
     let separator = Separator()
 
     let record: HistoryRecord
@@ -30,12 +27,16 @@ class HistoryRow: NSView {
         addSubview(songLabel)
         addSubview(stationLabel)
         addSubview(dateLabel)
-        addSubview(favoriteSong)
+        addSubview(favoriteButton)
         addSubview(separator)
 
         songLabel.setFontWeight(.medium)
 
-        favoriteSong.toolTip = NSLocalizedString("The current song has been marked as a favorite.", comment: "History window icon tooltip")
+        favoriteButton.image = NSImage(systemSymbolName: NSImage.Name("heart"), accessibilityDescription: NSLocalizedString("Mark song as favorite", comment: "History window icon tooltip"))
+        favoriteButton.alternateImage = NSImage(systemSymbolName: NSImage.Name("heart.fill"), accessibilityDescription: NSLocalizedString("Unmark song as favorite", comment: "History window icon tooltip"))
+        favoriteButton.target = self
+        favoriteButton.action = #selector(toggleFavorite)
+        favoriteButton.toolTip = NSLocalizedString("Toggle favorite", comment: "History window icon tooltip")
 
         stationLabel.font = NSFont.systemFont(ofSize: 11)
         stationLabel.textColor = .secondaryLabelColor
@@ -46,14 +47,16 @@ class HistoryRow: NSView {
         songLabel.translatesAutoresizingMaskIntoConstraints = false
         stationLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        favoriteSong.translatesAutoresizingMaskIntoConstraints = false
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             songLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             songLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -36),
 
-            favoriteSong.centerYAnchor.constraint(equalTo: songLabel.centerYAnchor),
-            favoriteSong.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            favoriteButton.centerYAnchor.constraint(equalTo: songLabel.centerYAnchor),
+            favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            favoriteButton.widthAnchor.constraint(equalToConstant: 20),
+            favoriteButton.heightAnchor.constraint(equalToConstant: 20),
 
             stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor),
             dateLabel.leadingAnchor.constraint(equalTo: stationLabel.trailingAnchor, constant: 8),
@@ -81,7 +84,7 @@ class HistoryRow: NSView {
         songLabel.stringValue = record.song
         stationLabel.stringValue = record.stationTitle
         dateLabel.toolTip = dateAndTime()
-        favoriteSong.state = record.isFavorite ? .on : .off
+        favoriteButton.state = record.isFavorite ? .on : .off
 
         refreshDate()
     }
@@ -184,5 +187,13 @@ class HistoryRow: NSView {
     private func stopTimer() {
         timer?.invalidate()
         timer = nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func toggleFavorite() {
+        record.isFavorite = !record.isFavorite
+        favoriteButton.state = record.isFavorite ? .on : .off
     }
 }

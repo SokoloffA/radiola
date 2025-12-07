@@ -1199,6 +1199,9 @@
         }
       }
     },
+    "Mark song as favorite" : {
+      "comment" : "History window icon tooltip"
+    },
     "matches with" : {
       "comment" : "Internet station search panel",
       "localizations" : {
@@ -1704,6 +1707,7 @@
     },
     "The current song has been marked as a favorite" : {
       "comment" : "History window icon tooltip",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1727,6 +1731,7 @@
     },
     "The current song has been marked as a favorite." : {
       "comment" : "History window icon tooltip",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -1909,6 +1914,12 @@
           }
         }
       }
+    },
+    "Toggle favorite" : {
+      "comment" : "History window icon tooltip"
+    },
+    "Unmark song as favorite" : {
+      "comment" : "History window icon tooltip"
     },
     "Unmute" : {
       "comment" : "Mute button tooltip\nStatus bar menu Item",
