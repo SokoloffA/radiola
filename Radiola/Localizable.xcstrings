@@ -1361,7 +1361,21 @@
       }
     },
     "Now playing" : {
-      "comment" : "Player notification title."
+      "comment" : "Player notification title.",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "In riproduzione"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сейчас играет"
+          }
+        }
+      }
     },
     "Open Radiola…" : {
       "comment" : "Status bar menu item",

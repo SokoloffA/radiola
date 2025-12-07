@@ -522,10 +522,38 @@
       }
     },
     "Notifications:" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifiche:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Уведомления:"
+          }
+        }
+      }
     },
     "Open the main window on startup" : {
-      "comment" : "Settings control title"
+      "comment" : "Settings control title",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri la finestra principale all'avvio"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показывать главное окно при запуске"
+          }
+        }
+      }
     },
     "Play last station on startup" : {
       "comment" : "Settings control title",
@@ -689,7 +717,15 @@
       }
     },
     "Show song title in menu bar" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отображать песню в строке меню"
+          }
+        }
+      }
     },
     "Show station lists:" : {
       "comment" : "Settings control title",
@@ -854,7 +890,21 @@
       }
     },
     "Startup:" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avvio:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запуск:"
+          }
+        }
+      }
     },
     "switch favorite stations" : {
       "comment" : "Settings combobox item",
@@ -949,7 +999,21 @@
       }
     },
     "When playback starts." : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quando inizia la riproduzione."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Когда начинается воспроизведение."
+          }
+        }
+      }
     },
     "when the main window is open" : {
       "comment" : "Settings combobox item",
