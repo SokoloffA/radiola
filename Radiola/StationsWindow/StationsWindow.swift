@@ -205,6 +205,16 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
             instance = StationsWindow()
         }
 
+        // Ensure the window is loaded before accessing outlets
+        _ = instance?.window
+
+        // Always jump to the first local station list when opening from menu
+        if let localList = AppState.shared.localStations.first {
+            selectedListId = localList.id
+            instance?.sideBar.selectedListId = localList.id
+            instance?.sidebarChanged()
+        }
+
         instance?.window?.show()
     }
 
