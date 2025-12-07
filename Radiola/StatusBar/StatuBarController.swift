@@ -55,6 +55,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
         menuItem.button?.action = #selector(leftRightMouseAction)
         menuItem.button?.imagePosition = .imageRight
         middleMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.otherMouseDown, .otherMouseUp], handler: middleMouseDown)
+        scrollWheelMonitor = NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel], handler: scrollWheel)
 
         playerStatusChanged()
     }
