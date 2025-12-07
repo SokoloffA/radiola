@@ -233,7 +233,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @IBAction func showHistory(_ sender: Any?) {
-        _ = HistoryWindow.show()
+        StationsWindow.showHistory()
     }
 
     /* ****************************************

@@ -127,7 +127,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
                 StationsWindow.show()
 
             case .showHistory:
-                _ = HistoryWindow.show()
+                StationsWindow.showHistory()
 
             case .mute:
                 player.isMuted = !player.isMuted

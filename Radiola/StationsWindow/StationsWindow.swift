@@ -10,6 +10,7 @@ import Combine
 
 fileprivate var selectedListId: UUID? = AppState.shared.localStations.first?.id
 fileprivate var selectedRows: [UUID: Int] = [:]
+fileprivate let historyListId = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
 
 class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate {
     private static var instance: StationsWindow?
@@ -35,6 +36,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
     private var localStationsDelegate: LocalStationDelegate!
     private var internetStationsDelegate: InternetStationDelegate!
+    private var historyDelegate: HistoryDelegate!
 
     private var toolBox: NSView? { didSet { placeToolbox() } }
     private var searchPanel: NSView? { didSet { placeSearchPanel() }}
@@ -59,6 +61,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         localStationsDelegate = LocalStationDelegate(outlineView: stationsTree)
         internetStationsDelegate = InternetStationDelegate(outlineView: stationsTree)
+        historyDelegate = HistoryDelegate(outlineView: stationsTree)
 
         stationsTree.style = .inset
         stationsTree.allowsMultipleSelection = true
@@ -92,6 +95,9 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         for list in appState.internetStations {
             sideBar.addItem(id: list.id, title: list.title, icon: list.icon)
         }
+
+        sideBar.addGroup(title: "")
+        sideBar.addItem(id: historyListId, title: NSLocalizedString("History", comment: "Sidebar item"), icon: "clock")
 
         sideBar.selectedListId = selectedListId
         toggleSideBarItem.target = self
@@ -205,6 +211,22 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
+    class func showHistory() {
+        if instance == nil {
+            instance = StationsWindow()
+        }
+
+        // Ensure the window is loaded before accessing outlets
+        _ = instance?.window
+
+        instance?.sideBar.selectedListId = historyListId
+        instance?.sidebarChanged()
+        instance?.window?.show()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     class func close() {
         instance?.window?.close()
     }
@@ -285,7 +307,11 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
             return
         }
 
-        if let list = AppState.shared.localStations.find(byId: listId) {
+        if listId == historyListId {
+            setHistoryList()
+            setFocus(listId: listId, toTree: true)
+            updateStateIndicator(state: .notLoaded)
+        } else if let list = AppState.shared.localStations.find(byId: listId) {
             setLocalStationList(list: list)
             setFocus(listId: listId, toTree: true)
             updateStateIndicator(state: .notLoaded)
@@ -320,6 +346,63 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         toolBox.delButton.action = #selector(removeStation)
 
         self.toolBox = toolBox
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func setHistoryList() {
+        stationsTree.delegate = historyDelegate
+        stationsTree.dataSource = historyDelegate
+
+        stationsTree.reloadItem(nil, reloadChildren: true)
+
+        searchPanel = nil
+
+        let toolBox = HistoryToolBox()
+        toolBox.onlyFavoriteCheckbox.target = self
+        toolBox.onlyFavoriteCheckbox.action = #selector(historyFilterChanged)
+
+        toolBox.exportButton.target = self
+        toolBox.exportButton.action = #selector(exportHistory)
+
+        self.toolBox = toolBox
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func historyFilterChanged() {
+        guard let toolBox = toolBox as? HistoryToolBox else { return }
+        historyDelegate.showOnlyFavorites = toolBox.onlyFavoriteCheckbox.state == .on
+        historyDelegate.refresh()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func exportHistory() {
+        guard let window = window else { return }
+
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd-HH.mm.ss"
+        let dateStr = formatter.string(from: Date())
+
+        let dialog = NSSavePanel()
+        dialog.allowedFileTypes = ["csv"]
+        dialog.allowsOtherFileTypes = true
+        dialog.canCreateDirectories = true
+        dialog.isExtensionHidden = false
+        dialog.nameFieldStringValue = "RadiolaHistory-\(dateStr)"
+
+        dialog.beginSheetModal(for: window) { result in
+            guard result == .OK, let url = dialog.url else { return }
+            do {
+                try AppState.shared.history.exportToCSV(file: url)
+            } catch {
+                error.show()
+            }
+        }
     }
 
     /* ****************************************
