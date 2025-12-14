@@ -60,6 +60,14 @@ class AudioSytstem {
     /* ****************************************
      *
      * ****************************************/
+    static func device(byUID: String?) -> AudioDevice? {
+        guard let uid = byUID else { return nil }
+        return devices().first { $0.UID == uid }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     static func defaultOutputDeviceID() -> AudioDeviceID? {
         var deviceID = kAudioObjectUnknown
         var propertyAddress = AudioObjectPropertyAddress(
@@ -77,6 +85,30 @@ class AudioSytstem {
         }
 
         return deviceID
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func debugAudioDevices(prefix: String? = nil) {
+        let p = (prefix != nil) ? "\(prefix!) " : ""
+
+        debug("\(p)Config device UID:        \(settings.audioDevice ?? "nil")")
+        debug("\(p)System default device ID: \(AudioSytstem.defaultOutputDeviceID().map(String.init) ?? "ERROR")")
+
+        debug("\(p)Available audio devices:")
+        let devices = AudioSytstem.devices()
+        for d in devices {
+            debug("\(p)  * UID: \(d.UID)")
+            debug("\(p)    name: \(d.name)")
+            debug("\(p)    deviceID: \(d.deviceID)")
+            debug("\(p)    manufacturer: \(d.manufacturer)")
+            debug("\(p)    streamsInput: \(d.streamsInput)")
+            debug("\(p)    streamsOutput: \(d.streamsOutput)")
+            debug("\(p)    sampleRateInput: \(d.sampleRateInput)")
+            debug("\(p)    sampleRateOutput: \(d.sampleRateOutput)")
+            debug("\(p)")
+        }
     }
 }
 

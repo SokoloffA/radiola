@@ -58,32 +58,28 @@ class Player: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    var audioDeviceUID: String? { didSet {
-        settings.audioDevice = audioDeviceUID
-        if player.audioOutputDeviceUniqueID != audioDeviceUID {
-            player.audioOutputDeviceUniqueID = audioDeviceUID
-
-            if isPlaying {
-                stop()
-                play()
-            }
-        }
-    }}
-
-    /* ****************************************
-     *
-     * ****************************************/
     override init() {
         self.volume = settings.volumeLevel
         self.isMuted = settings.volumeIsMuted
-        self.audioDeviceUID = settings.audioDevice
 
         super.init()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onAudioDevicesListChanged),
+            name: Notification.Name.AudioDeviceChanged,
+            object: nil)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(onSettingsChanged),
+            name: Notification.Name.SettingsChanged,
+            object: nil)
 
         stateWatch = player.$state.receive(on: RunLoop.main).sink { self.stateChenged($0) }
         metaWatch = player.$nowPlaing.receive(on: RunLoop.main).sink { self.metadataChanged($0) }
 
-        debugAudioDevices()
+        AudioSytstem.debugAudioDevices(prefix: "[Player]")
     }
 
     /* ****************************************
@@ -114,16 +110,11 @@ class Player: NSObject {
 
         player.volume = self.volume
         player.isMuted = self.isMuted
-        player.audioOutputDeviceUniqueID = self.audioDeviceUID
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateAudioDevice),
-                                               name: Notification.Name.AudioDeviceChanged,
-                                               object: nil)
+        let audioDeviceUID = AudioSytstem.device(byUID: settings.audioDevice)?.UID
+        player.play(url: url, audioDeviceUID: audioDeviceUID)
+        AudioSytstem.debugAudioDevices(prefix: "[Player]")
 
-        debugAudioDevices()
-
-        player.play(url: url)
         settings.lastStationUrl = station.url
 
         timer = Timer.scheduledTimer(
@@ -256,22 +247,65 @@ class Player: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    @objc private func updateAudioDevice() {
-        let uid = player.audioOutputDeviceUniqueID
+    @objc private func onSettingsChanged() {
+        let uid = player.audioDeviceUID
+        if settings.audioDevice != uid {
+            debug("[Player] The current audio device has changed")
+            debug("[Player]  - Config device UID:        \(settings.audioDevice ?? "nil")")
+            debug("[Player]  - Player audio device UID:  \(player.audioDeviceUID ?? "nil")")
+            debug("[Player]  - System default device ID: \(AudioSytstem.defaultOutputDeviceID().map(String.init) ?? "ERROR")")
 
-        debug("Audio device changed: current ID: \(uid ?? "nil")")
-        if uid == nil {
+            if !isPlaying {
+                debug("[Player] Do nothing because the player is not playing")
+                return
+            }
+
+            debug("[Player] The current audio device has been changed. Restart player with new audio device \(settings.audioDevice ?? "nil").")
+            stop()
+            play()
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func onAudioDevicesListChanged() {
+        debug("[Player] The list of audio devices has changed")
+        debug("[Player]  - Config device UID:        \(settings.audioDevice ?? "nil")")
+        debug("[Player]  - Player audio device UID:  \(player.audioDeviceUID ?? "nil")")
+        debug("[Player]  - System default device ID: \(AudioSytstem.defaultOutputDeviceID().map(String.init) ?? "ERROR")")
+
+        if !isPlaying {
             return
         }
 
-        for d in AudioSytstem.devices() {
-            if d.UID == uid {
+        if let d = AudioSytstem.device(byUID: settings.audioDevice) {
+            if player.audioDeviceUID != d.UID {
+                debug("Switch to preferred audio device. From \(player.audioDeviceUID ?? "nil"), to \(d.UID)")
+                stop()
+                play()
                 return
             }
+
+            debug("The preferred audio device is still connected")
+            return
         }
 
-        debug("Change player device ID from \(uid ?? "nil") to nil")
-        audioDeviceUID = nil
+        // nil is the system default device and is always present.
+        let currentUID = player.audioDeviceUID
+        if currentUID == nil {
+            return
+        }
+
+        let d = AudioSytstem.device(byUID: currentUID)
+        if d != nil {
+            debug("The current audio device is still connected")
+            return
+        }
+
+        debug("The current audio device has been deleted. Restart player with system default device")
+        stop()
+        play()
     }
 
     /* ****************************************
@@ -332,33 +366,5 @@ class Player: NSObject {
 
         rec.isFavorite = favorite
         NotificationCenter.default.post(name: Notification.Name.PlayerMetadataChanged, object: nil, userInfo: ["title": songTitle])
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func debugAudioDevices() {
-        debug("Player audio device ID: \(player.audioOutputDeviceUniqueID ?? "nil")")
-        if let ID = AudioSytstem.defaultOutputDeviceID() {
-            debug("System default device ID: \(ID)")
-        } else {
-            debug("System default device ID: ERROR")
-        }
-
-        debug("Config device UID: \(settings.audioDevice ?? "nil")")
-
-        debug("Available audio devices:")
-        let devices = AudioSytstem.devices()
-        for d in devices {
-            debug("  * UID: \(d.UID)")
-            debug("    name: \(d.name)")
-            debug("    deviceID: \(d.deviceID)")
-            debug("    manufacturer: \(d.manufacturer)")
-            debug("    streamsInput: \(d.streamsInput)")
-            debug("    streamsOutput: \(d.streamsOutput)")
-            debug("    sampleRateInput: \(d.sampleRateInput)")
-            debug("    sampleRateOutput: \(d.sampleRateOutput)")
-            debug("")
-        }
     }
 }

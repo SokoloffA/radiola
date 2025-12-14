@@ -74,7 +74,7 @@ public class FFPlayer: ObservableObject {
         didSet { updateVolume() }
     }
 
-    var audioOutputDeviceUniqueID: String?
+    private(set) var audioDeviceUID: String?
 
     /* ****************************************
      *
@@ -86,11 +86,12 @@ public class FFPlayer: ObservableObject {
     /* ****************************************
      *
      * ****************************************/
-    func play(url: URL) {
+    func play(url: URL, audioDeviceUID: String?) {
         error = nil
 
         let vol = isMuted ? 0.0 : volume
-        let deviceUID = audioOutputDeviceUniqueID
+        self.audioDeviceUID = audioDeviceUID
+        let deviceUID = audioDeviceUID
 
         backend.queue.async {
             self.backend.userInterrupt.value = false
@@ -520,7 +521,7 @@ fileprivate class Backend {
             message = message.trimmingCharacters(in: .whitespacesAndNewlines)
 
             if !message.isEmpty {
-                print("FFmpeg \(Backend.ffmpegLogLevelToString(level)): \(message)")
+                debug("[FFmpeg] \(Backend.ffmpegLogLevelToString(level)): \(message)")
             }
         }
     }
@@ -609,14 +610,14 @@ fileprivate class Backend {
                 let err = AudioQueueSetProperty(audioQueue, kAudioQueueProperty_CurrentDevice, rawPtr, UInt32(MemoryLayout<CFString?>.size))
 
                 if err != noErr {
-                    throw NSError(code: .setDeviceError, message: internalErrorDescription, debug: "Error setting audio device")
+                    throw NSError(code: .setDeviceError, error: err, message: internalErrorDescription, debug: "Error setting audio device")
                 }
             }
         }
 
         let err = AudioQueueStart(audioQueue, nil)
         if err != noErr {
-            throw NSError(code: .audioQueueStartError, message: internalErrorDescription, debug: "Error calling AudioQueueStart")
+            throw NSError(code: .audioQueueStartError, error: err, message: internalErrorDescription, debug: "Error calling AudioQueueStart")
         }
     }
 
@@ -637,7 +638,7 @@ fileprivate class Backend {
 
         let err = AudioQueueSetParameter(audioQueue, kAudioQueueParam_Volume, volume)
         if err != noErr {
-            setError(NSError(code: .setVolumeError, message: internalErrorDescription, debug: "Error calling AudioQueueSetParameter"))
+            setError(NSError(code: .setVolumeError, error: err, message: internalErrorDescription, debug: "Error calling AudioQueueSetParameter"))
         }
     }
 
@@ -883,6 +884,14 @@ extension NSError {
      *
      * ****************************************/
     convenience init(code: FFPlayer.ErrorCode, message: String, debug: String) {
+        self.init(code: Int(code.rawValue), message: message, debug: debug)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    convenience init(code: FFPlayer.ErrorCode, error: OSStatus, message: String, debug: String) {
+        let desc = SecCopyErrorMessageString(error, nil) as String? ?? ""
         self.init(code: Int(code.rawValue), message: message, debug: debug)
     }
 

@@ -33,10 +33,11 @@ class AudioPage: NSViewController {
         super.viewDidLoad()
         deviceLabel.stringValue = NSLocalizedString("Device:", tableName: "Settings", comment: "Settings label")
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(refreshDeviceCombo),
-                                               name: Notification.Name.AudioDeviceChanged,
-                                               object: nil)
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refreshDeviceCombo),
+            name: Notification.Name.AudioDeviceChanged,
+            object: nil)
 
         refreshDeviceCombo()
     }
@@ -45,7 +46,10 @@ class AudioPage: NSViewController {
      *
      * ****************************************/
     @objc private func refreshDeviceCombo() {
-        let sel = player.audioDeviceUID // selectedDeviceUID()
+        debug("[Settings] The list of audio devices has changed")
+        AudioSytstem.debugAudioDevices(prefix: "[Settings]")
+
+        let sel = settings.audioDevice
 
         deviceCombobox.removeAllItems()
         deviceCombobox.addItem(withTitle: "System Default Device")
@@ -69,7 +73,11 @@ class AudioPage: NSViewController {
      *
      * ****************************************/
     @IBAction func deviceChanged(_ sender: Any) {
-        let device = deviceCombobox.selectedItem?.representedObject as? AudioDevice
-        player.audioDeviceUID = device?.UID ?? nil
+        let deviceUID = (deviceCombobox.selectedItem?.representedObject as? AudioDevice)?.UID
+        if settings.audioDevice != deviceUID {
+            debug("[Settings] Select audio device \(deviceUID ?? "nil")")
+            settings.audioDevice = deviceUID
+            NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+        }
     }
 }
