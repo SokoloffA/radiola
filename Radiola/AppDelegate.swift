@@ -12,6 +12,7 @@ extension KeyboardShortcuts.Name {
     static let showMainWindow = Self("showMainWindow")
     static let showHistoryWindow = Self("showHistoryWindow")
     static let togglePlayPuse = Self("togglePlayPuse")
+    static let showMainMenu = Self("showMainMenu")
 }
 
 @NSApplicationMain
@@ -84,6 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         KeyboardShortcuts.onKeyUp(for: .showMainWindow) { [self] in showStationView(nil) }
         KeyboardShortcuts.onKeyUp(for: .showHistoryWindow) { [self] in showHistory(nil) }
         KeyboardShortcuts.onKeyUp(for: .togglePlayPuse) { [self] in togglePlay(nil) }
+        KeyboardShortcuts.onKeyUp(for: .showMainMenu) { [self] in showMainMenu(nil) }
 
         playerStatusChanged()
 
@@ -227,6 +229,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     @IBAction func showStationView(_ sender: Any?) {
         StationsWindow.show()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func showMainMenu(_ sender: Any?) {
+        statusBar.showMenu()
     }
 
     /* ****************************************

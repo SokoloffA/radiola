@@ -117,8 +117,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
 
         switch action {
             case .showMenu:
-                menuItem.menu = buildMenu()
-                menuItem.button?.performClick(nil) // Optional: Programmatically trigger the menu
+                showMenu()
                 break
 
             case .playPause:
@@ -133,6 +132,14 @@ class StatusBarController: NSObject, NSMenuDelegate {
             case .mute:
                 player.isMuted = !player.isMuted
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func showMenu() {
+        menuItem.menu = buildMenu()
+        menuItem.button?.performClick(nil)  // Optional: Programmatically trigger the menu
     }
 
     /* ****************************************

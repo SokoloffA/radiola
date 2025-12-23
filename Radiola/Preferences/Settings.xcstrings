@@ -336,6 +336,9 @@
         }
       }
     },
+    "Global shortcut to show menu" : {
+      "comment" : "Settings label"
+    },
     "Global shortcut to show stations" : {
       "comment" : "Settings label",
       "localizations" : {

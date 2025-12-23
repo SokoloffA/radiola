@@ -34,6 +34,7 @@ class ControlsPage: NSViewController {
     private var globalKeys: [GlobalKeyDef] = [
         GlobalKeyDef(key: .showMainWindow, label: NSLocalizedString("Global shortcut to show stations", tableName: "Settings", comment: "Settings label")),
         GlobalKeyDef(key: .showHistoryWindow, label: NSLocalizedString("Global shortcut to show history", tableName: "Settings", comment: "Settings label")),
+        GlobalKeyDef(key: .showMainMenu, label: NSLocalizedString("Global shortcut to show menu", tableName: "Settings", comment: "Settings label")),
         GlobalKeyDef(key: .togglePlayPuse, label: NSLocalizedString("Global shortcut to toggle play and pause", tableName: "Settings", comment: "Settings label")),
     ]
 
