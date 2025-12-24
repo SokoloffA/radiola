@@ -18,18 +18,20 @@ class HistoryToolBox: NSView {
     init() {
         super.init(frame: NSRect())
 
-        exportButton.bezelStyle = .accessoryBarAction
-        exportButton.title = NSLocalizedString("Export…", comment: "History export button")
-        exportButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-
         addSubview(exportButton)
 
-        exportButton.translatesAutoresizingMaskIntoConstraints = false
+        exportButton.bezelStyle = .smallSquare
+        exportButton.setButtonType(.momentaryPushIn)
+        exportButton.title = NSLocalizedString("Export…", comment: "History export button")
+        exportButton.image = NSImage(systemSymbolName: NSImage.Name("arrowshape.down.circle"), accessibilityDescription: exportButton.title)
+        exportButton.imagePosition = .imageLeft
+        exportButton.image?.isTemplate = true
+        exportButton.isBordered = false
 
-        NSLayoutConstraint.activate([
-            exportButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            exportButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-        ])
+        exportButton.translatesAutoresizingMaskIntoConstraints = false
+        exportButton.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        exportButton.topAnchor.constraint(equalTo: topAnchor, constant: 6).isActive = true
+        exportButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16).isActive = true
     }
 
     /* ****************************************
