@@ -410,7 +410,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    @objc private func exportHistory() {
+    @objc private func exportHistory(_ sender: Any?) {
         guard let window = window else { return }
 
         let formatter = DateFormatter()
