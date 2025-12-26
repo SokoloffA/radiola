@@ -969,7 +969,21 @@
       }
     },
     "Export…" : {
-      "comment" : "History export button"
+      "comment" : "History export button",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esporta..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспортировать…"
+          }
+        }
+      }
     },
     "Favorite stations" : {
       "comment" : "Status bar menu item",
@@ -1000,19 +1014,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nur Favoriten"
+            "value" : "favorites only"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "solo preferiti"
+            "value" : "Solo preferite"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "только избранное"
+            "value" : "только любимые"
           }
         }
       }
@@ -1023,7 +1037,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Verlauf"
+            "value" : "History"
           }
         },
         "it" : {
@@ -1300,19 +1314,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "meine Reihenfolge"
+            "value" : "my ordering"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "il mio ordinamento"
+            "value" : "Il mio ordine"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "мой порядок"
+            "value" : "ручной порядок"
           }
         }
       }
@@ -1727,13 +1741,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nach Name sortieren"
+            "value" : "sort by name"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ordina per nome"
+            "value" : "Ordina per nome"
           }
         },
         "ru" : {
@@ -1750,19 +1764,19 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nach Datum sortieren"
+            "value" : "sort by recent"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ordina per data"
+            "value" : "Ordina per recente"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "сортировать по дате"
+            "value" : "сортировать по последним"
           }
         }
       }
@@ -1773,13 +1787,13 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "nach Sender sortieren"
+            "value" : "sort by station"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ordina per stazione"
+            "value" : "Ordina per stazione"
           }
         },
         "ru" : {

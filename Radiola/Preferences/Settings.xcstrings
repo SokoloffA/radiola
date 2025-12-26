@@ -325,7 +325,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scorciatoia finestra Cronologia"
+            "value" : "Scorciatoia mostra Cronologia"
           }
         },
         "ru" : {
@@ -337,7 +337,15 @@
       }
     },
     "Global shortcut to show menu" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorciatoia mostra menu"
+          }
+        }
+      }
     },
     "Global shortcut to show stations" : {
       "comment" : "Settings label",
@@ -351,7 +359,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scorciatoia finestra Stazioni"
+            "value" : "Scorciatoia mostra Stazioni"
           }
         },
         "ru" : {
@@ -374,7 +382,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Scorciatoia di controllo play e pausa"
+            "value" : "Scorciatoia controllo play e pausa"
           }
         },
         "ru" : {
@@ -722,6 +730,12 @@
     "Show song title in menu bar" : {
       "comment" : "Settings label",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mostra il titolo del brano nella barra dei menu"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
