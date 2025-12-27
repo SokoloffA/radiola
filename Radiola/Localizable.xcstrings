@@ -1239,6 +1239,9 @@
         }
       }
     },
+    "Mark song as favorite" : {
+      "comment" : "History window icon tooltip"
+    },
     "matches with" : {
       "comment" : "Internet station search panel",
       "localizations" : {
@@ -2034,6 +2037,12 @@
           }
         }
       }
+    },
+    "Toggle favorite" : {
+      "comment" : "History window icon tooltip"
+    },
+    "Unmark song as favorite" : {
+      "comment" : "History window icon tooltip"
     },
     "Unmute" : {
       "comment" : "Mute button tooltip\nStatus bar menu Item",
