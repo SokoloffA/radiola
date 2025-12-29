@@ -44,15 +44,25 @@ class MediaKeysController: NSObject {
     @objc private func playerStatusChanged() {
         switch player.status {
             case .playing:
-                MPNowPlayingInfoCenter.default().playbackState = .playing
-
-            case .paused:
-                MPNowPlayingInfoCenter.default().playbackState = .stopped
-                MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyArtist: player.station?.title ?? ""]
+                if MPNowPlayingInfoCenter.default().playbackState != .playing {
+                    debug("[NowPlayingInfo] Set playbackState to playing")
+                    MPNowPlayingInfoCenter.default().playbackState = .playing
+                }
 
             case .connecting:
-                MPNowPlayingInfoCenter.default().playbackState = .stopped
-                MPNowPlayingInfoCenter.default().nowPlayingInfo = [MPMediaItemPropertyArtist: player.station?.title ?? ""]
+                updateNowPlayingInfo(artist: player.station?.title)
+                if MPNowPlayingInfoCenter.default().playbackState != .playing {
+                    debug("[NowPlayingInfo] Set playbackState to playing")
+                    MPNowPlayingInfoCenter.default().playbackState = .playing
+                }
+                break
+
+            case .paused:
+                if MPNowPlayingInfoCenter.default().playbackState != .paused {
+                    debug("[NowPlayingInfo] Set playbackState to paused")
+                    MPNowPlayingInfoCenter.default().playbackState = .paused
+                }
+                updateNowPlayingInfo(artist: player.station?.title)
         }
     }
 
@@ -60,10 +70,36 @@ class MediaKeysController: NSObject {
      *
      * ****************************************/
     @objc private func playerMetadataChanged(_ notification: Notification) {
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = [
-            MPMediaItemPropertyTitle: notification.userInfo?["title"] as? String ?? "",
-            MPMediaItemPropertyArtist: player.station?.title ?? "",
-        ]
+        if player.status == .paused {
+            return
+        }
+
+        updateNowPlayingInfo(artist: player.station?.title, title: notification.userInfo?["title"] as? String)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateNowPlayingInfo(artist: String?, title: String? = nil) {
+        let curArtist = MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtist] as? String?
+        let curTitle = MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyTitle] as? String?
+
+        if artist == curArtist && title == curTitle {
+            return
+        }
+
+        var info: [String: Any] = [:]
+
+        if artist != nil {
+            info[MPMediaItemPropertyArtist] = artist
+        }
+
+        if title != nil {
+            info[MPMediaItemPropertyTitle] = title
+        }
+
+        debug("[NowPlayingInfo] Update playing info to Artist:\(artist ?? "nil"), Title: \(title ?? "nil")")
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = info
     }
 
     /* ****************************************
