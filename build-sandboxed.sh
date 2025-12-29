@@ -32,51 +32,87 @@ function prepare() {
     mkdir -p "${BUILD_DIR}"
 }
 
-function build() {
+function archive() {
     echo ""
     echo "***********************************"
-    echo "** Building project..."
+    echo "** Archiving project..."
     echo "***********************************"
 
     ARGS=(
         -project "./${APP_NAME}.xcodeproj"
         -scheme "${APP_NAME}"
         -configuration "${CONFIGURATION}"
-        -derivedDataPath ./build
-        CODE_SIGN_IDENTITY=""
-        CODE_SIGNING_REQUIRED=NO
-        CODE_SIGNING_ALLOWED=NO
+        -archivePath "${ARCHIVE_PATH}"
+        ONLY_ACTIVE_ARCH=NO
     )
 
-    xcodebuild clean build "${ARGS[@]}" | tee "${BUILD_DIR}/01-build.log"
+    if [ "${GITHUB_ACTIONS-}" = "true" ]; then
+        ARGS+=(
+            DEVELOPMENT_TEAM="${TEAM_ID}"
+            CODE_SIGN_IDENTITY="${CODE_SIGN_IDENTITY}"
+            CODE_SIGN_STYLE=Manual
+            PROVISIONING_PROFILE_SPECIFIER="com.github.SokoloffA.Radiola"
+        )
+    fi
+
+    xcodebuild clean archive "${ARGS[@]}" | tee "${BUILD_DIR}/01-archive.log"
 }
 
-function copyApp() {
-    echo ""
-    echo "***********************************"
-    echo "** Copying the bundle..."
-    echo "***********************************"
-    rm -rf "${APP_PATH}"
-    cp -a "${BUILD_DIR}/Build/Products/${CONFIGURATION}/${APP_NAME}.app" "${APP_PATH}"
-    echo "  OK"
+function genExportOptions() {
+    echo '<?xml version="1.0" encoding="UTF-8"?>'
+    echo '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">'
+    echo '<plist version="1.0">'
+    echo '<dict>'
+    echo '<key>method</key>'
+    echo '<string>developer-id</string>'
+
+    if [ "${GITHUB_ACTIONS-}" = "true" ]; then
+        echo '<key>signingCertificate</key>'
+        echo '<string>'${CODE_SIGN_IDENTITY}'</string>'
+
+        echo '<key>teamID</key>'
+        echo '<string>'${TEAM_ID}'</string>'
+
+        echo '<key>signingStyle</key>'
+        echo '<string>manual</string>'
+
+        echo '<key>provisioningProfiles</key>'
+        echo '<dict>'
+        echo '    <key>'${PROVISIONING_PROFILE}'</key>'
+        echo '    <string>'${PROVISIONING_PROFILE}'</string>'
+        echo '</dict>'
+    fi
+
+    echo '<key>stripSwiftSymbols</key>'
+    echo '<true/>'
+
+    echo '<key>compileBitcode</key>'
+    echo '<false/>'
+
+    echo '<key>destination</key>'
+    echo '<string>export</string>'
+
+    echo '<key>manageAppVersionAndBuildNumber</key>'
+    echo '<false/>'
+    echo '</dict>'
+    echo '</plist>'
 }
 
-function sign() {
+function exportArchive() {
     echo ""
     echo "***********************************"
-    echo "Removing quarantine flag..."
+    echo "** Exporting to ${APP_PATH}..."
     echo "***********************************"
-    xattr -r -d com.apple.quarantine "${APP_PATH}"
-    echo "  OK"
 
-    echo ""
-    echo "***********************************"
-    echo "Signing the bundle..."
-    echo "***********************************"
-    codesign --force --options runtime --deep --verify --sign  "${CODE_SIGN_IDENTITY}" "${APP_PATH}"
-    echo "  OK"
-    echo ""
+    genExportOptions > "${EXPORT_OPTIONS_PLIST}"
 
+    ARGS=(
+        -archivePath "${ARCHIVE_PATH}"
+        -exportPath "${BUILD_DIR}"
+        -exportOptionsPlist "${EXPORT_OPTIONS_PLIST}"
+    )
+
+    xcodebuild -exportArchive "${ARGS[@]}" | tee "${BUILD_DIR}/02-export-archive.log"
 }
 
 function verifyCodesign() {
@@ -151,9 +187,8 @@ function notarize() {
 
 DEFAULT_STEPS=""
 DEFAULT_STEPS+=" prepare"
-DEFAULT_STEPS+=" build"
-DEFAULT_STEPS+=" copyApp"
-DEFAULT_STEPS+=" sign"
+DEFAULT_STEPS+=" archive"
+DEFAULT_STEPS+=" exportArchive"
 DEFAULT_STEPS+=" verifyCodesign"
 DEFAULT_STEPS+=" createDmg"
 DEFAULT_STEPS+=" notarize"

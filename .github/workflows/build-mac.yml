@@ -65,23 +65,8 @@ jobs:
 
           echo "${{ secrets.AC_PRIVATE_KEY_BASE64 }}" | base64 --decode > ./AuthKey.p8
 
-      - name: Prepare
-        run: ./build.sh prepare
-
-      - name: Archive
-        run: ./build.sh archive
-
-      - name: Export archive
-        run: ./build.sh exportArchive
-
-      - name: Verify codesign
-        run: ./build.sh verifyCodesign
-
-      - name: Create DMG
-        run: ./build.sh createDmg
-
-      - name: Notarize
-        run: ./build.sh notarize
+      - name: Build
+        run: ./build.sh
         env:
           AC_KEY_ID: "${{ secrets.AC_KEY_ID }}"
           AC_ISSUER_ID: "${{ secrets.AC_ISSUER_ID }}"
