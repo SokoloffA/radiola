@@ -1832,6 +1832,7 @@
     },
     "The current song has been marked as a favorite" : {
       "comment" : "History window icon tooltip",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

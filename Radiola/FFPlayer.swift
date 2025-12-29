@@ -892,7 +892,8 @@ extension NSError {
      * ****************************************/
     convenience init(code: FFPlayer.ErrorCode, error: OSStatus, message: String, debug: String) {
         let desc = SecCopyErrorMessageString(error, nil) as String? ?? ""
-        self.init(code: Int(code.rawValue), message: message, debug: debug)
+        let dbg = "\(debug). error code = \(code.rawValue) : \(desc)"
+        self.init(code: Int(code.rawValue), message: message, debug: dbg)
     }
 
     /* ****************************************

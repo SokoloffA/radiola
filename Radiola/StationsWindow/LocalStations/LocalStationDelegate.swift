@@ -213,7 +213,7 @@ extension LocalStationDelegate: NSOutlineViewDataSource {
      * We must specify if a given item should be expandable or not.
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: Any) -> Bool {
-        if let group = item as? StationGroup {
+        if item is StationGroup {
             return !currentItems(for: item).isEmpty
         }
 
