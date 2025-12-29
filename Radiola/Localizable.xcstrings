@@ -1240,7 +1240,15 @@
       }
     },
     "Mark song as favorite" : {
-      "comment" : "History window icon tooltip"
+      "comment" : "History window icon tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметить песню как любимую"
+          }
+        }
+      }
     },
     "matches with" : {
       "comment" : "Internet station search panel",
@@ -2040,10 +2048,26 @@
       }
     },
     "Toggle favorite" : {
-      "comment" : "History window icon tooltip"
+      "comment" : "History window icon tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отметить/снять отметку «Любимая»"
+          }
+        }
+      }
     },
     "Unmark song as favorite" : {
-      "comment" : "History window icon tooltip"
+      "comment" : "History window icon tooltip",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Снять с песни отметку «Любимая»"
+          }
+        }
+      }
     },
     "Unmute" : {
       "comment" : "Mute button tooltip\nStatus bar menu Item",
