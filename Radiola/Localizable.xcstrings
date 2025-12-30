@@ -1242,6 +1242,12 @@
     "Mark song as favorite" : {
       "comment" : "History window icon tooltip",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi brano ai preferiti"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2050,6 +2056,12 @@
     "Toggle favorite" : {
       "comment" : "History window icon tooltip",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferiti"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2061,6 +2073,12 @@
     "Unmark song as favorite" : {
       "comment" : "History window icon tooltip",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rimuovi brano dai preferiti"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
