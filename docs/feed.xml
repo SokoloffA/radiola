@@ -5,6 +5,27 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 11.0.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Improvements to appearance and behavior. Thanks to William Entriken (fulldecent). In particular:&lt;ul&gt;
+&lt;li&gt;Easier access to listening history&lt;/li&gt;
+&lt;li&gt;Station filtering and sorting&lt;/li&gt;
+&lt;li&gt;Filtering and sorting in the listening history&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Option to keep the main application window always visible&lt;/li&gt;
+&lt;li&gt;Notifications on track changes (can be enabled separately)&lt;/li&gt;
+&lt;li&gt;Support for sending URLs from the command line, both at launch and while the application is already running&lt;/li&gt;
+&lt;li&gt;Option to display the current track directly in the menu bar&lt;/li&gt;
+&lt;li&gt;Added a keyboard shortcut to open the application’s menu bar menu&lt;/li&gt;
+&lt;li&gt;Fixed an issue where scrolling the mouse wheel over the menu bar icon did not change the volume&lt;/li&gt;
+&lt;li&gt;Improved handling of audio device connection and removal&lt;/li&gt;
+&lt;li&gt;Translations updated&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 03 Jan 2026 09:27:24 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v11.0.0/Radiola-11.0.0.dmg" sparkle:version="11.0.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 10.1.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Fix. Release 10.1.0 runs in the sandbox, so it doesn't read saved stations.&lt;/li&gt;
