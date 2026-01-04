@@ -85,6 +85,7 @@ class MediaKeysController: NSObject {
         let curTitle = MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyTitle] as? String?
 
         if artist == curArtist && title == curTitle {
+            updateNowPlayingArtwork()
             return
         }
 
@@ -100,6 +101,21 @@ class MediaKeysController: NSObject {
 
         debug("[NowPlayingInfo] Update playing info to Artist:\(artist ?? "nil"), Title: \(title ?? "nil")")
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+        updateNowPlayingArtwork()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateNowPlayingArtwork() {
+        guard let station = player.station else { return }
+
+        StationIconLoader.shared.loadIcon(for: station) { image in
+            guard let image = image else { return }
+            var info = MPNowPlayingInfoCenter.default().nowPlayingInfo ?? [:]
+            info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(boundsSize: image.size) { _ in image }
+            MPNowPlayingInfoCenter.default().nowPlayingInfo = info
+        }
     }
 
     /* ****************************************

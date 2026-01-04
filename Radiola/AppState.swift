@@ -13,11 +13,15 @@ fileprivate class DefaultStation: Station {
     var title: String
     var url: String
     var isFavorite: Bool
+    var homepageUrl: String?
+    var iconUrl: String?
 
-    init(title: String, url: String, isFavorite: Bool) {
+    init(title: String, url: String, isFavorite: Bool, homepageUrl: String? = nil, iconUrl: String? = nil) {
         self.title = title
         self.url = url
         self.isFavorite = isFavorite
+        self.homepageUrl = homepageUrl
+        self.iconUrl = iconUrl
     }
 }
 
@@ -181,6 +185,15 @@ class AppState: ObservableObject {
                     return res
                 }
             }
+
+            let title = settings.lastStationTitle ?? ""
+            return DefaultStation(
+                title: title.isEmpty ? url : title,
+                url: url,
+                isFavorite: false,
+                homepageUrl: settings.lastStationHomepageUrl,
+                iconUrl: settings.lastStationIconUrl
+            )
         }
 
         if let res = favoritesStations().first {
@@ -218,6 +231,20 @@ class AppState: ObservableObject {
         }
 
         return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func saveStationMetadata(_ station: Station) {
+        for list in localStations {
+            if let existing = list.firstStation(byID: station.id) {
+                existing.homepageUrl = station.homepageUrl
+                existing.iconUrl = station.iconUrl
+                list.trySave()
+                return
+            }
+        }
     }
 
     /* ****************************************

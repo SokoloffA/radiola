@@ -116,6 +116,9 @@ class Player: NSObject {
         AudioSytstem.debugAudioDevices(prefix: "[Player]")
 
         settings.lastStationUrl = station.url
+        settings.lastStationTitle = station.title
+        settings.lastStationHomepageUrl = station.homepageUrl
+        settings.lastStationIconUrl = station.iconUrl
 
         timer = Timer.scheduledTimer(
             timeInterval: connectDelay,
