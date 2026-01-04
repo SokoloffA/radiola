@@ -236,6 +236,20 @@ class AppState: ObservableObject {
     /* ****************************************
      *
      * ****************************************/
+    func saveStationMetadata(_ station: Station) {
+        for list in localStations {
+            if let existing = list.firstStation(byID: station.id) {
+                existing.homepageUrl = station.homepageUrl
+                existing.iconUrl = station.iconUrl
+                list.trySave()
+                return
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func localStation(byID: UUID?) -> Station? {
         guard let byID = byID else { return nil }
 
