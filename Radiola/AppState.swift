@@ -13,11 +13,15 @@ fileprivate class DefaultStation: Station {
     var title: String
     var url: String
     var isFavorite: Bool
+    var homepageUrl: String?
+    var iconUrl: String?
 
-    init(title: String, url: String, isFavorite: Bool) {
+    init(title: String, url: String, isFavorite: Bool, homepageUrl: String? = nil, iconUrl: String? = nil) {
         self.title = title
         self.url = url
         self.isFavorite = isFavorite
+        self.homepageUrl = homepageUrl
+        self.iconUrl = iconUrl
     }
 }
 

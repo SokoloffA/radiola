@@ -239,6 +239,14 @@ class StatusBarController: NSObject, NSMenuDelegate {
 
         res.target = self
         res.representedObject = station
+        res.image = StationIconLoader.shared.placeholderImage()
+        res.image?.size = NSSize(width: 16, height: 16)
+        StationIconLoader.shared.loadIcon(for: station) { image in
+            if let image = image {
+                res.image = image
+                res.image?.size = NSSize(width: 16, height: 16)
+            }
+        }
 
         return res
     }

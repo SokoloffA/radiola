@@ -17,6 +17,8 @@ class InternetStation: Station, Identifiable {
     var bitrate: Bitrate?
     var votes: Int?
     var countryCode: String?
+    var homepageUrl: String?
+    var iconUrl: String?
     var isFavorite: Bool = false
 
     /* ****************************************

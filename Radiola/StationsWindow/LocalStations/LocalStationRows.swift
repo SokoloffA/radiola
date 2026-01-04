@@ -87,6 +87,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
     private let station: Station
     private let list: any StationList
 
+    private let iconView = NSImageView()
     var nameEdit = TextField()
     var urlEdit = TextField()
     var favoriteButton = ImageButton()
@@ -109,6 +110,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
         menuButton.station = station
 
         super.init(frame: NSRect())
+        addSubview(iconView)
         addSubview(nameEdit)
         addSubview(favoriteButton)
         addSubview(menuButton)
@@ -134,6 +136,14 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
         favoriteButton.target = self
         favoriteButton.action = #selector(favClicked(sender:))
 
+        iconView.image = StationIconLoader.shared.placeholderImage()
+        iconView.imageScaling = .scaleProportionallyUpOrDown
+        iconView.translatesAutoresizingMaskIntoConstraints = false
+        iconView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        iconView.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
+        iconView.widthAnchor.constraint(equalToConstant: 16).isActive = true
+        iconView.heightAnchor.constraint(equalToConstant: 16).isActive = true
+
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
         favoriteButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
@@ -147,7 +157,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
         menuButton.heightAnchor.constraint(equalTo: favoriteButton.heightAnchor).isActive = true
 
         nameEdit.translatesAutoresizingMaskIntoConstraints = false
-        nameEdit.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        nameEdit.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 8).isActive = true
         nameEdit.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -8).isActive = true
         nameEdit.topAnchor.constraint(equalTo: topAnchor, constant: 6.0).isActive = true
 
@@ -159,6 +169,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
 
         separator.alignBottom(of: self)
 
+        refreshIcon()
         refreshFavoriteButton()
     }
 
@@ -201,5 +212,17 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
     func control(_ control: NSControl, textShouldEndEditing fieldEditor: NSText) -> Bool {
         update()
         return true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func refreshIcon() {
+        StationIconLoader.shared.loadIcon(for: station) { [weak self] image in
+            guard let self = self else { return }
+            if let image = image {
+                self.iconView.image = image
+            }
+        }
     }
 }

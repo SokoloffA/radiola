@@ -14,11 +14,15 @@ class OpmlStation: Station {
     var title: String
     var url: String
     var isFavorite: Bool
+    var homepageUrl: String?
+    var iconUrl: String?
 
-    init(title: String, url: String, isFavorite: Bool = false) {
+    init(title: String, url: String, isFavorite: Bool = false, homepageUrl: String? = nil, iconUrl: String? = nil) {
         self.title = title
         self.url = url
         self.isFavorite = isFavorite
+        self.homepageUrl = homepageUrl
+        self.iconUrl = iconUrl
     }
 }
 
@@ -107,7 +111,9 @@ class OpmlStations: StationList {
             parent.append(OpmlStation(
                 title: xml.attribute(forName: "text")?.stringValue ?? "",
                 url: xml.attribute(forName: "url")?.stringValue ?? "",
-                isFavorite: getBoolAttribute(xml: xml, attribute: "fav")
+                isFavorite: getBoolAttribute(xml: xml, attribute: "fav"),
+                homepageUrl: xml.attribute(forName: "homepage")?.stringValue,
+                iconUrl: xml.attribute(forName: "icon")?.stringValue
             ))
         }
 
@@ -202,6 +208,12 @@ extension StationList {
                 outline.addAttribute(XMLNode.attribute(withName: "url", stringValue: station.url) as! XMLNode)
                 if station.isFavorite {
                     outline.addAttribute(XMLNode.attribute(withName: "fav", stringValue: "true") as! XMLNode)
+                }
+                if let homepageUrl = station.homepageUrl, !homepageUrl.isEmpty {
+                    outline.addAttribute(XMLNode.attribute(withName: "homepage", stringValue: homepageUrl) as! XMLNode)
+                }
+                if let iconUrl = station.iconUrl, !iconUrl.isEmpty {
+                    outline.addAttribute(XMLNode.attribute(withName: "icon", stringValue: iconUrl) as! XMLNode)
                 }
             }
 
