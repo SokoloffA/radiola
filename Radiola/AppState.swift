@@ -185,6 +185,15 @@ class AppState: ObservableObject {
                     return res
                 }
             }
+
+            let title = settings.lastStationTitle ?? ""
+            return DefaultStation(
+                title: title.isEmpty ? url : title,
+                url: url,
+                isFavorite: false,
+                homepageUrl: settings.lastStationHomepageUrl,
+                iconUrl: settings.lastStationIconUrl
+            )
         }
 
         if let res = favoritesStations().first {

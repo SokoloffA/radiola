@@ -11,6 +11,9 @@ class Settings {
     private let data = UserDefaults.standard
 
     private let lastStationKey = "Url"
+    private let lastStationTitleKey = "Title"
+    private let lastStationHomepageKey = "Homepage"
+    private let lastStationIconKey = "Icon"
     private let volumeLevelKey = "Volume"
     private let volumeIsMutedKey = "Muted"
     private let showVolumeInMenuKey = "ShowVolumeInMenu"
@@ -66,6 +69,30 @@ class Settings {
     var lastStationUrl: String? {
         get { data.string(forKey: lastStationKey) }
         set { data.set(newValue, forKey: lastStationKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var lastStationTitle: String? {
+        get { data.string(forKey: lastStationTitleKey) }
+        set { data.set(newValue, forKey: lastStationTitleKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var lastStationHomepageUrl: String? {
+        get { data.string(forKey: lastStationHomepageKey) }
+        set { data.set(newValue, forKey: lastStationHomepageKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    var lastStationIconUrl: String? {
+        get { data.string(forKey: lastStationIconKey) }
+        set { data.set(newValue, forKey: lastStationIconKey) }
     }
 
     /* ****************************************
