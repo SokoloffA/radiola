@@ -339,6 +339,12 @@
     "Global shortcut to show menu" : {
       "comment" : "Settings label",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Globaler Kurzbefehl zum Anzeigen des Menüs"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -535,6 +541,12 @@
     "Notifications:" : {
       "comment" : "Settings label",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benachrichtigungen:"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -552,6 +564,12 @@
     "Open the main window on startup" : {
       "comment" : "Settings control title",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hauptfenster beim Start öffnen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -730,6 +748,12 @@
     "Show song title in menu bar" : {
       "comment" : "Settings label",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Songtitel in der Menüleiste anzeigen"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -909,6 +933,12 @@
     "Startup:" : {
       "comment" : "Settings label",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beim Starten:"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1018,6 +1048,12 @@
     "When playback starts." : {
       "comment" : "Settings label",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wenn die Wiedergabe startet."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",

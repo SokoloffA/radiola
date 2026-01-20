@@ -971,6 +971,12 @@
     "Export…" : {
       "comment" : "History export button",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exportieren…"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1014,7 +1020,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "favorites only"
+            "value" : "ausschließlich Favoriten"
           }
         },
         "it" : {
@@ -1037,7 +1043,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "History"
+            "value" : "Verlauf"
           }
         },
         "it" : {
@@ -1242,6 +1248,12 @@
     "Mark song as favorite" : {
       "comment" : "History window icon tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markiere Song als Favoriten"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1331,7 +1343,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "my ordering"
+            "value" : "meine Sortierung"
           }
         },
         "it" : {
@@ -1444,6 +1456,12 @@
     "Now playing" : {
       "comment" : "Player notification title.",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuell läuft"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1758,7 +1776,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sort by name"
+            "value" : "Sortieren nach: Name"
           }
         },
         "it" : {
@@ -1781,7 +1799,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sort by recent"
+            "value" : "Sortieren nach: Neueste"
           }
         },
         "it" : {
@@ -1804,7 +1822,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "sort by station"
+            "value" : "Sortieren nach: Station"
           }
         },
         "it" : {
@@ -2056,6 +2074,12 @@
     "Toggle favorite" : {
       "comment" : "History window icon tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Favoriten umschalten"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2073,6 +2097,12 @@
     "Unmark song as favorite" : {
       "comment" : "History window icon tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entferne Song von Favoriten"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
