@@ -22,7 +22,7 @@ The **history window** allows you to find out what song is playing now or has pl
 ![Radiola History Window](https://user-images.githubusercontent.com/854935/182125735-6dd7494a-c899-471e-a617-1dd09dbe497c.png)
 
 ## Radiola features
-* Very light, less than 2 megabytes.
+* Very light, less than 40 megabytes.
 * Easy to use, just click on the icon in the menu bar, select station and enjoy.
 * Absolutely free.
 
