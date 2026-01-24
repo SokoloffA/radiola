@@ -11,7 +11,7 @@ FEED_LANGUAGE    = "en"
 MIN_VERSION = "3.0"
 
 #######################################
-URL_TEMPLATE = "https://api.github.com/repos/%s/%s/releases"
+URL_TEMPLATE = "https://api.github.com/repos/%s/%s/releases?per_page=300"
 
 import sys
 import os
