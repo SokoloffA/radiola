@@ -14,6 +14,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     private let station: InternetStation
     private let list: InternetStationList
 
+    private let iconView = NSImageView()
     var nameEdit = TextField()
     var urlEdit = TextField()
     var qualityText = Label()
@@ -39,6 +40,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         menuButton.station = station
 
         super.init(frame: NSRect())
+        addSubview(iconView)
         addSubview(nameEdit)
         addSubview(actionButton)
         addSubview(menuButton)
@@ -67,6 +69,9 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         actionButton.target = self
         actionButton.action = #selector(actionButtonClicked)
 
+        iconView.image = StationIconLoader.shared.placeholderImage()
+        iconView.imageScaling = .scaleProportionallyUpOrDown
+
         qualityText.attributedStringValue = qualityInfo()
         qualityText.textColor = .secondaryLabelColor
 
@@ -74,6 +79,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         voteText.textColor = .secondaryLabelColor
 
         actionButton.translatesAutoresizingMaskIntoConstraints = false
+        iconView.translatesAutoresizingMaskIntoConstraints = false
         nameEdit.translatesAutoresizingMaskIntoConstraints = false
         urlEdit.translatesAutoresizingMaskIntoConstraints = false
         qualityText.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +88,11 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         NSLayoutConstraint.activate([
             actionButton.widthAnchor.constraint(equalToConstant: 16),
-            nameEdit.leadingAnchor.constraint(equalTo: leadingAnchor),
+            iconView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            iconView.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            iconView.widthAnchor.constraint(equalToConstant: 16),
+            iconView.heightAnchor.constraint(equalToConstant: 16),
+            nameEdit.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 8),
             nameEdit.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -8),
 
             menuButton.leadingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 8),
@@ -107,6 +117,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         separator.alignBottom(of: self)
 
+        refreshIcon()
         refreshActionButton()
     }
 
@@ -126,6 +137,8 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         if !inLocal {
             let s = list.createStation(title: station.title, url: station.url)
+            s.homepageUrl = station.homepageUrl
+            s.iconUrl = station.iconUrl
             list.append(s)
             list.trySave()
             refreshActionButton()
@@ -139,6 +152,18 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         let inLocal = AppState.shared.localStation(byURL: station.url) != nil
         actionButton.image = actionButtonIcons[inLocal]!
         actionButton.toolTip = inLocal ? "" : NSLocalizedString("Add the station to my stations list", comment: "Button tooltip")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func refreshIcon() {
+        StationIconLoader.shared.loadIcon(for: station) { [weak self] image in
+            guard let self = self else { return }
+            if let image = image {
+                self.iconView.image = image
+            }
+        }
     }
 
     /* ****************************************

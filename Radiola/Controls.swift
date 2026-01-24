@@ -141,6 +141,21 @@ public extension NSImage {
         return image
     }
 
+    func resized(to size: NSSize) -> NSImage {
+        let image = NSImage(size: size)
+        image.lockFocus()
+
+        NSGraphicsContext.current?.imageInterpolation = .high
+        draw(in: NSRect(origin: .zero, size: size),
+             from: NSRect(origin: .zero, size: self.size),
+             operation: .sourceOver,
+             fraction: 1.0)
+        image.unlockFocus()
+        image.isTemplate = false
+
+        return image
+    }
+
     func writePNG(toURL url: URL) {
         guard let data = tiffRepresentation,
               let rep = NSBitmapImageRep(data: data),

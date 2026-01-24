@@ -70,7 +70,10 @@ class StationsMerger {
      * ****************************************/
     private func statStation(src: Station, srcParent: StationGroup, destParent: StationGroup?) {
         if let station = destParent?.findStation(src: src) {
-            if station.title != src.title || station.isFavorite != src.isFavorite {
+            if station.title != src.title ||
+                station.isFavorite != src.isFavorite ||
+                station.homepageUrl != src.homepageUrl ||
+                station.iconUrl != src.iconUrl {
                 statistics.updatedStations += 1
             }
             return
@@ -125,12 +128,16 @@ class StationsMerger {
         if let station = destParent.findStation(src: src) {
             station.title = src.title
             station.isFavorite = src.isFavorite
+            station.homepageUrl = src.homepageUrl
+            station.iconUrl = src.iconUrl
             return
         }
 
         let index = insertIndex(src: src, srcParent: srcParent, destParent: destParent)
         let station = currentStations.createStation(title: src.title, url: src.url)
         station.isFavorite = src.isFavorite
+        station.homepageUrl = src.homepageUrl
+        station.iconUrl = src.iconUrl
         destParent.items.insert(station, at: index)
     }
 

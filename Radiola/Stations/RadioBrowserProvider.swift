@@ -74,6 +74,8 @@ class RadioBrowserProvider: ObservableObject {
             s.bitrate = r.bitrate * 1024
             s.votes = r.votes
             s.countryCode = r.countryCode
+            s.homepageUrl = r.homepage
+            s.iconUrl = r.favicon
             res.append(s)
         }
 
