@@ -9,17 +9,17 @@ Radiola is a lightweight Internet radio player for macOS. It's located in the me
 
 Most often, you use the **menu in the menu bar**.
 
-![Radiola menu](https://user-images.githubusercontent.com/854935/182122940-a42de641-3377-4728-bd95-b3b6e54f2ea9.png)  
+<img width="461" height="375" alt="Image" src="https://github.com/user-attachments/assets/c0c9412d-be20-442a-9199-17772ee782f0" />
 
 
 In the **station window** you can both manage the station list and use it as an Internet radio player.
 
-![Radiola Main Window](https://user-images.githubusercontent.com/854935/182121740-67f47916-85a7-4d3d-8742-a0ea06c511c9.png)
+<img width="975" height="636" alt="Image" src="https://github.com/user-attachments/assets/7cfcf773-0cc1-479c-8879-a501f8037485" />
 
 
-The **history window** allows you to find out what song is playing now or has played recently.
+The **history** allows you to find out what song is playing now or has played recently.
 
-![Radiola History Window](https://user-images.githubusercontent.com/854935/182125735-6dd7494a-c899-471e-a617-1dd09dbe497c.png)
+<img width="975" height="636" alt="Image" src="https://github.com/user-attachments/assets/353cfb0d-394a-4ae1-93f1-d8a81d952e7a" />
 
 ## Radiola features
 * Very light, less than 40 megabytes.
