@@ -251,4 +251,20 @@ class AppState: ObservableObject {
 
         return nil
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func applyProxySettings() {
+        let proxy = settings.proxy ?? ""
+        if proxy != "" {
+            debug("Setting proxy to \(proxy)")
+            setenv("http_proxy", proxy, 1)
+            setenv("https_proxy", proxy, 1)
+        } else {
+            debug("Disable proxy")
+            unsetenv("http_proxy")
+            unsetenv("https_proxy")
+        }
+    }
 }

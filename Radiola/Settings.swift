@@ -263,6 +263,15 @@ class Settings {
      * ****************************************/
     @Setting("ShowMainWindowOnStartup", default: false)
     var showMainWindowOnStartup: Bool
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private let proxyKey = "Proxy"
+    var proxy: String? {
+        get { data.string(forKey: proxyKey) }
+        set { data.set(newValue, forKey: proxyKey) }
+    }
 }
 
 let settings = Settings()

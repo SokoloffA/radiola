@@ -399,6 +399,9 @@
         }
       }
     },
+    "HTTP(S) proxy:" : {
+      "comment" : "Settings label"
+    },
     "Left mouse button:" : {
       "comment" : "Settings label",
       "localizations" : {

@@ -12,6 +12,9 @@ class AdvancedPage: NSViewController {
     private let playLastStationCheckBox = Checkbox(title: NSLocalizedString("Play last station on startup", tableName: "Settings", comment: "Settings control title"))
     private let showMainWindowOnStartupCheckBox = Checkbox(title: NSLocalizedString("Open the main window on startup", tableName: "Settings", comment: "Settings control title"))
 
+    private let proxyLabel = Label(text: NSLocalizedString("HTTP(S) proxy:", tableName: "Settings", comment: "Settings label"))
+    private let proxyEdit = TextEdit()
+
     /* ****************************************
      *
      * ****************************************/
@@ -25,6 +28,11 @@ class AdvancedPage: NSViewController {
         showMainWindowOnStartupCheckBox.state = settings.showMainWindowOnStartup ? .on : .off
         showMainWindowOnStartupCheckBox.target = self
         showMainWindowOnStartupCheckBox.action = #selector(showMainWindowOnStartupCheckBoxChanged)
+
+        proxyEdit.placeholderString = "http://127.0.0.1:1316"
+        proxyEdit.stringValue = settings.proxy ?? ""
+        proxyEdit.target = self
+        proxyEdit.action = #selector(proxyChanged)
     }
 
     /* ****************************************
@@ -59,6 +67,27 @@ class AdvancedPage: NSViewController {
         showMainWindowOnStartupCheckBox.leadingAnchor.constraint(equalTo: playLastStationCheckBox.leadingAnchor).isActive = true
         showMainWindowOnStartupCheckBox.trailingAnchor.constraint(equalTo: playLastStationCheckBox.trailingAnchor).isActive = true
 
+        let separator = Separator()
+        res.addSubview(separator)
+        separator.topAnchor.constraint(equalTo: showMainWindowOnStartupCheckBox.bottomAnchor, constant: 24).isActive = true
+        separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
+        separator.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
+
+        res.addSubview(proxyLabel)
+        proxyLabel.alignment = .right
+        proxyLabel.translatesAutoresizingMaskIntoConstraints = false
+        proxyLabel.topAnchor.constraint(equalToSystemSpacingBelow: separator.bottomAnchor, multiplier: 1).isActive = true
+        proxyLabel.leadingAnchor.constraint(equalTo: startupLabel.leadingAnchor).isActive = true
+        proxyLabel.trailingAnchor.constraint(equalTo: startupLabel.trailingAnchor).isActive = true
+
+        res.addSubview(proxyEdit)
+        proxyEdit.translatesAutoresizingMaskIntoConstraints = false
+        proxyEdit.centerYAnchor.constraint(equalTo: proxyLabel.centerYAnchor).isActive = true
+        proxyEdit.leadingAnchor.constraint(equalTo: playLastStationCheckBox.leadingAnchor).isActive = true
+        res.trailingAnchor.constraint(equalToSystemSpacingAfter: proxyEdit.trailingAnchor, multiplier: 1).isActive = true
+
+        res.bottomAnchor.constraint(equalTo: proxyEdit.bottomAnchor, constant: 32).isActive = true
+
         return res
     }
 
@@ -84,6 +113,15 @@ class AdvancedPage: NSViewController {
      * ****************************************/
     @objc private func showMainWindowOnStartupCheckBoxChanged(_ sender: NSButton) {
         settings.showMainWindowOnStartup = sender.state == .on
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func proxyChanged(_ sender: NSTextField) {
+        settings.proxy = proxyEdit.stringValue != "" ? proxyEdit.stringValue : nil
+        AppState.shared.applyProxySettings()
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 }

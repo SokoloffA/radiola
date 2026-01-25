@@ -87,6 +87,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         KeyboardShortcuts.onKeyUp(for: .togglePlayPuse) { [self] in togglePlay(nil) }
         KeyboardShortcuts.onKeyUp(for: .showMainMenu) { [self] in showMainMenu(nil) }
 
+        AppState.shared.applyProxySettings()
+
         playerStatusChanged()
 
         if let url = argURL {

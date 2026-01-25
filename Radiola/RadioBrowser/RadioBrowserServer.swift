@@ -26,7 +26,14 @@ extension RadioBrowser {
                 throw RadioBrowser.Error("Invalid URL \(url)")
             }
 
-            let (data, _) = try await URLSession.shared.data(from: url)
+            let config = URLSessionConfiguration.default
+
+            if let proxyDict = httpProxyDictionaryFromEnv() {
+                config.connectionProxyDictionary = proxyDict
+            }
+
+            let session = URLSession(configuration: config)
+            let (data, _) = try await session.data(from: url)
             let decoder = JSONDecoder()
             decoder.dateDecodingStrategy = JSONDecoder.DateDecodingStrategy.iso8601
 
@@ -37,6 +44,45 @@ extension RadioBrowser {
                 warning(error)
                 throw error
             }
+        }
+
+        /* ****************************************
+         *
+         * ****************************************/
+        internal func httpProxyDictionaryFromEnv() -> [String: Any]? {
+            let env = ProcessInfo.processInfo.environment
+
+            guard
+                let raw = env["http_proxy"] ?? env["HTTP_PROXY"],
+                !raw.isEmpty
+            else {
+                return nil
+            }
+
+            let urlString: String
+            if raw.contains("://") {
+                urlString = raw
+            } else {
+                urlString = "http://\(raw)"
+            }
+
+            guard
+                let url = URL(string: urlString),
+                let host = url.host,
+                let port = url.port
+            else {
+                return nil
+            }
+
+            return [
+                kCFNetworkProxiesHTTPEnable as String: true,
+                kCFNetworkProxiesHTTPProxy as String: host,
+                kCFNetworkProxiesHTTPPort as String: port,
+
+                kCFNetworkProxiesHTTPSEnable as String: true,
+                kCFNetworkProxiesHTTPSProxy as String: host,
+                kCFNetworkProxiesHTTPSPort as String: port,
+            ]
         }
     }
 }
@@ -94,12 +140,11 @@ extension RadioBrowser {
         } catch {
             do {
                 try Task.checkCancellation()
-            }
-            catch {
+            } catch {
                 return (server, false)
             }
 
-            print("Failed to ping \(server.url): \(error)")//.localizedDescription)")
+            print("Failed to ping \(server.url): \(error)") // .localizedDescription)")
             return (server, false)
         }
     }
@@ -110,22 +155,22 @@ extension RadioBrowser {
         let servers = try getAllServers()
 
         do {
-                return try await withThrowingTaskGroup(of: (Server, Bool).self) { taskGroup in
-                    for server in servers {
-                        taskGroup.addTask {
-                            await pingServer(server: server)
-                        }
+            return try await withThrowingTaskGroup(of: (Server, Bool).self) { taskGroup in
+                for server in servers {
+                    taskGroup.addTask {
+                        await pingServer(server: server)
                     }
-
-                    for try await (server, isAvailable) in taskGroup {
-                        if isAvailable {
-                            taskGroup.cancelAll()
-                            return server
-                        }
-                    }
-
-                    throw RadioBrowser.Error("Unable to find an available server")  // Если все серверы недоступны
                 }
+
+                for try await (server, isAvailable) in taskGroup {
+                    if isAvailable {
+                        taskGroup.cancelAll()
+                        return server
+                    }
+                }
+
+                throw RadioBrowser.Error("Unable to find an available server") // Если все серверы недоступны
             }
+        }
     }
 }

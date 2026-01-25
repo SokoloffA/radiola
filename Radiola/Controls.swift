@@ -262,6 +262,18 @@ class TextField: NSTextField {
     }
 }
 
+// MARK: - TextEdit
+
+class TextEdit: NSTextField {
+    /* ****************************************
+     *
+     * ****************************************/
+    override func textDidChange(_ notification: Notification) {
+        super.textDidChange(notification)
+        sendAction(action, to: target)
+    }
+}
+
 // MARK: - Label
 
 class Label: NSTextField {
