@@ -211,10 +211,10 @@ class Player: NSObject {
                 metadataChanged(nil)
 
                 if let error = player.error {
-                    warning("Player: FFPlaying error : \(error.localizedDescription)")
                     let title = NSLocalizedString("Sorry, I couldn't play \"%@\".", comment: "Player error title. %@ is a station name")
                     Alarm.show(title: String(format: title, station?.title ?? ""), message: error.localizedDescription)
-                    warning("FFPlayer error:", error.localizedDescription, ":", error.userInfo[NSDebugDescriptionErrorKey] ?? "")
+                    let text = error.localizedDescription.filter{!$0.isNewline}
+                    warning("Player  error: \"\(text)\".   Description: \"\(error.debugDescription)\"")
                 }
         }
 

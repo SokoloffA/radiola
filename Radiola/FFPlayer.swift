@@ -107,7 +107,7 @@ public class FFPlayer: ObservableObject {
         backend.userInterrupt.value = true
         backend.shouldInterrupt.value = true
 
-        backend.queue.async {
+        backend.queue.sync {
             self.backend.setVolume(0)
             self.backend.stop()
         }
