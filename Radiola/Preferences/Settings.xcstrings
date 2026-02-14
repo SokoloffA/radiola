@@ -449,6 +449,9 @@
         }
       }
     },
+    "mark current song as favorite" : {
+      "comment" : "Settings combobox item"
+    },
     "Media key handling:" : {
       "comment" : "Settings label",
       "localizations" : {

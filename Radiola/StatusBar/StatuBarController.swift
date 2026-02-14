@@ -131,6 +131,9 @@ class StatusBarController: NSObject, NSMenuDelegate {
 
             case .mute:
                 player.isMuted = !player.isMuted
+
+            case .markAsFavorite:
+                player.isFavoriteSong = true
         }
     }
 
@@ -139,7 +142,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
      * ****************************************/
     func showMenu() {
         menuItem.menu = buildMenu()
-        menuItem.button?.performClick(nil)  // Optional: Programmatically trigger the menu
+        menuItem.button?.performClick(nil) // Optional: Programmatically trigger the menu
     }
 
     /* ****************************************

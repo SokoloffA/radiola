@@ -190,6 +190,9 @@ class ControlsPage: NSViewController {
         cbx.addItem(withTitle: NSLocalizedString("toggles mute", tableName: "Settings", comment: "Settings combobox item"))
         cbx.lastItem?.tag = MouseButtonAction.mute.rawValue
 
+        cbx.addItem(withTitle: NSLocalizedString("mark current song as favorite", tableName: "Settings", comment: "Settings combobox item"))
+        cbx.lastItem?.tag = MouseButtonAction.markAsFavorite.rawValue
+
         cbx.selectItem(withTag: settings.mouseAction(forButton: button).rawValue)
         cbx.target = self
         cbx.action = #selector(buttonActionChanged)
