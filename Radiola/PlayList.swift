@@ -98,7 +98,7 @@ class PlayList {
     private func parseM3u(baseURL: URL, content: String) -> [URL] {
         var res: [URL] = []
         for l in content.split(separator: "\n") {
-            let line = l.trimmingCharacters(in: .whitespaces)
+            let line = l.trimmingCharacters(in: .whitespacesAndNewlines)
             if line.isEmpty { continue }
             if line.hasPrefix("#") { continue }
 
@@ -116,7 +116,7 @@ class PlayList {
     private func parsePls(baseURL: URL, content: String) -> [URL] {
         var res: [URL] = []
         for l in content.split(separator: "\n") {
-            let line = l.trimmingCharacters(in: .whitespaces)
+            let line = l.trimmingCharacters(in: .whitespacesAndNewlines)
             if !line.hasPrefix("File") { continue }
 
             let parts = line.split(separator: "=", maxSplits: 1)
