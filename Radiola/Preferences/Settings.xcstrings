@@ -350,6 +350,12 @@
             "state" : "translated",
             "value" : "Scorciatoia mostra menu"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Глобальные клавиши для отображения меню"
+          }
         }
       }
     },
@@ -400,7 +406,15 @@
       }
     },
     "HTTP(S) proxy:" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP(S) прокси:"
+          }
+        }
+      }
     },
     "Left mouse button:" : {
       "comment" : "Settings label",
@@ -450,7 +464,15 @@
       }
     },
     "mark current song as favorite" : {
-      "comment" : "Settings combobox item"
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "пометить текущую песню как любимую"
+          }
+        }
+      }
     },
     "Media key handling:" : {
       "comment" : "Settings label",
