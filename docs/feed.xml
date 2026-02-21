@@ -5,6 +5,16 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 11.1.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fix: An error occurred when switching to the next station if one was already playing&lt;/li&gt;
+&lt;li&gt;Fix: Some playlists were parsed incorrectly&lt;/li&gt;
+&lt;li&gt;Translations updated &lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 21 Feb 2026 11:44:01 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v11.1.0/Radiola-11.1.0.dmg" sparkle:version="11.1.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 11.0.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Translations updated&lt;/li&gt;
