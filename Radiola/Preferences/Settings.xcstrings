@@ -408,6 +408,12 @@
     "HTTP(S) proxy:" : {
       "comment" : "Settings label",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP(S)-Proxy:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -466,10 +472,22 @@
     "mark current song as favorite" : {
       "comment" : "Settings combobox item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktuellen Song als Favorit markieren"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "contrassegna il brano corrente come preferito"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "пометить текущую песню как любимую"
+            "value" : "отмечает текущую песню как любимую"
           }
         }
       }

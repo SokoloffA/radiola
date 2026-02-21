@@ -1228,7 +1228,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Aktuelles Lied als Favorit markieren"
+            "value" : "Aktuellen Song als Favorit markieren"
           }
         },
         "it" : {
@@ -1869,7 +1869,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das aktuelle Lied wurde als Favorit markiert"
+            "value" : "Der aktuelle Song wurde als Favorit markiert"
           }
         },
         "it" : {
@@ -1892,7 +1892,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Das aktuelle Lied wurde als Favorit markiert."
+            "value" : "Der aktuelle Song wurde als Favorit markiert."
           }
         },
         "it" : {
