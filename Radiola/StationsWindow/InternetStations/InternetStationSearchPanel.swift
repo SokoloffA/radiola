@@ -28,8 +28,7 @@ class InternetStationSearchPanel: NSControl {
         self.provider = provider
         super.init(frame: NSRect.zero)
 
-        wantsLayer = true
-        layer?.backgroundColor = NSColor.textBackgroundColor.cgColor
+        setBackgroundColor(NSColor.textBackgroundColor)
 
         addSubview(matchTypeCombo)
         addSubview(searchTextView)
@@ -95,6 +94,14 @@ class InternetStationSearchPanel: NSControl {
      * ****************************************/
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override func viewDidChangeEffectiveAppearance() {
+        super.viewDidChangeEffectiveAppearance()
+        setBackgroundColor(NSColor.textBackgroundColor)
     }
 
     /* ****************************************

@@ -41,8 +41,7 @@ class LocalStationSearchPanel: NSControl {
      *
      * ****************************************/
     private func setupView() {
-        wantsLayer = true
-        layer?.backgroundColor = NSColor.textBackgroundColor.cgColor
+        setBackgroundColor(NSColor.textBackgroundColor)
 
         addSubview(searchTextView)
         addSubview(sortCombo)
@@ -79,6 +78,14 @@ class LocalStationSearchPanel: NSControl {
         sortCombo.addItem(withTitle: NSLocalizedString("my ordering", comment: "Station search panel"), tag: Order.myOrdering.rawValue)
         sortCombo.addItem(withTitle: NSLocalizedString("sort by name", comment: "Station search panel"), tag: Order.byName.rawValue)
         sortCombo.selectItem(withTag: Order.myOrdering.rawValue)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override func viewDidChangeEffectiveAppearance() {
+        super.viewDidChangeEffectiveAppearance()
+        setBackgroundColor(NSColor.textBackgroundColor)
     }
 
     /* ****************************************

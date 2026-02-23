@@ -44,8 +44,7 @@ class HistorySearchPanel: NSControl {
      *
      * ****************************************/
     private func setupView() {
-        wantsLayer = true
-        layer?.backgroundColor = NSColor.textBackgroundColor.cgColor
+        setBackgroundColor(NSColor.textBackgroundColor)
 
         addSubview(searchTextView)
         addSubview(sortCombo)
@@ -91,6 +90,14 @@ class HistorySearchPanel: NSControl {
         sortCombo.addItem(withTitle: NSLocalizedString("sort by name", comment: "History search panel"), tag: Order.byName.rawValue)
         sortCombo.addItem(withTitle: NSLocalizedString("sort by station", comment: "History search panel"), tag: Order.byStation.rawValue)
         sortCombo.selectItem(withTag: Order.byRecent.rawValue)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override func viewDidChangeEffectiveAppearance() {
+        super.viewDidChangeEffectiveAppearance()
+        setBackgroundColor(NSColor.textBackgroundColor)
     }
 
     /* ****************************************
