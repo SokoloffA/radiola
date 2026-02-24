@@ -192,7 +192,10 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
      * ****************************************/
     private func refreshFavoriteButton() {
         favoriteButton.image = favoriteIcons[station.isFavorite]!
-        favoriteButton.toolTip = station.isFavorite ? "Unmark the station as a favorite" : "Mark the station as a favorite"
+        favoriteButton.toolTip = NSLocalizedString(
+            station.isFavorite ? "Unmark station as favorite" : "Mark station as favorite",
+            comment: "Station favorite star icon tooltip"
+        )
     }
 
     /* ****************************************

@@ -1268,6 +1268,18 @@
         }
       }
     },
+    "Mark station as favorite" : {
+      "comment" : "Station favorite star icon tooltip",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markiere Sender als Favoriten"
+          }
+        }
+      }
+    },
     "matches with" : {
       "comment" : "Internet station search panel",
       "localizations" : {
@@ -2117,6 +2129,18 @@
         }
       }
     },
+    "Unmark station as favorite" : {
+      "comment" : "Station favorite star icon tooltip",
+      "extractionState" : "manual",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entferne Sender von Favoriten"
+          }
+        }
+      }
+    },
     "Unmute" : {
       "comment" : "Mute button tooltip\nStatus bar menu Item",
       "localizations" : {
@@ -2143,6 +2167,12 @@
     "URL:" : {
       "comment" : "Add station dialog label for URL edit",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
