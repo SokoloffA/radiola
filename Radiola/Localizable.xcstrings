@@ -1037,6 +1037,9 @@
         }
       }
     },
+    "Group name" : {
+      "comment" : "Station group placeholder"
+    },
     "History" : {
       "comment" : "Sidebar group\nSidebar item",
       "localizations" : {
@@ -1267,6 +1270,9 @@
           }
         }
       }
+    },
+    "Mark station as favorite" : {
+      "comment" : "Station favorite star icon tooltip"
     },
     "matches with" : {
       "comment" : "Internet station search panel",
@@ -1862,6 +1868,9 @@
         }
       }
     },
+    "Station name" : {
+      "comment" : "Station name placeholder"
+    },
     "The current song has been marked as a favorite" : {
       "comment" : "History window icon tooltip",
       "extractionState" : "stale",
@@ -2116,6 +2125,9 @@
           }
         }
       }
+    },
+    "Unmark station as favorite" : {
+      "comment" : "Station favorite star icon tooltip"
     },
     "Unmute" : {
       "comment" : "Mute button tooltip\nStatus bar menu Item",

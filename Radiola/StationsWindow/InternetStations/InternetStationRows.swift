@@ -47,7 +47,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         addSubview(qualityText)
         addSubview(voteText)
 
-        nameEdit.placeholderString = "Station name"
+        nameEdit.placeholderString = NSLocalizedString("Station name", comment: "Station name placeholder")
         nameEdit.isBordered = false
         nameEdit.drawsBackground = false
         if let font = nameEdit.font {
@@ -158,19 +158,19 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         switch votes {
             case 0:
-            res.append(format(NSLocalizedString("no votes", comment: "Internet station row"), normalFont))
+                res.append(format(NSLocalizedString("no votes", comment: "Internet station row"), normalFont))
 
             case 0 ..< 1000:
                 res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
                 res.append(format(" \(votes)", normalFont))
 
-            case 1000 ..< 1000000:
+            case 1000 ..< 1_000_000:
                 res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
                 res.append(format(" \(votes / 1000)", normalFont))
                 res.append(format("k", smallFont))
             default:
                 res.append(format(NSLocalizedString("votes:", comment: "Internet station row"), smallFont))
-                res.append(format(" \(votes / 10000000)", normalFont))
+                res.append(format(" \(votes / 10_000_000)", normalFont))
                 res.append(format("M", smallFont))
         }
         return res

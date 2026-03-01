@@ -30,7 +30,7 @@ class LocalGroupRow: NSView {
         addSubview(separator)
         addSubview(menuButton)
 
-        nameEdit.placeholderString = "Group name"
+        nameEdit.placeholderString = NSLocalizedString("Group name", comment: "Station group placeholder")
         nameEdit.isBordered = false
         nameEdit.drawsBackground = false
         if let font = nameEdit.font {
@@ -115,7 +115,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
         addSubview(urlEdit)
         addSubview(separator)
 
-        nameEdit.placeholderString = "Station name"
+        nameEdit.placeholderString = NSLocalizedString("Station name", comment: "Station name placeholder")
         nameEdit.isBordered = false
         nameEdit.drawsBackground = false
         if let font = nameEdit.font {
