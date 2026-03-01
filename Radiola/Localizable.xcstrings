@@ -876,6 +876,9 @@
         }
       }
     },
+    "Copy song title to clipboard" : {
+      "comment" : "History action menu item"
+    },
     "Copy station title to clipboard" : {
       "comment" : "Station action menu item",
       "localizations" : {

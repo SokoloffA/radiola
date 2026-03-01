@@ -12,6 +12,7 @@ class HistoryRow: NSView {
     private var stationLabel = Label()
     private var dateLabel = Label()
     private let favoriteButton = ImageButton()
+    let menuButton = MenuButton()
     let separator = Separator()
 
     let record: HistoryRecord
@@ -26,6 +27,7 @@ class HistoryRow: NSView {
 
         addSubview(songLabel)
         addSubview(stationLabel)
+        addSubview(menuButton)
         addSubview(dateLabel)
         addSubview(favoriteButton)
         addSubview(separator)
@@ -47,21 +49,27 @@ class HistoryRow: NSView {
         stationLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false
+        menuButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            songLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            songLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             songLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -36),
 
             favoriteButton.centerYAnchor.constraint(equalTo: songLabel.centerYAnchor),
-            favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
             favoriteButton.widthAnchor.constraint(equalToConstant: 20),
             favoriteButton.heightAnchor.constraint(equalToConstant: 20),
 
+            menuButton.leadingAnchor.constraint(equalTo: favoriteButton.trailingAnchor, constant: 8),
+            menuButton.trailingAnchor.constraint(equalTo: trailingAnchor),
+            menuButton.centerYAnchor.constraint(equalTo: favoriteButton.centerYAnchor),
+            menuButton.widthAnchor.constraint(equalTo: favoriteButton.widthAnchor),
+            menuButton.heightAnchor.constraint(equalTo: favoriteButton.heightAnchor),
+
             stationLabel.leadingAnchor.constraint(equalTo: songLabel.leadingAnchor),
             dateLabel.leadingAnchor.constraint(equalTo: stationLabel.trailingAnchor, constant: 8),
-            dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            dateLabel.trailingAnchor.constraint(equalTo: favoriteButton.trailingAnchor),
 
-            songLabel.topAnchor.constraint(equalTo: topAnchor, constant: 7.0),
+            songLabel.topAnchor.constraint(equalTo: topAnchor, constant: 6.0),
             stationLabel.topAnchor.constraint(equalTo: songLabel.bottomAnchor, constant: 4),
             stationLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0),
 
@@ -69,6 +77,8 @@ class HistoryRow: NSView {
         ])
 
         separator.alignBottom(of: self)
+
+        menuButton.menu = initMenu()
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refreshDate),
@@ -93,6 +103,24 @@ class HistoryRow: NSView {
      * ****************************************/
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func initMenu() -> NSMenu {
+        let menu = NSMenu()
+        menu.addItem(withTitle: NSLocalizedString("Copy song title to clipboard", comment: "History action menu item"), action: #selector(copySongToClipboard), keyEquivalent: "").target = self
+        return menu
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func copySongToClipboard() {
+        let pasteboard = NSPasteboard.general
+        pasteboard.declareTypes([.string], owner: nil)
+        pasteboard.setString(record.song, forType: .string)
     }
 
     /* ****************************************

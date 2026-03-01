@@ -123,7 +123,7 @@ extension HistoryDelegate: NSOutlineViewDelegate {
      * Variable Row Heights
      * ****************************************/
     func outlineView(_ outlineView: NSOutlineView, heightOfRowByItem item: Any) -> CGFloat {
-        return CGFloat(44.0)
+        return CGFloat(48.0)
     }
 }
 
