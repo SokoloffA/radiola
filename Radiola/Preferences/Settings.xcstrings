@@ -613,7 +613,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hauptfenster beim Start öffnen"
+            "value" : "Hauptfenster öffnen"
           }
         },
         "it" : {
@@ -636,7 +636,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bei Start den letzten Sender abspielen"
+            "value" : "den letzten Sender abspielen"
           }
         },
         "it" : {
@@ -844,7 +844,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Den Eintrag „Songtitel und Interpret kopieren“ im Menü anzeigen"
+            "value" : "den Eintrag „Songtitel und Interpret kopieren“ im Menü anzeigen"
           }
         },
         "it" : {
@@ -1097,7 +1097,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wenn die Wiedergabe startet."
+            "value" : "wenn die Wiedergabe startet"
           }
         },
         "it" : {
