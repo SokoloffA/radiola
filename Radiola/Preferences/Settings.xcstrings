@@ -21,6 +21,12 @@
             "state" : "translated",
             "value" : "Дополнительно"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "高级"
+          }
         }
       }
     },
@@ -43,6 +49,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "всегда"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总是"
           }
         }
       }
@@ -67,6 +79,12 @@
             "state" : "translated",
             "value" : "Внешний вид"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "外观"
+          }
         }
       }
     },
@@ -89,6 +107,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "как плоский список"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作为平铺列表"
           }
         }
       }
@@ -113,6 +137,12 @@
             "state" : "translated",
             "value" : "как вложенные меню"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "作为子菜单"
+          }
         }
       }
     },
@@ -123,6 +153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Аудио"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音频"
           }
         }
       }
@@ -147,6 +183,12 @@
             "state" : "translated",
             "value" : "Автоматически проверять обновления"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自动检查更新"
+          }
         }
       }
     },
@@ -170,6 +212,12 @@
             "state" : "translated",
             "value" : "меняет громкость"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改音量"
+          }
         }
       }
     },
@@ -192,6 +240,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Проверить обновления сейчас"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "立即检查更新"
           }
         }
       }
@@ -217,6 +271,12 @@
             "state" : "translated",
             "value" : "из облака и локальные станции"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "云端和本地电台"
+          }
         }
       }
     },
@@ -241,6 +301,12 @@
             "state" : "translated",
             "value" : "только из облака (рекомендуется)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅云端电台（推荐）"
+          }
         }
       }
     },
@@ -263,6 +329,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Управление"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制"
           }
         }
       }
@@ -287,6 +359,12 @@
             "state" : "translated",
             "value" : "Устройство:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设备："
+          }
         }
       }
     },
@@ -309,6 +387,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ничего не делает"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无操作"
           }
         }
       }
@@ -333,6 +417,12 @@
             "state" : "translated",
             "value" : "Глобальные клавиши для отображения истории"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示历史记录的全局快捷键"
+          }
         }
       }
     },
@@ -355,6 +445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Глобальные клавиши для отображения меню"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示菜单的全局快捷键"
           }
         }
       }
@@ -379,6 +475,12 @@
             "state" : "translated",
             "value" : "Глобальные клавиши для отображения станций"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示电台的全局快捷键"
+          }
         }
       }
     },
@@ -402,6 +504,12 @@
             "state" : "translated",
             "value" : "Глобальные клавиши для переключения между воспроизведением и паузой"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放/暂停的全局快捷键"
+          }
         }
       }
     },
@@ -418,6 +526,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HTTP(S) прокси:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP(S) 代理："
           }
         }
       }
@@ -441,6 +555,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Левая кнопка мыши:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鼠标左键："
           }
         }
       }
@@ -466,6 +586,12 @@
             "state" : "translated",
             "value" : "тольео локальные станции"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅本地电台"
+          }
         }
       }
     },
@@ -488,6 +614,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "отмечает текущую песню как любимую"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将当前歌曲标记为收藏"
           }
         }
       }
@@ -512,6 +644,12 @@
             "state" : "translated",
             "value" : "Медиа клавиши:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "媒体键处理："
+          }
         }
       }
     },
@@ -534,6 +672,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Средняя кнопка мыши:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鼠标中键："
           }
         }
       }
@@ -558,6 +702,12 @@
             "state" : "translated",
             "value" : "Колесико мыши:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鼠标滚轮："
+          }
         }
       }
     },
@@ -580,6 +730,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "никогда"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从不"
           }
         }
       }
@@ -604,6 +760,12 @@
             "state" : "translated",
             "value" : "Уведомления:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通知："
+          }
         }
       }
     },
@@ -626,6 +788,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показывать главное окно при запуске"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动时打开主窗口"
           }
         }
       }
@@ -650,6 +818,12 @@
             "state" : "translated",
             "value" : "Играть последнюю станцию при запуске программы"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动时播放上次电台"
+          }
         }
       }
     },
@@ -672,6 +846,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Нажмите комбинацию клавиш"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按快捷键"
           }
         }
       }
@@ -696,6 +876,12 @@
             "state" : "translated",
             "value" : "Кнопки предыдущей и следующей трека:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一曲和下一曲按钮："
+          }
         }
       }
     },
@@ -718,6 +904,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Задать комбинацию клавиш"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "录制快捷键"
           }
         }
       }
@@ -742,6 +934,12 @@
             "state" : "translated",
             "value" : "Правая кнопка мыши:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鼠标右键："
+          }
         }
       }
     },
@@ -764,6 +962,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать всплывающую подсказку с радиостанцией и песней"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示电台和歌曲的工具提示"
           }
         }
       }
@@ -788,6 +992,12 @@
             "state" : "translated",
             "value" : "Показывать группы в «любимых станциях»:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在收藏中显示分组："
+          }
         }
       }
     },
@@ -810,6 +1020,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отображать песню в строке меню"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在菜单栏显示歌曲标题"
           }
         }
       }
@@ -835,6 +1051,12 @@
             "state" : "translated",
             "value" : "Показывать списки станций:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示电台列表："
+          }
         }
       }
     },
@@ -857,6 +1079,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать в меню пункт «Копировать название песни и исполнителя»."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在菜单中显示\"复制歌曲标题和艺术家\"选项"
           }
         }
       }
@@ -881,6 +1109,12 @@
             "state" : "translated",
             "value" : "Показывать пункт «Выключить звук» в меню"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在菜单中显示静音选项"
+          }
         }
       }
     },
@@ -903,6 +1137,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показывать регулятор громкости в меню"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在菜单中显示音量控制"
           }
         }
       }
@@ -927,6 +1167,12 @@
             "state" : "translated",
             "value" : "показывает историю"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示历史记录"
+          }
         }
       }
     },
@@ -949,6 +1195,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "показывает главное окно"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示主窗口"
           }
         }
       }
@@ -973,6 +1225,12 @@
             "state" : "translated",
             "value" : "показывает всплывающее меню"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示弹出菜单"
+          }
         }
       }
     },
@@ -995,6 +1253,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Запуск:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启动："
           }
         }
       }
@@ -1019,6 +1283,12 @@
             "state" : "translated",
             "value" : "переключает любимые станции"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换收藏的电台"
+          }
         }
       }
     },
@@ -1041,6 +1311,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "включает и выключает звук"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换静音"
           }
         }
       }
@@ -1065,6 +1341,12 @@
             "state" : "translated",
             "value" : "переключает воспроизведение и паузу"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换播放和暂停"
+          }
         }
       }
     },
@@ -1087,6 +1369,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обновления"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更新"
           }
         }
       }
@@ -1111,6 +1399,12 @@
             "state" : "translated",
             "value" : "Когда начинается воспроизведение."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当播放开始时。"
+          }
         }
       }
     },
@@ -1133,6 +1427,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "когда открыто главное окно"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当主窗口打开时"
           }
         }
       }
@@ -1157,6 +1457,12 @@
             "state" : "translated",
             "value" : "с отступами"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "带边距"
+          }
         }
       }
     },
@@ -1179,6 +1485,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы всегда можете открыть меню с помощью Control+Mouse Click"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您始终可以使用 Control+鼠标点击 打开菜单"
           }
         }
       }

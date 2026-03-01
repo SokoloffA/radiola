@@ -93,6 +93,18 @@
               }
             }
           }
+        },
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "将添加 %lld 个电台。"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -188,6 +200,18 @@
               }
             }
           }
+        },
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "将更新 %lld 个电台。"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -210,6 +234,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Добавить группу"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加分组"
           }
         }
       }
@@ -234,6 +264,12 @@
             "state" : "translated",
             "value" : "Добавить группу в «%@»"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加分组到 \"%@\""
+          }
         }
       }
     },
@@ -256,6 +292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Добавить станцию"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加电台"
           }
         }
       }
@@ -280,6 +322,12 @@
             "state" : "translated",
             "value" : "Добавить станцию в «%@»"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加电台到 \"%@\""
+          }
         }
       }
     },
@@ -303,6 +351,12 @@
             "state" : "translated",
             "value" : "Добавить станцию в список «Мои станции»"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将该电台添加到我的电台列表"
+          }
         }
       }
     },
@@ -325,6 +379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы уверены что хотите продолжить?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要继续吗？"
           }
         }
       }
@@ -399,6 +459,18 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Вы уверены что хотите удалить %lld станций и групп со всем их содержимым?"
+                }
+              }
+            }
+          }
+        },
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "确定要删除 %lld 个电台和分组及其所有子项吗？"
                 }
               }
             }
@@ -480,6 +552,18 @@
               }
             }
           }
+        },
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "确定要删除 %lld 个电台吗？"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -557,6 +641,18 @@
               }
             }
           }
+        },
+        "zh-Hans" : {
+          "variations" : {
+            "plural" : {
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "确定要删除 %lld 个分组及其所有子项吗？"
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -579,6 +675,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы уверены что хотите удалить группу «%@» со всем ее содержимым?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除分组 \"%@\" 及其所有子项吗？"
           }
         }
       }
@@ -603,6 +705,12 @@
             "state" : "translated",
             "value" : "Вы уверены что хотите удалить группу «%@»?"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除分组 \"%@\" 吗？"
+          }
         }
       }
     },
@@ -625,6 +733,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы уверены что хотите удалить станцию «%@»?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除电台 \"%@\" 吗？"
           }
         }
       }
@@ -649,6 +763,12 @@
             "state" : "translated",
             "value" : "По странам"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按国家"
+          }
         }
       }
     },
@@ -671,6 +791,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "По имени"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按名称"
           }
         }
       }
@@ -695,6 +821,12 @@
             "state" : "translated",
             "value" : "По тэгу"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按标签"
+          }
         }
       }
     },
@@ -717,6 +849,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }
@@ -741,6 +879,12 @@
             "state" : "translated",
             "value" : "Не удается воспроизвести станцию. Возможно, ваше интернет-соединение слишком медленное или нестабильное."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法播放电台。您的网络连接可能太慢或不稳定。"
+          }
         }
       }
     },
@@ -757,6 +901,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "кодек:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编码格式："
           }
         }
       }
@@ -781,6 +931,12 @@
             "state" : "translated",
             "value" : "Подключение…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在连接…"
+          }
         }
       }
     },
@@ -803,6 +959,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Время соединения истекло"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接时间已过期"
           }
         }
       }
@@ -827,6 +989,12 @@
             "state" : "translated",
             "value" : "содержит"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含"
+          }
         }
       }
     },
@@ -849,6 +1017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Копировать название группы в буфер обмена"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制分组标题到剪贴板"
           }
         }
       }
@@ -873,16 +1047,34 @@
             "state" : "translated",
             "value" : "Копировать название песни и исполнителя"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制歌曲标题和艺术家"
+          }
         }
       }
     },
     "Copy song title to clipboard" : {
       "comment" : "History action menu item",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Songtitel in die Zwischenablage kopieren"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Копировать название песни в буфер обмена"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制歌曲标题到剪贴板"
           }
         }
       }
@@ -907,6 +1099,12 @@
             "state" : "translated",
             "value" : "Копировать название станции в буфер обмена"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制电台标题到剪贴板"
+          }
         }
       }
     },
@@ -929,6 +1127,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Копировать URL станции в буфер обмена"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制电台 URL 到剪贴板"
           }
         }
       }
@@ -953,6 +1157,12 @@
             "state" : "translated",
             "value" : "Копировать в буфер обмена"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制到剪贴板"
+          }
         }
       }
     },
@@ -975,6 +1185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Уменьшить громкость"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "降低音量"
           }
         }
       }
@@ -999,6 +1215,12 @@
             "state" : "translated",
             "value" : "Экспортировать…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出…"
+          }
         }
       }
     },
@@ -1021,6 +1243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Любимые станции"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收藏的电台"
           }
         }
       }
@@ -1045,16 +1273,34 @@
             "state" : "translated",
             "value" : "только любимые"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅收藏"
+          }
         }
       }
     },
     "Group name" : {
       "comment" : "Station group placeholder",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gruppenname"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Название группы"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "分组名称"
           }
         }
       }
@@ -1079,6 +1325,12 @@
             "state" : "translated",
             "value" : "История"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "历史记录"
+          }
         }
       }
     },
@@ -1101,6 +1353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "История…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "历史记录…"
           }
         }
       }
@@ -1125,6 +1383,12 @@
             "state" : "translated",
             "value" : "Увеличить громкость"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "增加音量"
+          }
         }
       }
     },
@@ -1147,6 +1411,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Внутренняя ошибка.\nДополнительные сведения см. в логах."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内部错误。\n请查看日志获取更多信息。"
           }
         }
       }
@@ -1171,6 +1441,12 @@
             "state" : "translated",
             "value" : "меньше минуты назад"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不到一分钟前"
+          }
         }
       }
     },
@@ -1193,6 +1469,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузка…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在加载…"
           }
         }
       }
@@ -1218,6 +1500,12 @@
             "state" : "translated",
             "value" : "Локальные станции"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地电台"
+          }
         }
       }
     },
@@ -1240,6 +1528,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "«%@» не похож на правильный URL."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"%@\" 似乎不是有效的 URL。"
           }
         }
       }
@@ -1264,6 +1558,12 @@
             "state" : "translated",
             "value" : "Пометить текущую песню как любимую"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将当前歌曲标记为收藏"
+          }
         }
       }
     },
@@ -1287,16 +1587,34 @@
             "state" : "translated",
             "value" : "Отметить песню как любимую"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将歌曲标记为收藏"
+          }
         }
       }
     },
     "Mark station as favorite" : {
       "comment" : "Station favorite star icon tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Markiere Sender als Favoriten"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отметить песню как любимую"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将电台标记为收藏"
           }
         }
       }
@@ -1321,6 +1639,12 @@
             "state" : "translated",
             "value" : "совпадает с"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匹配"
+          }
         }
       }
     },
@@ -1343,6 +1667,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выключить звук"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "静音"
           }
         }
       }
@@ -1367,6 +1697,12 @@
             "state" : "translated",
             "value" : "Мои списки"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的列表"
+          }
         }
       }
     },
@@ -1390,6 +1726,12 @@
             "state" : "translated",
             "value" : "ручной порядок"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的排序"
+          }
         }
       }
     },
@@ -1412,6 +1754,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Мои станции"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "我的电台"
           }
         }
       }
@@ -1437,6 +1785,12 @@
             "state" : "translated",
             "value" : "Пока нет записей"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无记录"
+          }
         }
       }
     },
@@ -1459,6 +1813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Нет результатов"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无结果"
           }
         }
       }
@@ -1483,6 +1843,12 @@
             "state" : "translated",
             "value" : "нет голосов"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无投票"
+          }
         }
       }
     },
@@ -1505,6 +1871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сейчас играет"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在播放"
           }
         }
       }
@@ -1529,6 +1901,12 @@
             "state" : "translated",
             "value" : "Открыть Radiola…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 Radiola…"
+          }
         }
       }
     },
@@ -1551,6 +1929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Остановить"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂停"
           }
         }
       }
@@ -1575,6 +1959,12 @@
             "state" : "translated",
             "value" : "Играть"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放"
+          }
         }
       }
     },
@@ -1597,6 +1987,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "играет сейчас"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在播放"
           }
         }
       }
@@ -1621,6 +2017,12 @@
             "state" : "translated",
             "value" : "Выйти"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出"
+          }
         }
       }
     },
@@ -1637,6 +2039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Radio browser"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电台浏览器"
           }
         }
       }
@@ -1661,6 +2069,12 @@
             "state" : "translated",
             "value" : "Логи Radiola"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola 日志"
+          }
         }
       }
     },
@@ -1684,6 +2098,12 @@
             "state" : "translated",
             "value" : "Удалить станцию"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除电台"
+          }
         }
       }
     },
@@ -1706,6 +2126,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Настройки…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
           }
         }
       }
@@ -1731,6 +2157,12 @@
             "state" : "translated",
             "value" : "Показывать только любимые песни"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅显示收藏的歌曲"
+          }
         }
       }
     },
@@ -1753,6 +2185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Извините, я не смог воспроизвести «%@»."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "抱歉，无法播放 \"%@\"。"
           }
         }
       }
@@ -1777,6 +2215,12 @@
             "state" : "translated",
             "value" : "сортировать по битрейту"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按比特率排序"
+          }
         }
       }
     },
@@ -1799,6 +2243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "сортировать по стране"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按国家排序"
           }
         }
       }
@@ -1823,6 +2273,12 @@
             "state" : "translated",
             "value" : "сортировать по названию"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按名称排序"
+          }
         }
       }
     },
@@ -1845,6 +2301,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "сортировать по последним"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按最近排序"
           }
         }
       }
@@ -1869,6 +2331,12 @@
             "state" : "translated",
             "value" : "сортировать по станции"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按电台排序"
+          }
         }
       }
     },
@@ -1892,16 +2360,34 @@
             "state" : "translated",
             "value" : "сортировать по голосам"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按投票排序"
+          }
         }
       }
     },
     "Station name" : {
       "comment" : "Station name placeholder",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sendername"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Название станции"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电台名称"
           }
         }
       }
@@ -1927,6 +2413,12 @@
             "state" : "translated",
             "value" : "Песня была помечена как любимая"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前歌曲已标记为收藏"
+          }
         }
       }
     },
@@ -1949,6 +2441,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Песня была помечена как любимая."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前歌曲已标记为收藏。"
           }
         }
       }
@@ -1973,6 +2471,12 @@
             "state" : "translated",
             "value" : "Файл не содержит новых или отличающихся станций."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该文件不包含任何新的或已更改的电台。"
+          }
         }
       }
     },
@@ -1995,6 +2499,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Радиостанция временно недоступна. Проверьте URL-адрес или повторите попытку позже."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该电台暂时不可用。请检查 URL 或稍后再试。"
           }
         }
       }
@@ -2020,6 +2530,12 @@
             "state" : "translated",
             "value" : "URL-адрес не содержит или содержит неподдерживаемое аудио."
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该 URL 不包含音频或包含不支持的音频格式。"
+          }
         }
       }
     },
@@ -2042,6 +2558,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Это действие нельзя будет отменить."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此操作无法撤销。"
           }
         }
       }
@@ -2066,6 +2588,12 @@
             "state" : "translated",
             "value" : "Название:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标题："
+          }
         }
       }
     },
@@ -2088,6 +2616,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Чтобы добавить группу, заполните следующую информацию:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要添加分组，请填写以下信息："
           }
         }
       }
@@ -2112,6 +2646,12 @@
             "state" : "translated",
             "value" : "Чтобы добавить станцию, заполните следующую информацию:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要添加电台，请填写以下信息："
+          }
         }
       }
     },
@@ -2134,6 +2674,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отметить/снять отметку «Любимая»"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换收藏"
           }
         }
       }
@@ -2158,16 +2704,34 @@
             "state" : "translated",
             "value" : "Снять с песни отметку «Любимая»"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消歌曲收藏"
+          }
         }
       }
     },
     "Unmark station as favorite" : {
       "comment" : "Station favorite star icon tooltip",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entferne Sender von Favoriten"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Снять с песни отметку «Любимая»"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消电台收藏"
           }
         }
       }
@@ -2192,6 +2756,12 @@
             "state" : "translated",
             "value" : "Включить звук"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消静音"
+          }
         }
       }
     },
@@ -2202,6 +2772,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "URL:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL："
           }
         }
       }
@@ -2219,6 +2795,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Громкость"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音量"
           }
         }
       }
@@ -2243,6 +2825,12 @@
             "state" : "translated",
             "value" : "голосов:"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "投票："
+          }
         }
       }
     },
@@ -2266,6 +2854,12 @@
             "state" : "translated",
             "value" : "Да"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是"
+          }
         }
       }
     },
@@ -2288,6 +2882,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Возможно, вы уже экспортировали его ранее."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您可能之前已经导出过了。"
           }
         }
       }

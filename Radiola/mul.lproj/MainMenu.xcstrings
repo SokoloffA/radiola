@@ -46,6 +46,12 @@
             "state" : "translated",
             "value" : "Добавить станцию в список «Мои станции»"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加电台到我的电台"
+          }
         }
       }
     },
@@ -75,6 +81,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Завершить Радиолу"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "退出 Radiola"
           }
         }
       }
@@ -106,6 +118,12 @@
             "state" : "translated",
             "value" : "О приложении «Radiola»"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关于 Radiola"
+          }
         }
       }
     },
@@ -135,6 +153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Правка"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑"
           }
         }
       }
@@ -166,6 +190,12 @@
             "state" : "translated",
             "value" : "Выбрать все"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全选"
+          }
         }
       }
     },
@@ -195,6 +225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Окно"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "窗口"
           }
         }
       }
@@ -226,6 +262,12 @@
             "state" : "translated",
             "value" : "Управление"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制"
+          }
         }
       }
     },
@@ -256,6 +298,12 @@
             "state" : "translated",
             "value" : "Основное меню"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "主菜单"
+          }
         }
       }
     },
@@ -279,6 +327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Файл"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件"
           }
         }
       }
@@ -310,6 +364,12 @@
             "state" : "translated",
             "value" : "Настройки…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置…"
+          }
         }
       }
     },
@@ -340,6 +400,12 @@
             "state" : "translated",
             "value" : "Создать новую станцию"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建电台"
+          }
         }
       }
     },
@@ -363,6 +429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Файл"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文件"
           }
         }
       }
@@ -394,6 +466,12 @@
             "state" : "translated",
             "value" : "Закрыть"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
         }
       }
     },
@@ -423,6 +501,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Поверх всех окон"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "置顶显示"
           }
         }
       }
@@ -454,6 +538,12 @@
             "state" : "translated",
             "value" : "Справка"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "帮助"
+          }
         }
       }
     },
@@ -483,6 +573,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Справка Радиолы"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Radiola 帮助"
           }
         }
       }
@@ -514,6 +610,12 @@
             "state" : "translated",
             "value" : "Скопировать"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制"
+          }
         }
       }
     },
@@ -543,6 +645,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать логи"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示日志"
           }
         }
       }
@@ -574,6 +682,12 @@
             "state" : "translated",
             "value" : "Службы"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务"
+          }
         }
       }
     },
@@ -603,6 +717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Правка"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑"
           }
         }
       }
@@ -634,6 +754,12 @@
             "state" : "translated",
             "value" : "Вставить"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "粘贴"
+          }
         }
       }
     },
@@ -663,6 +789,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать все"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示全部"
           }
         }
       }
@@ -694,6 +826,12 @@
             "state" : "translated",
             "value" : "Все окна — на передний план"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部置于顶层"
+          }
         }
       }
     },
@@ -723,6 +861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Службы"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "服务"
           }
         }
       }
@@ -754,6 +898,12 @@
             "state" : "translated",
             "value" : "Скрыть Радиолу"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏 Radiola"
+          }
         }
       }
     },
@@ -783,6 +933,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Управление"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "控制"
           }
         }
       }
@@ -814,6 +970,12 @@
             "state" : "translated",
             "value" : "Скрыть Радиолу"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最小化"
+          }
         }
       }
     },
@@ -843,6 +1005,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Воспроизвести"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放"
           }
         }
       }
@@ -874,6 +1042,12 @@
             "state" : "translated",
             "value" : "Экспортировать историю в файл…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出历史记录到文件…"
+          }
         }
       }
     },
@@ -897,6 +1071,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Изменить масштаб"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缩放"
           }
         }
       }
@@ -928,6 +1108,12 @@
             "state" : "translated",
             "value" : "Удалить станцию или группу"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除电台或分组"
+          }
         }
       }
     },
@@ -957,6 +1143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Окно"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "窗口"
           }
         }
       }
@@ -988,6 +1180,12 @@
             "state" : "translated",
             "value" : "Показать окно станций"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示电台窗口"
+          }
         }
       }
     },
@@ -1017,6 +1215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Импортировать станции из файла…"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从文件导入电台…"
           }
         }
       }
@@ -1066,6 +1270,12 @@
             "state" : "translated",
             "value" : "Скрыть остальные"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "隐藏其他"
+          }
         }
       }
     },
@@ -1095,6 +1305,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать окно истории"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示历史记录窗口"
           }
         }
       }
@@ -1126,6 +1342,12 @@
             "state" : "translated",
             "value" : "Экспортировать станции в файл…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导出电台到文件…"
+          }
         }
       }
     },
@@ -1155,6 +1377,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Создать новую группу станций"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建电台分组"
           }
         }
       }
@@ -1186,6 +1414,12 @@
             "state" : "translated",
             "value" : "Справка"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "帮助"
+          }
         }
       }
     },
@@ -1216,6 +1450,12 @@
             "state" : "translated",
             "value" : "Проверить наличие обновлений…"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "检查更新…"
+          }
         }
       }
     },
@@ -1245,6 +1485,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пауза"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂停"
           }
         }
       }
