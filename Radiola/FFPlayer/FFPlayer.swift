@@ -124,117 +124,6 @@ public class FFPlayer: ObservableObject {
     }
 }
 
-// MARK: - RingBuffer
-
-fileprivate class RingBuffer {
-    class Buffer {
-        var audioData = [UInt8](repeating: 0, count: BUFFER_SIZE)
-        var audioDataByteSize: Int = 0
-    }
-
-    var buffers: [Buffer]
-
-    private var _readIndex: Int64 = 0
-    private var _writeIndex: Int64 = 0
-    private var mutex = pthread_mutex_t()
-
-    /* ****************************************
-     *
-     * ****************************************/
-    init() {
-        buffers = (0 ..< NUM_RING_BUFFERS).map { _ in Buffer() }
-        pthread_mutex_init(&mutex, nil)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    deinit {
-        pthread_mutex_destroy(&mutex)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func reset() {
-        pthread_mutex_lock(&mutex)
-        defer { pthread_mutex_unlock(&mutex) }
-
-        _readIndex = 0
-        _writeIndex = 0
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func readIndex() -> Int? {
-        pthread_mutex_lock(&mutex)
-        defer { pthread_mutex_unlock(&mutex) }
-
-        if _readIndex < _writeIndex {
-            return Int(_readIndex % Int64(buffers.count))
-        }
-
-        return nil
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func writeIndex() -> Int? {
-        pthread_mutex_lock(&mutex)
-        defer { pthread_mutex_unlock(&mutex) }
-
-        if _writeIndex - _readIndex < buffers.count {
-            return Int(_writeIndex % Int64(buffers.count))
-        }
-
-        return nil
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func readyNum() -> Int {
-        pthread_mutex_lock(&mutex)
-        defer { pthread_mutex_unlock(&mutex) }
-        return Int(_writeIndex - _readIndex)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @discardableResult
-    func incReadIndex() -> Int {
-        pthread_mutex_lock(&mutex)
-        defer { pthread_mutex_unlock(&mutex) }
-        _readIndex += 1
-        return Int(_readIndex % Int64(buffers.count))
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @discardableResult
-    func incWriteIndex() -> Int {
-        pthread_mutex_lock(&mutex)
-        defer { pthread_mutex_unlock(&mutex) }
-        _writeIndex += 1
-        return Int(_writeIndex % Int64(buffers.count))
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func debug(_ prefix: String) {
-        pthread_mutex_lock(&mutex)
-        defer { pthread_mutex_unlock(&mutex) }
-        let r = Int(_readIndex % Int64(buffers.count))
-        let w = Int(_writeIndex % Int64(buffers.count))
-        print("\(Date()) [\(pthread_mach_thread_np(pthread_self()))]  \(prefix): read: \(_readIndex) write:\(_writeIndex) ready: \(_writeIndex - _readIndex) [r: \(r) w: \(w)]")
-    }
-}
-
 // MARK: - Backend
 
 fileprivate class Backend {
@@ -264,7 +153,7 @@ fileprivate class Backend {
     let shouldInterrupt = AtomicBool()
     var interruptCB: AVIOInterruptCB!
 
-    let ringBuffer = RingBuffer()
+    let ringBuffer = RingBuffer(buffersCount: NUM_RING_BUFFERS, bufferSize: BUFFER_SIZE)
     private var ffmpegThread: Thread?
 
     /* ****************************************
