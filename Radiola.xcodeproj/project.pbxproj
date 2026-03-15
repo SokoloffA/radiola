@@ -298,13 +298,13 @@
 			isa = PBXGroup;
 			children = (
 				394ABCAE2AA359E600E2B6E9 /* Stations */,
+				39DDF8412F66CB8400ED9441 /* FFPlayer */,
 				39F08E452A0CC582006B65D0 /* Types.swift */,
 				391500302EB89EB700060015 /* NotificationManager.swift */,
 				39A794112B4B65AF000D9875 /* AppState.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
-				393F9C0F2DFDA8C400870055 /* FFPlayer.swift */,
 				3985C9052E1163CD00C96D83 /* PlayList.swift */,
 				3959DBB32C03327A0032A1BA /* TrackMetadata.swift */,
 				39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */,
@@ -413,6 +413,14 @@
 				3926FF112AD4687A0094D875 /* AddStationDialog.xib */,
 			);
 			path = LocalStations;
+			sourceTree = "<group>";
+		};
+		39DDF8412F66CB8400ED9441 /* FFPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				393F9C0F2DFDA8C400870055 /* FFPlayer.swift */,
+			);
+			path = FFPlayer;
 			sourceTree = "<group>";
 		};
 		39F869A3288C11B600273AB0 /* Preferences */ = {
