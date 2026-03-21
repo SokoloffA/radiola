@@ -99,21 +99,6 @@ class MacAudio {
     /* ****************************************
      *
      * ****************************************/
-    func bufferDuration() -> TimeInterval {
-        guard let format = format else { return 0 }
-
-        var bytesPerFrame = Int(format.mBytesPerFrame)
-        if bytesPerFrame == 0 {
-            bytesPerFrame = 44100 * 2
-        }
-
-        let frames = Double(ringBuffer.bufferSize) / Double(bytesPerFrame)
-        return frames / format.mSampleRate
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     private func makeASBD(format: FFDecoder.Format) -> AudioStreamBasicDescription {
         var res = AudioStreamBasicDescription()
         res.mSampleRate = Double(format.sampleRate)

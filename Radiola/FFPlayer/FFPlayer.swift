@@ -95,7 +95,6 @@ public class FFPlayer: ObservableObject {
 
         backend.queue.async {
             self.backend.userInterrupt.value = false
-            self.backend.shouldInterrupt.value = false
             self.backend.start(url: url, volume: vol, deviceUID: deviceUID)
         }
     }
@@ -105,7 +104,6 @@ public class FFPlayer: ObservableObject {
      * ****************************************/
     func stop() {
         backend.userInterrupt.value = true
-        backend.shouldInterrupt.value = true
 
         backend.queue.sync {
             self.backend.setVolume(0)
@@ -131,14 +129,10 @@ class Backend {
     fileprivate let queue = DispatchQueue(label: "FFPlayerQueue")
 
     let ringBuffer = RingBuffer(buffersCount: NUM_RING_BUFFERS, bufferSize: BUFFER_SIZE)
-    var decoder = FFDecoder()
+    var decoder: FFDecoder
     let macAudio: MacAudio
 
     fileprivate let userInterrupt = AtomicBool()
-    fileprivate let shouldInterrupt = AtomicBool()
-    var interruptCB: AVIOInterruptCB!
-
-    private var ffmpegThread: Thread?
 
     /* ****************************************
      *
@@ -146,9 +140,7 @@ class Backend {
     init(frontend: FFPlayer) {
         self.frontend = frontend
         macAudio = MacAudio(ringBuffer: ringBuffer, numBuffers: NUM_AUDIO_BUFFERS)
-
-//        let opaque = Unmanaged.passUnretained(self).toOpaque()
-//        interruptCB = AVIOInterruptCB(callback: interruptCallback, opaque: opaque)
+        decoder = FFDecoder(ringBuffer: ringBuffer)
     }
 
     /* ****************************************
@@ -187,16 +179,7 @@ class Backend {
             try macAudio.start(format: decoder.format, deviceUID: deviceUID)
             try macAudio.setVolume(volume)
 
-            // Start ffmpeg decoder thread
-            let delay = macAudio.bufferDuration()
-
-            ffmpegThread = Thread { [weak self, delay] in
-                decode(backend: self!, delay: delay)
-            }
-
-            ffmpegThread?.name = "FFmpegDecoder"
-            ffmpegThread?.qualityOfService = .userInitiated
-            ffmpegThread?.start()
+            decoder.startDecodeThread()
 
             try macAudio.startQueue()
 
@@ -210,14 +193,7 @@ class Backend {
      *
      * ****************************************/
     func stop() {
-        shouldInterrupt.value = true
-
         macAudio.stop()
-
-        while let thread = ffmpegThread, thread.isExecuting {
-            Thread.sleep(forTimeInterval: 0.01)
-        }
-
         decoder.stop()
 
         Task.detached { @MainActor in
@@ -275,34 +251,6 @@ class Backend {
     }
 }
 
-// MARK: - FFMpeg callbacks
-
-/* ****************************************
- *
- * ****************************************/
-fileprivate func decode(backend: Backend, delay: TimeInterval) {
-    do {
-        while true {
-            if backend.shouldInterrupt.value {
-                return
-            }
-
-            guard let index = backend.ringBuffer.writeIndex() else {
-                Thread.sleep(forTimeInterval: delay)
-                continue
-            }
-
-            try backend.decoder.decodeBuffer(outBuffer: backend.ringBuffer.buffers[index])
-            backend.ringBuffer.incWriteIndex()
-        }
-    } catch {
-        warning(error)
-        backend.queue.async {
-            backend.setError(error as NSError)
-        }
-    }
-}
-
 // MARK: -  NSError
 
 extension NSError {
@@ -352,7 +300,7 @@ extension NSError {
 
 // MARK: -  AtomicBool
 
-fileprivate class AtomicBool {
+class AtomicBool {
     private var val: Bool = false
     private var mutex = pthread_mutex_t()
 

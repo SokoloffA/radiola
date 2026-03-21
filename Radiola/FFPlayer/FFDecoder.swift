@@ -18,6 +18,8 @@ extension FFDecoder {
 }
 
 class FFDecoder {
+    private var ringBuffer: RingBuffer
+
     private var frame: UnsafeMutablePointer<AVFrame>!
     private var packet: UnsafeMutablePointer<AVPacket>!
 
@@ -35,6 +37,11 @@ class FFDecoder {
 
     private var prevNowPlaying = ""
 
+    private var interruptCB: AVIOInterruptCB!
+    fileprivate let shouldInterrupt = AtomicBool()
+
+    private var decodeThread: Thread?
+
     var format: Format {
         return Format(
             sampleFormat: outFmt,
@@ -46,12 +53,13 @@ class FFDecoder {
     /* ****************************************
      *
      * ****************************************/
-    init() {
+    init(ringBuffer: RingBuffer) {
+        self.ringBuffer = ringBuffer
         frame = av_frame_alloc()
         packet = av_packet_alloc()
 
-        //        let opaque = Unmanaged.passUnretained(self).toOpaque()
-        //        interruptCB = AVIOInterruptCB(callback: interruptCallback, opaque: opaque)
+        let opaque = Unmanaged.passUnretained(self).toOpaque()
+        interruptCB = AVIOInterruptCB(callback: interruptCallback, opaque: opaque)
     }
 
     /* ****************************************
@@ -170,6 +178,12 @@ class FFDecoder {
      *
      * ****************************************/
     func stop() {
+        shouldInterrupt.value = true
+
+        while let thread = decodeThread, thread.isExecuting {
+            Thread.sleep(forTimeInterval: 0.01)
+        }
+
         if swrContext != nil {
             swr_free(&swrContext)
             swrContext = nil
@@ -365,6 +379,67 @@ class FFDecoder {
         //    backend.frontend.nowPlaing = streamTitle
         // }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func startDecodeThread() {
+        shouldInterrupt.value = false
+        let delay = bufferDuration()
+        decodeThread = Thread { [weak self, delay] in
+            do {
+                while true {
+                    guard let self = self else { return }
+
+                    if self.shouldInterrupt.value {
+                        return
+                    }
+
+                    guard let index = ringBuffer.writeIndex() else {
+                        Thread.sleep(forTimeInterval: delay)
+                        continue
+                    }
+
+                    try decodeBuffer(outBuffer: ringBuffer.buffers[index])
+                    ringBuffer.incWriteIndex()
+                }
+            } catch {
+                warning(error)
+                //backend.queue.async {
+                //    backend.setError(error as NSError)
+                //}
+            }
+        }
+
+        decodeThread?.name = "FFmpegDecoder"
+        decodeThread?.qualityOfService = .userInitiated
+        decodeThread?.start()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func bufferDuration() -> TimeInterval {
+        var bytesPerSample: Int
+        switch outFmt {
+            case AV_SAMPLE_FMT_U8, AV_SAMPLE_FMT_U8P:
+            bytesPerSample = 1
+            case AV_SAMPLE_FMT_S16, AV_SAMPLE_FMT_S16P:
+            bytesPerSample = 2
+            case AV_SAMPLE_FMT_S32, AV_SAMPLE_FMT_S32P,
+                 AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_FLTP:
+            bytesPerSample = 4
+            case AV_SAMPLE_FMT_DBL, AV_SAMPLE_FMT_DBLP:
+            bytesPerSample = 8
+            default:
+                return 44100 * 2
+            }
+
+          let bytesPerFrame = bytesPerSample * Int(outChannels)
+          let frames = Double(ringBuffer.bufferSize) / Double(bytesPerFrame)
+          return frames / Double(outSampleRate)
+        }
+
 }
 
 /* ****************************************
@@ -373,8 +448,7 @@ class FFDecoder {
 typealias FFmpegInterruptCallback = @convention(c) (UnsafeMutableRawPointer?) -> Int32
 let interruptCallback: FFmpegInterruptCallback = { opaque in
     guard let opaque else { return 0 }
-    let backend = Unmanaged<Backend>.fromOpaque(opaque).takeUnretainedValue()
+    let decoder = Unmanaged<FFDecoder>.fromOpaque(opaque).takeUnretainedValue()
 
-    return 0
-    // return backend.shouldInterrupt.value ? 1 : 0
+    return decoder.shouldInterrupt.value ? 1 : 0
 }
