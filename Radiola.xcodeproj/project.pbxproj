@@ -50,6 +50,7 @@
 		3962D0422BE689130014BCFB /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0412BE689130014BCFB /* Recorder.swift */; };
 		3962D0442BE689190014BCFB /* RecorderCocoa.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0432BE689190014BCFB /* RecorderCocoa.swift */; };
 		3962D0462BE6891E0014BCFB /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3962D0452BE6891E0014BCFB /* ViewModifiers.swift */; };
+		3963143F2F6EC20A00C2A1A3 /* FFDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3963143E2F6EC20A00C2A1A3 /* FFDecoder.swift */; };
 		396433962B502AE9009BE1CE /* LocalStationToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396433952B502AE9009BE1CE /* LocalStationToolBox.swift */; };
 		396433992B55A189009BE1CE /* InternetStationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396433982B55A189009BE1CE /* InternetStationDelegate.swift */; };
 		3964339B2B55A293009BE1CE /* InternetStationRows.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3964339A2B55A293009BE1CE /* InternetStationRows.swift */; };
@@ -84,6 +85,7 @@
 		39D582C62C96C49B00AE3A01 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D582C52C96C49B00AE3A01 /* VolumeView.swift */; };
 		39D79E632933BEAB00210D94 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D79E622933BEAB00210D94 /* Settings.swift */; };
 		39DDF84B2F672EB100ED9441 /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDF84A2F672EB100ED9441 /* RingBuffer.swift */; };
+		39DDF84D2F672FBA00ED9441 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDF84C2F672FBA00ED9441 /* MacAudio.swift */; };
 		39E042D0293B3ACA00A2167E /* VolumeMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E042CE293B3AC900A2167E /* VolumeMenuItem.swift */; };
 		39E70DE62AD9E1CA00BF3059 /* RadioBrowserServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */; };
 		39E8DFD5288F316A00082467 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 39E8DFD4288F316A00082467 /* Sparkle */; };
@@ -158,6 +160,7 @@
 		3962D0412BE689130014BCFB /* Recorder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
 		3962D0432BE689190014BCFB /* RecorderCocoa.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecorderCocoa.swift; sourceTree = "<group>"; };
 		3962D0452BE6891E0014BCFB /* ViewModifiers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
+		3963143E2F6EC20A00C2A1A3 /* FFDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFDecoder.swift; sourceTree = "<group>"; };
 		396433952B502AE9009BE1CE /* LocalStationToolBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalStationToolBox.swift; sourceTree = "<group>"; };
 		396433982B55A189009BE1CE /* InternetStationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetStationDelegate.swift; sourceTree = "<group>"; };
 		3964339A2B55A293009BE1CE /* InternetStationRows.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetStationRows.swift; sourceTree = "<group>"; };
@@ -192,6 +195,7 @@
 		39D582C52C96C49B00AE3A01 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
 		39D79E622933BEAB00210D94 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		39DDF84A2F672EB100ED9441 /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
+		39DDF84C2F672FBA00ED9441 /* MacAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		39E042CE293B3AC900A2167E /* VolumeMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMenuItem.swift; sourceTree = "<group>"; };
 		39E70DE52AD9E1CA00BF3059 /* RadioBrowserServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioBrowserServer.swift; sourceTree = "<group>"; };
 		39E8DFD62890839500082467 /* Updater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
@@ -421,6 +425,8 @@
 			isa = PBXGroup;
 			children = (
 				393F9C0F2DFDA8C400870055 /* FFPlayer.swift */,
+				39DDF84C2F672FBA00ED9441 /* MacAudio.swift */,
+				3963143E2F6EC20A00C2A1A3 /* FFDecoder.swift */,
 				39DDF84A2F672EB100ED9441 /* RingBuffer.swift */,
 			);
 			path = FFPlayer;
@@ -602,6 +608,7 @@
 				390C7294287B213200E17BAE /* Controls.swift in Sources */,
 				39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */,
 				39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */,
+				39DDF84D2F672FBA00ED9441 /* MacAudio.swift in Sources */,
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
 				9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */,
 				39A794052B4B33F1000D9875 /* LocalStationDelegate.swift in Sources */,
@@ -630,6 +637,7 @@
 				3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */,
 				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
 				39FF07732933A59900751A03 /* StatuBarController.swift in Sources */,
+				3963143F2F6EC20A00C2A1A3 /* FFDecoder.swift in Sources */,
 				394ABC972A97AC9B00E2B6E9 /* SidebarTopLevelView.swift in Sources */,
 				39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */,
 				39D582C62C96C49B00AE3A01 /* VolumeView.swift in Sources */,

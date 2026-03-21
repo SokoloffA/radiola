@@ -126,34 +126,18 @@ public class FFPlayer: ObservableObject {
 
 // MARK: - Backend
 
-fileprivate class Backend {
+class Backend {
     unowned let frontend: FFPlayer
     fileprivate let queue = DispatchQueue(label: "FFPlayerQueue")
 
-    var formatContext: UnsafeMutablePointer<AVFormatContext>!
-    var streamIndex: Int = -1
-    var codecContext: UnsafeMutablePointer<AVCodecContext>!
-    var swrContext: OpaquePointer!
-    var outLayout = AVChannelLayout()
-    var outSampleRate: Int32 = 0
-    var outChannels: Int32 = 0
+    let ringBuffer = RingBuffer(buffersCount: NUM_RING_BUFFERS, bufferSize: BUFFER_SIZE)
+    var decoder = FFDecoder()
+    let macAudio: MacAudio
 
-    var audioQueue: AudioQueueRef?
-    let outFmt: AVSampleFormat = AV_SAMPLE_FMT_FLT
-
-    var frame: UnsafeMutablePointer<AVFrame>!
-    var packet: UnsafeMutablePointer<AVPacket>!
-
-    var pcmBuffer = [UInt8]()
-    private var audioQueueBuffers = [AudioQueueBufferRef?](repeating: nil, count: NUM_AUDIO_BUFFERS)
-
-    var prevNowPlaying = ""
-
-    let userInterrupt = AtomicBool()
-    let shouldInterrupt = AtomicBool()
+    fileprivate let userInterrupt = AtomicBool()
+    fileprivate let shouldInterrupt = AtomicBool()
     var interruptCB: AVIOInterruptCB!
 
-    let ringBuffer = RingBuffer(buffersCount: NUM_RING_BUFFERS, bufferSize: BUFFER_SIZE)
     private var ffmpegThread: Thread?
 
     /* ****************************************
@@ -161,11 +145,10 @@ fileprivate class Backend {
      * ****************************************/
     init(frontend: FFPlayer) {
         self.frontend = frontend
-        frame = av_frame_alloc()
-        packet = av_packet_alloc()
+        macAudio = MacAudio(ringBuffer: ringBuffer, numBuffers: NUM_AUDIO_BUFFERS)
 
-        let opaque = Unmanaged.passUnretained(self).toOpaque()
-        interruptCB = AVIOInterruptCB(callback: interruptCallback, opaque: opaque)
+//        let opaque = Unmanaged.passUnretained(self).toOpaque()
+//        interruptCB = AVIOInterruptCB(callback: interruptCallback, opaque: opaque)
     }
 
     /* ****************************************
@@ -173,14 +156,6 @@ fileprivate class Backend {
      * ****************************************/
     deinit {
         stop()
-
-        if packet != nil {
-            av_packet_free(&packet)
-        }
-
-        if frame != nil {
-            av_frame_free(&frame)
-        }
     }
 
     /* ****************************************
@@ -190,17 +165,40 @@ fileprivate class Backend {
         do {
             setState(.connecting)
 
+            var realURL: URL
             if PlayList.isPlayListURL(url) {
                 let playList = PlayList()
                 try playList.download(url: url)
 
-                try load(url: playList.urls[0])
+                realURL = playList.urls[0]
             } else {
-                try load(url: url)
+                realURL = url
             }
 
-            setVolume(volume)
-            try startAudioQueue(deviceUID: deviceUID)
+            debug("FFplayer load \(realURL)")
+            ringBuffer.reset()
+
+            debug(1)
+            try decoder.load(url: realURL)
+            debug(2)
+            try fillRingBuffer()
+            debug(3)
+
+            try macAudio.start(format: decoder.format, deviceUID: deviceUID)
+            try macAudio.setVolume(volume)
+
+            // Start ffmpeg decoder thread
+            let delay = macAudio.bufferDuration()
+
+            ffmpegThread = Thread { [weak self, delay] in
+                decode(backend: self!, delay: delay)
+            }
+
+            ffmpegThread?.name = "FFmpegDecoder"
+            ffmpegThread?.qualityOfService = .userInitiated
+            ffmpegThread?.start()
+
+            try macAudio.startQueue()
 
             setState(.playing)
         } catch {
@@ -214,34 +212,13 @@ fileprivate class Backend {
     func stop() {
         shouldInterrupt.value = true
 
-        if let audioQueue = audioQueue {
-            AudioQueueStop(audioQueue, true)
-            AudioQueueDispose(audioQueue, true)
-            self.audioQueue = nil
-        }
+        macAudio.stop()
 
         while let thread = ffmpegThread, thread.isExecuting {
             Thread.sleep(forTimeInterval: 0.01)
         }
 
-        if swrContext != nil {
-            swr_free(&swrContext)
-            swrContext = nil
-        }
-
-        if codecContext != nil {
-            avcodec_free_context(&codecContext)
-            codecContext = nil
-        }
-
-        if formatContext != nil {
-            avformat_close_input(&formatContext)
-            formatContext = nil
-        }
-
-        av_channel_layout_uninit(&outLayout)
-
-        prevNowPlaying = ""
+        decoder.stop()
 
         Task.detached { @MainActor in
             if self.frontend.state != .stoped { self.frontend.state = .stoped }
@@ -252,261 +229,11 @@ fileprivate class Backend {
     /* ****************************************
      *
      * ****************************************/
-    func load(url: URL) throws {
-        debug("FFplayer load \(url)")
-        setupFFmpegLogging()
-
-        ringBuffer.reset()
-
-        if frame == nil {
-            throw NSError(code: .alocError_avframe, message: internalErrorDescription, debug: "Error calling av_frame_alloc")
-        }
-
-        if packet == nil {
-            throw NSError(code: .alocError_avpacket, message: internalErrorDescription, debug: "Error calling av_packet_alloc")
-        }
-
-        var options: OpaquePointer?
-        var err: Int32 = 0
-
-        err = av_dict_set(&options, "icy", "1", 0)
-        if err < 0 {
-            throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_dict_set")
-        }
-
-        formatContext = avformat_alloc_context()
-        guard formatContext != nil else {
-            throw NSError(code: .alocError_avformat, message: internalErrorDescription, debug: "Error calling avformat_alloc_context")
-        }
-
-        formatContext.pointee.interrupt_callback = interruptCB
-
-        err = avformat_open_input(&formatContext, url.absoluteString, nil, &options)
-        if err < 0 {
-            av_dict_free(&options)
-            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling avformat_open_input")
-        }
-        av_dict_free(&options)
-
-        err = avformat_find_stream_info(formatContext, nil)
-        if err < 0 {
-            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling avformat_find_stream_info")
-        }
-
-        // Find the first audio stream
-        streamIndex = Int(av_find_best_stream(formatContext, AVMEDIA_TYPE_AUDIO, -1, -1, nil, 0))
-        if streamIndex < 0 {
-            throw NSError(code: .noStreamFoundError, message: invalidURLErrorDescription, debug: "No audio stream found.")
-        }
-
-        guard let stream = formatContext.pointee.streams[streamIndex] else {
-            throw NSError(code: .noStreamFoundError, message: invalidURLErrorDescription, debug: "No input stream found.")
-        }
-
-        guard
-            let codecParams = stream.pointee.codecpar, // formatContext.pointee.streams[streamIndex]!.pointee.codecpar,
-            let codec = avcodec_find_decoder(codecParams.pointee.codec_id)
-        else {
-            throw NSError(code: .noCodecFoundError, message: invalidURLErrorDescription, debug: "No input codec found.")
-        }
-
-        codecContext = avcodec_alloc_context3(codec)
-        if codecContext == nil {
-            throw NSError(code: .alocError_avcodec, message: invalidURLErrorDescription, debug: "Error calling avcodec_alloc_context3")
-        }
-
-        codecContext.pointee.pkt_timebase = stream.pointee.time_base
-
-        err = avcodec_parameters_to_context(codecContext, stream.pointee.codecpar)
-        if err < 0 {
-            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling avcodec_parameters_to_context")
-        }
-
-        err = avcodec_open2(codecContext, codec, nil)
-        if err < 0 {
-            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling avcodec_open2")
-        }
-
-        // Define output format ................
-        outSampleRate = codecContext.pointee.sample_rate
-        outChannels = min(2, codecContext.pointee.ch_layout.nb_channels)
-
-        withUnsafeMutablePointer(to: &outLayout) { outLayoutPtr in
-            av_channel_layout_default(outLayoutPtr, outChannels)
-
-            err = swr_alloc_set_opts2(&swrContext,
-                                      outLayoutPtr,
-                                      outFmt,
-                                      outSampleRate,
-                                      &codecContext.pointee.ch_layout, codecContext.pointee.sample_fmt, codecContext.pointee.sample_rate,
-                                      0, nil)
-        }
-        if err < 0 {
-            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling swr_alloc_set_opts2")
-        }
-
-        err = swr_init(swrContext)
-        if err < 0 {
-            throw NSError(ffCode: err, message: invalidURLErrorDescription, debug: "Error calling swr_init")
-        }
-
-        var format = makeASBD(outFmt: outFmt, outChannels: UInt32(outChannels), outSampleRate: Double(outSampleRate))
-
-        err = AudioQueueNewOutput(
-            &format,
-            fillAudioQueueBuffer,
-            Unmanaged.passUnretained(self).toOpaque(),
-            nil,
-            nil,
-            0,
-            &audioQueue)
-
-        if err < 0 {
-            throw NSError(code: .alocError_AudioQueue, message: internalErrorDescription, debug: "Error calling AudioQueueNewOutput")
-        }
-
+    private func fillRingBuffer() throws {
         // Preload audio
-        for i in 0 ..< NUM_AUDIO_BUFFERS {
-            var buffer: AudioQueueBufferRef?
-            err = AudioQueueAllocateBuffer(audioQueue!, UInt32(BUFFER_SIZE), &buffer)
-
-            if err != noErr || buffer == nil {
-                throw NSError(code: .alocError_AudioQueueBuffer, message: internalErrorDescription, debug: "Error calling AudioQueueAllocateBuffer")
-            }
-
-            try decodeBuffer(backend: self, outBuffer: ringBuffer.buffers[i])
+        for i in 0 ..< macAudio.numBuffers {
+            try decoder.decodeBuffer(outBuffer: ringBuffer.buffers[i])
             ringBuffer.incWriteIndex()
-
-            audioQueueBuffers[i] = buffer
-            fillAudioQueueBuffer(userData: Unmanaged.passUnretained(self).toOpaque(), outAQ: audioQueue!, outBuffer: buffer!)
-        }
-
-        // Start ffmpeg decoder thread
-        let delay = bufferDuration(format: format)
-
-        ffmpegThread = Thread { [weak self, delay] in
-            decode(backend: self!, delay: delay)
-        }
-
-        ffmpegThread?.name = "FFmpegDecoder"
-        ffmpegThread?.qualityOfService = .userInitiated
-        ffmpegThread?.start()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func setupFFmpegLogging() {
-        av_log_set_level(AV_LOG_INFO)
-
-        av_log_set_callback { _, level, format, args in
-            if level > AV_LOG_INFO { return }
-            guard let format = format else { return }
-            guard let args = args else { return }
-
-            var buffer = [CChar](repeating: 0, count: 4096)
-            vsnprintf(&buffer, buffer.count, format, args)
-            var message = String(cString: buffer)
-            message = message.trimmingCharacters(in: .whitespacesAndNewlines)
-
-            if !message.isEmpty {
-                debug("[FFmpeg] \(Backend.ffmpegLogLevelToString(level)): \(message)")
-            }
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private static func ffmpegLogLevelToString(_ level: Int32) -> String {
-        switch level {
-            case AV_LOG_PANIC: return "PANIC"
-            case AV_LOG_FATAL: return "FATAL"
-            case AV_LOG_ERROR: return "ERROR"
-            case AV_LOG_WARNING: return "WARNING"
-            case AV_LOG_INFO: return "INFO"
-            case AV_LOG_VERBOSE: return "VERBOSE"
-            case AV_LOG_DEBUG: return "DEBUG"
-            case AV_LOG_TRACE: return "TRACE"
-            default: return "UNKNOWN(\(level))"
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func makeASBD(outFmt: AVSampleFormat, outChannels: UInt32, outSampleRate: Double) -> AudioStreamBasicDescription {
-        var format = AudioStreamBasicDescription()
-        format.mSampleRate = outSampleRate
-        format.mFormatID = kAudioFormatLinearPCM
-
-        // sample type detection
-        switch outFmt {
-            case AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_FLTP:
-                format.mFormatFlags = kAudioFormatFlagIsFloat | kAudioFormatFlagIsPacked
-                format.mBitsPerChannel = 32
-
-            case AV_SAMPLE_FMT_S16, AV_SAMPLE_FMT_S16P:
-                format.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked
-                format.mBitsPerChannel = 16
-
-            case AV_SAMPLE_FMT_S32, AV_SAMPLE_FMT_S32P:
-                format.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked
-                format.mBitsPerChannel = 32
-
-            case AV_SAMPLE_FMT_U8, AV_SAMPLE_FMT_U8P:
-                format.mFormatFlags = kAudioFormatFlagIsPacked
-                format.mBitsPerChannel = 8
-
-            default:
-                // std::cerr << "Unsupported sample format: " << av_get_sample_fmt_name(outFmt) << std::endl;
-                format.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked
-                format.mBitsPerChannel = 16
-        }
-
-        format.mChannelsPerFrame = outChannels
-        format.mFramesPerPacket = 1
-        format.mBytesPerFrame = (format.mBitsPerChannel / 8) * format.mChannelsPerFrame
-        format.mBytesPerPacket = format.mBytesPerFrame
-        format.mReserved = 0
-
-        return format
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func bufferDuration(format: AudioStreamBasicDescription) -> TimeInterval {
-        var bytesPerFrame = Int(format.mBytesPerFrame)
-        if bytesPerFrame == 0 {
-            bytesPerFrame = 44100 * 2
-        }
-
-        let frames = Double(BUFFER_SIZE) / Double(bytesPerFrame)
-        return frames / format.mSampleRate
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func startAudioQueue(deviceUID: String?) throws {
-        guard let audioQueue = audioQueue else { return }
-
-        if let deviceUID = deviceUID {
-            let cfUID = deviceUID as CFString
-            try withUnsafePointer(to: cfUID) { ptr in
-                let rawPtr = UnsafeRawPointer(ptr)
-                let err = AudioQueueSetProperty(audioQueue, kAudioQueueProperty_CurrentDevice, rawPtr, UInt32(MemoryLayout<CFString?>.size))
-
-                if err != noErr {
-                    throw NSError(code: .setDeviceError, error: err, message: internalErrorDescription, debug: "Error setting audio device")
-                }
-            }
-        }
-
-        let err = AudioQueueStart(audioQueue, nil)
-        if err != noErr {
-            throw NSError(code: .audioQueueStartError, error: err, message: internalErrorDescription, debug: "Error calling AudioQueueStart")
         }
     }
 
@@ -523,11 +250,10 @@ fileprivate class Backend {
      *
      * ****************************************/
     func setVolume(_ volume: Float) {
-        guard let audioQueue = audioQueue else { return }
-
-        let err = AudioQueueSetParameter(audioQueue, kAudioQueueParam_Volume, volume)
-        if err != noErr {
-            setError(NSError(code: .setVolumeError, error: err, message: internalErrorDescription, debug: "Error calling AudioQueueSetParameter"))
+        do {
+            try macAudio.setVolume(volume)
+        } catch {
+            setError(error as NSError)
         }
     }
 
@@ -566,7 +292,7 @@ fileprivate func decode(backend: Backend, delay: TimeInterval) {
                 continue
             }
 
-            try decodeBuffer(backend: backend, outBuffer: backend.ringBuffer.buffers[index])
+            try backend.decoder.decodeBuffer(outBuffer: backend.ringBuffer.buffers[index])
             backend.ringBuffer.incWriteIndex()
         }
     } catch {
@@ -575,181 +301,6 @@ fileprivate func decode(backend: Backend, delay: TimeInterval) {
             backend.setError(error as NSError)
         }
     }
-}
-
-/* ****************************************
- *
- * ****************************************/
-fileprivate func decodeBuffer(backend: Backend, outBuffer: RingBuffer.Buffer) throws {
-    var timeoutCount = 0
-    let maxTimeouts = 10
-
-    var err: Int32 = 0
-
-    while backend.pcmBuffer.count < BUFFER_SIZE {
-        err = av_read_frame(backend.formatContext, backend.packet)
-        if err == -ETIMEDOUT {
-            debug("Error calling av_read_frame: ETIMEDOUT")
-            timeoutCount += 1
-            if timeoutCount >= maxTimeouts {
-                throw NSError(ffCode: err, message: timeoutErrorDescription, debug: "Too many timeouts from av_read_frame")
-            }
-            continue
-        }
-
-        if err < 0 {
-            throw NSError(ffCode: err, message: timeoutErrorDescription, debug: "Error calling av_read_frame")
-        }
-
-        timeoutCount = 0
-
-        defer {
-            av_packet_unref(backend.packet)
-        }
-        readMetadta(backend: backend, tag: av_dict_get(backend.formatContext.pointee.metadata, "StreamTitle", nil, 0))
-
-        if backend.packet.pointee.stream_index != backend.streamIndex {
-            continue
-        }
-
-        err = avcodec_send_packet(backend.codecContext, backend.packet)
-        if err < 0 {
-            throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_send_packet")
-        }
-
-        err = avcodec_receive_frame(backend.codecContext, backend.frame)
-        if err == -EAGAIN {
-            continue
-        } else if err < 0 {
-            throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_receive_frame")
-        }
-
-        let dstNbSamples = av_rescale_rnd(
-            swr_get_delay(backend.swrContext, Int64(backend.codecContext.pointee.sample_rate)) + Int64(backend.frame.pointee.nb_samples),
-            Int64(backend.outSampleRate),
-            Int64(backend.codecContext.pointee.sample_rate),
-            AV_ROUND_UP)
-
-        var outLinesize: Int32 = 0
-        var outBuf: UnsafeMutablePointer<UInt8>?
-        err = av_samples_alloc(&outBuf, &outLinesize, backend.outChannels, Int32(dstNbSamples), backend.outFmt, 0)
-        guard
-            err >= 0,
-            var outBuf = outBuf
-        else {
-            throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling av_samples_alloc")
-        }
-        defer {
-            av_freep(&outBuf)
-        }
-
-        let outBufPointer = UnsafeMutablePointer<UnsafeMutablePointer<UInt8>?>.allocate(capacity: 1)
-        outBufPointer.initialize(to: outBuf)
-        defer {
-            outBufPointer.deinitialize(count: 1)
-            outBufPointer.deallocate()
-        }
-
-        let srcData = withUnsafePointer(to: &backend.frame.pointee.data) {
-            UnsafeRawPointer($0).assumingMemoryBound(to: UnsafePointer<UInt8>?.self)
-        }
-
-        let samplesConverted = swr_convert(backend.swrContext,
-                                           outBufPointer,
-                                           Int32(dstNbSamples),
-                                           srcData,
-                                           backend.frame.pointee.nb_samples)
-
-        if samplesConverted < 0 {
-            throw NSError(ffCode: samplesConverted, message: internalErrorDescription, debug: "Error calling swr_convert")
-        }
-
-        let outSize = av_samples_get_buffer_size(nil, backend.outChannels, samplesConverted, backend.outFmt, 1)
-        if outSize < 0 {
-            throw NSError(ffCode: outSize, message: internalErrorDescription, debug: "Error calling av_samples_get_buffer_size")
-        }
-
-        backend.pcmBuffer.append(contentsOf: UnsafeBufferPointer(start: outBuf, count: Int(outSize)))
-    }
-
-    let toCopy = min(BUFFER_SIZE, backend.pcmBuffer.count)
-
-    outBuffer.audioDataByteSize = toCopy
-
-    backend.pcmBuffer.withUnsafeBytes { srcRaw in
-        outBuffer.audioData.withUnsafeMutableBytes { dstRaw in
-            let srcPtr = srcRaw.baseAddress!
-            let dstPtr = dstRaw.baseAddress!
-            memcpy(dstPtr, srcPtr, toCopy)
-        }
-    }
-
-    if backend.pcmBuffer.count > toCopy {
-        backend.pcmBuffer.replaceSubrange(0 ..< toCopy, with: [])
-    } else {
-        backend.pcmBuffer.removeAll()
-    }
-}
-
-/* ****************************************
- *
- * ****************************************/
-fileprivate func readMetadta(backend: Backend, tag: UnsafeMutablePointer<AVDictionaryEntry>?) {
-    guard
-        let tag = tag,
-        let value = tag.pointee.value,
-        let streamTitle = String(validatingUTF8: value)
-    else {
-        return
-    }
-
-    if backend.prevNowPlaying == streamTitle {
-        return
-    }
-
-    backend.prevNowPlaying = streamTitle
-    Task.detached { @MainActor in
-        backend.frontend.nowPlaing = streamTitle
-    }
-}
-
-/* ****************************************
- *
- * ****************************************/
-typealias FFmpegInterruptCallback = @convention(c) (UnsafeMutableRawPointer?) -> Int32
-let interruptCallback: FFmpegInterruptCallback = { opaque in
-    guard let opaque else { return 0 }
-    let backend = Unmanaged<Backend>.fromOpaque(opaque).takeUnretainedValue()
-
-    return backend.shouldInterrupt.value ? 1 : 0
-}
-
-// MARK: - AudioQueue callback
-
-fileprivate func fillAudioQueueBuffer(userData: UnsafeMutableRawPointer?, outAQ: AudioQueueRef, outBuffer: AudioQueueBufferRef) {
-    guard let userData = userData else { return }
-    let backend = Unmanaged<Backend>.fromOpaque(userData).takeUnretainedValue()
-
-    // print("Buffers: \(backend.ringBuffer.readyNum())")
-
-    guard let index = backend.ringBuffer.readIndex() else {
-        let silent = Array(repeating: UInt8(0), count: Int(BUFFER_SIZE))
-        let dest = outBuffer.pointee.mAudioData
-
-        outBuffer.pointee.mAudioDataByteSize = UInt32(silent.count)
-        memcpy(dest, silent, silent.count)
-        AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
-        // backend.ringBuffer.debug("@@@ Buffer is empty")
-        return
-    }
-
-    let src = backend.ringBuffer.buffers[index]
-    let dest = outBuffer.pointee.mAudioData
-
-    outBuffer.pointee.mAudioDataByteSize = UInt32(src.audioDataByteSize)
-    memcpy(dest, src.audioData, src.audioDataByteSize)
-    AudioQueueEnqueueBuffer(outAQ, outBuffer, 0, nil)
-    backend.ringBuffer.incReadIndex()
 }
 
 // MARK: -  NSError
