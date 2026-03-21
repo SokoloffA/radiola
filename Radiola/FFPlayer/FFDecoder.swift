@@ -50,6 +50,9 @@ class FFDecoder {
         )
     }
 
+    var onError: ((NSError) -> Void)?
+    var metadataReady: ((String) -> Void)?
+
     /* ****************************************
      *
      * ****************************************/
@@ -273,7 +276,7 @@ class FFDecoder {
             defer {
                 av_packet_unref(packet)
             }
-            // readMetadta(backend: backend, tag: av_dict_get(formatContext.pointee.metadata, "StreamTitle", nil, 0))
+            readMetadta(tag: av_dict_get(formatContext.pointee.metadata, "StreamTitle", nil, 0))
 
             if packet.pointee.stream_index != streamIndex {
                 continue
@@ -375,9 +378,7 @@ class FFDecoder {
         }
 
         prevNowPlaying = streamTitle
-        // Task.detached { @MainActor in
-        //    backend.frontend.nowPlaing = streamTitle
-        // }
+        metadataReady?(streamTitle)
     }
 
     /* ****************************************
@@ -404,10 +405,13 @@ class FFDecoder {
                     ringBuffer.incWriteIndex()
                 }
             } catch {
+                guard let self = self else { return }
+                if self.shouldInterrupt.value {
+                    return
+                }
+
                 warning(error)
-                //backend.queue.async {
-                //    backend.setError(error as NSError)
-                //}
+                self.onError?(error as NSError)
             }
         }
 
@@ -423,23 +427,22 @@ class FFDecoder {
         var bytesPerSample: Int
         switch outFmt {
             case AV_SAMPLE_FMT_U8, AV_SAMPLE_FMT_U8P:
-            bytesPerSample = 1
+                bytesPerSample = 1
             case AV_SAMPLE_FMT_S16, AV_SAMPLE_FMT_S16P:
-            bytesPerSample = 2
+                bytesPerSample = 2
             case AV_SAMPLE_FMT_S32, AV_SAMPLE_FMT_S32P,
                  AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_FLTP:
-            bytesPerSample = 4
+                bytesPerSample = 4
             case AV_SAMPLE_FMT_DBL, AV_SAMPLE_FMT_DBLP:
-            bytesPerSample = 8
+                bytesPerSample = 8
             default:
                 return 44100 * 2
-            }
-
-          let bytesPerFrame = bytesPerSample * Int(outChannels)
-          let frames = Double(ringBuffer.bufferSize) / Double(bytesPerFrame)
-          return frames / Double(outSampleRate)
         }
 
+        let bytesPerFrame = bytesPerSample * Int(outChannels)
+        let frames = Double(ringBuffer.bufferSize) / Double(bytesPerFrame)
+        return frames / Double(outSampleRate)
+    }
 }
 
 /* ****************************************

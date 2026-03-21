@@ -44,7 +44,7 @@ extension FFPlayer {
         case stoped
         case connecting
         case playing
-        case error
+        case error(NSError)
 
         var description: String {
             switch self {
@@ -57,14 +57,17 @@ extension FFPlayer {
     }
 }
 
+extension FFPlayer {
+    enum Event {
+        case stateChanged(FFPlayer.State)
+        case metadataReady(String?)
+    }
+}
+
 // MARK: - FFPlayer
 
 public class FFPlayer: ObservableObject {
     private var backend: Backend!
-
-    @Published fileprivate(set) var state = State.stoped
-    @Published fileprivate(set) var nowPlaing: String?
-    fileprivate(set) var error: NSError?
 
     var volume: Float = 1.0 {
         didSet { updateVolume() }
@@ -75,6 +78,9 @@ public class FFPlayer: ObservableObject {
     }
 
     private(set) var audioDeviceUID: String?
+
+    private let streamPair = AsyncStream<FFPlayer.Event>.makeStream()
+    var events: AsyncStream<FFPlayer.Event> { streamPair.stream }
 
     /* ****************************************
      *
@@ -87,8 +93,6 @@ public class FFPlayer: ObservableObject {
      *
      * ****************************************/
     func play(url: URL, audioDeviceUID: String?) {
-        error = nil
-
         let vol = isMuted ? 0.0 : volume
         self.audioDeviceUID = audioDeviceUID
         let deviceUID = audioDeviceUID
@@ -120,6 +124,13 @@ public class FFPlayer: ObservableObject {
             self.backend.setVolume(vol)
         }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    fileprivate func emit(_ event: Event) {
+        streamPair.continuation.yield(event)
+    }
 }
 
 // MARK: - Backend
@@ -141,6 +152,7 @@ class Backend {
         self.frontend = frontend
         macAudio = MacAudio(ringBuffer: ringBuffer, numBuffers: NUM_AUDIO_BUFFERS)
         decoder = FFDecoder(ringBuffer: ringBuffer)
+        decoder.onError = errorHandler()
     }
 
     /* ****************************************
@@ -154,8 +166,15 @@ class Backend {
      *
      * ****************************************/
     func start(url: URL, volume: Float, deviceUID: String?) {
+        decoder.metadataReady = { [weak self] metadata in
+            guard let self else { return }
+            queue.async {
+                self.frontend.emit(.metadataReady(metadata))
+            }
+        }
+
         do {
-            setState(.connecting)
+            frontend.emit(.stateChanged(.connecting))
 
             var realURL: URL
             if PlayList.isPlayListURL(url) {
@@ -170,11 +189,8 @@ class Backend {
             debug("FFplayer load \(realURL)")
             ringBuffer.reset()
 
-            debug(1)
             try decoder.load(url: realURL)
-            debug(2)
             try fillRingBuffer()
-            debug(3)
 
             try macAudio.start(format: decoder.format, deviceUID: deviceUID)
             try macAudio.setVolume(volume)
@@ -183,7 +199,7 @@ class Backend {
 
             try macAudio.startQueue()
 
-            setState(.playing)
+            frontend.emit(.stateChanged(.playing))
         } catch {
             setError(error as NSError)
         }
@@ -196,10 +212,8 @@ class Backend {
         macAudio.stop()
         decoder.stop()
 
-        Task.detached { @MainActor in
-            if self.frontend.state != .stoped { self.frontend.state = .stoped }
-            if self.frontend.nowPlaing != "" { self.frontend.nowPlaing = "" }
-        }
+        frontend.emit(.stateChanged(.stoped))
+        frontend.emit(.metadataReady(nil))
     }
 
     /* ****************************************
@@ -210,15 +224,6 @@ class Backend {
         for i in 0 ..< macAudio.numBuffers {
             try decoder.decodeBuffer(outBuffer: ringBuffer.buffers[i])
             ringBuffer.incWriteIndex()
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func setState(_ state: FFPlayer.State) {
-        Task.detached { @MainActor in
-            if self.frontend.state != state { self.frontend.state = state }
         }
     }
 
@@ -236,17 +241,27 @@ class Backend {
     /* ****************************************
      *
      * ****************************************/
+    private func errorHandler() -> (NSError) -> Void {
+        return { [weak self] error in
+            guard let self else { return }
+
+            queue.async {
+                self.setError(error)
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     fileprivate func setError(_ error: NSError) {
         if userInterrupt.value || error.code == averror_exit {
             stop()
-            setState(.stoped)
+            frontend.emit(.stateChanged(.stoped))
             return
         }
 
-        Task { @MainActor in
-            self.frontend.error = error
-            self.frontend.state = .error
-        }
+        frontend.emit(.stateChanged(.error(error)))
         stop()
     }
 }

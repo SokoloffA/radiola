@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import Combine
 import Foundation
 
 // MARK: - Player
@@ -32,8 +31,6 @@ class Player: NSObject {
     public var status = Status.paused
     private var playerItemContext = 0
     private var player = FFPlayer()
-    private var stateWatch: AnyCancellable?
-    private var metaWatch: AnyCancellable?
     private var timer: Timer?
     private let connectDelay = 20.0
 
@@ -76,8 +73,11 @@ class Player: NSObject {
             name: Notification.Name.SettingsChanged,
             object: nil)
 
-        stateWatch = player.$state.receive(on: RunLoop.main).sink { self.stateChenged($0) }
-        metaWatch = player.$nowPlaing.receive(on: RunLoop.main).sink { self.metadataChanged($0) }
+        Task { @MainActor in
+            for await event in await player.events {
+                handleEvent(event)
+            }
+        }
 
         AudioSytstem.debugAudioDevices(prefix: "[Player]")
     }
@@ -191,6 +191,19 @@ class Player: NSObject {
     /* ****************************************
      *
      * ****************************************/
+    private func handleEvent(_ event: FFPlayer.Event) {
+        switch event {
+            case let .stateChanged(state):
+                stateChenged(state)
+
+            case let .metadataReady(metadata):
+                metadataChanged(metadata)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     private func stateChenged(_ state: FFPlayer.State) {
         debug("Player status changed \(state.description) for \(station?.url ?? "nil")")
 
@@ -206,16 +219,14 @@ class Player: NSObject {
             case .playing:
                 self.status = .playing
 
-            case .error:
+            case let .error(error):
                 self.status = .paused
                 metadataChanged(nil)
 
-                if let error = player.error {
-                    let title = NSLocalizedString("Sorry, I couldn't play \"%@\".", comment: "Player error title. %@ is a station name")
-                    Alarm.show(title: String(format: title, station?.title ?? ""), message: error.localizedDescription)
-                    let text = error.localizedDescription.filter{!$0.isNewline}
-                    warning("Player  error: \"\(text)\".   Description: \"\(error.debugDescription)\"")
-                }
+                let title = NSLocalizedString("Sorry, I couldn't play \"%@\".", comment: "Player error title. %@ is a station name")
+                Alarm.show(title: String(format: title, station?.title ?? ""), message: error.localizedDescription)
+                let text = error.localizedDescription.filter { !$0.isNewline }
+                warning("Player  error: \"\(text)\".   Description: \"\(error.debugDescription)\"")
         }
 
         NotificationCenter.default.post(name: Notification.Name.PlayerStatusChanged, object: nil)
@@ -224,7 +235,7 @@ class Player: NSObject {
     // ****************************************
     // Metadata
     // ****************************************
-    func metadataChanged(_ nowPlaing: String?) {
+    private func metadataChanged(_ nowPlaing: String?) {
         songTitle = cleanTrackMetadata(raw: nowPlaing ?? "")
         if isPlaying && nowPlaing != nil {
             addHistory()
