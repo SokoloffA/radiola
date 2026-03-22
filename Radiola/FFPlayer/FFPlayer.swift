@@ -66,18 +66,12 @@ extension FFPlayer {
 
 // MARK: - FFPlayer
 
-public class FFPlayer: ObservableObject {
-    private var backend: Backend!
+actor FFPlayer {
+    private let ringBuffer = RingBuffer(buffersCount: NUM_RING_BUFFERS, bufferSize: BUFFER_SIZE)
+    private var decoder: FFDecoder
+    private let macAudio: MacAudio
 
-    var volume: Float = 1.0 {
-        didSet { updateVolume() }
-    }
-
-    var isMuted: Bool = false {
-        didSet { updateVolume() }
-    }
-
-    private(set) var audioDeviceUID: String?
+    fileprivate let userInterrupt = AtomicBool()
 
     private let streamPair = AsyncStream<FFPlayer.Event>.makeStream()
     var events: AsyncStream<FFPlayer.Event> { streamPair.stream }
@@ -86,95 +80,31 @@ public class FFPlayer: ObservableObject {
      *
      * ****************************************/
     init() {
-        backend = Backend(frontend: self)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func play(url: URL, audioDeviceUID: String?) {
-        let vol = isMuted ? 0.0 : volume
-        self.audioDeviceUID = audioDeviceUID
-        let deviceUID = audioDeviceUID
-
-        backend.queue.async {
-            self.backend.userInterrupt.value = false
-            self.backend.start(url: url, volume: vol, deviceUID: deviceUID)
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func stop() {
-        backend.userInterrupt.value = true
-
-        backend.queue.sync {
-            self.backend.setVolume(0)
-            self.backend.stop()
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func updateVolume() {
-        let vol = isMuted ? 0.0 : volume
-        backend.queue.async {
-            self.backend.setVolume(vol)
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    fileprivate func emit(_ event: Event) {
-        streamPair.continuation.yield(event)
-    }
-}
-
-// MARK: - Backend
-
-class Backend {
-    unowned let frontend: FFPlayer
-    fileprivate let queue = DispatchQueue(label: "FFPlayerQueue")
-
-    let ringBuffer = RingBuffer(buffersCount: NUM_RING_BUFFERS, bufferSize: BUFFER_SIZE)
-    var decoder: FFDecoder
-    let macAudio: MacAudio
-
-    fileprivate let userInterrupt = AtomicBool()
-
-    /* ****************************************
-     *
-     * ****************************************/
-    init(frontend: FFPlayer) {
-        self.frontend = frontend
         macAudio = MacAudio(ringBuffer: ringBuffer, numBuffers: NUM_AUDIO_BUFFERS)
-        decoder = FFDecoder(ringBuffer: ringBuffer)
-        decoder.onError = errorHandler()
-    }
+        let decoder = FFDecoder(ringBuffer: ringBuffer)
+        self.decoder = decoder
 
-    /* ****************************************
-     *
-     * ****************************************/
-    deinit {
-        stop()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func start(url: URL, volume: Float, deviceUID: String?) {
-        decoder.metadataReady = { [weak self] metadata in
+        decoder.onError = { [weak self] error in
             guard let self else { return }
-            queue.async {
-                self.frontend.emit(.metadataReady(metadata))
+            Task {
+                await self.setError(error)
             }
         }
 
+        decoder.metadataReady = { [weak self] metadata in
+            guard let self else { return }
+            Task {
+                await self.emit(.metadataReady(metadata))
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func start(url: URL, volume: Float, audioDeviceUID: String?) {
         do {
-            frontend.emit(.stateChanged(.connecting))
+            emit(.stateChanged(.connecting))
 
             var realURL: URL
             if PlayList.isPlayListURL(url) {
@@ -192,14 +122,14 @@ class Backend {
             try decoder.load(url: realURL)
             try fillRingBuffer()
 
-            try macAudio.start(format: decoder.format, deviceUID: deviceUID)
+            try macAudio.start(format: decoder.format, deviceUID: audioDeviceUID)
             try macAudio.setVolume(volume)
 
             decoder.startDecodeThread()
 
             try macAudio.startQueue()
 
-            frontend.emit(.stateChanged(.playing))
+            emit(.stateChanged(.playing))
         } catch {
             setError(error as NSError)
         }
@@ -212,15 +142,14 @@ class Backend {
         macAudio.stop()
         decoder.stop()
 
-        frontend.emit(.stateChanged(.stoped))
-        frontend.emit(.metadataReady(nil))
+        emit(.stateChanged(.stoped))
+        emit(.metadataReady(nil))
     }
 
     /* ****************************************
-     *
+     * Preload audio
      * ****************************************/
     private func fillRingBuffer() throws {
-        // Preload audio
         for i in 0 ..< macAudio.numBuffers {
             try decoder.decodeBuffer(outBuffer: ringBuffer.buffers[i])
             ringBuffer.incWriteIndex()
@@ -241,28 +170,22 @@ class Backend {
     /* ****************************************
      *
      * ****************************************/
-    private func errorHandler() -> (NSError) -> Void {
-        return { [weak self] error in
-            guard let self else { return }
-
-            queue.async {
-                self.setError(error)
-            }
+    private func setError(_ error: NSError) {
+        if userInterrupt.value || error.code == averror_exit {
+            stop()
+            emit(.stateChanged(.stoped))
+            return
         }
+
+        emit(.stateChanged(.error(error)))
+        stop()
     }
 
     /* ****************************************
      *
      * ****************************************/
-    fileprivate func setError(_ error: NSError) {
-        if userInterrupt.value || error.code == averror_exit {
-            stop()
-            frontend.emit(.stateChanged(.stoped))
-            return
-        }
-
-        frontend.emit(.stateChanged(.error(error)))
-        stop()
+    private func emit(_ event: Event) {
+        streamPair.continuation.yield(event)
     }
 }
 

@@ -12,9 +12,9 @@ import Foundation
 // MARK: - MacAudio
 
 class MacAudio {
-    var audioQueue: AudioQueueRef?
+    private var audioQueue: AudioQueueRef?
     private var audioQueueBuffers: [AudioQueueBufferRef?]
-    var format: AudioStreamBasicDescription?
+    private var format: AudioStreamBasicDescription?
     private let ringBuffer: RingBuffer
     let numBuffers: Int
 

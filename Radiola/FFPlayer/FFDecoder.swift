@@ -51,7 +51,7 @@ class FFDecoder {
     }
 
     var onError: ((NSError) -> Void)?
-    var metadataReady: ((String) -> Void)?
+    var metadataReady: ((String?) -> Void)?
 
     /* ****************************************
      *
@@ -423,7 +423,7 @@ class FFDecoder {
     /* ****************************************
      *
      * ****************************************/
-    func bufferDuration() -> TimeInterval {
+    private func bufferDuration() -> TimeInterval {
         var bytesPerSample: Int
         switch outFmt {
             case AV_SAMPLE_FMT_U8, AV_SAMPLE_FMT_U8P:

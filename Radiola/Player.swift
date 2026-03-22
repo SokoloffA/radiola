@@ -28,8 +28,8 @@ class Player: NSObject {
         case playing
     }
 
+    private var audioDeviceUID: String?
     public var status = Status.paused
-    private var playerItemContext = 0
     private var player = FFPlayer()
     private var timer: Timer?
     private let connectDelay = 20.0
@@ -37,8 +37,8 @@ class Player: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    var volume: Float { didSet {
-        player.volume = max(0, min(1, volume))
+    var volume: Float = 1.0 { didSet {
+        updateVolume()
         settings.volumeLevel = volume
         NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
     }}
@@ -46,11 +46,21 @@ class Player: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    var isMuted: Bool { didSet {
-        player.isMuted = isMuted
+    var isMuted: Bool = false { didSet {
+        updateVolume()
         settings.volumeIsMuted = isMuted
         NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
     }}
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateVolume() {
+        let vol = isMuted ? 0.0 : max(0, min(1, volume))
+        Task {
+            await player.setVolume(vol)
+        }
+    }
 
     /* ****************************************
      *
@@ -108,11 +118,13 @@ class Player: NSObject {
 
         stop()
 
-        player.volume = self.volume
-        player.isMuted = self.isMuted
-
         let audioDeviceUID = AudioSytstem.device(byUID: settings.audioDevice)?.UID
-        player.play(url: url, audioDeviceUID: audioDeviceUID)
+        let vol = isMuted ? 0.0 : volume
+        let deviceUID = audioDeviceUID
+
+        Task {
+            await player.start(url: url, volume: vol, audioDeviceUID: deviceUID)
+        }
         AudioSytstem.debugAudioDevices(prefix: "[Player]")
 
         settings.lastStationUrl = station.url
@@ -138,7 +150,9 @@ class Player: NSObject {
      *
      * ****************************************/
     @objc func stop() {
-        player.stop()
+        Task {
+            await player.stop()
+        }
     }
 
     /* ****************************************
@@ -259,11 +273,11 @@ class Player: NSObject {
      *
      * ****************************************/
     @objc private func onSettingsChanged() {
-        let uid = player.audioDeviceUID
+        let uid = audioDeviceUID
         if settings.audioDevice != uid {
             debug("[Player] The current audio device has changed")
             debug("[Player]  - Config device UID:        \(settings.audioDevice ?? "nil")")
-            debug("[Player]  - Player audio device UID:  \(player.audioDeviceUID ?? "nil")")
+            debug("[Player]  - Player audio device UID:  \(audioDeviceUID ?? "nil")")
             debug("[Player]  - System default device ID: \(AudioSytstem.defaultOutputDeviceID().map(String.init) ?? "ERROR")")
 
             if !isPlaying {
@@ -283,7 +297,7 @@ class Player: NSObject {
     @objc private func onAudioDevicesListChanged() {
         debug("[Player] The list of audio devices has changed")
         debug("[Player]  - Config device UID:        \(settings.audioDevice ?? "nil")")
-        debug("[Player]  - Player audio device UID:  \(player.audioDeviceUID ?? "nil")")
+        debug("[Player]  - Player audio device UID:  \(audioDeviceUID ?? "nil")")
         debug("[Player]  - System default device ID: \(AudioSytstem.defaultOutputDeviceID().map(String.init) ?? "ERROR")")
 
         if !isPlaying {
@@ -291,8 +305,8 @@ class Player: NSObject {
         }
 
         if let d = AudioSytstem.device(byUID: settings.audioDevice) {
-            if player.audioDeviceUID != d.UID {
-                debug("Switch to preferred audio device. From \(player.audioDeviceUID ?? "nil"), to \(d.UID)")
+            if audioDeviceUID != d.UID {
+                debug("Switch to preferred audio device. From \(audioDeviceUID ?? "nil"), to \(d.UID)")
                 stop()
                 play()
                 return
@@ -303,7 +317,7 @@ class Player: NSObject {
         }
 
         // nil is the system default device and is always present.
-        let currentUID = player.audioDeviceUID
+        let currentUID = audioDeviceUID
         if currentUID == nil {
             return
         }
