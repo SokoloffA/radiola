@@ -17,6 +17,28 @@ let internalErrorDescription = NSLocalizedString("Internal error.\nSee logs for 
 let invalidURLErrorDescription = NSLocalizedString("The station is temporarily unavailable. Check URL or try again later.", comment: "Player error message")
 let timeoutErrorDescription = NSLocalizedString("Cannot play station. Your internet connection may be too slow or unstable.", comment: "Player error message")
 
+extension AVSampleFormat: @retroactive CustomStringConvertible {
+    public var description: String {
+        switch self {
+            case AV_SAMPLE_FMT_NONE: return "AV_SAMPLE_FMT_NONE"
+            case AV_SAMPLE_FMT_U8: return "AV_SAMPLE_FMT_U8"
+            case AV_SAMPLE_FMT_S16: return "AV_SAMPLE_FMT_S16"
+            case AV_SAMPLE_FMT_S32: return "AV_SAMPLE_FMT_S32"
+            case AV_SAMPLE_FMT_FLT: return "AV_SAMPLE_FMT_FLT"
+            case AV_SAMPLE_FMT_DBL: return "AV_SAMPLE_FMT_DBL"
+            case AV_SAMPLE_FMT_U8P: return "AV_SAMPLE_FMT_U8P"
+            case AV_SAMPLE_FMT_S16P: return "AV_SAMPLE_FMT_S16P"
+            case AV_SAMPLE_FMT_S32P: return "AV_SAMPLE_FMT_S32P"
+            case AV_SAMPLE_FMT_FLTP: return "AV_SAMPLE_FMT_FLTP"
+            case AV_SAMPLE_FMT_DBLP: return "AV_SAMPLE_FMT_DBLP"
+            case AV_SAMPLE_FMT_S64: return "AV_SAMPLE_FMT_S64"
+            case AV_SAMPLE_FMT_S64P: return "AV_SAMPLE_FMT_S64P"
+            case AV_SAMPLE_FMT_NB: return "AV_SAMPLE_FMT_NB"
+            default: return "AV_SAMPLE_FMT_UNKNOWN(\(rawValue))"
+        }
+    }
+}
+
 extension FFPlayer {
     enum ErrorCode: Int32 {
         case noError = 0
