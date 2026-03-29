@@ -34,7 +34,7 @@ class RingBuffer {
     init(buffersCount: Int, bufferSize: Int) {
         self.bufferSize = bufferSize
         self.buffersCount = buffersCount
-        buffers = (0 ..< bufferSize).map { _ in Buffer(bufferSize: bufferSize) }
+        buffers = (0 ..< buffersCount).map { _ in Buffer(bufferSize: bufferSize) }
         pthread_mutex_init(&mutex, nil)
     }
 
@@ -63,6 +63,7 @@ class RingBuffer {
         pthread_mutex_lock(&mutex)
         defer { pthread_mutex_unlock(&mutex) }
 
+        let bc = buffers.count
         if _readIndex < _writeIndex {
             return Int(_readIndex % Int64(buffers.count))
         }
