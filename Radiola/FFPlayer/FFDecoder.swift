@@ -14,6 +14,40 @@ extension FFDecoder {
         let sampleFormat: AVSampleFormat
         let channelsNum: Int32
         let sampleRate: Int32
+        let isInterleaved: Bool
+
+        init(sampleFormat: AVSampleFormat, channelsNum: Int32, sampleRate: Int32) {
+            self.sampleFormat = sampleFormat
+            self.channelsNum = channelsNum
+            self.sampleRate = sampleRate
+
+            switch sampleFormat {
+                case AV_SAMPLE_FMT_FLT,
+                     AV_SAMPLE_FMT_S16,
+                     AV_SAMPLE_FMT_S32,
+                     AV_SAMPLE_FMT_U8:
+                    isInterleaved = true
+
+                case AV_SAMPLE_FMT_FLTP,
+                     AV_SAMPLE_FMT_S16P,
+                     AV_SAMPLE_FMT_S32P,
+                     AV_SAMPLE_FMT_U8P:
+                    isInterleaved = false
+
+                default:
+                    isInterleaved = false
+            }
+        }
+
+        var bytesPerSample: Int {
+            switch sampleFormat {
+                case AV_SAMPLE_FMT_FLT, AV_SAMPLE_FMT_FLTP: return 4
+                case AV_SAMPLE_FMT_S32, AV_SAMPLE_FMT_S32P: return 4
+                case AV_SAMPLE_FMT_S16, AV_SAMPLE_FMT_S16P: return 2
+                case AV_SAMPLE_FMT_U8, AV_SAMPLE_FMT_U8P: return 1
+                default: return 2
+            }
+        }
     }
 }
 

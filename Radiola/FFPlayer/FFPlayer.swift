@@ -48,6 +48,7 @@ extension FFPlayer {
         case alocError_avformat
         case alocError_AudioQueue
         case alocError_AudioQueueBuffer
+        case formatError
         case noStreamFoundError
         case noCodecFoundError
         case audioQueueStartError
@@ -124,7 +125,7 @@ actor FFPlayer {
     /* ****************************************
      *
      * ****************************************/
-    func start(url: URL, volume: Float, audioDeviceUID: String?) {
+    func start(url: URL, volume: Float, audioDevice: AudioDevice?) {
         do {
             emit(.stateChanged(.connecting))
 
@@ -144,12 +145,10 @@ actor FFPlayer {
             try decoder.load(url: realURL)
             try fillRingBuffer()
 
-            try macAudio.start(format: decoder.format, deviceUID: audioDeviceUID)
-            try macAudio.setVolume(volume)
+            try macAudio.start(format: decoder.format, audioDevice: audioDevice)
+            macAudio.fadeInVolume(to: volume)
 
             decoder.startDecodeThread()
-
-            try macAudio.startQueue()
 
             emit(.stateChanged(.playing))
         } catch {

@@ -311,7 +311,6 @@
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
-				3985C9052E1163CD00C96D83 /* PlayList.swift */,
 				3959DBB32C03327A0032A1BA /* TrackMetadata.swift */,
 				39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */,
 				3962D0292BE0E39F0014BCFB /* History.swift */,
@@ -424,6 +423,7 @@
 		39DDF8412F66CB8400ED9441 /* FFPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				3985C9052E1163CD00C96D83 /* PlayList.swift */,
 				393F9C0F2DFDA8C400870055 /* FFPlayer.swift */,
 				39DDF84C2F672FBA00ED9441 /* MacAudio.swift */,
 				3963143E2F6EC20A00C2A1A3 /* FFDecoder.swift */,

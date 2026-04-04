@@ -63,7 +63,6 @@ class RingBuffer {
         pthread_mutex_lock(&mutex)
         defer { pthread_mutex_unlock(&mutex) }
 
-        let bc = buffers.count
         if _readIndex < _writeIndex {
             return Int(_readIndex % Int64(buffers.count))
         }

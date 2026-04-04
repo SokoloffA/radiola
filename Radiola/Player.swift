@@ -118,12 +118,12 @@ class Player: NSObject {
 
         stop()
 
-        let audioDeviceUID = AudioSytstem.device(byUID: settings.audioDevice)?.UID
+        let audioDevice = AudioSytstem.device(byUID: settings.audioDevice)
+        audioDeviceUID = audioDevice?.UID
         let vol = isMuted ? 0.0 : volume
-        let deviceUID = audioDeviceUID
 
         Task {
-            await player.start(url: url, volume: vol, audioDeviceUID: deviceUID)
+            await player.start(url: url, volume: vol, audioDevice: audioDevice)
         }
         AudioSytstem.debugAudioDevices(prefix: "[Player]")
 
