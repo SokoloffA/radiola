@@ -70,7 +70,7 @@ class MacAudio {
             self?.handleEngineConfigurationChange()
         }
 
-        try setVolume(0)
+        setVolume(0)
 
         let ringBufferRef = ringBuffer
         let sourceNode = AVAudioSourceNode(format: avFormat) { [weak self] _, _, frameCount, audioBufferList -> OSStatus in

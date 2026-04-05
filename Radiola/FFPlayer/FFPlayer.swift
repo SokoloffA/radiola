@@ -181,11 +181,7 @@ actor FFPlayer {
      *
      * ****************************************/
     func setVolume(_ volume: Float) {
-        do {
-            try macAudio.setVolume(volume)
-        } catch {
-            setError(error as NSError)
-        }
+        macAudio.setVolume(volume)
     }
 
     /* ****************************************
