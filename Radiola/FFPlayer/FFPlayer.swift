@@ -180,6 +180,7 @@ private actor FFPlayerActor {
      * ****************************************/
     func start(url: URL, volume: Float, audioDevice: AudioDevice?) {
         do {
+            userInterrupt.value = false
             decoderInterrupt.value = false
             emit(.stateChanged(.connecting))
 
