@@ -94,7 +94,8 @@ actor FFPlayer {
     private var decoder: FFDecoder
     private let macAudio: MacAudio
 
-    fileprivate let userInterrupt = AtomicBool()
+    private let userInterrupt = AtomicBool()
+    private let decoderInterrupt = AtomicBool()
 
     private let streamPair = AsyncStream<FFPlayer.Event>.makeStream()
     var events: AsyncStream<FFPlayer.Event> { streamPair.stream }
@@ -104,7 +105,7 @@ actor FFPlayer {
      * ****************************************/
     init() {
         macAudio = MacAudio(ringBuffer: ringBuffer, numBuffers: NUM_AUDIO_BUFFERS)
-        let decoder = FFDecoder(ringBuffer: ringBuffer)
+        let decoder = FFDecoder(ringBuffer: ringBuffer, shouldInterrupt: decoderInterrupt)
         self.decoder = decoder
 
         decoder.onError = { [weak self] error in
@@ -127,6 +128,7 @@ actor FFPlayer {
      * ****************************************/
     func start(url: URL, volume: Float, audioDevice: AudioDevice?) {
         do {
+            decoderInterrupt.value = false
             emit(.stateChanged(.connecting))
 
             var realURL: URL
@@ -165,6 +167,14 @@ actor FFPlayer {
 
         emit(.stateChanged(.stoped))
         emit(.metadataReady(nil))
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    nonisolated func interruptDecoder() {
+        userInterrupt.value = true
+        decoderInterrupt.value = true
     }
 
     /* ****************************************
@@ -250,36 +260,6 @@ extension NSError {
         let dbg = "\(debug). error code = \(ffCode) : \(ffmpegError)"
 
         self.init(code: Int(ffCode), message: message, debug: dbg)
-    }
-}
-
-// MARK: -  AtomicBool
-
-class AtomicBool {
-    private var val: Bool = false
-    private var mutex = pthread_mutex_t()
-
-    init(val: Bool = false) {
-        pthread_mutex_init(&mutex, nil)
-        value = val
-    }
-
-    deinit {
-        pthread_mutex_destroy(&mutex)
-    }
-
-    var value: Bool {
-        get {
-            pthread_mutex_lock(&mutex)
-            let res = val
-            pthread_mutex_unlock(&mutex)
-            return res
-        }
-        set {
-            pthread_mutex_lock(&mutex)
-            val = newValue
-            pthread_mutex_unlock(&mutex)
-        }
     }
 }
 

@@ -72,7 +72,7 @@ class FFDecoder {
     private var prevNowPlaying = ""
 
     private var interruptCB: AVIOInterruptCB!
-    fileprivate let shouldInterrupt = AtomicBool()
+    let shouldInterrupt: AtomicBool
 
     private var decodeThread: Thread?
 
@@ -90,8 +90,9 @@ class FFDecoder {
     /* ****************************************
      *
      * ****************************************/
-    init(ringBuffer: RingBuffer) {
+    init(ringBuffer: RingBuffer, shouldInterrupt: AtomicBool) {
         self.ringBuffer = ringBuffer
+        self.shouldInterrupt = shouldInterrupt
         frame = av_frame_alloc()
         packet = av_packet_alloc()
 
@@ -139,7 +140,7 @@ class FFDecoder {
             throw NSError(code: .alocError_avformat, message: internalErrorDescription, debug: "Error calling avformat_alloc_context")
         }
 
-        // formatContext.pointee.interrupt_callback = interruptCB
+        formatContext.pointee.interrupt_callback = interruptCB
 
         err = avformat_open_input(&formatContext, url.absoluteString, nil, &options)
         if err < 0 {
@@ -215,8 +216,6 @@ class FFDecoder {
      *
      * ****************************************/
     func stop() {
-        shouldInterrupt.value = true
-
         while let thread = decodeThread, thread.isExecuting {
             Thread.sleep(forTimeInterval: 0.01)
         }
@@ -419,7 +418,6 @@ class FFDecoder {
      *
      * ****************************************/
     func startDecodeThread() {
-        shouldInterrupt.value = false
         let delay = bufferDuration()
         decodeThread = Thread { [weak self, delay] in
             do {

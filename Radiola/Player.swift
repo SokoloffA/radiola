@@ -34,6 +34,9 @@ class Player: NSObject {
     private var timer: Timer?
     private let connectDelay = 20.0
 
+    private var playTask: Task<Void, Never>?
+    private var stopTask: Task<Void, Never>?
+
     /* ****************************************
      *
      * ****************************************/
@@ -122,7 +125,9 @@ class Player: NSObject {
         audioDeviceUID = audioDevice?.UID
         let vol = isMuted ? 0.0 : volume
 
-        Task {
+        let currentStopTask = stopTask
+        playTask = Task {
+            await currentStopTask?.value
             await player.start(url: url, volume: vol, audioDevice: audioDevice)
         }
         AudioSytstem.debugAudioDevices(prefix: "[Player]")
@@ -150,7 +155,11 @@ class Player: NSObject {
      *
      * ****************************************/
     @objc func stop() {
-        Task {
+        player.interruptDecoder()
+        playTask?.cancel()
+        playTask = nil
+
+        stopTask = Task {
             await player.stop()
         }
     }

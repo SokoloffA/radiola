@@ -180,3 +180,33 @@ extension NSMenu {
         addItem(NSMenuItem(title: withTitle, keyEquivalent: keyEquivalent, action: action))
     }
 }
+
+// MARK: -  AtomicBool
+
+class AtomicBool: @unchecked Sendable {
+    private var val: Bool = false
+    private var mutex = pthread_mutex_t()
+
+    init(val: Bool = false) {
+        pthread_mutex_init(&mutex, nil)
+        value = val
+    }
+
+    deinit {
+        pthread_mutex_destroy(&mutex)
+    }
+
+    var value: Bool {
+        get {
+            pthread_mutex_lock(&mutex)
+            let res = val
+            pthread_mutex_unlock(&mutex)
+            return res
+        }
+        set {
+            pthread_mutex_lock(&mutex)
+            val = newValue
+            pthread_mutex_unlock(&mutex)
+        }
+    }
+}
