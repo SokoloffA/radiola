@@ -18,6 +18,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     var sideBarWidth: CGFloat = 0.0
     private var searchPanelHeight: CGFloat = 0.0
     private let toolbarPlayView = ToolbarPlayView()
+    private let airPlayButton = AirPlayButton()
     private let toolbarVolumeView = VolumeView(showMuteButton: true)
     private let toolbarLeftMargin = 145.0
 
@@ -118,12 +119,14 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         let playView = toolbarPlayView.view
         playtoolbar.addSubview(playView)
         playtoolbar.addSubview(toolbarVolumeView)
+        playtoolbar.addSubview(airPlayButton)
 
         toolbarVolumeView.widthAnchor.constraint(equalToConstant: 210).isActive = true
 
         playView.translatesAutoresizingMaskIntoConstraints = false
         toolbarVolumeView.translatesAutoresizingMaskIntoConstraints = false
         playtoolbar.translatesAutoresizingMaskIntoConstraints = false
+        airPlayButton.translatesAutoresizingMaskIntoConstraints = false
 
         playView.topAnchor.constraint(equalTo: playtoolbar.topAnchor).isActive = true
         playView.bottomAnchor.constraint(equalTo: playtoolbar.bottomAnchor).isActive = true
@@ -139,7 +142,11 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         playView.trailingAnchor.constraint(equalTo: toolbarVolumeView.leadingAnchor).isActive = true
         toolbarVolumeView.leadingAnchor.constraint(equalTo: playView.trailingAnchor).isActive = true
-        toolbarVolumeView.trailingAnchor.constraint(equalTo: playtoolbar.trailingAnchor).isActive = true
+
+        airPlayButton.widthAnchor.constraint(equalTo: airPlayButton.heightAnchor).isActive = true
+        airPlayButton.centerYAnchor.constraint(equalTo: toolbarVolumeView.centerYAnchor).isActive = true
+        airPlayButton.leadingAnchor.constraint(equalToSystemSpacingAfter: toolbarVolumeView.trailingAnchor, multiplier: 1).isActive = true
+        playtoolbar.trailingAnchor.constraint(equalToSystemSpacingAfter: airPlayButton.trailingAnchor, multiplier: 1).isActive = true
     }
 
     /* ****************************************
@@ -367,7 +374,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     @objc private func localStationSearchChanged() {
         guard let panel = searchPanel as? LocalStationSearchPanel else { return }
         localStationsDelegate.searchText = panel.searchText
-        localStationsDelegate.isExactMatch = false  // Always use contains search
+        localStationsDelegate.isExactMatch = false // Always use contains search
         localStationsDelegate.sortOrder = panel.order
         localStationsDelegate.refresh()
     }
@@ -401,7 +408,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     @objc private func historySearchChanged() {
         guard let panel = searchPanel as? HistorySearchPanel else { return }
         historyDelegate.searchText = panel.searchText
-        historyDelegate.isExactMatch = false  // Always use contains search
+        historyDelegate.isExactMatch = false // Always use contains search
         historyDelegate.sortOrder = panel.order
         historyDelegate.showOnlyFavorites = panel.showOnlyFavorites
         historyDelegate.refresh()
