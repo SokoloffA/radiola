@@ -89,13 +89,10 @@ extension FFPlayer {
 
 // MARK: - FFPlayer
 
-actor FFPlayer {
-    private let ringBuffer = RingBuffer(buffersCount: NUM_RING_BUFFERS, bufferSize: BUFFER_SIZE)
-    private var decoder: FFDecoder
-    private let macAudio: MacAudio
-
-    private let userInterrupt = AtomicBool()
-    private let decoderInterrupt = AtomicBool()
+class FFPlayer {
+    private let actor: FFPlayerActor
+    private var playTask: Task<Void, Never>?
+    private var stopTask: Task<Void, Never>?
 
     private let streamPair = AsyncStream<FFPlayer.Event>.makeStream()
     var events: AsyncStream<FFPlayer.Event> { streamPair.stream }
@@ -104,6 +101,61 @@ actor FFPlayer {
      *
      * ****************************************/
     init() {
+        actor = FFPlayerActor(continuation: streamPair.continuation)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func start(url: URL, volume: Float, audioDevice: AudioDevice?) {
+        let currentStopTask = stopTask
+        playTask = Task {
+            await currentStopTask?.value
+            await actor.start(url: url, volume: volume, audioDevice: audioDevice)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func stop() {
+        actor.interruptDecoder()
+        playTask?.cancel()
+        playTask = nil
+
+        stopTask = Task {
+            await actor.stop()
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func setVolume(_ volume: Float) {
+        Task {
+            await actor.setVolume(volume)
+        }
+    }
+}
+
+// MARK: - FFPlayerActor
+
+private actor FFPlayerActor {
+    private let ringBuffer = RingBuffer(buffersCount: NUM_RING_BUFFERS, bufferSize: BUFFER_SIZE)
+    private var decoder: FFDecoder
+    private let macAudio: MacAudio
+
+    private let userInterrupt = AtomicBool()
+    private let decoderInterrupt = AtomicBool()
+
+    typealias Event = FFPlayer.Event
+    private let continuation: AsyncStream<FFPlayer.Event>.Continuation
+
+    /* ****************************************
+     *
+     * ****************************************/
+    init(continuation: AsyncStream<FFPlayer.Event>.Continuation) {
+        self.continuation = continuation
         macAudio = MacAudio(ringBuffer: ringBuffer, numBuffers: NUM_AUDIO_BUFFERS)
         let decoder = FFDecoder(ringBuffer: ringBuffer, shouldInterrupt: decoderInterrupt)
         self.decoder = decoder
@@ -212,7 +264,7 @@ actor FFPlayer {
      *
      * ****************************************/
     private func emit(_ event: Event) {
-        streamPair.continuation.yield(event)
+        continuation.yield(event)
     }
 }
 
