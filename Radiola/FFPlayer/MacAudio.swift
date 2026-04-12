@@ -16,6 +16,7 @@ class MacAudio {
     private var audioRenderer: AVSampleBufferAudioRenderer?
     private var renderSynchronizer: AVSampleBufferRenderSynchronizer?
     private var rendererFlushObserver: NSObjectProtocol?
+    private var rendererOutputConfigObserver: NSObjectProtocol?
     private var nextPresentationTime = CMTime.zero
     private var rendererStarted = false
     private var prerollBuffersQueued = 0
@@ -27,6 +28,8 @@ class MacAudio {
     let numBuffers: Int
 
     private var avFormat: AVAudioFormat?
+    private var bytesPerFrame = 0
+    private var ringBufferDuration: TimeInterval = 0
 
     private var pcmBuffer = PcmBuffer(capacity: 65536)
 
@@ -52,6 +55,12 @@ class MacAudio {
         guard let avFormat = avFormat else {
             throw NSError(code: .formatError, message: internalErrorDescription, debug: "Failed to create AVAudioFormat from FFDecoder.Format")
         }
+
+        bytesPerFrame = Int(avFormat.streamDescription.pointee.mBytesPerFrame)
+        guard bytesPerFrame > 0 else {
+            throw NSError(code: .formatError, message: internalErrorDescription, debug: "Incorrect audio format bytesPerFrame=\(bytesPerFrame)")
+        }
+        ringBufferDuration = Double(ringBuffer.bufferSize / bytesPerFrame) / avFormat.sampleRate
 
         debug("FFFormat: \(ffFormat))")
         debug("AVFormat: \(avFormat)")
@@ -91,7 +100,7 @@ class MacAudio {
         }
 
         if #available(macOS 12.0, *) {
-            NotificationCenter.default.addObserver(
+            rendererOutputConfigObserver = NotificationCenter.default.addObserver(
                 forName: .AVSampleBufferAudioRendererOutputConfigurationDidChange,
                 object: renderer,
                 queue: nil
@@ -109,6 +118,12 @@ class MacAudio {
             NotificationCenter.default.removeObserver(observer)
             rendererFlushObserver = nil
         }
+
+        if let observer = rendererOutputConfigObserver {
+            NotificationCenter.default.removeObserver(observer)
+            rendererOutputConfigObserver = nil
+        }
+
         if let synchronizer = renderSynchronizer {
             synchronizer.rate = 0.0
             renderSynchronizer = nil
@@ -136,8 +151,12 @@ class MacAudio {
 
         var enqueuedNow = 0
         while renderer.isReadyForMoreMediaData {
+            guard let sampleBuffer = dequeueAudioSampleBuffer() else {
+                renderer.stopRequestingMediaData()
+                rescheduleMediaData()
+                break
+            }
 
-            guard let sampleBuffer = dequeueAudioSampleBuffer() else { break }
             if prerollStartTime == nil {
                 prerollStartTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
             }
@@ -158,10 +177,6 @@ class MacAudio {
      * ****************************************/
     private func dequeueAudioSampleBuffer() -> CMSampleBuffer? {
         guard let avFormat else { return nil }
-
-        let asbd = avFormat.streamDescription.pointee
-        let bytesPerFrame = Int(asbd.mBytesPerFrame)
-        guard bytesPerFrame > 0 else { return nil }
         guard let index = ringBuffer.readIndex() else { return nil }
 
         let src = ringBuffer.buffers[index]
@@ -188,11 +203,7 @@ class MacAudio {
             blockBufferOut: &blockBuffer
         )
 
-        guard
-            ok == noErr,
-            let blockBuffer else {
-            return nil
-        }
+        guard ok == noErr, let blockBuffer else { return nil }
 
         ok = src.audioData.withUnsafeBytes { raw -> OSStatus in
             guard let base = raw.baseAddress else { return -1 }
@@ -221,11 +232,26 @@ class MacAudio {
             sampleBufferOut: &sampleBuffer
         ) == noErr, let sampleBuffer else { return nil }
 
-        let sampleRate = asbd.mSampleRate
+        let sampleRate = avFormat.streamDescription.pointee.mSampleRate
         let duration = CMTime(value: CMTimeValue(availableFrames), timescale: CMTimeScale(sampleRate))
         nextPresentationTime = CMTimeAdd(pts, duration)
 
         return sampleBuffer
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func rescheduleMediaData() {
+        playbackQueue.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+            guard let self, let renderer = self.audioRenderer else { return }
+
+            if self.ringBuffer.readyNum() > 0 {
+                renderer.requestMediaDataWhenReady(on: self.playbackQueue) { [weak self] in self?.feedAudioRenderer() }
+            } else {
+                self.rescheduleMediaData()
+            }
+        }
     }
 
     /* ****************************************

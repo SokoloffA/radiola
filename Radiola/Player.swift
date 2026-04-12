@@ -33,6 +33,7 @@ class Player: NSObject {
     private var player = FFPlayer()
     private var timer: Timer?
     private let connectDelay = 20.0
+    private var eventsTask: Task<Void, Never>?
 
     /* ****************************************
      *
@@ -81,13 +82,20 @@ class Player: NSObject {
             name: Notification.Name.SettingsChanged,
             object: nil)
 
-        Task { @MainActor in
-            for await event in await player.events {
+        eventsTask = Task { @MainActor in
+            for await event in player.events {
                 handleEvent(event)
             }
         }
 
         AudioSytstem.debugAudioDevices(prefix: "[Player]")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    deinit {
+        eventsTask?.cancel()
     }
 
     /* ****************************************
