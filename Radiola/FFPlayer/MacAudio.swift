@@ -96,7 +96,7 @@ class MacAudio {
                 object: renderer,
                 queue: nil
             ) { [weak self] _ in
-                self?.playbackQueue.async { self?.routeChanged() }
+                self?.playbackQueue.async { self?.realignAfterFlush() }
             }
         }
     }
@@ -132,14 +132,15 @@ class MacAudio {
     private func feedAudioRenderer() {
         guard
             let renderer = audioRenderer,
-            let synchronizer = renderSynchronizer else {
-            return
-        }
+            let synchronizer = renderSynchronizer else { return }
 
         var enqueuedNow = 0
         while renderer.isReadyForMoreMediaData {
+
             guard let sampleBuffer = dequeueAudioSampleBuffer() else { break }
-            if prerollStartTime == nil { prerollStartTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer) }
+            if prerollStartTime == nil {
+                prerollStartTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+            }
             renderer.enqueue(sampleBuffer)
             prerollBuffersQueued += 1
             enqueuedNow += 1
@@ -157,46 +158,73 @@ class MacAudio {
      * ****************************************/
     private func dequeueAudioSampleBuffer() -> CMSampleBuffer? {
         guard let avFormat else { return nil }
-        let bytesPerFrame = Int(avFormat.streamDescription.pointee.mBytesPerFrame)
+
+        let asbd = avFormat.streamDescription.pointee
+        let bytesPerFrame = Int(asbd.mBytesPerFrame)
         guard bytesPerFrame > 0 else { return nil }
         guard let index = ringBuffer.readIndex() else { return nil }
 
         let src = ringBuffer.buffers[index]
         let byteCount = src.audioDataByteSize
-        guard byteCount > 0 else { ringBuffer.incReadIndex(); return nil }
-
-        let data = Array(src.audioData[0 ..< byteCount])
-        ringBuffer.incReadIndex()
+        guard byteCount > 0 else {
+            ringBuffer.incReadIndex()
+            return nil
+        }
 
         let availableFrames = byteCount / bytesPerFrame
         guard availableFrames > 0 else { return nil }
 
+        var ok: OSStatus
         var blockBuffer: CMBlockBuffer?
-        guard CMBlockBufferCreateWithMemoryBlock(
-            allocator: kCFAllocatorDefault, memoryBlock: nil, blockLength: byteCount,
-            blockAllocator: kCFAllocatorDefault, customBlockSource: nil,
-            offsetToData: 0, dataLength: byteCount, flags: 0, blockBufferOut: &blockBuffer
-        ) == noErr, let blockBuffer else { return nil }
+        ok = CMBlockBufferCreateWithMemoryBlock(
+            allocator: kCFAllocatorDefault,
+            memoryBlock: nil,
+            blockLength: byteCount,
+            blockAllocator: kCFAllocatorDefault,
+            customBlockSource: nil,
+            offsetToData: 0,
+            dataLength: byteCount,
+            flags: 0,
+            blockBufferOut: &blockBuffer
+        )
 
-        let writeOK = data.withUnsafeBytes { raw -> Bool in
-            guard let base = raw.baseAddress else { return false }
-            return CMBlockBufferReplaceDataBytes(with: base, blockBuffer: blockBuffer,
-                                                 offsetIntoDestination: 0, dataLength: byteCount) == noErr
+        guard
+            ok == noErr,
+            let blockBuffer else {
+            return nil
         }
-        guard writeOK else { return nil }
 
-        let formatDescription = avFormat.formatDescription
+        ok = src.audioData.withUnsafeBytes { raw -> OSStatus in
+            guard let base = raw.baseAddress else { return -1 }
+
+            return CMBlockBufferReplaceDataBytes(
+                with: base,
+                blockBuffer: blockBuffer,
+                offsetIntoDestination: 0,
+                dataLength: byteCount
+            )
+        }
+
+        guard ok == noErr else { return nil }
+
+        ringBuffer.incReadIndex()
+
         var sampleBuffer: CMSampleBuffer?
         let pts = nextPresentationTime
         guard CMAudioSampleBufferCreateReadyWithPacketDescriptions(
-            allocator: kCFAllocatorDefault, dataBuffer: blockBuffer,
-            formatDescription: formatDescription, sampleCount: availableFrames,
-            presentationTimeStamp: pts, packetDescriptions: nil,
+            allocator: kCFAllocatorDefault,
+            dataBuffer: blockBuffer,
+            formatDescription: avFormat.formatDescription,
+            sampleCount: availableFrames,
+            presentationTimeStamp: pts,
+            packetDescriptions: nil,
             sampleBufferOut: &sampleBuffer
         ) == noErr, let sampleBuffer else { return nil }
 
-        let timescale = CMTimeScale(max(1, avFormat.sampleRate))
-        nextPresentationTime = CMTimeAdd(pts, CMTime(value: CMTimeValue(availableFrames), timescale: timescale))
+        let sampleRate = asbd.mSampleRate
+        let duration = CMTime(value: CMTimeValue(availableFrames), timescale: CMTimeScale(sampleRate))
+        nextPresentationTime = CMTimeAdd(pts, duration)
+
         return sampleBuffer
     }
 
@@ -218,43 +246,15 @@ class MacAudio {
      *
      * ****************************************/
     private func realignAfterFlush() {
-        guard
-            let renderer = audioRenderer,
-            let synchronizer = renderSynchronizer else {
-            return
-        }
+        guard let synchronizer = renderSynchronizer else { return }
 
-        renderer.flush()
         let current = synchronizer.currentTime()
         synchronizer.rate = 0.0
         nextPresentationTime = CMTimeCompare(current, .zero) >= 0 ? current : .zero
         prerollBuffersQueued = 0
         prerollStartTime = nil
         rendererStarted = false
-        feedAudioRenderer() // ← без этого тишина
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func routeChanged() {
-        playbackQueue.async { [weak self] in
-            guard
-                let self,
-                let renderer = self.audioRenderer,
-                let synchronizer = self.renderSynchronizer else {
-                return
-            }
-
-            renderer.flush()
-            let current = synchronizer.currentTime()
-            synchronizer.rate = 0.0
-            self.nextPresentationTime = CMTimeCompare(current, .zero) >= 0 ? current : .zero
-            self.prerollBuffersQueued = 0
-            self.prerollStartTime = nil
-            self.rendererStarted = false
-            self.feedAudioRenderer()
-        }
+        feedAudioRenderer()
     }
 
     /* ****************************************
@@ -285,7 +285,7 @@ class MacAudio {
         guard let renderer = audioRenderer else { return }
         if #available(macOS 10.13, *) {
             renderer.audioOutputDeviceUniqueID = audioDevice.UID
-            routeChanged()
+            playbackQueue.async { [weak self] in self?.realignAfterFlush() }
         }
     }
 }
