@@ -281,11 +281,12 @@ class MacAudio {
     /* ****************************************
      *
      * ****************************************/
-    private func setOutputDevice(audioDevice: AudioDevice) {
-        guard let renderer = audioRenderer else { return }
+    public func setOutputDevice(audioDevice: AudioDevice?) {
         if #available(macOS 10.13, *) {
-            renderer.audioOutputDeviceUniqueID = audioDevice.UID
-            playbackQueue.async { [weak self] in self?.realignAfterFlush() }
+            playbackQueue.async { [weak self] in
+                self?.audioRenderer?.audioOutputDeviceUniqueID = audioDevice?.UID
+                self?.realignAfterFlush()
+            }
         }
     }
 }

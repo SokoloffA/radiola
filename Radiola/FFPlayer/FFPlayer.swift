@@ -136,6 +136,15 @@ class FFPlayer {
             await actor.setVolume(volume)
         }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    public func setOutputDevice(audioDevice: AudioDevice?) {
+        Task {
+            await actor.setOutputDevice(audioDevice: audioDevice)
+        }
+    }
 }
 
 // MARK: - FFPlayerActor
@@ -245,6 +254,13 @@ private actor FFPlayerActor {
      * ****************************************/
     func setVolume(_ volume: Float) {
         macAudio.setVolume(volume)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    public func setOutputDevice(audioDevice: AudioDevice?) {
+        macAudio.setOutputDevice(audioDevice: audioDevice)
     }
 
     /* ****************************************

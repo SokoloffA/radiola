@@ -288,8 +288,9 @@ class Player: NSObject {
             }
 
             debug("[Player] The current audio device has been changed. Restart player with new audio device \(settings.audioDevice ?? "nil").")
-            stop()
-            play()
+
+            let audioDevice = AudioSytstem.device(byUID: settings.audioDevice)
+            player.setOutputDevice(audioDevice: audioDevice)
         }
     }
 
@@ -331,8 +332,8 @@ class Player: NSObject {
         }
 
         debug("The current audio device has been deleted. Restart player with system default device")
-        stop()
-        play()
+        let audioDevice = AudioSytstem.device(byUID: audioDeviceUID)
+        player.setOutputDevice(audioDevice: audioDevice)
     }
 
     /* ****************************************
