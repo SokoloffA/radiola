@@ -263,7 +263,6 @@ class MacAudio {
      * ****************************************/
     func setVolume(_ volume: Float) {
         audioRenderer?.volume = volume
-        playbackQueue.async { [weak self] in self?.realignAfterFlush() }
     }
 
     /* ****************************************
