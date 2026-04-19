@@ -94,6 +94,6 @@ import Foundation
     }
 
     typealias SpeedMetric = NoopMetric
-    typealias CountMetric = NoopMetrictype
+    typealias CounterMetric = NoopMetric
     typealias GaugeMetric = NoopMetric
 #endif
