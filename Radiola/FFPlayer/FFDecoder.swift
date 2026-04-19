@@ -76,6 +76,12 @@ class FFDecoder {
 
     private var decodeThread: Thread?
 
+    private let speedMetric = SpeedMetric(name: "FFDecoder speed")
+    private let readyBuffMetric = GaugeMetric(name: "FFDecoder ready buffers")
+    private let missingBuffMetric = CounterMetric(name: "FFDecoder missing buffers")
+
+    private let decCountMetric = CounterMetric(name: "FFDecoder dec count")
+
     var format: Format {
         return Format(
             sampleFormat: outFmt,
@@ -289,6 +295,8 @@ class FFDecoder {
         var err: Int32 = 0
         let bufferSize = outBuffer.audioData.count
 
+        decCountMetric.record(1)
+
         while pcmBuffer.count < bufferSize {
             err = av_read_frame(formatContext, packet)
             if err == -ETIMEDOUT {
@@ -385,6 +393,9 @@ class FFDecoder {
                 let dstPtr = dstRaw.baseAddress!
                 memcpy(dstPtr, srcPtr, toCopy)
             }
+
+            speedMetric.record(toCopy)
+            readyBuffMetric.record(ringBuffer.readyNum())
         }
 
         if pcmBuffer.count > toCopy {
@@ -429,12 +440,14 @@ class FFDecoder {
                     }
 
                     guard let index = ringBuffer.writeIndex() else {
+                        missingBuffMetric.record(1)
                         Thread.sleep(forTimeInterval: delay)
                         continue
                     }
 
                     try decodeBuffer(outBuffer: ringBuffer.buffers[index])
                     ringBuffer.incWriteIndex()
+                    missingBuffMetric.record(0)
                 }
             } catch {
                 guard let self = self else { return }
