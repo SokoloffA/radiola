@@ -28,6 +28,8 @@ class MacAudio {
     private var bytesPerFrame = 0
     private var ringBufferDuration: TimeInterval = 0
 
+    private var isRealigned = true
+
     /* ****************************************
      *
      * ****************************************/
@@ -95,8 +97,8 @@ class MacAudio {
             }
         }
 
-        ringBuffer.onBufferReady = { [weak self] in
-            self?.playbackQueue.async { self?.enqueueNextBuffer() }
+        renderer.requestMediaDataWhenReady(on: playbackQueue) { [weak self] in
+            self?.feedAudioRenderer()
         }
     }
 
@@ -133,37 +135,29 @@ class MacAudio {
     /* ****************************************
      *
      * ****************************************/
-    private func enqueueNextBuffer() {
+    private func feedAudioRenderer() {
         guard
             let renderer = audioRenderer,
             let synchronizer = renderSynchronizer else { return }
 
-        var needReschedule = true
-        defer {
-            if needReschedule && ringBuffer.isFull() {
-                playbackQueue.asyncAfter(deadline: .now() + ringBufferDuration) { [weak self] in
-                    self?.enqueueNextBuffer()
-                }
+        while renderer.isReadyForMoreMediaData {
+            if isRealigned && ringBuffer.readyNum() < 50 { return }
+            isRealigned = false
+
+            guard let sampleBuffer = dequeueAudioSampleBuffer() else { return }
+
+            if timeline.prerollStartTime == nil {
+                timeline.prerollStartTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+            }
+
+            renderer.enqueue(sampleBuffer)
+            timeline.buffersQueued += 1
+
+            if !timeline.isStarted && timeline.buffersQueued >= timeline.prerollTarget {
+                startSynchronizer(synchronizer, at: timeline.prerollStartTime ?? timeline.nextPresentationTime)
+                timeline.isStarted = true
             }
         }
-
-        guard renderer.isReadyForMoreMediaData else { return }
-
-        guard let sampleBuffer = dequeueAudioSampleBuffer() else { return }
-
-        if timeline.prerollStartTime == nil {
-            timeline.prerollStartTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-        }
-
-        renderer.enqueue(sampleBuffer)
-        timeline.buffersQueued += 1
-
-        if !timeline.isStarted && timeline.buffersQueued >= timeline.prerollTarget {
-            startSynchronizer(synchronizer, at: timeline.prerollStartTime ?? timeline.nextPresentationTime)
-            timeline.isStarted = true
-        }
-
-        needReschedule = false
     }
 
     /* ****************************************
@@ -245,17 +239,15 @@ class MacAudio {
      *
      * ****************************************/
     private func realignAfterFlush() {
+        audioRenderer?.flush()
         guard let synchronizer = renderSynchronizer else { return }
 
         let current = synchronizer.currentTime()
         synchronizer.rate = 0.0
         timeline.reset(at: current)
 
-        // Flush the buffers that have already been accumulated from the ring buffer
-        let ready = ringBuffer.readyNum()
-        for _ in 0 ..< ready {
-            enqueueNextBuffer()
-        }
+        isRealigned = true
+        feedAudioRenderer()
     }
 
     /* ****************************************
