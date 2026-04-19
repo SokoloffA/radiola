@@ -21,6 +21,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     private let airPlayButton = AirPlayButton()
     private let toolbarVolumeView = VolumeView(showMuteButton: true)
     private let toolbarLeftMargin = 145.0
+    private let playToolbarStack =  NSStackView()
 
     @IBOutlet var stationsTree: NSOutlineView!
     @IBOutlet var playtoolbar: NSView!
@@ -117,36 +118,37 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      * ****************************************/
     private func initPlaytoolbar() {
         let playView = toolbarPlayView.view
-        playtoolbar.addSubview(playView)
-        playtoolbar.addSubview(toolbarVolumeView)
-        playtoolbar.addSubview(airPlayButton)
 
         toolbarVolumeView.widthAnchor.constraint(equalToConstant: 210).isActive = true
 
-        playView.translatesAutoresizingMaskIntoConstraints = false
-        toolbarVolumeView.translatesAutoresizingMaskIntoConstraints = false
-        playtoolbar.translatesAutoresizingMaskIntoConstraints = false
-        airPlayButton.translatesAutoresizingMaskIntoConstraints = false
+        playToolbarStack.orientation = .horizontal
+        playToolbarStack.spacing = 8
+        playToolbarStack.alignment = .centerY
+        playToolbarStack.translatesAutoresizingMaskIntoConstraints = false
+        playToolbarStack.addArrangedSubview(playView)
+        playToolbarStack.addArrangedSubview(toolbarVolumeView)
+        playToolbarStack.addArrangedSubview(airPlayButton)
+        playToolbarStack.distribution = .fill
 
-        playView.topAnchor.constraint(equalTo: playtoolbar.topAnchor).isActive = true
-        playView.bottomAnchor.constraint(equalTo: playtoolbar.bottomAnchor).isActive = true
-        toolbarVolumeView.topAnchor.constraint(equalTo: playView.topAnchor).isActive = true
-        toolbarVolumeView.bottomAnchor.constraint(equalTo: playView.bottomAnchor).isActive = true
+        playView.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        toolbarVolumeView.setContentHuggingPriority(.required, for: .horizontal)
+        airPlayButton.setContentHuggingPriority(.required, for: .horizontal)
 
-        let cnst = playView.leadingAnchor.constraint(equalTo: playtoolbar.leadingAnchor)
-        cnst.priority = NSLayoutConstraint.Priority(999)
-        cnst.isActive = true
+        playtoolbar.addSubview(playToolbarStack)
+
+        NSLayoutConstraint.activate([
+              playToolbarStack.topAnchor.constraint(equalTo: playtoolbar.topAnchor),
+              playToolbarStack.bottomAnchor.constraint(equalTo: playtoolbar.bottomAnchor),
+              playToolbarStack.trailingAnchor.constraint(equalTo: playtoolbar.trailingAnchor, constant: -8),
+          ])
+
+        let leading = playToolbarStack.leadingAnchor.constraint(equalTo: playtoolbar.leadingAnchor)
+        leading.priority = NSLayoutConstraint.Priority(999)
+        leading.isActive = true
+
         if let contentView = window?.contentView {
             playView.leadingAnchor.constraint(greaterThanOrEqualTo: contentView.leadingAnchor, constant: toolbarLeftMargin).isActive = true
         }
-
-        playView.trailingAnchor.constraint(equalTo: toolbarVolumeView.leadingAnchor).isActive = true
-        toolbarVolumeView.leadingAnchor.constraint(equalTo: playView.trailingAnchor).isActive = true
-
-        airPlayButton.widthAnchor.constraint(equalTo: airPlayButton.heightAnchor).isActive = true
-        airPlayButton.centerYAnchor.constraint(equalTo: toolbarVolumeView.centerYAnchor).isActive = true
-        airPlayButton.leadingAnchor.constraint(equalToSystemSpacingAfter: toolbarVolumeView.trailingAnchor, multiplier: 1).isActive = true
-        playtoolbar.trailingAnchor.constraint(equalToSystemSpacingAfter: airPlayButton.trailingAnchor, multiplier: 1).isActive = true
     }
 
     /* ****************************************

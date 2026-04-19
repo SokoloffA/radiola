@@ -8,30 +8,53 @@
 import AppKit
 import AVKit
 
-final class AirPlayButton: NSView {
+final class AirPlayButton: AVRoutePickerView {
+    private let routeDetector = AVRouteDetector()
 
-    private let routePicker = AVRoutePickerView()
-
+    /* ****************************************
+     *
+     * ****************************************/
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         setup()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setup()
     }
 
-    private func setup() {
-        routePicker.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(routePicker)
+    /* ****************************************
+     *
+     * ****************************************/
+    deinit {
+        routeDetector.isRouteDetectionEnabled = false
+    }
 
-        routePicker.isRoutePickerButtonBordered = false
-        NSLayoutConstraint.activate([
-            routePicker.leadingAnchor.constraint(equalTo: leadingAnchor),
-            routePicker.trailingAnchor.constraint(equalTo: trailingAnchor),
-            routePicker.topAnchor.constraint(equalTo: topAnchor),
-            routePicker.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+    /* ****************************************
+     *
+     * ****************************************/
+    private func setup() {
+        isRoutePickerButtonBordered = false
+        routeDetector.isRouteDetectionEnabled = true
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateVisibility),
+            name: .AVRouteDetectorMultipleRoutesDetectedDidChange,
+            object: routeDetector
+        )
+
+        updateVisibility()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func updateVisibility() {
+        isHidden = !routeDetector.multipleRoutesDetected
     }
 }
