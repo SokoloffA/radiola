@@ -12,6 +12,7 @@ import Foundation
 class RingBuffer {
     let buffersCount: Int
     let bufferSize: Int
+    var onBufferReady: (() -> Void)?
 
     class Buffer {
         var audioData: [UInt8]
@@ -96,6 +97,15 @@ class RingBuffer {
     /* ****************************************
      *
      * ****************************************/
+    func isFull() -> Bool {
+        pthread_mutex_lock(&mutex)
+        defer { pthread_mutex_unlock(&mutex) }
+        return Int(_writeIndex - _readIndex) >= buffersCount
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @discardableResult
     func incReadIndex() -> Int {
         pthread_mutex_lock(&mutex)
@@ -110,9 +120,12 @@ class RingBuffer {
     @discardableResult
     func incWriteIndex() -> Int {
         pthread_mutex_lock(&mutex)
-        defer { pthread_mutex_unlock(&mutex) }
         _writeIndex += 1
-        return Int(_writeIndex % Int64(buffers.count))
+        let res = Int(_writeIndex % Int64(buffers.count))
+        pthread_mutex_unlock(&mutex)
+
+        onBufferReady?()
+        return res
     }
 
     /* ****************************************
