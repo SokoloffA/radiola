@@ -109,6 +109,7 @@ class FFPlayer {
      * ****************************************/
     func start(url: URL, volume: Float, audioDevice: AudioDevice?) {
         let currentStopTask = stopTask
+
         playTask = Task {
             await currentStopTask?.value
             await actor.start(url: url, volume: volume, audioDevice: audioDevice)

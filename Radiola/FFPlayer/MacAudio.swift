@@ -103,7 +103,7 @@ class MacAudio {
             }
         }
 
-        renderer.requestMediaDataWhenReady(on: playbackQueue) { [weak self] in
+        playbackQueue.async { [weak self] in
             self?.feedAudioRenderer()
         }
     }
@@ -132,8 +132,6 @@ class MacAudio {
             audioRenderer = nil
         }
 
-        ringBuffer.onBufferReady = nil
-
         avFormat = nil
         timeline.reset()
     }
@@ -146,11 +144,13 @@ class MacAudio {
             let renderer = audioRenderer,
             let synchronizer = renderSynchronizer else { return }
 
+        var duration = 0.0
         while renderer.isReadyForMoreMediaData {
-            if isRealigned && ringBuffer.readyNum() < 50 { return }
+            if isRealigned && ringBuffer.readyNum() < 50 { break }
             isRealigned = false
 
-            guard let sampleBuffer = dequeueAudioSampleBuffer() else { return }
+            guard let sampleBuffer = dequeueAudioSampleBuffer() else { break }
+            duration += CMSampleBufferGetOutputDuration(sampleBuffer).seconds
 
             if timeline.prerollStartTime == nil {
                 timeline.prerollStartTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
@@ -163,6 +163,12 @@ class MacAudio {
                 startSynchronizer(synchronizer, at: timeline.prerollStartTime ?? timeline.nextPresentationTime)
                 timeline.isStarted = true
             }
+        }
+
+        let delay = (duration > 0 ? duration : ringBufferDuration) * 0.8
+
+        playbackQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
+            self?.feedAudioRenderer()
         }
     }
 
