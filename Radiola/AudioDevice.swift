@@ -137,6 +137,7 @@ class AudioSytstem {
             debug("\(p)    streamsOutput: \(d.streamsOutput)")
             debug("\(p)    sampleRateInput: \(d.sampleRateInput)")
             debug("\(p)    sampleRateOutput: \(d.sampleRateOutput)")
+            debug("\(p)    transportType: \(d.transportType)")
             debug("\(p)")
         }
     }
@@ -153,6 +154,7 @@ struct AudioDevice {
     let sampleRateOutput: Float64
     let buffersInput: [AudioBuffer]
     let buffersOutput: [AudioBuffer]
+    let transportType: UInt32
 
     /* ****************************************
      *
@@ -276,5 +278,16 @@ struct AudioDevice {
             buffersOutput = []
             sampleRateOutput = 0.0
         }
+
+        // get transport type
+        var transportType: UInt32 = 0
+        var transportSize = UInt32(MemoryLayout<UInt32>.size)
+        var transportAddress = AudioObjectPropertyAddress(
+            mSelector: kAudioDevicePropertyTransportType,
+            mScope: kAudioObjectPropertyScopeGlobal,
+            mElement: kAudioObjectPropertyElementMain
+        )
+        AudioObjectGetPropertyData(deviceID, &transportAddress, 0, nil, &transportSize, &transportType)
+        self.transportType = transportType
     }
 }
