@@ -68,6 +68,14 @@ class AudioSytstem {
     /* ****************************************
      *
      * ****************************************/
+    static func device(byDeviceID: AudioDeviceID?) -> AudioDevice? {
+        guard let id = byDeviceID else { return nil }
+        return devices().first { $0.deviceID == id }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     static func defaultOutputDeviceID() -> AudioDeviceID? {
         var deviceID = kAudioObjectUnknown
         var propertyAddress = AudioObjectPropertyAddress(
