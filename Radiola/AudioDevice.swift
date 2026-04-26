@@ -90,6 +90,28 @@ class AudioSytstem {
     /* ****************************************
      *
      * ****************************************/
+    static func defaultOutputDevice() -> AudioDevice? {
+        var deviceID = kAudioObjectUnknown
+        var propertyAddress = AudioObjectPropertyAddress(
+            mSelector: kAudioHardwarePropertyDefaultOutputDevice,
+            mScope: kAudioObjectPropertyScopeGlobal,
+            mElement: kAudioObjectPropertyElementMaster
+        )
+
+        var size = UInt32(MemoryLayout<AudioDeviceID>.size)
+        let status = AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &propertyAddress, 0, nil, &size, &deviceID)
+
+        guard status == noErr else {
+            warning("Error receiving the default device: \(status)")
+            return nil
+        }
+
+        return devices().first { $0.deviceID == deviceID }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     static func debugAudioDevices(prefix: String? = nil) {
         let p = (prefix != nil) ? "\(prefix!) " : ""
 

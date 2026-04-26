@@ -30,6 +30,8 @@ class MacAudio {
 
     private var isRealigned = true
 
+    var onNeedRestart: (() -> Void)?
+
     private var speedMetric: SpeedMetric?
     private var renderCountMetric: CounterMetric?
 
@@ -90,7 +92,7 @@ class MacAudio {
             object: renderer,
             queue: nil
         ) { [weak self] _ in
-            self?.playbackQueue.async { self?.realignAfterFlush() }
+            self?.playbackQueue.async { self?.onNeedRestart?() }
         }
 
         if #available(macOS 12.0, *) {
@@ -99,7 +101,7 @@ class MacAudio {
                 object: renderer,
                 queue: nil
             ) { [weak self] _ in
-                self?.playbackQueue.async { self?.realignAfterFlush() }
+                self?.playbackQueue.async { self?.onNeedRestart?() }
             }
         }
 
@@ -254,17 +256,17 @@ class MacAudio {
     /* ****************************************
      *
      * ****************************************/
-    private func realignAfterFlush() {
-        audioRenderer?.flush()
-        guard let synchronizer = renderSynchronizer else { return }
-
-        let current = synchronizer.currentTime()
-        synchronizer.rate = 0.0
-        timeline.reset(at: current)
-
-        isRealigned = true
-        feedAudioRenderer()
-    }
+//    private func realignAfterFlush() {
+//        audioRenderer?.flush()
+//        guard let synchronizer = renderSynchronizer else { return }
+//
+//        let current = synchronizer.currentTime()
+//        synchronizer.rate = 0.0
+//        timeline.reset(at: current)
+//
+//        isRealigned = true
+//        feedAudioRenderer()
+//    }
 
     /* ****************************************
      *
@@ -290,11 +292,10 @@ class MacAudio {
     /* ****************************************
      *
      * ****************************************/
-    public func setOutputDevice(audioDevice: AudioDevice?) {
+    public func setOutputDevice(audioDevice: AudioDevice) {
         if #available(macOS 10.13, *) {
             playbackQueue.async { [weak self] in
-                self?.audioRenderer?.audioOutputDeviceUniqueID = audioDevice?.UID
-                self?.realignAfterFlush()
+                self?.audioRenderer?.audioOutputDeviceUniqueID = audioDevice.UID
             }
         }
     }

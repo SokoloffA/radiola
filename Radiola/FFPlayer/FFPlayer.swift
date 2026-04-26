@@ -84,6 +84,7 @@ extension FFPlayer {
     enum Event {
         case stateChanged(FFPlayer.State)
         case metadataReady(String?)
+        case needRestart
     }
 }
 
@@ -137,15 +138,6 @@ class FFPlayer {
             await actor.setVolume(volume)
         }
     }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    public func setOutputDevice(audioDevice: AudioDevice?) {
-        Task {
-            await actor.setOutputDevice(audioDevice: audioDevice)
-        }
-    }
 }
 
 // MARK: - FFPlayerActor
@@ -166,7 +158,10 @@ private actor FFPlayerActor {
      * ****************************************/
     init(continuation: AsyncStream<FFPlayer.Event>.Continuation) {
         self.continuation = continuation
-        macAudio = MacAudio(ringBuffer: ringBuffer, numBuffers: NUM_AUDIO_BUFFERS)
+
+        let macAudio = MacAudio(ringBuffer: ringBuffer, numBuffers: NUM_AUDIO_BUFFERS)
+        self.macAudio = macAudio
+
         let decoder = FFDecoder(ringBuffer: ringBuffer, shouldInterrupt: decoderInterrupt)
         self.decoder = decoder
 
@@ -181,6 +176,13 @@ private actor FFPlayerActor {
             guard let self else { return }
             Task {
                 await self.emit(.metadataReady(metadata))
+            }
+        }
+
+        macAudio.onNeedRestart = { [weak self] in
+            guard let self else { return }
+            Task {
+                await self.emit(.needRestart)
             }
         }
     }
@@ -255,13 +257,6 @@ private actor FFPlayerActor {
      * ****************************************/
     func setVolume(_ volume: Float) {
         macAudio.setVolume(volume)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    public func setOutputDevice(audioDevice: AudioDevice?) {
-        macAudio.setOutputDevice(audioDevice: audioDevice)
     }
 
     /* ****************************************

@@ -160,6 +160,17 @@ class Player: NSObject {
     /* ****************************************
      *
      * ****************************************/
+    private func restart() {
+        if !isPlaying {
+            return
+        }
+        stop()
+        play()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @objc func toggle() {
         guard let station = station else { return }
 
@@ -214,6 +225,9 @@ class Player: NSObject {
 
             case let .metadataReady(metadata):
                 metadataChanged(metadata)
+
+            case .needRestart:
+                restart()
         }
     }
 
@@ -288,9 +302,7 @@ class Player: NSObject {
             }
 
             debug("[Player] The current audio device has been changed. Restart player with new audio device \(settings.audioDevice ?? "nil").")
-
-            let audioDevice = AudioSytstem.device(byUID: settings.audioDevice)
-            player.setOutputDevice(audioDevice: audioDevice)
+            restart()
         }
     }
 
@@ -332,8 +344,7 @@ class Player: NSObject {
         }
 
         debug("The current audio device has been deleted. Restart player with system default device")
-        let audioDevice = AudioSytstem.device(byUID: audioDeviceUID)
-        player.setOutputDevice(audioDevice: audioDevice)
+        restart()
     }
 
     /* ****************************************
