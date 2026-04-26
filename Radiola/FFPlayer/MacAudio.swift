@@ -30,8 +30,8 @@ class MacAudio {
 
     private var isRealigned = true
 
-    private let speedMetric = SpeedMetric(name: "MacAudio speed")
-    private let renderCountMetric = CounterMetric(name: "MacAudio render count")
+    private var speedMetric: SpeedMetric?
+    private var renderCountMetric: CounterMetric?
 
     /* ****************************************
      *
@@ -45,6 +45,9 @@ class MacAudio {
      *
      * ****************************************/
     func start(format ffFormat: FFDecoder.Format, audioDevice: AudioDevice?) throws {
+        // renderCountMetric = CounterMetric(name: "MacAudio render count")
+        // speedMetric = SpeedMetric(name: "MacAudio speed")
+
         self.avFormat = AVAudioFormat(
             commonFormat: .pcmFormatFloat32,
             sampleRate: Double(ffFormat.sampleRate),
@@ -167,7 +170,7 @@ class MacAudio {
      *
      * ****************************************/
     private func dequeueAudioSampleBuffer() -> CMSampleBuffer? {
-        renderCountMetric.record(1)
+        renderCountMetric?.record(1)
 
         guard let avFormat else { return nil }
         guard let index = ringBuffer.readIndex() else { return nil }
@@ -228,7 +231,7 @@ class MacAudio {
         let sampleRate = avFormat.streamDescription.pointee.mSampleRate
         timeline.advance(by: availableFrames, sampleRate: sampleRate)
 
-        speedMetric.record(byteCount)
+        speedMetric?.record(byteCount)
 
         return sampleBuffer
     }

@@ -76,11 +76,10 @@ class FFDecoder {
 
     private var decodeThread: Thread?
 
-    private let speedMetric = SpeedMetric(name: "FFDecoder speed")
-    private let readyBuffMetric = GaugeMetric(name: "FFDecoder ready buffers")
-    private let missingBuffMetric = CounterMetric(name: "FFDecoder missing buffers")
-
-    private let decCountMetric = CounterMetric(name: "FFDecoder dec count")
+    private var speedMetric: SpeedMetric?
+    private var readyBuffMetric: GaugeMetric?
+    private var missingBuffMetric: CounterMetric?
+    private var decCountMetric: CounterMetric?
 
     var format: Format {
         return Format(
@@ -104,6 +103,11 @@ class FFDecoder {
 
         let opaque = Unmanaged.passUnretained(self).toOpaque()
         interruptCB = AVIOInterruptCB(callback: interruptCallback, opaque: opaque)
+
+        // speedMetric = SpeedMetric(name: "FFDecoder speed")
+        // readyBuffMetric = GaugeMetric(name: "FFDecoder ready buffers")
+        // missingBuffMetric = CounterMetric(name: "FFDecoder missing buffers")
+        // decCountMetric = CounterMetric(name: "FFDecoder dec count")
     }
 
     /* ****************************************
@@ -295,7 +299,7 @@ class FFDecoder {
         var err: Int32 = 0
         let bufferSize = outBuffer.audioData.count
 
-        decCountMetric.record(1)
+        decCountMetric?.record(1)
 
         while pcmBuffer.count < bufferSize {
             err = av_read_frame(formatContext, packet)
@@ -394,8 +398,8 @@ class FFDecoder {
                 memcpy(dstPtr, srcPtr, toCopy)
             }
 
-            speedMetric.record(toCopy)
-            readyBuffMetric.record(ringBuffer.readyNum())
+            speedMetric?.record(toCopy)
+            readyBuffMetric?.record(ringBuffer.readyNum())
         }
 
         if pcmBuffer.count > toCopy {
@@ -440,14 +444,14 @@ class FFDecoder {
                     }
 
                     guard let index = ringBuffer.writeIndex() else {
-                        missingBuffMetric.record(1)
+                        missingBuffMetric?.record(1)
                         Thread.sleep(forTimeInterval: delay)
                         continue
                     }
 
                     try decodeBuffer(outBuffer: ringBuffer.buffers[index])
                     ringBuffer.incWriteIndex()
-                    missingBuffMetric.record(0)
+                    missingBuffMetric?.record(0)
                 }
             } catch {
                 guard let self = self else { return }
