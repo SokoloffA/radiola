@@ -21,7 +21,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     private let airPlayButton = AirPlayButton()
     private let toolbarVolumeView = VolumeView(showMuteButton: true)
     private let toolbarLeftMargin = 145.0
-    private let playToolbarStack =  NSStackView()
+    private let playToolbarStack = NSStackView()
 
     @IBOutlet var stationsTree: NSOutlineView!
     @IBOutlet var playtoolbar: NSView!
@@ -137,10 +137,10 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         playtoolbar.addSubview(playToolbarStack)
 
         NSLayoutConstraint.activate([
-              playToolbarStack.topAnchor.constraint(equalTo: playtoolbar.topAnchor),
-              playToolbarStack.bottomAnchor.constraint(equalTo: playtoolbar.bottomAnchor),
-              playToolbarStack.trailingAnchor.constraint(equalTo: playtoolbar.trailingAnchor, constant: -8),
-          ])
+            playToolbarStack.topAnchor.constraint(equalTo: playtoolbar.topAnchor),
+            playToolbarStack.bottomAnchor.constraint(equalTo: playtoolbar.bottomAnchor),
+            playToolbarStack.trailingAnchor.constraint(equalTo: playtoolbar.trailingAnchor, constant: -8),
+        ])
 
         let leading = playToolbarStack.leadingAnchor.constraint(equalTo: playtoolbar.leadingAnchor)
         leading.priority = NSLayoutConstraint.Priority(999)
@@ -667,19 +667,45 @@ extension StationsWindow: NSUserInterfaceValidations {
             return
         }
 
+        var ext = ""
+        if let lastExportType = settings.lastExportType {
+            ext = "." + lastExportType
+        }
+
         let dialog = NSSavePanel()
-        dialog.allowedFileTypes = ["opml"]
-        dialog.allowsOtherFileTypes = true
+        dialog.allowedFileTypes = ["opml", "csv"]
+        dialog.allowsOtherFileTypes = false
         dialog.canCreateDirectories = true
-        dialog.isExtensionHidden = false
-        dialog.nameFieldStringValue = "RadiolaStations[\(stations.title)]"
+        dialog.isExtensionHidden = true
+        dialog.nameFieldStringValue = "RadiolaStations[\(stations.title)]" + ext
+
+        if #available(macOS 15.0, *) {
+            dialog.showsContentTypes = true
+        }
 
         dialog.beginSheetModal(for: window) { result in
             guard result == .OK, let url = dialog.url else { return }
             do {
-                try stations.saveAsOpml(file: url)
+                let ext = url.pathExtension.lowercased()
+                switch ext {
+                    case "opml":
+                        try stations.saveAsOpml(file: url)
+                        settings.lastExportType = ext
+
+                    case "csv":
+                        try stations.saveAsCSV(file: url)
+                        settings.lastExportType = ext
+
+                    default:
+                        var message = NSLocalizedString("The extension \"%@\" is not supported.", comment: "Export stations error tile")
+                        message = String(format: message, url.pathExtension)
+                        throw RadiolaError(message)
+                }
             } catch {
-                error.show()
+                var title = NSLocalizedString("The stations could not be saved as \"%@\".", comment: "Export stations error tile")
+                title = String(format: title, url.path)
+                let message = error.localizedDescription
+                Alarm(title: title, message: message).show(window: window)
             }
         }
     }

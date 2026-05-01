@@ -181,13 +181,9 @@ extension StationList {
      *
      * ****************************************/
     func saveAsOpml(file: URL) throws {
-        do {
-            let document = asXML()
-            let xmlData = document.xmlData(options: .nodePrettyPrint)
-            try xmlData.write(to: file)
-        } catch {
-            throw Alarm(title: "Can't write the stations file '\(file.absoluteString)'", message: "The file is corrupted or has an incorrect format", parentError: error)
-        }
+        let document = asXML()
+        let xmlData = document.xmlData(options: .nodePrettyPrint)
+        try xmlData.write(to: file)
     }
 
     /* ****************************************

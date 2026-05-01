@@ -2451,6 +2451,9 @@
         }
       }
     },
+    "The extension \"%@\" is not supported." : {
+      "comment" : "Export stations error tile"
+    },
     "The file does not contain any new or changed radio stations." : {
       "comment" : "Merger dialog message",
       "localizations" : {
@@ -2508,6 +2511,9 @@
           }
         }
       }
+    },
+    "The stations could not be saved as \"%@\"." : {
+      "comment" : "Export stations error tile"
     },
     "The URL does not contain or contains unsupported audio." : {
       "comment" : "Player error message",

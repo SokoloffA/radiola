@@ -272,6 +272,24 @@ class Settings {
         get { data.string(forKey: proxyKey) }
         set { data.set(newValue, forKey: proxyKey) }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private let lastExportTypeKey = "LastExportType"
+    var lastExportType: String? {
+        get { data.string(forKey: lastExportTypeKey) }
+        set { data.set(newValue, forKey: lastExportTypeKey) }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private let lastImportTypeKey = "LastImportType"
+    var lastImportType: String? {
+        get { data.string(forKey: lastImportTypeKey) }
+        set { data.set(newValue, forKey: lastImportTypeKey) }
+    }
 }
 
 let settings = Settings()

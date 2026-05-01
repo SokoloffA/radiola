@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CSV
 
 // MARK: - StationList
 
@@ -235,6 +236,45 @@ extension StationList {
     func station(byURL: String) -> Station? {
         return firstStation { $0.url == byURL }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func saveAsCSV(file: URL) throws {
+        func writeOutline(csv: CSVWriter, item: StationItem, path: String) throws {
+            if let station = item as? Station {
+                csv.beginNewRow()
+                try csv.write(field: station.url)
+                try csv.write(field: station.title)
+                try csv.write(field: path)
+            }
+
+            if let group = item as? StationGroup {
+                let p = path + "/" + item.title
+                for it in group.items {
+                    try writeOutline(csv: csv, item: it, path: p)
+                }
+            }
+        }
+
+        guard
+            let stream = OutputStream(url: file, append: false)
+        else {
+            throw RadiolaError("File open error")
+        }
+
+        let csv: CSVWriter
+        csv = try CSVWriter(stream: stream)
+
+        try csv.write(field: "URL")
+        try csv.write(field: "Title")
+        try csv.write(field: "Path")
+
+        for item in items {
+            try writeOutline(csv: csv, item: item, path: "")
+        }
+    }
+
 }
 
 // MARK: - extension [StationList]

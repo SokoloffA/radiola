@@ -112,6 +112,34 @@ extension Error {
             NotificationCenter.default.post(name: Alarm.notificationName, object: Alarm(title: "Error", message: "\(self)"))
         }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func show(window: NSWindow) {
+        guard let alarm = self as? Alarm else { return }
+
+        let alert = NSAlert()
+        alert.messageText = alarm.title
+        alert.alertStyle = .critical
+
+        if let informativeText = alarm.message {
+            alert.informativeText = informativeText
+        }
+
+        alert.beginSheetModal(for: window)
+    }
+}
+
+// MARK: - RadiolaError
+
+struct RadiolaError: LocalizedError {
+    let message: String
+    var errorDescription: String? { return message }
+
+    init(_ message: String) {
+        self.message = message
+    }
 }
 
 /* ****************************************
