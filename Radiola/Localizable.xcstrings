@@ -2392,6 +2392,9 @@
         }
       }
     },
+    "The \"%@\" file type is not supported." : {
+      "comment" : "Export stations error tile\nImport stations error tile"
+    },
     "The current song has been marked as a favorite" : {
       "comment" : "History window icon tooltip",
       "extractionState" : "stale",
@@ -2451,9 +2454,6 @@
         }
       }
     },
-    "The extension \"%@\" is not supported." : {
-      "comment" : "Export stations error tile"
-    },
     "The file does not contain any new or changed radio stations." : {
       "comment" : "Merger dialog message",
       "localizations" : {
@@ -2511,6 +2511,9 @@
           }
         }
       }
+    },
+    "The stations could not be loaded from \"%@\"." : {
+      "comment" : "Import stations error tile"
     },
     "The stations could not be saved as \"%@\"." : {
       "comment" : "Export stations error tile"

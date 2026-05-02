@@ -87,6 +87,7 @@
 		39D582C42C96B40400AE3A01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39D582C32C96B40400AE3A01 /* Localizable.xcstrings */; };
 		39D582C62C96C49B00AE3A01 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D582C52C96C49B00AE3A01 /* VolumeView.swift */; };
 		39D79E632933BEAB00210D94 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D79E622933BEAB00210D94 /* Settings.swift */; };
+		39D83EF12FA5EFAC00488437 /* IoCSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D83EF02FA5EFAC00488437 /* IoCSV.swift */; };
 		39DDF84B2F672EB100ED9441 /* RingBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDF84A2F672EB100ED9441 /* RingBuffer.swift */; };
 		39DDF84D2F672FBA00ED9441 /* MacAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39DDF84C2F672FBA00ED9441 /* MacAudio.swift */; };
 		39E042D0293B3ACA00A2167E /* VolumeMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39E042CE293B3AC900A2167E /* VolumeMenuItem.swift */; };
@@ -200,6 +201,7 @@
 		39D582C32C96B40400AE3A01 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		39D582C52C96C49B00AE3A01 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
 		39D79E622933BEAB00210D94 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		39D83EF02FA5EFAC00488437 /* IoCSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IoCSV.swift; sourceTree = "<group>"; };
 		39DDF84A2F672EB100ED9441 /* RingBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingBuffer.swift; sourceTree = "<group>"; };
 		39DDF84C2F672FBA00ED9441 /* MacAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAudio.swift; sourceTree = "<group>"; };
 		39E042CE293B3AC900A2167E /* VolumeMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeMenuItem.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				39A7940F2B4B6483000D9875 /* Stations.swift */,
+				39D83EF02FA5EFAC00488437 /* IoCSV.swift */,
 				39950B9E2C7B327600C37952 /* StationList.swift */,
 				3959DBB12BFCE7580032A1BA /* StationsMerger.swift */,
 				39950B9C2C7B2C4300C37952 /* OpmlStations.swift */,
@@ -672,6 +675,7 @@
 				393A72C02F9551BE0054A0CE /* Metrics.swift in Sources */,
 				394F8A3C28739339005EA7FA /* AppDelegate.swift in Sources */,
 				3987B9AB2A9F8A190077EB03 /* ToolbarPlayView.swift in Sources */,
+				39D83EF12FA5EFAC00488437 /* IoCSV.swift in Sources */,
 				39E8DFD72890839500082467 /* Updater.swift in Sources */,
 				AAAA00012024120600000001 /* HistoryDelegate.swift in Sources */,
 				AAAA00012024120600000003 /* HistoryToolBox.swift in Sources */,

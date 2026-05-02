@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import CSV
 
 // MARK: - StationList
 
@@ -47,6 +46,29 @@ extension StationList {
      * ****************************************/
     func firstStation(byID: UUID) -> Station? {
         return firstStation { $0.id == byID }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func findOrCreateGroup(path: [any StringProtocol]) -> any StationGroup {
+        if path.isEmpty {
+            return self
+        }
+
+        var parent = self as StationGroup
+        for p in path {
+            let g = parent.items.first { $0 is StationGroup && $0.title == p } as? StationGroup
+            if let g = g {
+                parent = g
+            } else {
+                let new = createGroup(title: String(p))
+                parent.append(new)
+                parent = new
+            }
+        }
+
+        return parent
     }
 
     /* ****************************************
@@ -236,45 +258,6 @@ extension StationList {
     func station(byURL: String) -> Station? {
         return firstStation { $0.url == byURL }
     }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func saveAsCSV(file: URL) throws {
-        func writeOutline(csv: CSVWriter, item: StationItem, path: String) throws {
-            if let station = item as? Station {
-                csv.beginNewRow()
-                try csv.write(field: station.url)
-                try csv.write(field: station.title)
-                try csv.write(field: path)
-            }
-
-            if let group = item as? StationGroup {
-                let p = path + "/" + item.title
-                for it in group.items {
-                    try writeOutline(csv: csv, item: it, path: p)
-                }
-            }
-        }
-
-        guard
-            let stream = OutputStream(url: file, append: false)
-        else {
-            throw RadiolaError("File open error")
-        }
-
-        let csv: CSVWriter
-        csv = try CSVWriter(stream: stream)
-
-        try csv.write(field: "URL")
-        try csv.write(field: "Title")
-        try csv.write(field: "Path")
-
-        for item in items {
-            try writeOutline(csv: csv, item: item, path: "")
-        }
-    }
-
 }
 
 // MARK: - extension [StationList]

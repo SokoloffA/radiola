@@ -697,7 +697,7 @@ extension StationsWindow: NSUserInterfaceValidations {
                         settings.lastExportType = ext
 
                     default:
-                        var message = NSLocalizedString("The extension \"%@\" is not supported.", comment: "Export stations error tile")
+                        var message = NSLocalizedString("The \"%@\" file type is not supported.", comment: "Export stations error tile")
                         message = String(format: message, url.pathExtension)
                         throw RadiolaError(message)
                 }
@@ -723,7 +723,7 @@ extension StationsWindow: NSUserInterfaceValidations {
         }
 
         let dialog = NSOpenPanel()
-        dialog.allowedFileTypes = ["opml"]
+        dialog.allowedFileTypes = ["opml", "csv"]
         dialog.allowsOtherFileTypes = true
         dialog.isExtensionHidden = false
         dialog.nameFieldStringValue = "RadiolaStations"
@@ -736,25 +736,42 @@ extension StationsWindow: NSUserInterfaceValidations {
             guard result == .OK, let url = dialog.url else { return }
 
             dialog.close()
-            self.doImportStations(url: url, list: list)
+
+            do {
+                let ext = url.pathExtension.lowercased()
+                switch ext {
+                    case "opml":
+                        let new = OpmlStations(icon: "", file: url)
+                        try new.load()
+                        try self.mergeList(from: new, to: list)
+
+                    case "csv":
+                        let new = OpmlStations(icon: "", file: URL(fileURLWithPath: ""))
+                        try new.LoadFromCSV(file: url)
+                        try self.mergeList(from: new, to: list)
+
+                    default:
+                        var message = NSLocalizedString("The \"%@\" file type is not supported.", comment: "Import stations error tile")
+                        message = String(format: message, url.pathExtension)
+                        throw RadiolaError(message)
+                }
+
+            } catch {
+                var title = NSLocalizedString("The stations could not be loaded from \"%@\".", comment: "Import stations error tile")
+                title = String(format: title, url.path)
+                let message = error.localizedDescription
+                Alarm(title: title, message: message).show(window: window)
+            }
         }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func doImportStations(url: URL, list: StationList) {
+    private func mergeList(from: StationList, to: StationList) throws {
         guard let window = window else { return }
 
-        let new = OpmlStations(icon: "", file: url)
-        do {
-            try new.load()
-        } catch {
-            error.show()
-            return
-        }
-
-        let merger = StationsMerger(currentStations: list, newStations: new)
+        let merger = StationsMerger(currentStations: to, newStations: from)
         if merger.statistics.isEmpty {
             let message = NSLocalizedString("The file does not contain any new or changed radio stations.", comment: "Merger dialog message")
             let informativeText = NSLocalizedString("You may have already exported it before.", comment: "Merger dialog informativeText")
@@ -784,7 +801,7 @@ extension StationsWindow: NSUserInterfaceValidations {
             }
             merger.run()
 
-            list.trySave()
+            to.trySave()
             self.stationsTree.reloadData()
         })
     }
