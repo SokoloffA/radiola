@@ -673,7 +673,7 @@ extension StationsWindow: NSUserInterfaceValidations {
         }
 
         let dialog = NSSavePanel()
-        dialog.allowedFileTypes = ["opml", "csv"]
+        dialog.allowedFileTypes = ["opml", "csv", "m3u8"]
         dialog.allowsOtherFileTypes = false
         dialog.canCreateDirectories = true
         dialog.isExtensionHidden = true
@@ -690,17 +690,21 @@ extension StationsWindow: NSUserInterfaceValidations {
                 switch ext {
                     case "opml":
                         try stations.saveAsOpml(file: url)
-                        settings.lastExportType = ext
 
                     case "csv":
-                        try stations.saveAsCSV(file: url)
-                        settings.lastExportType = ext
+                        try exportToCSV(list: stations, file: url)
+
+                    case "m3u8":
+                        try exportToM3U(list: stations, file: url)
 
                     default:
                         var message = NSLocalizedString("The \"%@\" file type is not supported.", comment: "Export stations error tile")
                         message = String(format: message, url.pathExtension)
                         throw RadiolaError(message)
                 }
+
+                settings.lastExportType = ext
+
             } catch {
                 var title = NSLocalizedString("The stations could not be saved as \"%@\".", comment: "Export stations error tile")
                 title = String(format: title, url.path)
@@ -723,7 +727,7 @@ extension StationsWindow: NSUserInterfaceValidations {
         }
 
         let dialog = NSOpenPanel()
-        dialog.allowedFileTypes = ["opml", "csv"]
+        dialog.allowedFileTypes = ["opml", "csv", "m3u", "m3u8"]
         dialog.allowsOtherFileTypes = true
         dialog.isExtensionHidden = false
         dialog.nameFieldStringValue = "RadiolaStations"
@@ -737,24 +741,27 @@ extension StationsWindow: NSUserInterfaceValidations {
 
             dialog.close()
 
+            var new: StationList
             do {
                 let ext = url.pathExtension.lowercased()
                 switch ext {
                     case "opml":
-                        let new = OpmlStations(icon: "", file: url)
+                        new = OpmlStations(icon: "", file: url)
                         try new.load()
-                        try self.mergeList(from: new, to: list)
 
                     case "csv":
-                        let new = OpmlStations(icon: "", file: URL(fileURLWithPath: ""))
-                        try new.LoadFromCSV(file: url)
-                        try self.mergeList(from: new, to: list)
+                        new = try importFromCSV(file: url)
+
+                    case "m3u", "m3u8":
+                        new = try importFromM3U(file: url)
 
                     default:
                         var message = NSLocalizedString("The \"%@\" file type is not supported.", comment: "Import stations error tile")
                         message = String(format: message, url.pathExtension)
                         throw RadiolaError(message)
                 }
+
+                try self.mergeList(from: new, to: list)
 
             } catch {
                 var title = NSLocalizedString("The stations could not be loaded from \"%@\".", comment: "Import stations error tile")

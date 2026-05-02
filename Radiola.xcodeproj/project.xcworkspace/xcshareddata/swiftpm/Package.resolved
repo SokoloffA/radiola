@@ -1,5 +1,5 @@
 {
-  "originHash" : "36c39bd2428902be8e2aa2707ee7d2b742792c143aab5d1b1fe87347934590f4",
+  "originHash" : "85bd6fb92eff436f21a7fbded49ea0258b55c06b5f39442178dd800a832b023a",
   "pins" : [
     {
       "identity" : "csv.swift",
@@ -17,6 +17,15 @@
       "state" : {
         "branch" : "main",
         "revision" : "6cb4cfc58ee64c4490c32d4ee354d0136f29c19f"
+      }
+    },
+    {
+      "identity" : "m3ukit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/omaralbeik/M3UKit",
+      "state" : {
+        "revision" : "a84b4d72ddb3f6fcce78752bddd9ac8fe91bf94e",
+        "version" : "0.8.1"
       }
     },
     {

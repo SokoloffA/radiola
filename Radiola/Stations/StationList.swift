@@ -51,29 +51,6 @@ extension StationList {
     /* ****************************************
      *
      * ****************************************/
-    func findOrCreateGroup(path: [any StringProtocol]) -> any StationGroup {
-        if path.isEmpty {
-            return self
-        }
-
-        var parent = self as StationGroup
-        for p in path {
-            let g = parent.items.first { $0 is StationGroup && $0.title == p } as? StationGroup
-            if let g = g {
-                parent = g
-            } else {
-                let new = createGroup(title: String(p))
-                parent.append(new)
-                parent = new
-            }
-        }
-
-        return parent
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     func firstGroup(byID: UUID) -> StationGroup? {
         return firstGroup { $0.id == byID }
     }
