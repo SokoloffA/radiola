@@ -234,11 +234,11 @@ class StatusBarController: NSObject, NSMenuDelegate {
     /* ****************************************
      *
      * ****************************************/
-    private func createStationMenuItem(_ station: Station, prefix: String = "") -> NSMenuItem {
+    private func createStationMenuItem(_ station: Station, prefix: String = "", keyEquivalent: String = "") -> NSMenuItem {
         let res = NSMenuItem(
             title: prefix + station.title,
             action: #selector(stationClicked(_:)),
-            keyEquivalent: "")
+            keyEquivalent: keyEquivalent)
 
         res.target = self
         res.representedObject = station
@@ -252,8 +252,8 @@ class StatusBarController: NSObject, NSMenuDelegate {
     func buildFlatFavoritesMenu(menu: NSMenu) {
         menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
 
-        for station in appState.favoritesStations() {
-            menu.addItem(createStationMenuItem(station))
+        for (i, station) in appState.favoritesStations().enumerated() {
+            menu.addItem(createStationMenuItem(station, keyEquivalent: stationKeyEquivalent(i + 1)))
         }
     }
 
@@ -261,11 +261,13 @@ class StatusBarController: NSObject, NSMenuDelegate {
      *
      * ****************************************/
     func buildMarginFavoritesMenu(menu: NSMenu) {
+        var num = 0
         func build(items: [StationItem], menu: NSMenu, prefix: String = "") {
             for item in items {
                 if let station = item as? Station {
                     if station.isFavorite {
-                        menu.addItem(createStationMenuItem(station, prefix: prefix))
+                        num += 1
+                        menu.addItem(createStationMenuItem(station, prefix: prefix, keyEquivalent: stationKeyEquivalent(num)))
                     }
                 }
 
@@ -292,10 +294,12 @@ class StatusBarController: NSObject, NSMenuDelegate {
      * ****************************************/
     func buildSubmenuFavoritesMenu(menu: NSMenu) {
         func build(items: [StationItem], menu: NSMenu, prefix: String = "") {
+            var num = 0
             for item in items {
                 if let station = item as? Station {
                     if station.isFavorite {
-                        menu.addItem(createStationMenuItem(station, prefix: prefix))
+                        num += 1
+                        menu.addItem(createStationMenuItem(station, prefix: prefix, keyEquivalent: stationKeyEquivalent(num)))
                     }
                 }
 
@@ -315,6 +319,13 @@ class StatusBarController: NSObject, NSMenuDelegate {
         for list in AppState.shared.localStations {
             build(items: list.items, menu: menu, prefix: menuPrefix)
         }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func stationKeyEquivalent(_ num: Int) -> String {
+        return num < 10 ? "\(num)" : ""
     }
 
     /* ****************************************
