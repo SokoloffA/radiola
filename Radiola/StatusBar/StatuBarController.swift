@@ -414,7 +414,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
         }
 
         let label = NSMutableAttributedString()
-        label.append(NSAttributedString(string: str))
+        label.append(NSAttributedString(string: str.truncateMiddle(maxLength: 50)))
         label.append(NSAttributedString(
             string: " ",
             attributes: [.kern: 16] // the distance between the image and the text

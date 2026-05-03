@@ -238,3 +238,52 @@ class AtomicBool: @unchecked Sendable {
         }
     }
 }
+
+// MARK: - String
+
+extension String {
+    /* ****************************************
+     *
+     * ****************************************/
+    func truncateMiddle(maxLength: Int, separator: String = "…") -> String {
+        guard count > maxLength else { return self }
+
+        let separatorLength = separator.count
+        let available = maxLength - separatorLength
+        let leftTarget = available / 2
+        let rightTarget = available - leftTarget
+
+        // Left side: take no more than leftTarget characters, but do not split the word
+        var leftPart = ""
+        if leftTarget > 0 {
+            let prefix = String(prefix(leftTarget + 1)) // +1 для проверки пробела
+            if let lastSpaceIndex = prefix.lastIndex(where: { $0.isWhitespace }) {
+                // Trim to the last space (excluding the space in the result)
+                leftPart = String(self[startIndex ..< lastSpaceIndex])
+            } else {
+                leftPart = String(self.prefix(leftTarget))
+            }
+        }
+
+        // Right side: take no more than rightTarget characters, starting from the end
+        var rightPart = ""
+        if rightTarget > 0 {
+            let suffix = String(suffix(rightTarget + 1)) // +1 для проверки пробела
+            if let firstSpaceIndex = suffix.firstIndex(where: { $0.isWhitespace }) {
+                // Start after the first space (or move forward)
+                let start = suffix.index(after: firstSpaceIndex)
+                rightPart = String(suffix[start...])
+            } else {
+                rightPart = String(self.suffix(rightTarget))
+            }
+        }
+
+        // If some of the sections are left blank after the adjustment, revert to the standard truncation (without words)
+        if leftPart.isEmpty && rightPart.isEmpty {
+            let simple = String(prefix(leftTarget)) + separator + String(suffix(rightTarget))
+            return simple
+        }
+
+        return leftPart + separator + rightPart
+    }
+}
