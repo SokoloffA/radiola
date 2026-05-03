@@ -1065,6 +1065,12 @@
             "value" : "Songtitel in die Zwischenablage kopieren"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia il titolo del brano negli appunti"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1289,6 +1295,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gruppenname"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome gruppo"
           }
         },
         "ru" : {
@@ -1603,6 +1615,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Markiere Sender als Favoriten"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi stazione ai preferiti"
           }
         },
         "ru" : {
@@ -2265,7 +2283,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ordina per nome"
+            "value" : "ordina per nome"
           }
         },
         "ru" : {
@@ -2294,7 +2312,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ordina per recente"
+            "value" : "ordina per recente"
           }
         },
         "ru" : {
@@ -2323,7 +2341,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ordina per stazione"
+            "value" : "ordina per stazione"
           }
         },
         "ru" : {
@@ -2378,6 +2396,12 @@
             "value" : "Sendername"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nome stazione"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2393,7 +2417,15 @@
       }
     },
     "The \"%@\" file type is not supported." : {
-      "comment" : "Export stations error tile\nImport stations error tile"
+      "comment" : "Export stations error tile\nImport stations error tile",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тип файла «%@» не поддерживается."
+          }
+        }
+      }
     },
     "The current song has been marked as a favorite" : {
       "comment" : "History window icon tooltip",
@@ -2513,10 +2545,26 @@
       }
     },
     "The stations could not be loaded from \"%@\"." : {
-      "comment" : "Import stations error tile"
+      "comment" : "Import stations error tile",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось загрузить станции из «%@»."
+          }
+        }
+      }
     },
     "The stations could not be saved as \"%@\"." : {
-      "comment" : "Export stations error tile"
+      "comment" : "Export stations error tile",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось сохранить станции как «%@»."
+          }
+        }
+      }
     },
     "The URL does not contain or contains unsupported audio." : {
       "comment" : "Player error message",
@@ -2729,6 +2777,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entferne Sender von Favoriten"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rimuovi stazione dai preferiti"
           }
         },
         "ru" : {
