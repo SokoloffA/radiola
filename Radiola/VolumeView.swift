@@ -19,7 +19,6 @@ class VolumeView: NSView {
     init(showMuteButton: Bool) {
         if showMuteButton {
             muteButton = ImageButton(systemSymbolName: "speaker.slash.fill", accessibilityDescription: "Mute")
-
         }
         super.init(frame: NSRect())
 
@@ -34,6 +33,7 @@ class VolumeView: NSView {
             muteButton.bezelStyle = .recessed
             muteButton.isBordered = true
             muteButton.setButtonType(.pushOnPushOff)
+            muteButton.focusRingType = .none
 
             muteButton.translatesAutoresizingMaskIntoConstraints = false
             muteButton.centerYAnchor.constraint(equalTo: downButton.centerYAnchor).isActive = true
@@ -42,6 +42,8 @@ class VolumeView: NSView {
 
             muteButton.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1).isActive = true
         }
+        downButton.focusRingType = .none
+        upButton.focusRingType = .none
 
         downButton.translatesAutoresizingMaskIntoConstraints = false
         downButton.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
