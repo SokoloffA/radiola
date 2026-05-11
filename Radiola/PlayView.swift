@@ -1,62 +1,93 @@
-//
-//  ToolbarPlayView.swift
+
+//  PlayView.swift
 //  Radiola
 //
-//  Created by Aleksandr Sokolov on 30.08.2023.
+//  Created by Alex Sokolov on 09.05.2026.
 //
 
 import Cocoa
 
-class ToolbarPlayView: NSViewController {
-    @IBOutlet var playButton: NSButton!
-    @IBOutlet var songLabel: NSTextField!
-    @IBOutlet var stationLabel: NSTextField!
+class PlayView: NSView {
+    private let playButton = NSButton()
+    private let songLabel = Label()
+    private let stationLabel = Label()
     private let onlyStationLabel = Label()
 
     /* ****************************************
      *
      * ****************************************/
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init() {
+        super.init(frame: .zero)
 
-        view.addSubview(onlyStationLabel)
+        addSubview(playButton)
+        addSubview(songLabel)
+        addSubview(stationLabel)
+        addSubview(onlyStationLabel)
+
+        playButton.contentTintColor = .selectedControlTextColor
+        playButton.setContentHuggingPriority(NSLayoutConstraint.Priority(240) /* .defaultLow */, for: NSLayoutConstraint.Orientation.horizontal)
+        playButton.bezelStyle = .regularSquare
+        playButton.setButtonType(.momentaryPushIn)
+        playButton.imagePosition = .imageLeft
+        playButton.title = ""
+        playButton.alignment = .center
+        playButton.lineBreakMode = NSLineBreakMode.byTruncatingTail
+        playButton.state = NSControl.StateValue.on
+        playButton.isBordered = false
+        playButton.imageScaling = .scaleNone
+        playButton.font = NSFont.systemFont(ofSize: 24)
+        playButton.image?.isTemplate = true
+        playButton.keyEquivalent = " "
+        playButton.keyEquivalentModifierMask = []
+
+        songLabel.font = NSFont.boldSystemFont(ofSize: 13)
+        songLabel.textColor = .controlTextColor
+        songLabel.lineBreakMode = .byTruncatingMiddle
+        songLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        songLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        songLabel.menu = ContextMenu(textField: songLabel)
+
+        stationLabel.textColor = .secondaryLabelColor
+        stationLabel.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
+        stationLabel.lineBreakMode = .byTruncatingMiddle
+        stationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        stationLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        stationLabel.menu = ContextMenu(textField: stationLabel)
+
         onlyStationLabel.textColor = stationLabel.textColor
         onlyStationLabel.lineBreakMode = .byClipping
         onlyStationLabel.font = NSFont.systemFont(ofSize: 14)
         onlyStationLabel.setFontWeight(.semibold)
         onlyStationLabel.lineBreakMode = .byTruncatingTail
         onlyStationLabel.usesSingleLineMode = true
+
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        songLabel.translatesAutoresizingMaskIntoConstraints = false
+        stationLabel.translatesAutoresizingMaskIntoConstraints = false
         onlyStationLabel.translatesAutoresizingMaskIntoConstraints = false
 
-        onlyStationLabel.leadingAnchor.constraint(equalTo: stationLabel.leadingAnchor).isActive = true
-        onlyStationLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor).isActive = true
-        onlyStationLabel.centerYAnchor.constraint(equalTo: playButton.centerYAnchor).isActive = true
+        NSLayoutConstraint.activate([
+            playButton.widthAnchor.constraint(equalToConstant: 42),
+            playButton.heightAnchor.constraint(equalToConstant: 38),
+            playButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            playButton.centerYAnchor.constraint(equalTo: centerYAnchor),
 
-        songLabel.lineBreakMode = .byTruncatingMiddle
-        songLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        songLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        songLabel.menu = ContextMenu(textField: songLabel)
+            songLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 8),
+            songLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            songLabel.bottomAnchor.constraint(equalTo: centerYAnchor, constant: -1),
+            songLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 151),
 
-        stationLabel.lineBreakMode = .byTruncatingMiddle
-        stationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        stationLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
-        stationLabel.menu = ContextMenu(textField: stationLabel)
+            stationLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 8),
+            stationLabel.trailingAnchor.constraint(equalTo: songLabel.trailingAnchor),
+            stationLabel.topAnchor.constraint(equalTo: centerYAnchor, constant: 2),
 
-        playButton.setContentHuggingPriority(NSLayoutConstraint.Priority(240) /* .defaultLow */, for: NSLayoutConstraint.Orientation.horizontal)
-        playButton.bezelStyle = NSButton.BezelStyle.regularSquare
-        playButton.setButtonType(NSButton.ButtonType.momentaryPushIn)
-        playButton.imagePosition = NSControl.ImagePosition.imageOnly
-        playButton.alignment = NSTextAlignment.center
-        playButton.lineBreakMode = NSLineBreakMode.byTruncatingTail
-        playButton.state = NSControl.StateValue.on
-        playButton.isBordered = false
-        playButton.imageScaling = NSImageScaling.scaleNone
-        playButton.font = NSFont.systemFont(ofSize: 24)
-        playButton.image?.isTemplate = true
+            onlyStationLabel.leadingAnchor.constraint(equalTo: stationLabel.leadingAnchor),
+            onlyStationLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor),
+            onlyStationLabel.centerYAnchor.constraint(equalTo: playButton.centerYAnchor),
+        ])
+
         playButton.target = self
         playButton.action = #selector(togglePlay)
-        playButton.keyEquivalent = " "
-        playButton.keyEquivalentModifierMask = []
 
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(refresh),
@@ -69,6 +100,13 @@ class ToolbarPlayView: NSViewController {
                                                object: nil)
 
         refresh()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     /* ****************************************

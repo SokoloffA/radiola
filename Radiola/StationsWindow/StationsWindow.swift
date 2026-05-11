@@ -17,7 +17,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     var sideBar = SideBar()
     var sideBarWidth: CGFloat = 0.0
     private var searchPanelHeight: CGFloat = 0.0
-    private let toolbarPlayView = ToolbarPlayView()
+    private let playView = PlayView()
     private let airPlayButton = AirPlayButton()
     private let toolbarVolumeView = VolumeView(showMuteButton: true)
     private let toolbarLeftMargin = 145.0
@@ -117,8 +117,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     private func initPlaytoolbar() {
-        let playView = toolbarPlayView.view
-
         toolbarVolumeView.widthAnchor.constraint(equalToConstant: 210).isActive = true
 
         playToolbarStack.orientation = .horizontal
@@ -139,10 +137,10 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         NSLayoutConstraint.activate([
             playToolbarStack.topAnchor.constraint(equalTo: playtoolbar.topAnchor),
             playToolbarStack.bottomAnchor.constraint(equalTo: playtoolbar.bottomAnchor),
-            playToolbarStack.trailingAnchor.constraint(equalTo: playtoolbar.trailingAnchor, constant: -8),
+            playToolbarStack.trailingAnchor.constraint(equalTo: playtoolbar.trailingAnchor, constant: -22),
         ])
 
-        let leading = playToolbarStack.leadingAnchor.constraint(equalTo: playtoolbar.leadingAnchor)
+        let leading = playToolbarStack.leadingAnchor.constraint(equalTo: playtoolbar.leadingAnchor, constant: 30)
         leading.priority = NSLayoutConstraint.Priority(999)
         leading.isActive = true
 

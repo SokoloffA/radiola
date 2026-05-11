@@ -237,7 +237,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      *
      * ****************************************/
     @IBAction func showMainMenu(_ sender: Any?) {
-        statusBar.showMenu()
+        statusBar.showPopover()
     }
 
     /* ****************************************

@@ -117,7 +117,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
 
         switch action {
             case .showMenu:
-                showMenu()
+                showPopover()
                 break
 
             case .playPause:
@@ -143,6 +143,27 @@ class StatusBarController: NSObject, NSMenuDelegate {
     func showMenu() {
         menuItem.menu = buildMenu()
         menuItem.button?.performClick(nil) // Optional: Programmatically trigger the menu
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private var popoverAnchor: NSView?
+
+    func showPopover() {
+        guard let button = menuItem.button else { return }
+        if popoverAnchor == nil {
+            let size = button.bounds.height
+            let anchor = NSView(frame: NSRect(x: button.bounds.maxX - size, y: button.bounds.minY, width: size, height: size))
+
+            button.addSubview(anchor)
+            anchor.autoresizingMask = [.minXMargin]
+
+            popoverAnchor = anchor
+        }
+        let popover = Popover()
+        popover.show(relativeTo: popoverAnchor!.bounds, of: popoverAnchor!, preferredEdge: .minY)
+        popover.contentViewController?.view.window?.makeKeyAndOrderFront(nil)
     }
 
     /* ****************************************

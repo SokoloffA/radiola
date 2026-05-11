@@ -40,7 +40,7 @@ class VolumeView: NSView {
             muteButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
             muteButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
 
-            muteButton.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1).isActive = true
+            muteButton.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         }
         downButton.focusRingType = .none
         upButton.focusRingType = .none
@@ -53,7 +53,7 @@ class VolumeView: NSView {
         if let muteButton = muteButton {
             downButton.leadingAnchor.constraint(equalToSystemSpacingAfter: muteButton.trailingAnchor, multiplier: 1).isActive = true
         } else {
-            downButton.leadingAnchor.constraint(equalToSystemSpacingAfter: leadingAnchor, multiplier: 1).isActive = true
+            downButton.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         }
 
         slider.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +65,7 @@ class VolumeView: NSView {
         upButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
         upButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
         upButton.leadingAnchor.constraint(equalToSystemSpacingAfter: slider.trailingAnchor, multiplier: 1).isActive = true
-        trailingAnchor.constraint(equalToSystemSpacingAfter: upButton.trailingAnchor, multiplier: 1).isActive = true
+        upButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
 
         slider.minValue = 0
         slider.maxValue = 1
