@@ -224,10 +224,18 @@ class PopoverItem: NSControl, NSValidatedUserInterfaceItem {
      * ****************************************/
     private func showSubmenu() {
         guard let menu, let window else { return }
+        menu.update()
+        let menuWidth = menu.size.width
 
-        let screenRect = window.convertToScreen(
-            convert(NSRect(x: bounds.maxX, y: bounds.minY, width: 0, height: bounds.height), to: nil)
+        let targetRect = NSRect(
+            x: bounds.minX - menuWidth - 8,
+            y: bounds.minY,
+            width: 0,
+            height: bounds.height
         )
+
+        let rectInWindow = convert(targetRect, to: nil)
+        let screenRect = window.convertToScreen(rectInWindow)
 
         menu.popUp(
             positioning: menu.items.first,
