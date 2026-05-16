@@ -12,6 +12,7 @@ class PlayView: NSView {
     private let songLabel = Label()
     private let stationLabel = Label()
     private let onlyStationLabel = Label()
+    private var hideSongWorkItem: DispatchWorkItem?
 
     /* ****************************************
      *
@@ -99,7 +100,7 @@ class PlayView: NSView {
                                                name: Notification.Name.PlayerMetadataChanged,
                                                object: nil)
 
-        refresh()
+        refrreshLabels()
     }
 
     /* ****************************************
@@ -113,6 +114,21 @@ class PlayView: NSView {
      *
      * ****************************************/
     @objc private func refresh() {
+        hideSongWorkItem?.cancel()
+
+        if player.status == .playing && player.songTitle.isEmpty {
+            let workItem = DispatchWorkItem { [weak self] in self?.refrreshLabels() }
+            hideSongWorkItem = workItem
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: workItem)
+        } else {
+            refrreshLabels()
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func refrreshLabels() {
         switch player.status {
             case Player.Status.paused:
                 stationLabel.stringValue = player.stationName
@@ -148,6 +164,7 @@ class PlayView: NSView {
         }
 
         onlyStationLabel.stringValue = stationLabel.stringValue
+
         onlyStationLabel.isVisible = songLabel.stringValue.isEmpty
         songLabel.isVisible = !onlyStationLabel.isVisible
         stationLabel.isVisible = !onlyStationLabel.isVisible
