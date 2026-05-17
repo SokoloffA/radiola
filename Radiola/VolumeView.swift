@@ -66,6 +66,7 @@ class VolumeView: NSView {
         upButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
         upButton.leadingAnchor.constraint(equalToSystemSpacingAfter: slider.trailingAnchor, multiplier: 1).isActive = true
         upButton.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        self.heightAnchor.constraint(greaterThanOrEqualTo: upButton.heightAnchor).isActive = true
 
         slider.minValue = 0
         slider.maxValue = 1

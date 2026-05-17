@@ -21,10 +21,10 @@ class PopoverItem: NSControl, NSValidatedUserInterfaceItem {
         set { titleLabel.stringValue = newValue }
     }
 
-    var keyEquivalent: String {
-        didSet {
-            keyLabel.stringValue = keyEquivalent.isEmpty ? "" : "⌘ " + keyEquivalent.uppercased()
-        }
+    var keyEquivalent: String { didSet { keyEquivalentDidSet() }}
+
+    private func keyEquivalentDidSet() {
+        keyLabel.stringValue = keyEquivalent.isEmpty ? "" : "⌘ " + keyEquivalent.uppercased()
     }
 
     override var menu: NSMenu? {
@@ -51,12 +51,13 @@ class PopoverItem: NSControl, NSValidatedUserInterfaceItem {
         keyLabel.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
         keyLabel.textColor = .secondaryLabelColor
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
+        keyEquivalentDidSet()
 
         addSubview(titleLabel)
         addSubview(keyLabel)
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: 27),
+            heightAnchor.constraint(equalToConstant: 23),
 
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
@@ -181,7 +182,7 @@ class PopoverItem: NSControl, NSValidatedUserInterfaceItem {
         super.draw(dirtyRect)
 
         if isHighlighted {
-            let rect = bounds.insetBy(dx: -10, dy: 2)
+            let rect = bounds.insetBy(dx: -10, dy: 0)
             let path = NSBezierPath(roundedRect: rect, xRadius: 5, yRadius: 5)
             NSColor.controlAccentColor.setFill()
             path.fill()

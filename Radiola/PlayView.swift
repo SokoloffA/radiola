@@ -7,11 +7,11 @@
 
 import Cocoa
 
-class PlayView: NSView {
-    private let playButton = NSButton()
-    private let songLabel = Label()
-    private let stationLabel = Label()
-    private let onlyStationLabel = Label()
+class PlayView: NSControl {
+    let playButton = NSButton()
+    let songLabel = Label()
+    let stationLabel = Label()
+    let onlyStationLabel = Label()
     private var hideSongWorkItem: DispatchWorkItem?
 
     /* ****************************************
@@ -173,7 +173,8 @@ class PlayView: NSView {
     /* ****************************************
      *
      * ****************************************/
-    @objc private func togglePlay() {
+    @objc func togglePlay() {
         player.toggle()
+        sendAction(action, to: target)
     }
 }

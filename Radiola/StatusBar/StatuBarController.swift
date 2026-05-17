@@ -13,12 +13,13 @@ import Cocoa
 class StatusBarController: NSObject, NSMenuDelegate {
     private let appState = AppState.shared
     let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-    private let menuPrefix = "  "
     private let icon = StatusBarIcon(size: 16)
     private let padding: CGFloat = 2
 
     private var middleMouseMonitor: Any?
     private var scrollWheelMonitor: Any?
+
+    private var popoverAnchor: NSView?
 
     /* ****************************************
      *
@@ -140,16 +141,6 @@ class StatusBarController: NSObject, NSMenuDelegate {
     /* ****************************************
      *
      * ****************************************/
-    func showMenu() {
-        menuItem.menu = buildMenu()
-        menuItem.button?.performClick(nil) // Optional: Programmatically trigger the menu
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private var popoverAnchor: NSView?
-
     func showPopover() {
         guard let button = menuItem.button else { return }
         if popoverAnchor == nil {
@@ -177,183 +168,6 @@ class StatusBarController: NSObject, NSMenuDelegate {
         }
 
         return settings.mouseAction(forButton: mouseButton)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func buildMenu() -> NSMenu {
-        let menu = NSMenu()
-
-        let playItem = PlayMenuItem()
-        playItem.target = self
-        playItem.isEnabled = true
-        menu.addItem(playItem)
-
-        if settings.showVolumeInMenu {
-            menu.addItem(NSMenuItem.separator())
-            menu.addItem(NSMenuItem(title: NSLocalizedString("Volume", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
-            let volumeItem = VolumeMenuItem(showMuteButton: settings.showMuteInMenu)
-            menu.addItem(volumeItem)
-        }
-
-        if settings.showMuteInMenu && !settings.showVolumeInMenu {
-            menu.addItem(NSMenuItem.separator())
-            let item = NSMenuItem(
-                title: player.isMuted ?
-                    NSLocalizedString("Unmute", comment: "Status bar menu Item") :
-                    NSLocalizedString("Mute", comment: "Status bar menu Item"),
-                action: #selector(Player.toggleMute),
-                keyEquivalent: "m")
-            item.target = player
-            menu.addItem(item)
-        }
-
-        menu.addItem(NSMenuItem.separator())
-
-        switch settings.favoritesMenuType {
-            case .flat: buildFlatFavoritesMenu(menu: menu)
-            case .margin: buildMarginFavoritesMenu(menu: menu)
-            case .submenu: buildSubmenuFavoritesMenu(menu: menu)
-        }
-
-        if settings.showCopyToClipboardInMenu {
-            menu.addItem(NSMenuItem.separator())
-
-            menu.addItem(NSMenuItem(
-                title: NSLocalizedString("Copy song title and artist", comment: "Status bar menu item"),
-                action: #selector(AppDelegate.copySongToClipboard(_:)),
-                keyEquivalent: "c"))
-        }
-
-        menu.addItem(NSMenuItem.separator())
-
-        menu.addItem(NSMenuItem(
-            title: NSLocalizedString("Open Radiola…", comment: "Status bar menu item"),
-            action: #selector(AppDelegate.showStationView(_:)),
-            keyEquivalent: "r"))
-
-        menu.addItem(NSMenuItem(
-            title: NSLocalizedString("History…", comment: "Status bar menu item"),
-            action: #selector(AppDelegate.showHistory(_:)),
-            keyEquivalent: "y"))
-
-        menu.addItem(NSMenuItem(
-            title: NSLocalizedString("Settings…", comment: "Status bar menu item"),
-            action: #selector(AppDelegate.showPreferences(_:)),
-            keyEquivalent: ","))
-
-        menu.addItem(NSMenuItem(
-            title: NSLocalizedString("Quit", comment: "Status bar menu item"),
-            action: #selector(NSApplication.terminate(_:)),
-            keyEquivalent: "q"))
-
-        menu.delegate = self
-        return menu
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func createStationMenuItem(_ station: Station, prefix: String = "", keyEquivalent: String = "") -> NSMenuItem {
-        let res = NSMenuItem(
-            title: prefix + station.title,
-            action: #selector(stationClicked(_:)),
-            keyEquivalent: keyEquivalent)
-
-        res.target = self
-        res.representedObject = station
-
-        return res
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func buildFlatFavoritesMenu(menu: NSMenu) {
-        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
-
-        for (i, station) in appState.favoritesStations().enumerated() {
-            menu.addItem(createStationMenuItem(station, keyEquivalent: stationKeyEquivalent(i + 1)))
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func buildMarginFavoritesMenu(menu: NSMenu) {
-        var num = 0
-        func build(items: [StationItem], menu: NSMenu, prefix: String = "") {
-            for item in items {
-                if let station = item as? Station {
-                    if station.isFavorite {
-                        num += 1
-                        menu.addItem(createStationMenuItem(station, prefix: prefix, keyEquivalent: stationKeyEquivalent(num)))
-                    }
-                }
-
-                if let group = item as? StationGroup {
-                    let n = menu.numberOfItems
-
-                    build(items: group.items, menu: menu, prefix: prefix + menuPrefix + "  ")
-                    if menu.numberOfItems > n {
-                        let groupItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
-                        menu.insertItem(groupItem, at: n)
-                    }
-                }
-            }
-        }
-
-        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
-        for list in AppState.shared.localStations {
-            build(items: list.items, menu: menu, prefix: menuPrefix)
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func buildSubmenuFavoritesMenu(menu: NSMenu) {
-        func build(items: [StationItem], menu: NSMenu, prefix: String = "") {
-            var num = 0
-            for item in items {
-                if let station = item as? Station {
-                    if station.isFavorite {
-                        num += 1
-                        menu.addItem(createStationMenuItem(station, prefix: prefix, keyEquivalent: stationKeyEquivalent(num)))
-                    }
-                }
-
-                if let group = item as? StationGroup {
-                    let subMenu = NSMenu()
-                    build(items: group.items, menu: subMenu)
-                    if subMenu.numberOfItems > 0 {
-                        let subMenuItem = NSMenuItem(title: prefix + group.title, action: nil, keyEquivalent: "")
-                        subMenuItem.submenu = subMenu
-                        menu.addItem(subMenuItem)
-                    }
-                }
-            }
-        }
-
-        menu.addItem(NSMenuItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: ""))
-        for list in AppState.shared.localStations {
-            build(items: list.items, menu: menu, prefix: menuPrefix)
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func stationKeyEquivalent(_ num: Int) -> String {
-        return num < 10 ? "\(num)" : ""
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    func menuDidClose(_ menu: NSMenu) {
-        menuItem.menu = nil
     }
 
     /* ****************************************
@@ -454,13 +268,5 @@ class StatusBarController: NSObject, NSMenuDelegate {
 
         menuItem.length = NSStatusItem.variableLength
         button.attributedTitle = label
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc func stationClicked(_ sender: NSMenuItem) {
-        guard let station = sender.representedObject as? Station else { return }
-        player.switchStation(station: station)
     }
 }

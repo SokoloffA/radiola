@@ -2847,6 +2847,7 @@
     },
     "Volume" : {
       "comment" : "Status bar menu item",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {

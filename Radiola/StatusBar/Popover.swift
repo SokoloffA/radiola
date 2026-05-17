@@ -36,7 +36,6 @@ class Popover: NSPopover {
 // MARK: - PopoverView
 
 class PopoverView: NSView {
-    private let playView = PlayView()
     private let stack = NSStackView()
 
     /* ****************************************
@@ -60,7 +59,6 @@ class PopoverView: NSView {
         stack.edgeInsets = NSEdgeInsets(top: 0, left: 16, bottom: 6, right: 16)
         addSubview(stack)
 
-        // self.widthAnchor.constraint(equalToConstant: 500).isActive = true
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: topAnchor),
             stack.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -137,11 +135,12 @@ class PopoverView: NSView {
      *
      * ****************************************/
     private func addPlayerView() {
-        let view = playView
+        let view = PlayItemView()
 
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         view.widthAnchor.constraint(equalToConstant: 500).isActive = true
+        view.topMargin = 5
         addView(view)
     }
 
@@ -156,8 +155,6 @@ class PopoverView: NSView {
             return
         }
 
-        addSeparator()
-
         if !showVolume && showMute {
             let item = addItem(
                 title: player.isMuted ?
@@ -170,11 +167,11 @@ class PopoverView: NSView {
         }
 
         let view = NSView()
-        let label = Label(text: NSLocalizedString("Volume", comment: "Status bar menu item"))
         let volumeView = VolumeView(showMuteButton: showMute)
         let airPlayButton = AirPlayButton()
 
-        label.textColor = .tertiaryLabelColor
+        volumeView.translatesAutoresizingMaskIntoConstraints = true
+
         volumeView.setContentHuggingPriority(.defaultLow, for: .horizontal)
         airPlayButton.setContentHuggingPriority(.required, for: .horizontal)
 
@@ -186,17 +183,13 @@ class PopoverView: NSView {
         hStack.addArrangedSubview(volumeView)
         hStack.addArrangedSubview(airPlayButton)
 
-        view.addSubview(label)
         view.addSubview(hStack)
-        label.translatesAutoresizingMaskIntoConstraints = false
         hStack.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
-            hStack.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 6),
-            hStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8),
+            hStack.topAnchor.constraint(equalTo: view.topAnchor, constant: 3),
+            hStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -6),
 
-            label.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             hStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
         ])
@@ -241,6 +234,7 @@ class PopoverView: NSView {
     @discardableResult
     private func addSeparator() -> Separator {
         let res = Separator()
+        res.heightAnchor.constraint(equalToConstant: 10).isActive = true
         addView(res)
         return res
     }
@@ -377,6 +371,9 @@ class PopoverView: NSView {
         walk(stack)
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     @discardableResult
     private func addItem(title: String, action selector: Selector? = nil, keyEquivalent: String = "") -> PopoverItem {
         let res = PopoverItem(title: title, keyEquivalent: keyEquivalent)
