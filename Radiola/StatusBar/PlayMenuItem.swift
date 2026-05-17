@@ -14,6 +14,8 @@ class PlayItemView: NSView {
     private let favoriteButton = FavButton()
     private var topConstraint: NSLayoutConstraint!
 
+    var playButton: NSButton { playView.playButton }
+
     var topMargin: Double {
         get { topConstraint.constant }
         set { topConstraint.constant = newValue }

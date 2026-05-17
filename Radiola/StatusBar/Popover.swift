@@ -50,6 +50,7 @@ class PopoverView: NSView {
      * ****************************************/
     init() {
         super.init(frame: .zero)
+        wantsLayer = true
 
         stack.orientation = .vertical
         stack.spacing = 0
@@ -82,6 +83,13 @@ class PopoverView: NSView {
         layoutSubtreeIfNeeded()
         let size = stack.fittingSize
         frame = NSRect(origin: .zero, size: size)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override func updateLayer() {
+        layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
     }
 
     /* ****************************************
@@ -141,6 +149,10 @@ class PopoverView: NSView {
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
         view.widthAnchor.constraint(equalToConstant: 500).isActive = true
         view.topMargin = 5
+
+        view.playButton.keyEquivalent = "p"
+        view.playButton.keyEquivalentModifierMask = .command
+
         addView(view)
     }
 
@@ -167,8 +179,17 @@ class PopoverView: NSView {
         }
 
         let view = NSView()
-        let volumeView = VolumeView(showMuteButton: showMute)
+        let volumeView = VolumeView(showMuteButton: true)
         let airPlayButton = AirPlayButton()
+
+        volumeView.muteButton?.keyEquivalent = "m"
+        volumeView.muteButton?.keyEquivalentModifierMask = .command
+
+        volumeView.downButton.keyEquivalent = String(UnicodeScalar(NSDownArrowFunctionKey)!)
+        volumeView.downButton.keyEquivalentModifierMask = .command
+
+        volumeView.upButton.keyEquivalent = String(UnicodeScalar(NSUpArrowFunctionKey)!)
+        volumeView.upButton.keyEquivalentModifierMask = .command
 
         volumeView.translatesAutoresizingMaskIntoConstraints = true
 
@@ -409,6 +430,7 @@ class PopoverView: NSView {
 
         if let station {
             player.switchStation(station: station)
+            window?.close()
         }
     }
 }

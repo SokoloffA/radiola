@@ -62,6 +62,7 @@ class PopoverItem: NSControl, NSValidatedUserInterfaceItem {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
 
+            keyLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 25),
             keyLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             keyLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
         ])
