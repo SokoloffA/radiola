@@ -62,6 +62,7 @@ class PlayItemView: NSView {
         favoriteButton.target = self
         favoriteButton.action = #selector(markAsFavoriteSong)
         favoriteButton.toolTip = NSLocalizedString("Mark current song as favorite", comment: "Button tooltip")
+        favoriteButton.setButtonType(.toggle)
 
         playView.translatesAutoresizingMaskIntoConstraints = false
         favoriteButton.translatesAutoresizingMaskIntoConstraints = false

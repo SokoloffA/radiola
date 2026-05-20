@@ -320,7 +320,6 @@ class ImageButton: NSButton {
         super.init(frame: NSRect())
         bezelStyle = .shadowlessSquare
         isBordered = false
-        setButtonType(.toggle)
         self.image = image
     }
 

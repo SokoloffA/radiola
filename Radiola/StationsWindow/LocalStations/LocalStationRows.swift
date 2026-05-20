@@ -138,6 +138,7 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
         favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: 8).isActive = true
         favoriteButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
         favoriteButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
+        favoriteButton.setButtonType(.toggle)
 
         menuButton.translatesAutoresizingMaskIntoConstraints = false
         menuButton.leadingAnchor.constraint(equalTo: favoriteButton.trailingAnchor, constant: 8).isActive = true

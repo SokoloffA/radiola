@@ -38,6 +38,7 @@ class HistoryRow: NSView {
         favoriteButton.alternateImage = NSImage(systemSymbolName: NSImage.Name("heart.fill"), accessibilityDescription: NSLocalizedString("Unmark song as favorite", comment: "History window icon tooltip"))
         favoriteButton.target = self
         favoriteButton.action = #selector(toggleFavorite)
+        favoriteButton.setButtonType(.toggle)
 
         stationLabel.font = NSFont.systemFont(ofSize: 11)
         stationLabel.textColor = .secondaryLabelColor
