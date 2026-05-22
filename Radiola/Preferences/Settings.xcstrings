@@ -513,6 +513,9 @@
         }
       }
     },
+    "Global shortcut to toggle song in the menu bar" : {
+      "comment" : "Settings label"
+    },
     "HTTP(S) proxy:" : {
       "comment" : "Settings label",
       "localizations" : {
