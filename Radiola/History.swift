@@ -83,7 +83,7 @@ class History {
         let calendar = Calendar.current
         guard let date100DaysAgo = calendar.date(byAdding: .day, value: -maxDaysCount, to: Date()) else { return }
         let fetchRequest: NSFetchRequest<HistoryRecord> = HistoryRecord.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "date < %@", date100DaysAgo as NSDate)
+        fetchRequest.predicate = NSPredicate(format: "date < %@ AND favorite == NO", date100DaysAgo as NSDate)
 
         do {
             for rec in try context.fetch(fetchRequest) {
