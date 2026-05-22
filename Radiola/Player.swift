@@ -289,8 +289,8 @@ class Player: NSObject {
      *
      * ****************************************/
     @objc private func onSettingsChanged() {
-        let uid = audioDeviceUID
-        if settings.audioDevice != uid {
+        let newAudioDevice = AudioSytstem.device(byUID: settings.audioDevice)
+        if newAudioDevice?.UID != self.audioDeviceUID {
             debug("[Player] The current audio device has changed")
             debug("[Player]  - Config device UID:        \(settings.audioDevice ?? "nil")")
             debug("[Player]  - Player audio device UID:  \(audioDeviceUID ?? "nil")")

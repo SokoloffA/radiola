@@ -13,6 +13,7 @@ extension KeyboardShortcuts.Name {
     static let showHistoryWindow = Self("showHistoryWindow")
     static let togglePlayPuse = Self("togglePlayPuse")
     static let showMainMenu = Self("showMainMenu")
+    static let toggleSongInMenuBar = Self("toggleSongInMenuBar")
 }
 
 @NSApplicationMain
@@ -86,6 +87,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         KeyboardShortcuts.onKeyUp(for: .showHistoryWindow) { [self] in showHistory(nil) }
         KeyboardShortcuts.onKeyUp(for: .togglePlayPuse) { [self] in togglePlay(nil) }
         KeyboardShortcuts.onKeyUp(for: .showMainMenu) { [self] in showMainMenu(nil) }
+        KeyboardShortcuts.onKeyUp(for: .toggleSongInMenuBar) { [self] in toggleSongInMenuBar(nil) }
 
         AppState.shared.applyProxySettings()
 
@@ -205,6 +207,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     @objc func togglePlay(_ sender: NSMenuItem?) {
         player.toggle()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func toggleSongInMenuBar(_ sender: Any?) {
+        settings.showSongInStatusBar.toggle()
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 
     /* ****************************************

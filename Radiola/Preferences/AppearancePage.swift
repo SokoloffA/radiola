@@ -42,13 +42,20 @@ class AppearancePage: NSViewController {
         showToolTipCheckBox.target = self
         showToolTipCheckBox.action = #selector(showTooltipChanged)
 
-        showSongInStatusBarCheckBox.state = settings.showSongInStatusBar ? .on : .off
         showSongInStatusBarCheckBox.target = self
         showSongInStatusBarCheckBox.action = #selector(showSongInStatusBarCheckBoxChanged)
 
         showCopyToClipboardCheckBox.state = settings.showCopyToClipboardInMenu ? .on : .off
         showCopyToClipboardCheckBox.target = self
         showCopyToClipboardCheckBox.action = #selector(showCopyToClipboardChanged)
+
+        refresh()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refresh),
+            name: Notification.Name.SettingsChanged,
+            object: nil)
     }
 
     /* ****************************************
@@ -122,7 +129,7 @@ class AppearancePage: NSViewController {
      *
      * ****************************************/
     private func addView(view: NSView, prev: NSView) -> NSView {
-        self.view.addSubview(showSongInStatusBarCheckBox)
+        self.view.addSubview(view)
 
         view.translatesAutoresizingMaskIntoConstraints = false
         view.topAnchor.constraint(equalTo: prev.bottomAnchor, constant: 10).isActive = true
@@ -231,5 +238,12 @@ class AppearancePage: NSViewController {
     @objc func notificationsWhenPlaybackStartsChanged(_ sender: NSButton) {
         settings.showNotificationWhenPlaybackStarts = sender.state == .on
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func refresh() {
+        showSongInStatusBarCheckBox.state = settings.showSongInStatusBar ? .on : .off
     }
 }
