@@ -63,7 +63,6 @@
 		3964339D2B55A69C009BE1CE /* InternetStationSearchPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3964339C2B55A69C009BE1CE /* InternetStationSearchPanel.swift */; };
 		396704692943AD2700012FFD /* AudioDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 396704682943AD2700012FFD /* AudioDevice.swift */; };
 		3967046C2944961500012FFD /* AudioPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3967046A2944961500012FFD /* AudioPage.swift */; };
-		3967046D2944961500012FFD /* AudioPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3967046B2944961500012FFD /* AudioPage.xib */; };
 		3970F46C2E910852001A9AC1 /* CSV in Frameworks */ = {isa = PBXBuildFile; productRef = 3970F46B2E910852001A9AC1 /* CSV */; };
 		3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD0C2C7B7BAB005432C7 /* Radiola.xcdatamodeld */; };
 		3975DD132C8310B0005432C7 /* HistoryData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3975DD112C8310B0005432C7 /* HistoryData.xcdatamodeld */; };
@@ -84,6 +83,7 @@
 		39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
 		39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */; };
+		39C212D72FC33D3B00F3E8B9 /* PreferencesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C212D62FC33D3B00F3E8B9 /* PreferencesPage.swift */; };
 		39D27F532BA36B2D00D5857A /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 39D27F522BA36B2D00D5857A /* Credits.html */; };
 		39D582C42C96B40400AE3A01 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39D582C32C96B40400AE3A01 /* Localizable.xcstrings */; };
 		39D582C62C96C49B00AE3A01 /* VolumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D582C52C96C49B00AE3A01 /* VolumeView.swift */; };
@@ -101,7 +101,6 @@
 		39F08E462A0CC582006B65D0 /* Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F08E452A0CC582006B65D0 /* Types.swift */; };
 		39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */; };
 		39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BA288C56C300273AB0 /* UpdatePanel.swift */; };
-		39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39F869BB288C56C300273AB0 /* UpdatePanel.xib */; };
 		39FF07732933A59900751A03 /* StatuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF07722933A59900751A03 /* StatuBarController.swift */; };
 		9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */; };
 		AAAA00012024120600000001 /* HistoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA00012024120600000002 /* HistoryDelegate.swift */; };
@@ -180,7 +179,6 @@
 		3964339C2B55A69C009BE1CE /* InternetStationSearchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetStationSearchPanel.swift; sourceTree = "<group>"; };
 		396704682943AD2700012FFD /* AudioDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevice.swift; sourceTree = "<group>"; };
 		3967046A2944961500012FFD /* AudioPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPage.swift; sourceTree = "<group>"; };
-		3967046B2944961500012FFD /* AudioPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AudioPage.xib; sourceTree = "<group>"; };
 		3975DD0D2C7B7BAB005432C7 /* Radiola.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Radiola.xcdatamodel; sourceTree = "<group>"; };
 		3975DD122C8310B0005432C7 /* HistoryData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = HistoryData.xcdatamodel; sourceTree = "<group>"; };
 		3985C9052E1163CD00C96D83 /* PlayList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayList.swift; sourceTree = "<group>"; };
@@ -201,6 +199,7 @@
 		39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioBrowserStatus.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
 		39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupDialog.swift; sourceTree = "<group>"; };
+		39C212D62FC33D3B00F3E8B9 /* PreferencesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesPage.swift; sourceTree = "<group>"; };
 		39D27F522BA36B2D00D5857A /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		39D582C32C96B40400AE3A01 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		39D582C52C96C49B00AE3A01 /* VolumeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumeView.swift; sourceTree = "<group>"; };
@@ -216,7 +215,6 @@
 		39F08E452A0CC582006B65D0 /* Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Types.swift; sourceTree = "<group>"; };
 		39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		39F869BA288C56C300273AB0 /* UpdatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePanel.swift; sourceTree = "<group>"; };
-		39F869BB288C56C300273AB0 /* UpdatePanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UpdatePanel.xib; sourceTree = "<group>"; };
 		39FF07722933A59900751A03 /* StatuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatuBarController.swift; sourceTree = "<group>"; };
 		9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedPage.swift; sourceTree = "<group>"; };
 		AAAA00012024120600000002 /* HistoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDelegate.swift; sourceTree = "<group>"; };
@@ -323,6 +321,7 @@
 				39DDF8412F66CB8400ED9441 /* FFPlayer */,
 				39F08E452A0CC582006B65D0 /* Types.swift */,
 				391500302EB89EB700060015 /* NotificationManager.swift */,
+				39C212D52FC33CFB00F3E8B9 /* Controls */,
 				39A794112B4B65AF000D9875 /* AppState.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
@@ -428,6 +427,14 @@
 			path = LocalStations;
 			sourceTree = "<group>";
 		};
+		39C212D52FC33CFB00F3E8B9 /* Controls */ = {
+			isa = PBXGroup;
+			children = (
+				39C212D62FC33D3B00F3E8B9 /* PreferencesPage.swift */,
+			);
+			path = Controls;
+			sourceTree = "<group>";
+		};
 		39DDF8412F66CB8400ED9441 /* FFPlayer */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,13 +454,11 @@
 			children = (
 				393B221E2CE951380035233D /* Settings.xcstrings */,
 				39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */,
-				39F869BA288C56C300273AB0 /* UpdatePanel.swift */,
 				392024AD2A51953600670ABD /* ControlsPage.swift */,
 				392024B12A519FF900670ABD /* AppearancePage.swift */,
 				3967046A2944961500012FFD /* AudioPage.swift */,
 				9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */,
-				3967046B2944961500012FFD /* AudioPage.xib */,
-				39F869BB288C56C300273AB0 /* UpdatePanel.xib */,
+				39F869BA288C56C300273AB0 /* UpdatePanel.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -578,10 +583,8 @@
 				39D582C42C96B40400AE3A01 /* Localizable.xcstrings in Resources */,
 				394F8A6428739A15005EA7FA /* StationsWindow.xib in Resources */,
 				3987B99E2A9635930077EB03 /* SideBar.xib in Resources */,
-				39F869BD288C56C300273AB0 /* UpdatePanel.xib in Resources */,
 				394ABC9C2A97AD9C00E2B6E9 /* SidebarSecondLevelView.xib in Resources */,
 				39D27F532BA36B2D00D5857A /* Credits.html in Resources */,
-				3967046D2944961500012FFD /* AudioPage.xib in Resources */,
 				394F8A412873933A005EA7FA /* Assets.xcassets in Resources */,
 				393B221F2CE951380035233D /* Settings.xcstrings in Resources */,
 				394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */,
@@ -630,6 +633,7 @@
 				393A72BE2F8ACE780054A0CE /* AirPlayButton.swift in Sources */,
 				3964339D2B55A69C009BE1CE /* InternetStationSearchPanel.swift in Sources */,
 				3962D03C2BE688DE0014BCFB /* Utilities.swift in Sources */,
+				39C212D72FC33D3B00F3E8B9 /* PreferencesPage.swift in Sources */,
 				396704692943AD2700012FFD /* AudioDevice.swift in Sources */,
 				3962D0442BE689190014BCFB /* RecorderCocoa.swift in Sources */,
 				396433962B502AE9009BE1CE /* LocalStationToolBox.swift in Sources */,

@@ -12,11 +12,11 @@ fileprivate struct GlobalKeyDef {
     var label: String
 }
 
-class ControlsPage: NSViewController {
-    private var leftMouseButtonLbl = Label()
-    private var middleMouseButtonLbl = Label()
-    private var rightMouseButtonLbl = Label()
-    private var wheellMouseLbl = Label()
+class ControlsPage: PreferencesPage {
+    private var leftMouseButtonLbl = NSLocalizedString("Left mouse button:", tableName: "Settings", comment: "Settings label")
+    private var middleMouseButtonLbl = NSLocalizedString("Middle mouse button:", tableName: "Settings", comment: "Settings label")
+    private var rightMouseButtonLbl = NSLocalizedString("Right mouse button:", tableName: "Settings", comment: "Settings label")
+    private var wheellMouseLbl = NSLocalizedString("Mouse wheel:", tableName: "Settings", comment: "Settings label")
 
     private var leftMouseButtonCbx = NSPopUpButton()
     private var middleMouseButtonCbx = NSPopUpButton()
@@ -25,10 +25,10 @@ class ControlsPage: NSViewController {
 
     private var ctrlMouseHelp = Label()
 
-    private var mediaKeysHandlingLbl = Label()
+    private var mediaKeysHandlingLbl = NSLocalizedString("Media key handling:", tableName: "Settings", comment: "Settings label")
     private var mediaKeysHandlingCbx = NSPopUpButton()
 
-    private var mediaPrevNextButtonLbl = Label()
+    private var mediaPrevNextButtonLbl = Label(text: NSLocalizedString("Previous and next track buttons:", tableName: "Settings", comment: "Settings label"))
     private var mediaPrevNextButtonCbx = NSPopUpButton()
 
     private var globalKeys: [GlobalKeyDef] = [
@@ -39,16 +39,27 @@ class ControlsPage: NSViewController {
         GlobalKeyDef(key: .toggleSongInMenuBar, label: NSLocalizedString("Global shortcut to toggle song in the menu bar", tableName: "Settings", comment: "Settings label")),
     ]
 
-    private var views: [NSView] = []
-
     /* ****************************************
      *
      * ****************************************/
-    init() {
-        super.init(nibName: nil, bundle: nil)
-
+    override init() {
+        super.init()
         title = NSLocalizedString("Controls", tableName: "Settings", comment: "Settings page title")
-        view = createView()
+
+        mediaPrevNextButtonLbl.alignment = .right
+        ctrlMouseHelp.stringValue = NSLocalizedString("You can always open the menu with Control+Mouse Click", tableName: "Settings", comment: "Settings label")
+        ctrlMouseHelp.textColor = .secondaryLabelColor
+
+        addRow(title: leftMouseButtonLbl, rightView: leftMouseButtonCbx)
+        addRow(title: middleMouseButtonLbl, rightView: middleMouseButtonCbx)
+        addRow(title: rightMouseButtonLbl, rightView: rightMouseButtonCbx)
+        addRow(rightView: ctrlMouseHelp).bottomPadding = 20
+        addRow(title: wheellMouseLbl, rightView: wheellMouseCbx)
+        addSeparator()
+        addRow(title: mediaKeysHandlingLbl, rightView: mediaKeysHandlingCbx)
+        addRow(leftView: mediaPrevNextButtonLbl, rightView: mediaPrevNextButtonCbx)
+        addGlobalKeys()
+
         initButtonCbx(leftMouseButtonCbx, button: .left)
         initButtonCbx(middleMouseButtonCbx, button: .middle)
         initButtonCbx(rightMouseButtonCbx, button: .right)
@@ -69,104 +80,14 @@ class ControlsPage: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    private func createView() -> NSView {
-        let res = NSView()
-        res.autoresizingMask = [.maxXMargin, .minYMargin]
-
-        res.addSubview(leftMouseButtonLbl)
-        res.addSubview(leftMouseButtonCbx)
-        res.addSubview(middleMouseButtonLbl)
-        res.addSubview(middleMouseButtonCbx)
-        res.addSubview(rightMouseButtonLbl)
-        res.addSubview(rightMouseButtonCbx)
-        res.addSubview(wheellMouseLbl)
-        res.addSubview(wheellMouseCbx)
-        res.addSubview(ctrlMouseHelp)
-        res.addSubview(mediaKeysHandlingLbl)
-        res.addSubview(mediaKeysHandlingCbx)
-        res.addSubview(mediaPrevNextButtonLbl)
-        res.addSubview(mediaPrevNextButtonCbx)
-
-        leftMouseButtonLbl.stringValue = NSLocalizedString("Left mouse button:", tableName: "Settings", comment: "Settings label")
-        leftMouseButtonLbl.alignment = .right
-        leftMouseButtonLbl.translatesAutoresizingMaskIntoConstraints = false
-        leftMouseButtonCbx.translatesAutoresizingMaskIntoConstraints = false
-        leftMouseButtonCbx.topAnchor.constraint(equalTo: res.topAnchor, constant: 20).isActive = true
-        leftMouseButtonLbl.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 16).isActive = true
-        leftMouseButtonCbx.leadingAnchor.constraint(equalTo: leftMouseButtonLbl.trailingAnchor, constant: 20).isActive = true
-        leftMouseButtonLbl.centerYAnchor.constraint(equalTo: leftMouseButtonCbx.centerYAnchor).isActive = true
-
-        middleMouseButtonLbl.stringValue = NSLocalizedString("Middle mouse button:", tableName: "Settings", comment: "Settings label")
-        alignRow(lbl: middleMouseButtonLbl, cbx: middleMouseButtonCbx, prev: leftMouseButtonCbx)
-
-        rightMouseButtonLbl.stringValue = NSLocalizedString("Right mouse button:", tableName: "Settings", comment: "Settings label")
-        alignRow(lbl: rightMouseButtonLbl, cbx: rightMouseButtonCbx, prev: middleMouseButtonCbx)
-
-        ctrlMouseHelp.stringValue = NSLocalizedString("You can always open the menu with Control+Mouse Click", tableName: "Settings", comment: "Settings label")
-        ctrlMouseHelp.textColor = .secondaryLabelColor
-        ctrlMouseHelp.translatesAutoresizingMaskIntoConstraints = false
-        ctrlMouseHelp.topAnchor.constraint(equalTo: rightMouseButtonCbx.bottomAnchor, constant: 14).isActive = true
-        ctrlMouseHelp.leadingAnchor.constraint(equalTo: rightMouseButtonCbx.leadingAnchor).isActive = true
-        ctrlMouseHelp.trailingAnchor.constraint(equalTo: rightMouseButtonCbx.trailingAnchor).isActive = true
-
-        wheellMouseLbl.stringValue = NSLocalizedString("Mouse wheel:", tableName: "Settings", comment: "Settings label")
-        alignRow(lbl: wheellMouseLbl, cbx: wheellMouseCbx, prev: ctrlMouseHelp, margin: 24)
-
-        let separator = Separator()
-        res.addSubview(separator)
-        separator.topAnchor.constraint(equalTo: wheellMouseCbx.bottomAnchor, constant: 24).isActive = true
-        separator.leadingAnchor.constraint(equalTo: res.leadingAnchor, constant: 20).isActive = true
-        separator.trailingAnchor.constraint(equalTo: res.trailingAnchor, constant: -20).isActive = true
-
-        mediaKeysHandlingLbl.stringValue = NSLocalizedString("Media key handling:", tableName: "Settings", comment: "Settings label")
-        alignRow(lbl: mediaKeysHandlingLbl, cbx: mediaKeysHandlingCbx, prev: separator, margin: 20)
-
-        mediaPrevNextButtonLbl.stringValue = NSLocalizedString("Previous and next track buttons:", tableName: "Settings", comment: "Settings label")
-        alignRow(lbl: mediaPrevNextButtonLbl, cbx: mediaPrevNextButtonCbx, prev: mediaKeysHandlingCbx)
-
-        var prev: NSView = mediaPrevNextButtonCbx
+    private func addGlobalKeys() {
         for globKeyDef in globalKeys {
-            let lbl = Label(text: globKeyDef.label)
             let ctrl = KeyboardShortcuts.RecorderCocoa(for: globKeyDef.key)
-
-            views.append(lbl)
-            views.append(ctrl)
-
             ctrl.pressShortcutText = NSLocalizedString("Press shortcut", tableName: "Settings", comment: "Settings label")
             ctrl.recordShortcutText = NSLocalizedString("Record shortcut", tableName: "Settings", comment: "Settings label")
 
-            res.addSubview(lbl)
-            res.addSubview(ctrl)
-
-            alignRow(lbl: lbl, cbx: ctrl, prev: prev)
-            prev = ctrl
+            addRow(title: globKeyDef.label, rightView: ctrl)
         }
-        res.bottomAnchor.constraint(equalTo: prev.bottomAnchor, constant: 32).isActive = true
-
-        for v in res.subviews {
-            res.trailingAnchor.constraint(greaterThanOrEqualTo: v.trailingAnchor, constant: 20).isActive = true
-        }
-
-        return res
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func alignRow(lbl: Label, cbx: NSView, prev: NSView, margin: CGFloat = 10) {
-        lbl.alignment = .right
-
-        lbl.translatesAutoresizingMaskIntoConstraints = false
-        cbx.translatesAutoresizingMaskIntoConstraints = false
-
-        cbx.topAnchor.constraint(equalTo: prev.bottomAnchor, constant: margin).isActive = true
-        cbx.centerYAnchor.constraint(equalTo: lbl.centerYAnchor).isActive = true
-
-        lbl.leadingAnchor.constraint(equalTo: leftMouseButtonLbl.leadingAnchor).isActive = true
-        lbl.trailingAnchor.constraint(equalTo: leftMouseButtonLbl.trailingAnchor).isActive = true
-
-        cbx.leadingAnchor.constraint(equalTo: leftMouseButtonCbx.leadingAnchor).isActive = true
-        cbx.trailingAnchor.constraint(equalTo: leftMouseButtonCbx.trailingAnchor).isActive = true
     }
 
     /* ****************************************

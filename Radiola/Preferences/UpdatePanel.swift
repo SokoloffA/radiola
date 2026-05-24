@@ -7,16 +7,27 @@
 
 import Cocoa
 
-class UpdatePanel: NSViewController {
-    @IBOutlet var checkNowButton: NSButton!
-    @IBOutlet var automaticallyChecksForUpdates: NSButton!
+class UpdatePanel: PreferencesPage {
+    private let automaticallyChecksForUpdates = Checkbox(title: NSLocalizedString("Automatically check for updates", tableName: "Settings", comment: "Settings label"))
+    private let checkNowButton = NSButton()
 
     /* ****************************************
      *
      * ****************************************/
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    override init() {
+        super.init()
         title = NSLocalizedString("Updates", tableName: "Settings", comment: "Settings tab title")
+
+        addRow(rightView: automaticallyChecksForUpdates)
+        addRow(rightView: checkNowButton)
+
+        checkNowButton.title = NSLocalizedString("Check for Updates now", tableName: "Settings", comment: "Settings button title")
+        checkNowButton.target = updater
+        checkNowButton.action = #selector(Updater.checkForUpdates)
+
+        automaticallyChecksForUpdates.state = updater.automaticallyChecksForUpdates ? .on : .off
+        automaticallyChecksForUpdates.target = self
+        automaticallyChecksForUpdates.action = #selector(autoUpdateClicked)
     }
 
     /* ****************************************
@@ -29,21 +40,7 @@ class UpdatePanel: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        checkNowButton.title = NSLocalizedString("Check for Updates now", tableName: "Settings", comment: "Settings button title")
-        automaticallyChecksForUpdates.title = NSLocalizedString("Automatically check for updates", tableName: "Settings", comment: "Settings label")
-
-        checkNowButton.target = updater
-        checkNowButton.action = #selector(Updater.checkForUpdates)
-
-        automaticallyChecksForUpdates.state = updater.automaticallyChecksForUpdates ? .on : .off
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction func autoUpdateClicked(_ sender: NSButton) {
+    @objc private func autoUpdateClicked(_ sender: NSButton) {
         updater.automaticallyChecksForUpdates = sender.state == .on
     }
 }

@@ -7,31 +7,20 @@
 
 import Cocoa
 
-class AudioPage: NSViewController {
-    @IBOutlet var deviceCombobox: NSPopUpButton!
-    @IBOutlet var deviceLabel: NSTextField!
-
+class AudioPage: PreferencesPage {
+    private let deviceCombobox = NSPopUpButton()
+    private let deviceLabel = NSLocalizedString("Device:", tableName: "Settings", comment: "Settings label")
     /* ****************************************
      *
      * ****************************************/
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    override init() {
+        super.init()
         title = NSLocalizedString("Audio", tableName: "Settings", comment: "Settings tab title")
-    }
 
-    /* ****************************************
-     *
-     * ****************************************/
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+        addRow(title: deviceLabel, rightView: deviceCombobox)
 
-    /* ****************************************
-     *
-     * ****************************************/
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        deviceLabel.stringValue = NSLocalizedString("Device:", tableName: "Settings", comment: "Settings label")
+        deviceCombobox.target = self
+        deviceCombobox.action = #selector(deviceChanged)
 
         NotificationCenter.default.addObserver(
             self,
@@ -40,6 +29,13 @@ class AudioPage: NSViewController {
             object: nil)
 
         refreshDeviceCombo()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     /* ****************************************
@@ -72,7 +68,7 @@ class AudioPage: NSViewController {
     /* ****************************************
      *
      * ****************************************/
-    @IBAction func deviceChanged(_ sender: Any) {
+    @objc private func deviceChanged(_ sender: Any) {
         let deviceUID = (deviceCombobox.selectedItem?.representedObject as? AudioDevice)?.UID
         if settings.audioDevice != deviceUID {
             debug("[Settings] Select audio device \(deviceUID ?? "nil")")
