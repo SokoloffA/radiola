@@ -255,8 +255,23 @@ class Settings {
     /* ****************************************
      *
      * ****************************************/
-    @Setting("ShowSongInStatusBar", default: false)
-    var showSongInStatusBar: Bool
+    var showSongInStatusBar: ShowSongInStatusBar {
+        get {
+            let s = data.string(forKey: "ShowSongInStatusBarV2")
+            if let s {
+                return ShowSongInStatusBar.fromString(s, default: .never)
+            }
+
+            if data.bool(forKey: "ShowSongInStatusBar") {
+                return .always
+            }
+            return .never
+        }
+
+        set {
+            data.set(newValue.toString(), forKey: "ShowSongInStatusBarV2")
+        }
+    }
 
     /* ****************************************
      *
@@ -306,5 +321,42 @@ struct Setting<Value> {
     var wrappedValue: Value {
         get { data.object(forKey: key) as? Value ?? defaultValue }
         set { data.set(newValue, forKey: key) }
+    }
+}
+
+fileprivate extension ShowSongInStatusBar {
+    static func fromString(_ s: String, default def: ShowSongInStatusBar) -> ShowSongInStatusBar {
+        switch s {
+            case "never": return .never
+            case "always": return .always
+            case "exceeds1024": return .exceeds1024
+            case "exceeds1280": return .exceeds1280
+            case "exceeds1440": return .exceeds1440
+            case "exceeds1600": return .exceeds1600
+            case "exceeds1920": return .exceeds1920
+            case "exceeds2048": return .exceeds2048
+            case "exceeds2560": return .exceeds2560
+            case "exceeds2880": return .exceeds2880
+            case "exceeds3200": return .exceeds3200
+            case "exceeds5120": return .exceeds5120
+            default: return def
+        }
+    }
+
+    func toString() -> String {
+        switch self {
+            case .never: return "never"
+            case .always: return "always"
+            case .exceeds1024: return "exceeds1024"
+            case .exceeds1280: return "exceeds1280"
+            case .exceeds1440: return "exceeds1440"
+            case .exceeds1600: return "exceeds1600"
+            case .exceeds1920: return "exceeds1920"
+            case .exceeds2048: return "exceeds2048"
+            case .exceeds2560: return "exceeds2560"
+            case .exceeds2880: return "exceeds2880"
+            case .exceeds3200: return "exceeds3200"
+            case .exceeds5120: return "exceeds5120"
+        }
     }
 }

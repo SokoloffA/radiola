@@ -14,7 +14,8 @@ class AppearancePage: PreferencesPage {
     private let showMuteCheckBox = Checkbox(title: NSLocalizedString("Show the mute item in the menu", tableName: "Settings", comment: "Settings label"))
     private let showCopyToClipboardCheckBox = Checkbox(title: NSLocalizedString("Show the \"Copy song title and artist\" item in the menu", tableName: "Settings", comment: "Settings label"))
     private let showToolTipCheckBox = Checkbox(title: NSLocalizedString("Show a tooltip with the radiostation and song", tableName: "Settings", comment: "Settings label"))
-    private let showSongInStatusBarCheckBox = Checkbox(title: NSLocalizedString("Show song title in menu bar", tableName: "Settings", comment: "Settings label"))
+    private let showSongInStatusBarLabel = NSLocalizedString("Show song title in menu bar", tableName: "Settings", comment: "Settings label")
+    private let showSongInStatusBarEdit = NSPopUpButton()
 
     private let notifiactionsLabel = NSLocalizedString("Notifications:", tableName: "Settings", comment: "Settings label")
     private let notificationsWhenPlaybackStarts = Checkbox(title: NSLocalizedString("When playback starts.", tableName: "Settings", comment: "Settings label"))
@@ -33,11 +34,14 @@ class AppearancePage: PreferencesPage {
         addRow(rightView: showCopyToClipboardCheckBox)
         addSeparator()
         addRow(rightView: showToolTipCheckBox)
-        addRow(rightView: showSongInStatusBarCheckBox)
+        addRow(title: showSongInStatusBarLabel, rightView: showSongInStatusBarEdit)
         addSeparator()
         addRow(title: notifiactionsLabel, rightView: notificationsWhenPlaybackStarts)
 
         initFavoritesMenuGroupTypeCbx()
+        favoritesMenuGroupTypeCbx.target = self
+        favoritesMenuGroupTypeCbx.action = #selector(favoritesMenuGroupTypeChanged)
+        favoritesMenuGroupTypeCbx.selectItem(withTag: settings.favoritesMenuType.rawValue)
 
         showVolumeCheckBox.state = settings.showVolumeInMenu ? .on : .off
         showVolumeCheckBox.target = self
@@ -51,8 +55,10 @@ class AppearancePage: PreferencesPage {
         showToolTipCheckBox.target = self
         showToolTipCheckBox.action = #selector(showTooltipChanged)
 
-        showSongInStatusBarCheckBox.target = self
-        showSongInStatusBarCheckBox.action = #selector(showSongInStatusBarCheckBoxChanged)
+        initShowSongInStatusBarEdit()
+        showSongInStatusBarEdit.selectItem(withTag: settings.showSongInStatusBar.rawValue)
+        showSongInStatusBarEdit.target = self
+        showSongInStatusBarEdit.action = #selector(showSongInStatusBarChanged)
 
         showCopyToClipboardCheckBox.state = settings.showCopyToClipboardInMenu ? .on : .off
         showCopyToClipboardCheckBox.target = self
@@ -61,14 +67,6 @@ class AppearancePage: PreferencesPage {
         notificationsWhenPlaybackStarts.state = settings.showNotificationWhenPlaybackStarts ? .on : .off
         notificationsWhenPlaybackStarts.target = self
         notificationsWhenPlaybackStarts.action = #selector(notificationsWhenPlaybackStartsChanged)
-
-        refresh()
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(refresh),
-            name: Notification.Name.SettingsChanged,
-            object: nil)
     }
 
     /* ****************************************
@@ -92,10 +90,6 @@ class AppearancePage: PreferencesPage {
 
         favoritesMenuGroupTypeCbx.addItem(withTitle: NSLocalizedString("as a submenu", tableName: "Settings", comment: "Settings label"))
         favoritesMenuGroupTypeCbx.lastItem?.tag = Settings.FavoritesMenuType.submenu.rawValue
-
-        favoritesMenuGroupTypeCbx.target = self
-        favoritesMenuGroupTypeCbx.action = #selector(favoritesMenuGroupTypeChanged)
-        favoritesMenuGroupTypeCbx.selectItem(withTag: settings.favoritesMenuType.rawValue)
     }
 
     /* ****************************************
@@ -135,8 +129,42 @@ class AppearancePage: PreferencesPage {
     /* ****************************************
      *
      * ****************************************/
-    @objc func showSongInStatusBarCheckBoxChanged(_ sender: NSButton) {
-        settings.showSongInStatusBar = sender.state == .on
+    private func initShowSongInStatusBarEdit() {
+        showSongInStatusBarEdit.removeAllItems()
+
+        showSongInStatusBarEdit.addItem(
+            withTitle: NSLocalizedString("never", tableName: "Settings", comment: "Settings combobox item"),
+            tag: ShowSongInStatusBar.never.rawValue)
+
+        showSongInStatusBarEdit.addItem(
+            withTitle: NSLocalizedString("always", tableName: "Settings", comment: "Settings combobox item"),
+            tag: ShowSongInStatusBar.always.rawValue)
+
+        let cases = ShowSongInStatusBar.allCases.sorted { $0.rawValue < $1.rawValue }
+        for c in cases {
+            if c == .never || c == .always {
+                continue
+            }
+
+            let s = NSLocalizedString("if screen width exceeds %dpx", tableName: "Settings", comment: "Settings combobox item")
+            showSongInStatusBarEdit.addItem(
+                withTitle: String(format: s, c.rawValue),
+                tag: c.rawValue)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func showSongInStatusBarChanged(_ sender: NSPopUpButton) {
+        guard
+            let tag = sender.selectedItem?.tag,
+            let val = ShowSongInStatusBar(rawValue: tag)
+        else {
+            return
+        }
+
+        settings.showSongInStatusBar = val
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 
@@ -154,12 +182,5 @@ class AppearancePage: PreferencesPage {
     @objc func notificationsWhenPlaybackStartsChanged(_ sender: NSButton) {
         settings.showNotificationWhenPlaybackStarts = sender.state == .on
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @objc private func refresh() {
-        showSongInStatusBarCheckBox.state = settings.showSongInStatusBar ? .on : .off
     }
 }

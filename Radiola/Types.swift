@@ -60,6 +60,21 @@ enum MediaPrevNextKeyAction: Int {
 
 typealias Bitrate = Int
 
+enum ShowSongInStatusBar: Int, CaseIterable {
+    case never = 0
+    case always = 1
+    case exceeds1024 = 1024
+    case exceeds1280 = 1280
+    case exceeds1440 = 1440
+    case exceeds1600 = 1600
+    case exceeds1920 = 1920
+    case exceeds2048 = 2048
+    case exceeds2560 = 2560
+    case exceeds2880 = 2880
+    case exceeds3200 = 3200
+    case exceeds5120 = 5120
+}
+
 // MARK: - Errors
 
 struct Alarm: Error, Identifiable {

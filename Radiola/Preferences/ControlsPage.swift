@@ -36,7 +36,6 @@ class ControlsPage: PreferencesPage {
         GlobalKeyDef(key: .showHistoryWindow, label: NSLocalizedString("Global shortcut to show history", tableName: "Settings", comment: "Settings label")),
         GlobalKeyDef(key: .showMainMenu, label: NSLocalizedString("Global shortcut to show menu", tableName: "Settings", comment: "Settings label")),
         GlobalKeyDef(key: .togglePlayPuse, label: NSLocalizedString("Global shortcut to toggle play and pause", tableName: "Settings", comment: "Settings label")),
-        GlobalKeyDef(key: .toggleSongInMenuBar, label: NSLocalizedString("Global shortcut to toggle song in the menu bar", tableName: "Settings", comment: "Settings label")),
     ]
 
     /* ****************************************

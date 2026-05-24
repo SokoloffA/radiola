@@ -51,6 +51,12 @@ class StatusBarController: NSObject, NSMenuDelegate {
                                                name: Notification.Name.SettingsChanged,
                                                object: nil)
 
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateTexts),
+                                               name: NSApplication.didChangeScreenParametersNotification,
+                                               object: nil
+        )
+
         menuItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp, .otherMouseUp])
         menuItem.button?.target = self
         menuItem.button?.action = #selector(leftRightMouseAction)
@@ -231,7 +237,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
      * ****************************************/
     private func updateItemText() {
         var str = ""
-        if settings.showSongInStatusBar {
+        if isShowSongInStatusBar() {
             switch player.status {
                 case Player.Status.paused:
                     str = ""
@@ -245,6 +251,18 @@ class StatusBarController: NSObject, NSMenuDelegate {
         }
 
         setItemText(str)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func isShowSongInStatusBar() -> Bool {
+        let cfg = settings.showSongInStatusBar
+        if cfg == .never { return false }
+        if cfg == .always { return true }
+
+        guard let screen = menuItem.button?.window?.screen else { return false }
+        return screen.frame.size.width >= Double(cfg.rawValue)
     }
 
     /* ****************************************
