@@ -72,6 +72,7 @@ class PlayItemView: NSView {
         topConstraint.isActive = true
 
         playView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        playView.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -10).isActive = true
 
         favoriteButton.heightAnchor.constraint(equalToConstant: 25.0).isActive = true
         favoriteButton.widthAnchor.constraint(equalToConstant: 25.0).isActive = true
