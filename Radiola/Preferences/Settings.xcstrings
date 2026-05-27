@@ -627,6 +627,9 @@
         }
       }
     },
+    "Maximum width of the text in the menu bar:" : {
+      "comment" : "Settings label"
+    },
     "Media key handling:" : {
       "comment" : "Settings label",
       "localizations" : {
@@ -800,6 +803,9 @@
           }
         }
       }
+    },
+    "pixels" : {
+      "comment" : "Settings label"
     },
     "Play last station on startup" : {
       "comment" : "Settings control title",

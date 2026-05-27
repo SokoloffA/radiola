@@ -282,6 +282,12 @@ class Settings {
     /* ****************************************
      *
      * ****************************************/
+    @Setting("SongInStatusBarWidth", default: 100)
+    var songInStatusBarWidth: Int
+
+    /* ****************************************
+     *
+     * ****************************************/
     private let proxyKey = "Proxy"
     var proxy: String? {
         get { data.string(forKey: proxyKey) }

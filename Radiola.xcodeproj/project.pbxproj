@@ -40,6 +40,7 @@
 		395001312FAFB4AA0029DF9B /* PlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395001302FAFB4AA0029DF9B /* PlayView.swift */; };
 		395001332FB234B70029DF9B /* PopoverItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395001322FB234B70029DF9B /* PopoverItem.swift */; };
 		39541B34287623F200A2A5CB /* AddStationDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39541B32287623F200A2A5CB /* AddStationDialog.swift */; };
+		395766262FC6E3A8002BC049 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = 395766252FC6E3A8002BC049 /* Label.swift */; };
 		3959DBA92BFCE6A50032A1BA /* RadiolaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBA82BFCE6A50032A1BA /* RadiolaTests.swift */; };
 		3959DBB02BFCE6C30032A1BA /* TestStationMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBAF2BFCE6C30032A1BA /* TestStationMerger.swift */; };
 		3959DBB22BFCE7580032A1BA /* StationsMerger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3959DBB12BFCE7580032A1BA /* StationsMerger.swift */; };
@@ -156,6 +157,7 @@
 		395001302FAFB4AA0029DF9B /* PlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayView.swift; sourceTree = "<group>"; };
 		395001322FB234B70029DF9B /* PopoverItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverItem.swift; sourceTree = "<group>"; };
 		39541B32287623F200A2A5CB /* AddStationDialog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStationDialog.swift; sourceTree = "<group>"; };
+		395766252FC6E3A8002BC049 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		3959DBA62BFCE6A50032A1BA /* RadiolaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RadiolaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3959DBA82BFCE6A50032A1BA /* RadiolaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadiolaTests.swift; sourceTree = "<group>"; };
 		3959DBAF2BFCE6C30032A1BA /* TestStationMerger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestStationMerger.swift; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 			isa = PBXGroup;
 			children = (
 				39C212D82FC4445F00F3E8B9 /* SpinBox.swift */,
+				395766252FC6E3A8002BC049 /* Label.swift */,
 				39C212D62FC33D3B00F3E8B9 /* PreferencesPage.swift */,
 			);
 			path = Controls;
@@ -682,6 +685,7 @@
 				3962D02A2BE0E39F0014BCFB /* History.swift in Sources */,
 				394ABCA92A9CA1F800E2B6E9 /* RadioBrowser.swift in Sources */,
 				3962D0402BE6890E0014BCFB /* NSMenuItem++.swift in Sources */,
+				395766262FC6E3A8002BC049 /* Label.swift in Sources */,
 				39D83EFC2FA6A3C700488437 /* Export.swift in Sources */,
 				39D83EFA2FA60FB400488437 /* Import.swift in Sources */,
 				39DDF84B2F672EB100ED9441 /* RingBuffer.swift in Sources */,

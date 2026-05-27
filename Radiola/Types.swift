@@ -301,4 +301,66 @@ extension String {
 
         return leftPart + separator + rightPart
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func truncatedMiddle(toWidth maxWidth: CGFloat, font: NSFont, separator: String = "…") -> String {
+        let attrs: [NSAttributedString.Key: Any] = [.font: font]
+
+        if (self as NSString).size(withAttributes: attrs).width <= maxWidth {
+            return self
+        }
+
+        let separatorWidth = (separator as NSString).size(withAttributes: attrs).width
+        let availableWidth = maxWidth - separatorWidth
+
+        guard availableWidth > 0 else { return "" }
+
+        var leftIndex = startIndex
+        var rightIndex = endIndex
+
+        var currentLeftWidth: CGFloat = 0
+        var currentRightWidth: CGFloat = 0
+
+        while leftIndex < rightIndex {
+            let nextLeftChar = String(self[leftIndex])
+            let nextLeftWidth = (nextLeftChar as NSString).size(withAttributes: attrs).width
+
+            let prevRightIndex = index(before: rightIndex)
+            let nextRightChar = String(self[prevRightIndex])
+            let nextRightWidth = (nextRightChar as NSString).size(withAttributes: attrs).width
+
+            if currentLeftWidth <= currentRightWidth {
+                if currentLeftWidth + currentRightWidth + nextLeftWidth > availableWidth { break }
+                currentLeftWidth += nextLeftWidth
+                leftIndex = index(after: leftIndex)
+            } else {
+                if currentLeftWidth + currentRightWidth + nextRightWidth > availableWidth { break }
+                currentRightWidth += nextRightWidth
+                rightIndex = prevRightIndex
+            }
+        }
+
+        var leftPart = String(self[startIndex ..< leftIndex])
+        var rightPart = String(self[rightIndex ..< endIndex])
+
+        if let lastSpaceIndex = leftPart.lastIndex(where: { $0.isWhitespace }) {
+            leftPart = String(leftPart[startIndex ..< lastSpaceIndex])
+        }
+
+        if let firstSpaceIndex = rightPart.firstIndex(where: { $0.isWhitespace }) {
+            let start = rightPart.index(after: firstSpaceIndex)
+            rightPart = String(rightPart[start...])
+        }
+
+        leftPart = leftPart.trimmingCharacters(in: .whitespaces)
+        rightPart = rightPart.trimmingCharacters(in: .whitespaces)
+
+        if leftPart.isEmpty && rightPart.isEmpty {
+            return String(self[startIndex ..< leftIndex]) + separator + String(self[rightIndex ..< endIndex])
+        }
+
+        return leftPart + separator + rightPart
+    }
 }

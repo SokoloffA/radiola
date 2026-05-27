@@ -85,6 +85,25 @@ class PreferencesPage: NSViewController {
     /* ****************************************
      *
      * ****************************************/
+    @discardableResult
+    func addRow(leftView: NSView, rightViews: [NSView]) -> NSGridRow {
+        let view = NSStackView(views: rightViews)
+        return addRow(leftView: leftView, rightView: view)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @discardableResult
+    func addRow(title: String, rightViews: [NSView]) -> NSGridRow {
+        let label = Label(text: title)
+        label.alignment = .right
+        return addRow(leftView: label, rightViews: rightViews)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func addSeparator() {
         let separator = Separator()
         let row = gridView.addRow(with: [separator, NSGridCell.emptyContentView])

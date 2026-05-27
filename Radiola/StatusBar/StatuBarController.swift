@@ -37,7 +37,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateTexts),
+                                               selector: #selector(refresh),
                                                name: Notification.Name.PlayerMetadataChanged,
                                                object: nil)
 
@@ -47,12 +47,12 @@ class StatusBarController: NSObject, NSMenuDelegate {
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateTexts),
+                                               selector: #selector(refresh),
                                                name: Notification.Name.SettingsChanged,
                                                object: nil)
 
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(updateTexts),
+                                               selector: #selector(refresh),
                                                name: NSApplication.didChangeScreenParametersNotification,
                                                object: nil
         )
@@ -60,7 +60,8 @@ class StatusBarController: NSObject, NSMenuDelegate {
         menuItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp, .otherMouseUp])
         menuItem.button?.target = self
         menuItem.button?.action = #selector(leftRightMouseAction)
-        menuItem.button?.imagePosition = .imageRight
+        menuItem.button?.imagePosition = .imageTrailing
+
         middleMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.otherMouseDown, .otherMouseUp], handler: middleMouseDown)
         scrollWheelMonitor = NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel], handler: scrollWheel)
 
@@ -181,7 +182,7 @@ class StatusBarController: NSObject, NSMenuDelegate {
      * ****************************************/
     @objc func playerStatusChanged() {
         icon.playerStatus = player.status
-        updateTexts()
+        refresh()
     }
 
     /* ****************************************
@@ -194,7 +195,19 @@ class StatusBarController: NSObject, NSMenuDelegate {
     /* ****************************************
      *
      * ****************************************/
-    @objc func updateTexts() {
+    private func isShowSongInStatusBar() -> Bool {
+        let cfg = settings.showSongInStatusBar
+        if cfg == .never { return false }
+        if cfg == .always { return true }
+
+        guard let screen = menuItem.button?.window?.screen else { return false }
+        return screen.frame.size.width >= Double(cfg.rawValue)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func refresh() {
         updateTooltip()
         updateItemText()
     }
@@ -250,25 +263,6 @@ class StatusBarController: NSObject, NSMenuDelegate {
             }
         }
 
-        setItemText(str)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func isShowSongInStatusBar() -> Bool {
-        let cfg = settings.showSongInStatusBar
-        if cfg == .never { return false }
-        if cfg == .always { return true }
-
-        guard let screen = menuItem.button?.window?.screen else { return false }
-        return screen.frame.size.width >= Double(cfg.rawValue)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func setItemText(_ str: String) {
         guard let button = menuItem.button else { return }
 
         if str.isEmpty {
@@ -277,8 +271,10 @@ class StatusBarController: NSObject, NSMenuDelegate {
             return
         }
 
+        str = str.truncatedMiddle(toWidth: CGFloat(settings.songInStatusBarWidth), font: NSFont.menuBarFont(ofSize: 0))
+
         let label = NSMutableAttributedString()
-        label.append(NSAttributedString(string: str.truncateMiddle(maxLength: 50)))
+        label.append(NSAttributedString(string: str))
         label.append(NSAttributedString(
             string: " ",
             attributes: [.kern: 16] // the distance between the image and the text

@@ -20,6 +20,10 @@ class AppearancePage: PreferencesPage {
     private let notifiactionsLabel = NSLocalizedString("Notifications:", tableName: "Settings", comment: "Settings label")
     private let notificationsWhenPlaybackStarts = Checkbox(title: NSLocalizedString("When playback starts.", tableName: "Settings", comment: "Settings label"))
 
+    private let songInStatusBarWidthLabel = NSLocalizedString("Maximum width of the text in the menu bar:", tableName: "Settings", comment: "Settings label")
+    private let songInStatusBarWidthEdit = SpinBox()
+    private let songInStatusBarUnitLabel = NSLocalizedString("pixels", tableName: "Settings", comment: "Settings label")
+
     /* ****************************************
      *
      * ****************************************/
@@ -35,6 +39,7 @@ class AppearancePage: PreferencesPage {
         addSeparator()
         addRow(rightView: showToolTipCheckBox)
         addRow(title: showSongInStatusBarLabel, rightView: showSongInStatusBarEdit)
+        addRow(title: songInStatusBarWidthLabel, rightViews: [songInStatusBarWidthEdit, Label(text: songInStatusBarUnitLabel)])
         addSeparator()
         addRow(title: notifiactionsLabel, rightView: notificationsWhenPlaybackStarts)
 
@@ -59,6 +64,13 @@ class AppearancePage: PreferencesPage {
         showSongInStatusBarEdit.selectItem(withTag: settings.showSongInStatusBar.rawValue)
         showSongInStatusBarEdit.target = self
         showSongInStatusBarEdit.action = #selector(showSongInStatusBarChanged)
+
+        songInStatusBarWidthEdit.minValue = 100
+        songInStatusBarWidthEdit.maxValue = 500
+        songInStatusBarWidthEdit.increment = 10
+        songInStatusBarWidthEdit.integerValue = settings.songInStatusBarWidth
+        songInStatusBarWidthEdit.target = self
+        songInStatusBarWidthEdit.action = #selector(songInStatusBarWidthChanged)
 
         showCopyToClipboardCheckBox.state = settings.showCopyToClipboardInMenu ? .on : .off
         showCopyToClipboardCheckBox.target = self
@@ -181,6 +193,14 @@ class AppearancePage: PreferencesPage {
      * ****************************************/
     @objc func notificationsWhenPlaybackStartsChanged(_ sender: NSButton) {
         settings.showNotificationWhenPlaybackStarts = sender.state == .on
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func songInStatusBarWidthChanged(_ sender: Any) {
+        settings.songInStatusBarWidth = songInStatusBarWidthEdit.integerValue
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 }
