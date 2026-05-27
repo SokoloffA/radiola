@@ -20,7 +20,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     private let playView = PlayView()
     private let airPlayButton = AirPlayButton()
     private let toolbarVolumeView = VolumeView(showMuteButton: true)
-    private let toolbarLeftMargin = 145.0
+    private let toolbarLeftMargin = 170.0
     private let playToolbarStack = NSStackView()
 
     @IBOutlet var stationsTree: NSOutlineView!
@@ -102,6 +102,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         sideBar.addItem(id: historyListId, title: NSLocalizedString("History", comment: "Sidebar item"), icon: "clock")
 
         sideBar.selectedListId = selectedListId
+        toggleSideBarItem.isBordered = false
         toggleSideBarItem.target = self
         toggleSideBarItem.action = #selector(toggleSideBar)
 
