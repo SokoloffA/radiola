@@ -18,7 +18,10 @@ class VolumeView: NSView {
      * ****************************************/
     init(showMuteButton: Bool) {
         if showMuteButton {
-            muteButton = ImageButton(systemSymbolName: "speaker.slash.fill", accessibilityDescription: "Mute")
+            muteButton = ToggleButton(
+                onSystemSymbolName: "speaker.slash", onAccessibilityDescription: "Mute",
+                offSystemSymbolName: "speaker.slash.fill", offAccessibilityDescription: "Unmute"
+            )
         }
         super.init(frame: NSRect())
 
@@ -30,9 +33,6 @@ class VolumeView: NSView {
         slider.controlSize = .small
 
         if let muteButton = muteButton {
-            muteButton.bezelStyle = .recessed
-            muteButton.isBordered = true
-            muteButton.setButtonType(.pushOnPushOff)
             muteButton.focusRingType = .none
 
             muteButton.translatesAutoresizingMaskIntoConstraints = false
