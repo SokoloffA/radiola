@@ -19,7 +19,7 @@ class UpdatePanel: PreferencesPage {
         title = NSLocalizedString("Updates", tableName: "Settings", comment: "Settings tab title")
 
         addRow(rightView: automaticallyChecksForUpdates)
-        addRow(rightView: checkNowButton)
+        addRow(rightView: checkNowButton).topPadding = 40
 
         checkNowButton.title = NSLocalizedString("Check for Updates now", tableName: "Settings", comment: "Settings button title")
         checkNowButton.target = updater

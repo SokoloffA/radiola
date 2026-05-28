@@ -25,7 +25,7 @@ class PreferencesPage: NSViewController {
         gridView.columnSpacing = 12
 
         gridView.xPlacement = .leading
-        gridView.yPlacement = .top
+        gridView.yPlacement = .center
 
         gridView.column(at: 0).xPlacement = .trailing
         gridView.column(at: 1).xPlacement = .leading
