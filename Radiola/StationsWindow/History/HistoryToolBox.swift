@@ -22,7 +22,7 @@ class HistoryToolBox: NSView {
 
         exportButton.bezelStyle = .smallSquare
         exportButton.setButtonType(.momentaryPushIn)
-        exportButton.title = NSLocalizedString("Export…", comment: "History export button")
+        exportButton.title = NSLocalizedString("Export favorites…", comment: "History export button")
         exportButton.image = NSImage(systemSymbolName: NSImage.Name("arrowshape.down.circle"), accessibilityDescription: exportButton.title)
         exportButton.imagePosition = .imageLeft
         exportButton.image?.isTemplate = true

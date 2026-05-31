@@ -373,6 +373,30 @@
         }
       }
     },
+    "coJ-Xk-HLP.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Export favorite history to a file…\"; ObjectID = \"coJ-Xk-HLP\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Export favorite history to a file…"
+          }
+        }
+      }
+    },
+    "D1P-Gs-YX4.title" : {
+      "comment" : "Class = \"NSMenu\"; title = \"History\"; ObjectID = \"D1P-Gs-YX4\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "History"
+          }
+        }
+      }
+    },
     "DcO-1r-sRD.title" : {
       "comment" : "Class = \"NSMenuItem\"; title = \"New Station\"; ObjectID = \"DcO-1r-sRD\";",
       "extractionState" : "extracted_with_value",
@@ -655,6 +679,18 @@
         }
       }
     },
+    "hTX-qc-i0G.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"Clear hisory…\"; ObjectID = \"hTX-qc-i0G\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Clear hisory…"
+          }
+        }
+      }
+    },
     "hz9-B4-Xy5.title" : {
       "comment" : "Class = \"NSMenu\"; title = \"Services\"; ObjectID = \"hz9-B4-Xy5\";",
       "extractionState" : "extracted_with_value",
@@ -831,6 +867,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "全部置于顶层"
+          }
+        }
+      }
+    },
+    "mGd-HH-J6B.title" : {
+      "comment" : "Class = \"NSMenuItem\"; title = \"History\"; ObjectID = \"mGd-HH-J6B\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "History"
           }
         }
       }

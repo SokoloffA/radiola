@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23727" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23727"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24506"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -115,13 +115,7 @@ CA
                                     <action selector="importStations:" target="-1" id="uN6-Gj-Yws"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Export history to a file…" id="qlB-d3-SsH">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="exportHistory:" target="-1" id="o5D-1N-WKJ"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="agl-e5-wrm"/>
+                            <menuItem isSeparatorItem="YES" id="25r-i0-EME"/>
                             <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
                                     <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
@@ -161,6 +155,32 @@ CA
                             </menuItem>
                             <menuItem title="Pause" tag="2" id="ZaX-dn-1ol">
                                 <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem title="History" id="mGd-HH-J6B">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="History" id="D1P-Gs-YX4">
+                        <items>
+                            <menuItem title="Export favorite history to a file…" id="coJ-Xk-HLP">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportHistoryFavorites:" target="-1" id="mpM-bs-XVg"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Export history to a file…" id="qlB-d3-SsH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="exportHistory:" target="-1" id="o5D-1N-WKJ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="agl-e5-wrm"/>
+                            <menuItem title="Clear hisory…" id="hTX-qc-i0G">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="clearHistory:" target="-1" id="AgG-vU-D3W"/>
+                                </connections>
                             </menuItem>
                         </items>
                     </menu>

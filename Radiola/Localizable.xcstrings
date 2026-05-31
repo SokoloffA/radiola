@@ -888,6 +888,9 @@
         }
       }
     },
+    "Clear History?" : {
+      "comment" : "Dialog message"
+    },
     "codec:" : {
       "comment" : "Internet station row",
       "localizations" : {
@@ -1201,8 +1204,12 @@
         }
       }
     },
+    "Export favorites…" : {
+      "comment" : "History export button"
+    },
     "Export…" : {
       "comment" : "History export button",
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2624,6 +2631,9 @@
           }
         }
       }
+    },
+    "This will permanently delete all history records.\nThis action cannot be undone." : {
+      "comment" : "Dialog message"
     },
     "Title:" : {
       "comment" : "Add group dialog label for TileEdit\nAdd station dialog label for Tile edit",

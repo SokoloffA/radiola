@@ -31,6 +31,13 @@ class HistoryDelegate: NSObject {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(refresh),
+            name: .NSManagedObjectContextDidSave,
+            object: AppState.shared.history.context
+        )
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(refresh),
             name: Notification.Name.PlayerMetadataChanged,
             object: nil)
     }
@@ -72,11 +79,11 @@ class HistoryDelegate: NSObject {
         if isExactMatch {
             // "Matches with" - whole word match (search term appears as a complete word)
             return matchesWholeWord(record.song, searchLower) ||
-                   matchesWholeWord(record.stationTitle, searchLower)
+                matchesWholeWord(record.stationTitle, searchLower)
         } else {
             // "Contains" - substring match
             return record.song.lowercased().contains(searchLower) ||
-                   record.stationTitle.lowercased().contains(searchLower)
+                record.stationTitle.lowercased().contains(searchLower)
         }
     }
 
@@ -97,13 +104,13 @@ class HistoryDelegate: NSObject {
      * ****************************************/
     private func applySort(records: [HistoryRecord]) -> [HistoryRecord] {
         switch sortOrder {
-        case .byRecent:
-            // Newest first (reverse order)
-            return records.reversed()
-        case .byName:
-            return records.sorted { $0.song.localizedCaseInsensitiveCompare($1.song) == .orderedAscending }
-        case .byStation:
-            return records.sorted { $0.stationTitle.localizedCaseInsensitiveCompare($1.stationTitle) == .orderedAscending }
+            case .byRecent:
+                // Newest first (reverse order)
+                return records.reversed()
+            case .byName:
+                return records.sorted { $0.song.localizedCaseInsensitiveCompare($1.song) == .orderedAscending }
+            case .byStation:
+                return records.sorted { $0.stationTitle.localizedCaseInsensitiveCompare($1.stationTitle) == .orderedAscending }
         }
     }
 }

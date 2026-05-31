@@ -20,6 +20,9 @@ class HistoryRecord: NSManagedObject {
 
     var isLast = false
 
+    /* ****************************************
+     *
+     * ****************************************/
     var isFavorite: Bool {
         get {
             return favorite
@@ -30,10 +33,26 @@ class HistoryRecord: NSManagedObject {
         }
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    var isPlaying: Bool {
+        return isLast &&
+            player.isPlaying &&
+            player.stationName == stationTitle &&
+            player.songTitle == song
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     @nonobjc public class func fetchRequest() -> NSFetchRequest<HistoryRecord> {
         return NSFetchRequest<HistoryRecord>(entityName: "HistoryRecord")
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
     func save() {
         guard let context = managedObjectContext else { return }
         saveContext(context: context)
@@ -48,7 +67,7 @@ class History {
     var last: HistoryRecord? { return records.last }
 
     private var persistentContainer: NSPersistentContainer
-    private var context: NSManagedObjectContext
+    var context: NSManagedObjectContext
 
     /* ****************************************
      *
@@ -101,6 +120,25 @@ class History {
     /* ****************************************
      *
      * ****************************************/
+    func clear() {
+        var keep: [HistoryRecord] = []
+        for rec in records {
+            if rec.isFavorite || rec.isPlaying {
+                rec.isLast = false
+                keep.append(rec)
+            } else {
+                context.delete(rec)
+            }
+        }
+
+        keep.last?.isLast = true
+        records = keep
+        save()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func add(station: Station, songTitle: String) {
         let last = records.last
         if last?.song == songTitle && last?.stationURL == station.url {
@@ -138,7 +176,7 @@ class History {
     /* ****************************************
      *
      * ****************************************/
-    func exportToCSV(file: URL) throws {
+    func exportToCSV(file: URL, onlyFavorites: Bool) throws {
         guard
             let stream = OutputStream(url: file, append: false)
         else {
@@ -163,6 +201,10 @@ class History {
             try csv.write(field: "Favorite")
 
             for rec in records {
+                if onlyFavorites && !rec.favorite {
+                    continue
+                }
+
                 csv.beginNewRow()
                 try csv.write(field: formatter.string(from: rec.date))
                 try csv.write(field: rec.song)

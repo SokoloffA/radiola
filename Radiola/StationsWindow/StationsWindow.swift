@@ -398,7 +398,7 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
 
         let toolBox = HistoryToolBox()
         toolBox.exportButton.target = self
-        toolBox.exportButton.action = #selector(exportHistory)
+        toolBox.exportButton.action = #selector(exportHistoryFavorites)
 
         self.toolBox = toolBox
     }
@@ -418,7 +418,21 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
-    @objc private func exportHistory(_ sender: Any?) {
+    @IBAction private func exportHistory(_ sender: Any?) {
+        doExportHistory(onlyFavorites: false)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func exportHistoryFavorites(_ sender: Any?) {
+        doExportHistory(onlyFavorites: true)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func doExportHistory(onlyFavorites: Bool) {
         guard let window = window else { return }
 
         let formatter = DateFormatter()
@@ -430,15 +444,37 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         dialog.allowsOtherFileTypes = true
         dialog.canCreateDirectories = true
         dialog.isExtensionHidden = false
-        dialog.nameFieldStringValue = "RadiolaHistory-\(dateStr)"
+        dialog.nameFieldStringValue = (onlyFavorites ? "RadiolaFavorites" : "RadiolaHistory") + "-\(dateStr)"
 
         dialog.beginSheetModal(for: window) { result in
             guard result == .OK, let url = dialog.url else { return }
             do {
-                try AppState.shared.history.exportToCSV(file: url)
+                try AppState.shared.history.exportToCSV(file: url, onlyFavorites: onlyFavorites)
             } catch {
                 error.show()
             }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @IBAction func clearHistory(_ sender: Any?) {
+        guard let window = window else { return }
+
+        let alert = NSAlert()
+        alert.messageText = NSLocalizedString("Clear History?", comment: "Dialog message")
+        alert.informativeText = NSLocalizedString("This will permanently delete all history records.\nThis action cannot be undone.", comment: "Dialog message")
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "Clear History").hasDestructiveAction = true
+        alert.addButton(withTitle: "Cancel")
+
+        alert.beginSheetModal(for: window) { response in
+            if response != NSApplication.ModalResponse.alertFirstButtonReturn {
+                return
+            }
+
+            AppState.shared.history.clear()
         }
     }
 
