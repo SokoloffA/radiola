@@ -158,7 +158,7 @@ class AppearancePage: PreferencesPage {
                 continue
             }
 
-            let s = NSLocalizedString("if screen width exceeds %dpx", tableName: "Settings", comment: "Settings combobox item")
+            let s = NSLocalizedString("if screen width exceeds %d px", tableName: "Settings", comment: "Settings combobox item")
             showSongInStatusBarEdit.addItem(
                 withTitle: String(format: s, c.rawValue),
                 tag: c.rawValue)

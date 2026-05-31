@@ -889,7 +889,15 @@
       }
     },
     "Clear History?" : {
-      "comment" : "Dialog message"
+      "comment" : "Dialog message",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить историю?"
+          }
+        }
+      }
     },
     "codec:" : {
       "comment" : "Internet station row",
@@ -1205,7 +1213,15 @@
       }
     },
     "Export favorites…" : {
-      "comment" : "History export button"
+      "comment" : "History export button",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспортировать любимые…"
+          }
+        }
+      }
     },
     "Export…" : {
       "comment" : "History export button",
@@ -2426,6 +2442,12 @@
     "The \"%@\" file type is not supported." : {
       "comment" : "Export stations error tile\nImport stations error tile",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il tipo di file \"%@\" non è supportato."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2554,6 +2576,12 @@
     "The stations could not be loaded from \"%@\"." : {
       "comment" : "Import stations error tile",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile caricare le stazioni da \"%@\"."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2565,6 +2593,12 @@
     "The stations could not be saved as \"%@\"." : {
       "comment" : "Export stations error tile",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossibile salvare le stazioni come \"%@\"."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2633,7 +2667,15 @@
       }
     },
     "This will permanently delete all history records.\nThis action cannot be undone." : {
-      "comment" : "Dialog message"
+      "comment" : "Dialog message",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Это действие навсегда удалит все записи истории. \nЕго нельзя отменить."
+          }
+        }
+      }
     },
     "Title:" : {
       "comment" : "Add group dialog label for TileEdit\nAdd station dialog label for Tile edit",

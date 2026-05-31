@@ -191,11 +191,39 @@ def push_lang(lang):
 
     subprocess.run(args)
 
+##################################
+#
+def load_config(config_path="~/.config/tx.conf"):
+    config_path = os.path.expanduser(config_path)
+
+    if not os.path.isfile(config_path):
+        return
+
+    with open(config_path, "r") as f:
+        for line in f:
+            line = line.strip()
+
+            if not line or line.startswith("#"):
+                continue
+
+            if "=" not in line:
+                continue
+
+            key, value = line.split("=", 1)
+
+            key = key.strip()
+            value = value.strip()
+
+            if key not in os.environ:
+                os.environ[key] = value
+
 
 ##################################
 #
 if __name__ == "__main__":
     try:
+        load_config()
+
         shutil.rmtree(TMP_DIR, ignore_errors=True)
         os.makedirs(TMP_DIR, exist_ok=True)
 

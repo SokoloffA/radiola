@@ -382,6 +382,12 @@
             "state" : "new",
             "value" : "Export favorite history to a file…"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Экспортировать историю любимых в файл…"
+          }
         }
       }
     },
@@ -393,6 +399,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "History"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История"
           }
         }
       }
@@ -688,6 +700,12 @@
             "state" : "new",
             "value" : "Clear hisory…"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить историю…"
+          }
         }
       }
     },
@@ -879,6 +897,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "History"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "История"
           }
         }
       }

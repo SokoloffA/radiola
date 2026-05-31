@@ -536,8 +536,16 @@
         }
       }
     },
-    "if screen width exceeds %dpx" : {
-      "comment" : "Settings combobox item"
+    "if screen width exceeds %d px" : {
+      "comment" : "Settings combobox item",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "если ширина экрана превышает %d пикселей"
+          }
+        }
+      }
     },
     "Left mouse button:" : {
       "comment" : "Settings label",
@@ -628,7 +636,15 @@
       }
     },
     "Maximum width of the text in the menu bar:" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Максимальная ширина текста в строке меню:"
+          }
+        }
+      }
     },
     "Media key handling:" : {
       "comment" : "Settings label",
@@ -805,7 +821,15 @@
       }
     },
     "pixels" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "пикселей"
+          }
+        }
+      }
     },
     "Play last station on startup" : {
       "comment" : "Settings control title",
