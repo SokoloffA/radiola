@@ -5,6 +5,21 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 12.0.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Redesigned the drop-down window in the menu bar&lt;/li&gt;
+&lt;li&gt;AirPlay support has been added&lt;/li&gt;
+&lt;li&gt;Added support for importing stations from CSV and M3U files&lt;/li&gt;
+&lt;li&gt;Added support for exporting stations to CSV and M3U files&lt;/li&gt;
+&lt;li&gt;Fixed the appearance in the creepy macOS Tahoe theme&lt;/li&gt;
+&lt;li&gt;Minor improvements in the appearance and behavior of the program&lt;/li&gt;
+&lt;li&gt;The popover window is used instead of the menu&lt;/li&gt;
+&lt;li&gt;Translations updated&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Fri, 05 Jun 2026 13:22:42 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v12.0.0/Radiola-12.0.0.dmg" sparkle:version="12.0.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 11.1.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Fix: When changing the color theme, the search bar did not change its color&lt;/li&gt;
