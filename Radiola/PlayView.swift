@@ -26,7 +26,6 @@ class PlayView: NSControl {
         addSubview(onlyStationLabel)
 
         playButton.contentTintColor = .selectedControlTextColor
-        playButton.setContentHuggingPriority(NSLayoutConstraint.Priority(240) /* .defaultLow */, for: NSLayoutConstraint.Orientation.horizontal)
         playButton.bezelStyle = .regularSquare
         playButton.setButtonType(.momentaryPushIn)
         playButton.imagePosition = .imageLeft
@@ -44,15 +43,11 @@ class PlayView: NSControl {
         songLabel.font = NSFont.boldSystemFont(ofSize: 13)
         songLabel.textColor = .controlTextColor
         songLabel.lineBreakMode = .byTruncatingMiddle
-        songLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        songLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         songLabel.menu = ContextMenu(textField: songLabel)
 
         stationLabel.textColor = .secondaryLabelColor
         stationLabel.font = NSFont.systemFont(ofSize: NSFont.smallSystemFontSize)
         stationLabel.lineBreakMode = .byTruncatingMiddle
-        stationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
-        stationLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         stationLabel.menu = ContextMenu(textField: stationLabel)
 
         onlyStationLabel.textColor = stationLabel.textColor
@@ -61,6 +56,7 @@ class PlayView: NSControl {
         onlyStationLabel.setFontWeight(.semibold)
         onlyStationLabel.lineBreakMode = .byTruncatingTail
         onlyStationLabel.usesSingleLineMode = true
+        onlyStationLabel.menu = ContextMenu(textField: stationLabel)
 
         playButton.translatesAutoresizingMaskIntoConstraints = false
         songLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -79,13 +75,23 @@ class PlayView: NSControl {
             songLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 151),
 
             stationLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 8),
-            stationLabel.trailingAnchor.constraint(equalTo: songLabel.trailingAnchor),
+            stationLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             stationLabel.topAnchor.constraint(equalTo: centerYAnchor, constant: 2),
 
-            onlyStationLabel.leadingAnchor.constraint(equalTo: stationLabel.leadingAnchor),
-            onlyStationLabel.trailingAnchor.constraint(equalTo: stationLabel.trailingAnchor),
+            onlyStationLabel.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 8),
+            onlyStationLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             onlyStationLabel.centerYAnchor.constraint(equalTo: playButton.centerYAnchor),
         ])
+
+        playButton.setContentHuggingPriority(.required, for: .horizontal)
+
+        songLabel.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        stationLabel.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+        onlyStationLabel.setContentHuggingPriority(.fittingSizeCompression, for: .horizontal)
+
+        songLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        stationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+        onlyStationLabel.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         playButton.target = self
         playButton.action = #selector(togglePlay)

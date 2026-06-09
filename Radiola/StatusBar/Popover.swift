@@ -143,11 +143,10 @@ class PopoverView: NSView {
      *
      * ****************************************/
     private func addPlayerView() {
-        let view = PlayItemView()
+        let view = PlayMenuItem()
 
         view.translatesAutoresizingMaskIntoConstraints = false
         view.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        view.widthAnchor.constraint(equalToConstant: 500).isActive = true
         view.topMargin = 5
 
         view.playButton.keyEquivalent = "p"

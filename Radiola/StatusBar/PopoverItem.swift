@@ -44,13 +44,12 @@ class PopoverItem: NSControl, NSValidatedUserInterfaceItem {
         titleLabel.stringValue = title
         titleLabel.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
         titleLabel.textColor = .labelColor
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.lineBreakMode = .byTruncatingTail
+        titleLabel.usesSingleLineMode = true
 
         keyLabel.translatesAutoresizingMaskIntoConstraints = false
-
         keyLabel.font = NSFont.systemFont(ofSize: NSFont.systemFontSize)
         keyLabel.textColor = .secondaryLabelColor
-        keyLabel.translatesAutoresizingMaskIntoConstraints = false
         keyEquivalentDidSet()
 
         addSubview(titleLabel)
@@ -62,6 +61,7 @@ class PopoverItem: NSControl, NSValidatedUserInterfaceItem {
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.centerYAnchor.constraint(equalTo: centerYAnchor),
 
+            keyLabel.leadingAnchor.constraint(greaterThanOrEqualTo: titleLabel.trailingAnchor, constant: 30),
             keyLabel.widthAnchor.constraint(greaterThanOrEqualToConstant: 25),
             keyLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             keyLabel.centerYAnchor.constraint(equalTo: centerYAnchor),

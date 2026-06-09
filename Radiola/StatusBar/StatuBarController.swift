@@ -19,8 +19,6 @@ class StatusBarController: NSObject, NSMenuDelegate {
     private var middleMouseMonitor: Any?
     private var scrollWheelMonitor: Any?
 
-    private var popoverAnchor: NSView?
-
     /* ****************************************
      *
      * ****************************************/
@@ -150,17 +148,11 @@ class StatusBarController: NSObject, NSMenuDelegate {
      * ****************************************/
     func showPopover() {
         guard let button = menuItem.button else { return }
-        if popoverAnchor == nil {
-            let size = button.bounds.height
-            let anchor = NSView(frame: NSRect(x: button.bounds.maxX - size, y: button.bounds.minY, width: size, height: size))
 
-            button.addSubview(anchor)
-            anchor.autoresizingMask = [.minXMargin]
-
-            popoverAnchor = anchor
-        }
         let popover = Popover()
-        popover.show(relativeTo: popoverAnchor!.bounds, of: popoverAnchor!, preferredEdge: .minY)
+
+        let bounds = button.cell?.imageRect(forBounds: button.bounds) ?? .zero
+        popover.show(relativeTo: bounds, of: button, preferredEdge: .minY)
         popover.contentViewController?.view.window?.makeKeyAndOrderFront(nil)
     }
 

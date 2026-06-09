@@ -57,7 +57,7 @@ fileprivate let defaultStations: [Station] = [
     ),
 
     DefaultStation(
-        title: "Radio Caroline 259 Gold [ Happy Rock &amp; Album Station ]",
+        title: "Radio Caroline 259 Gold [ Happy Rock & Album Station ]",
         url: "http://www.rcgoldserver.eu:8253",
         isFavorite: true
     ),

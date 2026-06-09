@@ -7,9 +7,9 @@
 
 import Cocoa
 
-// MARK: - PlayItemView
+// MARK: - PlayMenuItem
 
-class PlayItemView: NSView {
+class PlayMenuItem: NSView {
     private let playView = PlayView()
     private let favoriteButton = FavButton()
     private var topConstraint: NSLayoutConstraint!
