@@ -87,11 +87,16 @@ class StatusBarController: NSObject, NSMenuDelegate {
      *
      * ****************************************/
     private func middleMouseDown(_ event: NSEvent) -> NSEvent? {
+        if event.window != menuItem.button?.window {
+            return event
+        }
+
         menuItem.button?.highlight(event.type == .otherMouseDown)
 
         if event.type == .otherMouseDown {
             processEvent(event)
         }
+
         return event
     }
 
@@ -147,13 +152,16 @@ class StatusBarController: NSObject, NSMenuDelegate {
      *
      * ****************************************/
     func showPopover() {
-        guard let button = menuItem.button else { return }
+        guard
+            let button = menuItem.button,
+            let window = button.window,
+            let cellRect = button.cell?.imageRect(forBounds: button.bounds)
+        else {
+            return
+        }
 
-        let popover = Popover()
-
-        let bounds = button.cell?.imageRect(forBounds: button.bounds) ?? .zero
-        popover.show(relativeTo: bounds, of: button, preferredEdge: .minY)
-        popover.contentViewController?.view.window?.makeKeyAndOrderFront(nil)
+        let rectInScreen = window.convertToScreen(cellRect)
+        Popover.toggle(relativeTo: rectInScreen)
     }
 
     /* ****************************************

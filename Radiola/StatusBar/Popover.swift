@@ -10,19 +10,112 @@ import Foundation
 
 // MARK: - Popover
 
-class Popover: NSPopover {
+class Popover: NSPanel {
+    private static var instance: Popover?
+    private var mouseLocalMonitor: Any?
+    private var mouseGlobalMonitor: Any?
+
     /* ****************************************
      *
      * ****************************************/
-    override init() {
-        super.init()
-        behavior = .transient
-        animates = true
+    static func show(relativeTo positioningRect: NSRect) {
+        if instance == nil {
+            instance = Popover()
+        }
 
-        let view = PopoverView()
-        let viewController = NSViewController()
-        viewController.view = view
-        contentViewController = viewController
+        guard let instance = instance else { return }
+
+        let size = instance.frame.size
+        var xCoord = positioningRect.origin.x + (positioningRect.width / 2) - (size.width / 2)
+        let yCoord = positioningRect.origin.y - size.height - 4
+
+        let currentScreen = NSScreen.screens.first { NSMouseInRect(NSPoint(x: positioningRect.midX, y: positioningRect.midY), $0.frame, false) } ?? NSScreen.main
+
+        if let screen = currentScreen {
+            let maxAllowedX = screen.visibleFrame.maxX
+
+            if xCoord + size.width > screen.visibleFrame.maxX {
+                xCoord = screen.visibleFrame.maxX - size.width
+            }
+        }
+
+        let rect = NSRect(
+            x: xCoord,
+            y: yCoord,
+            width: size.width,
+            height: size.height
+        )
+
+        instance.setFrame(rect, display: true)
+        instance.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func close() {
+        instance?.close()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    static func toggle(relativeTo positioningRect: NSRect) {
+        if instance == nil {
+            Popover.show(relativeTo: positioningRect)
+        } else {
+            Popover.close()
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private init() {
+        let contentView = PopoverView()
+        contentView.layoutSubtreeIfNeeded()
+        let size = contentView.stack.fittingSize
+
+        super.init(
+            contentRect: NSRect(origin: .zero, size: size),
+            styleMask: [.borderless],
+            backing: .buffered,
+            defer: false
+        )
+
+        isFloatingPanel = true
+        level = .statusBar
+        collectionBehavior = [.canJoinAllSpaces, .fullScreenAuxiliary]
+
+        isOpaque = false
+        backgroundColor = .clear
+        hasShadow = true
+
+        self.contentView = contentView
+        contentView.wantsLayer = true
+        contentView.layer?.cornerRadius = 12
+        contentView.layer?.masksToBounds = true
+        self.contentView = contentView
+
+        // minSize = NSSize(width: 250, height: 300)
+        // maxSize = NSSize(width: 800, height: 1280)
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(popupDidResignKey),
+            name: NSWindow.didResignKeyNotification,
+            object: self
+        )
+
+        mouseLocalMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp]) { [weak self] event in
+            if event.window != self { self?.close() }
+            return event
+        }
+
+        mouseGlobalMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp]) { [weak self] event in
+            if event.window != self { self?.close() }
+        }
     }
 
     /* ****************************************
@@ -31,12 +124,47 @@ class Popover: NSPopover {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    deinit {
+        if let monitor = mouseLocalMonitor {
+            NSEvent.removeMonitor(monitor)
+        }
+
+        if let monitor = mouseGlobalMonitor {
+            NSEvent.removeMonitor(monitor)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override func close() {
+        Popover.instance = nil
+        super.close()
+    }
+
+    /* ****************************************
+         *
+     * ****************************************/
+    @objc private func popupDidResignKey(_ notification: Notification) {
+        close()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override var canBecomeKey: Bool {
+        return true
+    }
 }
 
 // MARK: - PopoverView
 
 class PopoverView: NSView {
-    private let stack = NSStackView()
+    fileprivate let stack = VerticalLayout()
 
     /* ****************************************
      *
@@ -52,10 +180,6 @@ class PopoverView: NSView {
         super.init(frame: .zero)
         wantsLayer = true
 
-        stack.orientation = .vertical
-        stack.spacing = 0
-        stack.alignment = .width
-        stack.distribution = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.edgeInsets = NSEdgeInsets(top: 0, left: 16, bottom: 6, right: 16)
         addSubview(stack)

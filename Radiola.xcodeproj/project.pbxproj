@@ -11,6 +11,7 @@
 		390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 390C7296287B237B00E17BAE /* HistoryRow.swift */; };
 		39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */; };
 		391500312EB89EB700060015 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391500302EB89EB700060015 /* NotificationManager.swift */; };
+		391D64252FDBFA1F0023604F /* VerticalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391D64242FDBFA1F0023604F /* VerticalLayout.swift */; };
 		392024AF2A51953600670ABD /* ControlsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024AD2A51953600670ABD /* ControlsPage.swift */; };
 		392024B32A519FF900670ABD /* AppearancePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024B12A519FF900670ABD /* AppearancePage.swift */; };
 		3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3926FF112AD4687A0094D875 /* AddStationDialog.xib */; };
@@ -127,6 +128,7 @@
 		390C7296287B237B00E17BAE /* HistoryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryRow.swift; sourceTree = "<group>"; };
 		39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarIcon.swift; sourceTree = "<group>"; };
 		391500302EB89EB700060015 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		391D64242FDBFA1F0023604F /* VerticalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalLayout.swift; sourceTree = "<group>"; };
 		392024AD2A51953600670ABD /* ControlsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsPage.swift; sourceTree = "<group>"; };
 		392024B12A519FF900670ABD /* AppearancePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePage.swift; sourceTree = "<group>"; };
 		3926FF112AD4687A0094D875 /* AddStationDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
@@ -338,8 +340,8 @@
 				39D27F522BA36B2D00D5857A /* Credits.html */,
 				396704682943AD2700012FFD /* AudioDevice.swift */,
 				390C7293287B213200E17BAE /* Controls.swift */,
-				39D582C52C96C49B00AE3A01 /* VolumeView.swift */,
 				395001302FAFB4AA0029DF9B /* PlayView.swift */,
+				39D582C52C96C49B00AE3A01 /* VolumeView.swift */,
 				394F8A56287394F1005EA7FA /* Notifications.swift */,
 				39D79E622933BEAB00210D94 /* Settings.swift */,
 				39E8DFD62890839500082467 /* Updater.swift */,
@@ -437,6 +439,7 @@
 			isa = PBXGroup;
 			children = (
 				39C212D82FC4445F00F3E8B9 /* SpinBox.swift */,
+				391D64242FDBFA1F0023604F /* VerticalLayout.swift */,
 				39AAA2EF2FC75ADD00C9C0AC /* Buttons.swift */,
 				395766252FC6E3A8002BC049 /* Label.swift */,
 				39C212D62FC33D3B00F3E8B9 /* PreferencesPage.swift */,
@@ -665,6 +668,7 @@
 				39A794102B4B6483000D9875 /* Stations.swift in Sources */,
 				39E042D0293B3ACA00A2167E /* VolumeMenuItem.swift in Sources */,
 				391500312EB89EB700060015 /* NotificationManager.swift in Sources */,
+				391D64252FDBFA1F0023604F /* VerticalLayout.swift in Sources */,
 				39AFBE3F2D18370E008D4087 /* MainMenuDelegate.swift in Sources */,
 				3975DD0E2C7B7BAB005432C7 /* Radiola.xcdatamodeld in Sources */,
 				39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */,
