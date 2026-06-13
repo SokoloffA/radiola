@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Popover
 
-class Popover: NSPanel {
+class Popover: NSPanel, NSWindowDelegate {
     private static var instance: Popover?
     private var mouseLocalMonitor: Any?
     private var mouseGlobalMonitor: Any?
@@ -25,15 +25,14 @@ class Popover: NSPanel {
 
         guard let instance = instance else { return }
 
-        let size = instance.frame.size
+        var size = instance.frame.size
+        size.width = settings.popoveWidth ?? size.width
         var xCoord = positioningRect.origin.x + (positioningRect.width / 2) - (size.width / 2)
         let yCoord = positioningRect.origin.y - size.height - 4
 
         let currentScreen = NSScreen.screens.first { NSMouseInRect(NSPoint(x: positioningRect.midX, y: positioningRect.midY), $0.frame, false) } ?? NSScreen.main
 
         if let screen = currentScreen {
-            let maxAllowedX = screen.visibleFrame.maxX
-
             if xCoord + size.width > screen.visibleFrame.maxX {
                 xCoord = screen.visibleFrame.maxX - size.width
             }
@@ -79,10 +78,12 @@ class Popover: NSPanel {
 
         super.init(
             contentRect: NSRect(origin: .zero, size: size),
-            styleMask: [.borderless],
+            styleMask: [.borderless, .resizable],
             backing: .buffered,
             defer: false
         )
+
+        delegate = self
 
         isFloatingPanel = true
         level = .statusBar
@@ -142,6 +143,7 @@ class Popover: NSPanel {
      *
      * ****************************************/
     override func close() {
+        settings.popoveWidth = frame.width
         Popover.instance = nil
         super.close()
     }
@@ -158,6 +160,23 @@ class Popover: NSPanel {
      * ****************************************/
     override var canBecomeKey: Bool {
         return true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+        let delta = frameSize.width - frame.width
+        let newOriginX = frame.origin.x - delta / 2
+
+        DispatchQueue.main.async {
+            var newFrame = self.frame
+            newFrame.origin.x = newOriginX
+            newFrame.size = frameSize
+            super.setFrame(newFrame, display: true)
+        }
+
+        return frameSize
     }
 }
 

@@ -79,9 +79,9 @@ class PlayMenuItem: NSView {
         favoriteButton.centerYAnchor.constraint(equalTo: playView.songLabel.centerYAnchor, constant: 0).isActive = true
         favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
 
-        playView.stationLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 500).isActive = true
-        playView.onlyStationLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 500).isActive = true
-        playView.songLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 500).isActive = true
+        playView.stationLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 800).isActive = true
+        playView.onlyStationLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 800).isActive = true
+        playView.songLabel.widthAnchor.constraint(lessThanOrEqualToConstant: 800).isActive = true
     }
 
     /* ****************************************

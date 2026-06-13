@@ -302,6 +302,13 @@ class Settings {
         get { data.string(forKey: lastExportTypeKey) }
         set { data.set(newValue, forKey: lastExportTypeKey) }
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @Setting("PopoveWidth", default: nil)
+    var popoveWidth: CGFloat?
+
 }
 
 let settings = Settings()

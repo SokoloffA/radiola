@@ -61,8 +61,8 @@ class SpinBox: NSTextField {
         addSubview(stepper)
         stepper.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stepper.topAnchor.constraint(equalTo: topAnchor),
-            stepper.bottomAnchor.constraint(equalTo: bottomAnchor),
+            stepper.heightAnchor.constraint(equalTo: heightAnchor, constant: -8),
+            stepper.centerYAnchor.constraint(equalTo: centerYAnchor),
             stepper.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
 
