@@ -26,7 +26,7 @@ class Popover: NSPanel, NSWindowDelegate {
         guard let instance = instance else { return }
 
         var size = instance.frame.size
-        size.width = settings.popoveWidth ?? size.width
+        size.width = max(settings.popoveWidth, size.width)
         var xCoord = positioningRect.origin.x + (positioningRect.width / 2) - (size.width / 2)
         let yCoord = positioningRect.origin.y - size.height - 4
 

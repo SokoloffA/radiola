@@ -306,8 +306,8 @@ class Settings {
     /* ****************************************
      *
      * ****************************************/
-    @Setting("PopoveWidth", default: nil)
-    var popoveWidth: CGFloat?
+    @Setting("PopoveWidth", default: 350)
+    var popoveWidth: CGFloat
 
 }
 
