@@ -19,12 +19,18 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
     var qualityText = Label()
     var voteText = Label()
     var actionButton = ImageButton()
+    var favoriteButton = ImageButton()
     let menuButton = StationMenuButton()
     let separator = Separator()
 
     private let actionButtonIcons = [
         false: NSImage(systemSymbolName: NSImage.Name("music.house"), accessibilityDescription: "")?.tint(color: .lightGray),
         true: NSImage(systemSymbolName: NSImage.Name("music.house.fill"), accessibilityDescription: "")?.tint(color: .systemYellow),
+    ]
+
+    private let favoriteIcons = [
+        false: NSImage(systemSymbolName: NSImage.Name("star"), accessibilityDescription: "Favorite")?.tint(color: .lightGray),
+        true: NSImage(systemSymbolName: NSImage.Name("star.fill"), accessibilityDescription: "Favorite")?.tint(color: .systemYellow),
     ]
 
     let normalFont = NSFont.systemFont(ofSize: 11)
@@ -41,6 +47,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         super.init(frame: NSRect())
         addSubview(nameEdit)
         addSubview(actionButton)
+        addSubview(favoriteButton)
         addSubview(menuButton)
         addSubview(urlEdit)
         addSubview(separator)
@@ -67,6 +74,10 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         actionButton.target = self
         actionButton.action = #selector(actionButtonClicked)
 
+        favoriteButton.target = self
+        favoriteButton.action = #selector(favClicked(sender:))
+        favoriteButton.setButtonType(.toggle)
+
         qualityText.attributedStringValue = qualityInfo()
         qualityText.textColor = .secondaryLabelColor
 
@@ -74,6 +85,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         voteText.textColor = .secondaryLabelColor
 
         actionButton.translatesAutoresizingMaskIntoConstraints = false
+        favoriteButton.translatesAutoresizingMaskIntoConstraints = false
         nameEdit.translatesAutoresizingMaskIntoConstraints = false
         urlEdit.translatesAutoresizingMaskIntoConstraints = false
         qualityText.translatesAutoresizingMaskIntoConstraints = false
@@ -82,10 +94,15 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         NSLayoutConstraint.activate([
             actionButton.widthAnchor.constraint(equalToConstant: 16),
+            favoriteButton.widthAnchor.constraint(equalTo: actionButton.widthAnchor),
+            favoriteButton.heightAnchor.constraint(equalTo: actionButton.heightAnchor),
+            favoriteButton.centerYAnchor.constraint(equalTo: actionButton.centerYAnchor),
             nameEdit.leadingAnchor.constraint(equalTo: leadingAnchor),
             nameEdit.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -8),
 
-            menuButton.leadingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 8),
+            favoriteButton.leadingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 8),
+
+            menuButton.leadingAnchor.constraint(equalTo: favoriteButton.trailingAnchor, constant: 8),
             menuButton.trailingAnchor.constraint(equalTo: trailingAnchor),
             menuButton.widthAnchor.constraint(equalTo: actionButton.widthAnchor),
             menuButton.heightAnchor.constraint(equalTo: actionButton.heightAnchor),
@@ -107,7 +124,7 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
 
         separator.alignBottom(of: self)
 
-        refreshActionButton()
+        refreshButtons()
     }
 
     /* ****************************************
@@ -121,15 +138,27 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
      *
      * ****************************************/
     @objc private func actionButtonClicked(sender: NSButton) {
-        guard let list = AppState.shared.localStations.first else { return }
-        let inLocal = list.firstStation(byURL: station.url) != nil
-
-        if !inLocal {
-            let s = list.createStation(title: station.title, url: station.url)
-            list.append(s)
+        if AppState.shared.localStation(byURL: station.url) == nil,
+           let (_, list) = createLocalStation() {
             list.trySave()
-            refreshActionButton()
         }
+
+        refreshButtons()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func favClicked(sender: NSButton) {
+        if let (localStation, list) = AppState.shared.localStationAndList(byURL: station.url) {
+            localStation.isFavorite = !localStation.isFavorite
+            list.trySave()
+        } else if let (localStation, list) = createLocalStation() {
+            localStation.isFavorite = true
+            list.trySave()
+        }
+
+        refreshButtons()
     }
 
     /* ****************************************
@@ -139,6 +168,39 @@ class InternetStationRow: NSView, NSTextFieldDelegate {
         let inLocal = AppState.shared.localStation(byURL: station.url) != nil
         actionButton.image = actionButtonIcons[inLocal]!
         actionButton.toolTip = inLocal ? "" : NSLocalizedString("Add the station to my stations list", comment: "Button tooltip")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func refreshFavoriteButton() {
+        let isFavorite = AppState.shared.localStation(byURL: station.url)?.isFavorite ?? false
+
+        favoriteButton.image = favoriteIcons[isFavorite]!
+        favoriteButton.state = isFavorite ? .on : .off
+        favoriteButton.toolTip = isFavorite ?
+            NSLocalizedString("Unmark station as favorite", comment: "Station favorite star icon tooltip") :
+            NSLocalizedString("Mark station as favorite", comment: "Station favorite star icon tooltip")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func refreshButtons() {
+        refreshActionButton()
+        refreshFavoriteButton()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func createLocalStation() -> (station: Station, list: any StationList)? {
+        guard let list = AppState.shared.localStations.first else { return nil }
+
+        let localStation = list.createStation(title: station.title, url: station.url)
+        list.append(localStation)
+
+        return (localStation, list)
     }
 
     /* ****************************************
