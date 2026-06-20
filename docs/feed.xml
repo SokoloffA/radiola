@@ -5,6 +5,17 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 12.1.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Redesigned the drop-down window in the menu bar&lt;/li&gt;
+&lt;li&gt;You can change the width of the drop-down window in the menu bar&lt;/li&gt;
+&lt;li&gt;Minor improvements in the appearance and behavior of the program&lt;/li&gt;
+&lt;li&gt;Translations updated&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 20 Jun 2026 19:10:50 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v12.1.0/Radiola-12.1.0.dmg" sparkle:version="12.1.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 12.0.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Redesigned the drop-down window in the menu bar&lt;/li&gt;
