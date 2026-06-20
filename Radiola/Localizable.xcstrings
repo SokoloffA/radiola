@@ -40,6 +40,30 @@
             }
           }
         },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld stations will be added."
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld station will be added."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld stations seront ajoutées."
+                }
+              }
+            }
+          }
+        },
         "it" : {
           "variations" : {
             "plural" : {
@@ -147,6 +171,30 @@
             }
           }
         },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld stations will be updated."
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld station will be updated."
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "%lld stations seront mises à jour."
+                }
+              }
+            }
+          }
+        },
         "it" : {
           "variations" : {
             "plural" : {
@@ -224,6 +272,12 @@
             "value" : "Gruppe hinzufügen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter un groupe"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -251,6 +305,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gruppe zu „%@“ hinzufügen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter une groupe à \"%@\""
           }
         },
         "it" : {
@@ -282,6 +342,12 @@
             "value" : "Sender hinzufügen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter une station"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -309,6 +375,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sender zu „%@“ hinzufügen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter une station à \"%@\""
           }
         },
         "it" : {
@@ -340,6 +412,12 @@
             "value" : "Den Sender zu meiner Senderliste hinzufügen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter la station à ma liste"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -367,6 +445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wirklich fortfahren?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Êtes-vous sûr de vouloir continuer ?"
           }
         },
         "it" : {
@@ -405,6 +489,30 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Möchten Sie wirklich %lld Sender und Gruppen und alle untergeordneten Elemente entfernen?"
+                }
+              }
+            }
+          }
+        },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations and groups and all their children?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : " Êtes-vous sûr de vouloir supprimer %lld stations et groupes et tous leurs suivants ?"
                 }
               }
             }
@@ -499,6 +607,30 @@
             }
           }
         },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove %lld stations?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Êtes-vous sûr de vouloir supprimer %lld stations ?"
+                }
+              }
+            }
+          }
+        },
         "it" : {
           "variations" : {
             "plural" : {
@@ -588,6 +720,30 @@
             }
           }
         },
+        "fr" : {
+          "variations" : {
+            "plural" : {
+              "many" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                }
+              },
+              "one" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Are you sure you want to remove the %lld groups and all their children?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "translated",
+                  "value" : "Êtes-vous sûr de vouloir supprimer %lld stations et groupes et tous leurs suivants ?"
+                }
+              }
+            }
+          }
+        },
         "it" : {
           "variations" : {
             "plural" : {
@@ -665,6 +821,12 @@
             "value" : "Soll die Gruppe  „%@“ sowie alle untergeordneten Elemente wirklich entfernt werden?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Êtes-vous sûr de vouloir supprimer le groupe \"%@\", et tous ses suivants ?"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -692,6 +854,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Soll die Gruppe „%@“ wirklich entfernt werden?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Êtes-vous sûr de vouloir supprimer le groupe \"%@\"?"
           }
         },
         "it" : {
@@ -723,6 +891,12 @@
             "value" : "Soll der Sender „%@“ wirklich entfernt werden?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Êtes-vous sûr de vouloir supprimer la station \"%@«  ?"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -750,6 +924,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nach Land"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par pays"
           }
         },
         "it" : {
@@ -781,6 +961,12 @@
             "value" : "Nach Name"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par nom"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -808,6 +994,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nach Tag"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Par tag"
           }
         },
         "it" : {
@@ -839,6 +1031,12 @@
             "value" : "Abbrechen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -868,6 +1066,12 @@
             "value" : "Der Sender kann nicht abgespielt werden. Ihre Internetverbindung ist eventuell zu langsam oder instabil."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible d’écouter la station. Votre connexion internet est peut-être trop lente ou instable."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -891,6 +1095,18 @@
     "Clear History?" : {
       "comment" : "Dialog message",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effacer l’historique ?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancellare la Cronologia?"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -906,6 +1122,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Codec:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "codec : "
           }
         },
         "ru" : {
@@ -929,6 +1151,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verbinden…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connexion…"
           }
         },
         "it" : {
@@ -960,6 +1188,12 @@
             "value" : "Verbindungszeit ist abgelaufen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le délai de connexion a expiré"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -987,6 +1221,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "enthält"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "contient"
           }
         },
         "it" : {
@@ -1018,6 +1258,12 @@
             "value" : "Gruppenname in die Zwischenablage kopieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier le titre du groupe dans le presse-papiers"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1045,6 +1291,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Songtitel und Interpret kopieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier le titre et l’artiste de la chanson"
           }
         },
         "it" : {
@@ -1076,6 +1328,12 @@
             "value" : "Songtitel in die Zwischenablage kopieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier le titre de la chanson dans le presse-papiers"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1103,6 +1361,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sendertitel in die Zwischenablage kopieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier le titre de la station dans le presse-papiers"
           }
         },
         "it" : {
@@ -1134,6 +1398,12 @@
             "value" : "Sender-URL in die Zwischenablage kopieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier l’URL de la station dans le presse-papiers"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1161,6 +1431,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In die Zwischenablage kopieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier dans le presse-papiers"
           }
         },
         "it" : {
@@ -1192,6 +1468,12 @@
             "value" : "Lautstärke verringern"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baisser le volume"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1215,6 +1497,18 @@
     "Export favorites…" : {
       "comment" : "History export button",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exporter les favoris…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esporta preferiti..."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1231,6 +1525,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Exportieren…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exporter…"
           }
         },
         "it" : {
@@ -1262,6 +1562,12 @@
             "value" : "Lieblingssender"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stations favorites"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1289,6 +1595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ausschließlich Favoriten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "favoris seulement"
           }
         },
         "it" : {
@@ -1320,6 +1632,12 @@
             "value" : "Gruppenname"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom du groupe"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1347,6 +1665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verlauf"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique"
           }
         },
         "it" : {
@@ -1378,6 +1702,12 @@
             "value" : "Verlauf…"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique…"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1405,6 +1735,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lautstärke erhöhen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Monter le volume"
           }
         },
         "it" : {
@@ -1436,6 +1772,12 @@
             "value" : "Interner Fehler.\nFür weitere Informationen Protokolle prüfen."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur interne..\nVoir les logs pour plus d'information."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1465,6 +1807,12 @@
             "value" : "vor weniger als einer Minute"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "il y a moins d’une minute "
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1492,6 +1840,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Laden…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chargement…"
           }
         },
         "it" : {
@@ -1524,6 +1878,12 @@
             "value" : "Lokale Sender"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stations locales"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1551,6 +1911,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anscheinend ist „%@“ keine gültige URL."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il semble que \"%@\"  n'est pas une URL valide."
           }
         },
         "it" : {
@@ -1582,6 +1948,12 @@
             "value" : "Aktuellen Song als Favorit markieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marquer la chanson courante comme favorite"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1609,6 +1981,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Markiere Song als Favoriten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marquer la chanson comme favorite"
           }
         },
         "it" : {
@@ -1640,6 +2018,12 @@
             "value" : "Markiere Sender als Favoriten"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marquer la station comme favorite"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1667,6 +2051,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "stimmt überein mit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "colle avec"
           }
         },
         "it" : {
@@ -1698,6 +2088,12 @@
             "value" : "Stumm"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silence"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1725,6 +2121,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Meine Listen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mes listes"
           }
         },
         "it" : {
@@ -1756,6 +2158,12 @@
             "value" : "meine Sortierung"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mon rangement"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1783,6 +2191,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Meine Sender"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mes stations"
           }
         },
         "it" : {
@@ -1815,6 +2229,12 @@
             "value" : "Noch keine Einträge"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pas encore d'enregistrement"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1842,6 +2262,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keine Ergebnisse"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun résultat"
           }
         },
         "it" : {
@@ -1873,6 +2299,12 @@
             "value" : "keine Votes"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aucun votes"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1902,6 +2334,12 @@
             "value" : "Aktuell läuft"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maintenant à l'écoute"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1929,6 +2367,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Radiola öffnen…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir Radiola…"
           }
         },
         "it" : {
@@ -1989,6 +2433,12 @@
             "value" : "Abspielen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jouer"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2018,6 +2468,12 @@
             "value" : "gerade läuft"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "à l'écoute"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2045,6 +2501,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beenden"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter"
           }
         },
         "it" : {
@@ -2128,6 +2590,12 @@
             "value" : "Sender entfernen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer la station"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2155,6 +2623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einstellungen…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglages…"
           }
         },
         "it" : {
@@ -2187,6 +2661,12 @@
             "value" : "Nur Lieblingssongs anzeigen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher seulement vos chansons favorites"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2214,6 +2694,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entschuldigung, „%@“ konnte nicht nicht abgespielt werden."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Désolé, je ne peux pas jouer \"%@\"."
           }
         },
         "it" : {
@@ -2245,6 +2731,12 @@
             "value" : "nach Bitrate sortieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trier par bitrate"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2272,6 +2764,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "nach Land sortieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trier par pays"
           }
         },
         "it" : {
@@ -2303,6 +2801,12 @@
             "value" : "Sortieren nach: Name"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trier par nom"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2330,6 +2834,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sortieren nach: Neueste"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trier par récent"
           }
         },
         "it" : {
@@ -2361,6 +2871,12 @@
             "value" : "Sortieren nach: Station"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trier par station"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2388,6 +2904,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "nach Votes sortieren"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "trier par votes"
           }
         },
         "it" : {
@@ -2419,6 +2941,12 @@
             "value" : "Sendername"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom de la station"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2442,6 +2970,12 @@
     "The \"%@\" file type is not supported." : {
       "comment" : "Export stations error tile\nImport stations error tile",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le fichier du type  \"%@\"  n’est pas supporté."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2464,6 +2998,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Der aktuelle Song wurde als Favorit markiert"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La chanson courante a été marquée comme favorite"
           }
         },
         "it" : {
@@ -2495,6 +3035,12 @@
             "value" : "Der aktuelle Song wurde als Favorit markiert."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La chanson courante a été marquée comme favorite."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2522,6 +3068,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die Datei enthält keine neuen oder geänderten Radiosender."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le fichier ne contient aucune station de radio nouvelle ou modifiée."
           }
         },
         "it" : {
@@ -2553,6 +3105,12 @@
             "value" : "Der Sender ist vorübergehend nicht verfügbar. Überprüfen Sie die URL oder versuchen Sie es später erneut."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La station est temporairement indisponible. Vérifier l'URL ou essayer plus tard"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2576,6 +3134,12 @@
     "The stations could not be loaded from \"%@\"." : {
       "comment" : "Import stations error tile",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les stations ne peuvent être chargées depuis \"%@\"."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2593,6 +3157,12 @@
     "The stations could not be saved as \"%@\"." : {
       "comment" : "Export stations error tile",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les stations ne peuvent enregistrées comme \"%@\"."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2615,6 +3185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die URL enthält kein oder nicht unterstütztes Audio."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'URL ne contient pas ou contient de l’audio non supportée."
           }
         },
         "it" : {
@@ -2646,6 +3222,12 @@
             "value" : "Dieser Vorgang kann nicht rückgängig gemacht werden."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cette opération ne peut être annulée."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2669,6 +3251,18 @@
     "This will permanently delete all history records.\nThis action cannot be undone." : {
       "comment" : "Dialog message",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cela effacera de façon permanente tout historique des enregistrements.\nCette action ne peut être annulée."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo cancellerà permanentemente tutta la cronologia.\nQuesta operazione non può essere annullata."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2684,6 +3278,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Titel:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titre :"
           }
         },
         "it" : {
@@ -2715,6 +3315,12 @@
             "value" : "Um eine Gruppe hinzuzufügen, folgende Informationen eingeben:"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour ajouter un groupe, remplir l’information suivante :"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2742,6 +3348,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Um einen Sender hinzuzufügen, folgende Informationen eingeben:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pour ajouter une station, remplir l’information suivante :"
           }
         },
         "it" : {
@@ -2773,6 +3385,12 @@
             "value" : "Favoriten umschalten"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer/Désactiver les favoris"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2800,6 +3418,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entferne Song von Favoriten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Décocher une chanson favorite"
           }
         },
         "it" : {
@@ -2831,6 +3455,12 @@
             "value" : "Entferne Sender von Favoriten"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Décocher une chanson favorite"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2860,6 +3490,12 @@
             "value" : "Stummschaltung aufheben"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rétablir le son"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2883,6 +3519,12 @@
     "URL:" : {
       "comment" : "Add station dialog label for URL edit",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL :"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2930,6 +3572,12 @@
             "value" : "Votes:"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "votes :"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2959,6 +3607,12 @@
             "value" : "Ja"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oui"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2986,6 +3640,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Möglicherweise wurde dies bereits zuvor exportiert."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous l’avez peut-être déjà exporté."
           }
         },
         "it" : {

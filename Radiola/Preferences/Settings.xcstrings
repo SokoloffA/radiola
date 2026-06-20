@@ -10,6 +10,12 @@
             "value" : "Erweitert"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avancé"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -37,6 +43,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "immer"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "toujours"
           }
         },
         "it" : {
@@ -68,6 +80,12 @@
             "value" : "Aussehen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apparence"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -97,6 +115,12 @@
             "value" : "als einfache Liste"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "en tant que liste simple"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -124,6 +148,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "als Untermenü"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "en tant que sous-menu"
           }
         },
         "it" : {
@@ -172,6 +202,12 @@
             "value" : "Automatisch nach Updates suchen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérifier automatiquement les mises à jour"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -201,6 +237,12 @@
             "value" : "Lautstärke ändern"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "change le volume"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -228,6 +270,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Jetzt nach Updates suchen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérifier maintenant les mises à jour"
           }
         },
         "it" : {
@@ -260,6 +308,12 @@
             "value" : "Online und lokale Sender"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cloud et stations locales"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -288,6 +342,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nur Online-Sender (empfohlen)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "stations du cloud seulement (recommandé)"
           }
         },
         "it" : {
@@ -319,6 +379,12 @@
             "value" : "Kontrollelemente"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrôles"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -346,6 +412,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gerät:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appareil :"
           }
         },
         "it" : {
@@ -377,6 +449,12 @@
             "value" : "nicht benutzen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ne rien faire"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -404,6 +482,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Globaler Kurzbefehl zum Anzeigen des Verlaufs"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raccourci global pour afficher l'historique"
           }
         },
         "it" : {
@@ -435,6 +519,12 @@
             "value" : "Globaler Kurzbefehl zum Anzeigen des Menüs"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raccourci global pour afficher le menu"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -462,6 +552,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Globaler Kurzbefehl zum Anzeigen der Sender"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raccourci global pour afficher les stations"
           }
         },
         "it" : {
@@ -493,6 +589,12 @@
             "value" : "Globaler Kurzbefehl zum Umschalten von Wiedergabe und Pause"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raccourci global pour afficher écoute/ pause"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -522,6 +624,12 @@
             "value" : "HTTP(S)-Proxy:"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HTTP(S) proxy :"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -539,6 +647,18 @@
     "if screen width exceeds %d px" : {
       "comment" : "Settings combobox item",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "si la largeur d’écran dépasse %d px"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se la larghezza dello schermo supera %d px"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -554,6 +674,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Linke Maustaste:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "bouton gauche de la souris :"
           }
         },
         "it" : {
@@ -586,6 +712,12 @@
             "value" : "nur lokale Sender"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "stations locales seulement"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -615,6 +747,12 @@
             "value" : "Aktuellen Song als Favorit markieren"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "marquer la chanson courante comme favorite"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -638,6 +776,12 @@
     "Maximum width of the text in the menu bar:" : {
       "comment" : "Settings label",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Larghezza massima del testo nella barra dei menu:"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -653,6 +797,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benutzung der Medien-Tasten:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Comportement de la clé médiane :"
           }
         },
         "it" : {
@@ -684,6 +834,12 @@
             "value" : "Mittlere Maustaste:"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "bouton médian de la souris :"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -711,6 +867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mausrad:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Molette de la souris :"
           }
         },
         "it" : {
@@ -742,6 +904,12 @@
             "value" : "niemals"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "jamais"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -769,6 +937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benachrichtigungen:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notifications :"
           }
         },
         "it" : {
@@ -823,6 +997,12 @@
     "pixels" : {
       "comment" : "Settings label",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pixel"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -838,6 +1018,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "den letzten Sender abspielen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Écouter la dernière station au démarrage"
           }
         },
         "it" : {
@@ -867,6 +1053,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kurzbefehl ausführen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Presser le raccourci"
           }
         },
         "it" : {
@@ -927,6 +1119,12 @@
             "value" : "Kurzbefehl aufzeichnen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer le raccourci"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -954,6 +1152,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rechte Maustaste"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "bouton droit de la souris :"
           }
         },
         "it" : {
@@ -1014,6 +1218,12 @@
             "value" : "Gruppen in Favoriten anzeigen:"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher les groupes dans les favoris :"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1041,6 +1251,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Songtitel in der Menüleiste anzeigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher le titre de la chanson dans la barre de menu"
           }
         },
         "it" : {
@@ -1071,6 +1287,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Senderliste zeigen:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher les listes des stations :"
           }
         },
         "it" : {
@@ -1247,6 +1469,12 @@
             "value" : "Popup-Menü anzeigen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "afficher le menu popup"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1274,6 +1502,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beim Starten:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrage :"
           }
         },
         "it" : {
@@ -1392,6 +1626,12 @@
             "value" : "Aktualisierungen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mises à jour"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1450,6 +1690,12 @@
             "value" : "wenn das Hauptfenster geöffnet ist"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "quand la fenêtre principale est ouverte"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1477,6 +1723,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "mit Rändern"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "avec marges"
           }
         },
         "it" : {

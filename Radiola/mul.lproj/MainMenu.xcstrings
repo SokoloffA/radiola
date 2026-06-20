@@ -35,6 +35,12 @@
             "value" : "Add Station to my stations"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter la station aux miennes"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -69,6 +75,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Quit Radiola"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitter Radiola"
           }
         },
         "it" : {
@@ -107,6 +119,12 @@
             "value" : "About Radiola"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "À propos de Radiola"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -141,6 +159,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Edit"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Édition"
           }
         },
         "it" : {
@@ -179,6 +203,12 @@
             "value" : "Select All"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout sélectionner"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -213,6 +243,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Window"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenêtre"
           }
         },
         "it" : {
@@ -251,6 +287,12 @@
             "value" : "Control"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrôle"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -285,6 +327,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Main Menu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menu principal"
           }
         },
         "it" : {
@@ -323,6 +371,12 @@
             "value" : "File"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fichier"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -351,6 +405,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Settings…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Réglages…"
           }
         },
         "it" : {
@@ -383,6 +443,18 @@
             "value" : "Export favorite history to a file…"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exporter l’historique des favoris dans un fichier…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esporta cronologia su file..."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -399,6 +471,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "History"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cronologia"
           }
         },
         "ru" : {
@@ -423,6 +507,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "New Station"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelle station"
           }
         },
         "it" : {
@@ -461,6 +551,12 @@
             "value" : "File"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fichier"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -489,6 +585,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Close"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fermer"
           }
         },
         "it" : {
@@ -563,6 +665,12 @@
             "value" : "Help"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aide"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -597,6 +705,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Radiola Help"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aide de Radiola"
           }
         },
         "it" : {
@@ -635,6 +749,12 @@
             "value" : "Copy"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -671,6 +791,12 @@
             "value" : "Show logs"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher les logs"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -699,6 +825,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Clear hisory…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effacer l’historique…"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancella cronologia..."
           }
         },
         "ru" : {
@@ -761,6 +899,12 @@
             "value" : "Edit"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Édition"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -795,6 +939,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Paste"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coller"
           }
         },
         "it" : {
@@ -833,6 +983,12 @@
             "value" : "Show All"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout afficher"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -869,6 +1025,12 @@
             "value" : "Bring All to Front"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout ramener au premier plan"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -897,6 +1059,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "History"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Historique"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cronologia"
           }
         },
         "ru" : {
@@ -959,6 +1133,12 @@
             "value" : "Hide Radiola"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer Radiola"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -993,6 +1173,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Control"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contrôle"
           }
         },
         "it" : {
@@ -1031,6 +1217,12 @@
             "value" : "Minimize"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimiser"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1065,6 +1257,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Play"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jouer"
           }
         },
         "it" : {
@@ -1103,6 +1301,12 @@
             "value" : "Export history to a file…"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exporter l’historique vers un fichier"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1131,6 +1335,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Zoom"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoomer"
           }
         },
         "it" : {
@@ -1169,6 +1379,12 @@
             "value" : "Delete Station or Group"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer une station ou un groupe"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1203,6 +1419,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Window"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fenêtre"
           }
         },
         "it" : {
@@ -1241,6 +1463,12 @@
             "value" : "Show stations window"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher la fenêtre des stations"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1275,6 +1503,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Import stations from a file…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer les stations depuis un fichier"
           }
         },
         "it" : {
@@ -1331,6 +1565,12 @@
             "value" : "Hide Others"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masquer les autres"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1365,6 +1605,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Show history window"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher la fenêtre de l'historique"
           }
         },
         "it" : {
@@ -1403,6 +1649,12 @@
             "value" : "Export stations to a file…"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exporter les stations vers un fichier"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1437,6 +1689,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "New Station Group"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouveau groupe de stations"
           }
         },
         "it" : {
@@ -1475,6 +1733,12 @@
             "value" : "Help"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aide"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1509,6 +1773,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Check For Updates…"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérifier les mises à jour…"
           }
         },
         "it" : {
