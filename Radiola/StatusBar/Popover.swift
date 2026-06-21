@@ -270,6 +270,8 @@ class PopoverView: NSView {
      * ****************************************/
     override func updateLayer() {
         layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+        topArrow.layer?.backgroundColor = layer?.backgroundColor
+        bottomArrow.layer?.backgroundColor = layer?.backgroundColor
     }
 
     /* ****************************************
@@ -674,7 +676,6 @@ fileprivate class Arrow: NSImageView {
         imageScaling = .scaleProportionallyUpOrDown
         contentTintColor = .secondaryLabelColor
         wantsLayer = true
-        layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
         isHidden = true
     }
 
