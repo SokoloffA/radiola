@@ -440,6 +440,9 @@ class PopoverView: NSView {
         airPlayButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
         airPlayButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
 
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.heightAnchor.constraint(equalToConstant: 30).isActive = true
+
         stack.addView(view)
     }
 
