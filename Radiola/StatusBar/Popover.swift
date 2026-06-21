@@ -242,7 +242,7 @@ class PopoverView: NSView {
         addPlayerView()
         addVolumeView()
 
-        addSeparator()
+        stack.addSeparator()
         switch settings.favoritesMenuType {
             case .flat: buildFlatFavoritesMenu()
             case .margin: buildMarginFavoritesMenu()
@@ -251,32 +251,32 @@ class PopoverView: NSView {
 
         // =============
         if settings.showCopyToClipboardInMenu {
-            addSeparator()
+            stack.addSeparator()
 
-            addItem(
+            stack.addItem(
                 title: NSLocalizedString("Copy song title and artist", comment: "Status bar menu item"),
                 action: #selector(AppDelegate.copySongToClipboard(_:)),
                 keyEquivalent: "c")
         }
 
-        addSeparator()
+        stack.addSeparator()
 
-        addItem(
+        stack.addItem(
             title: NSLocalizedString("Open Radiola…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showStationView(_:)),
             keyEquivalent: "r")
 
-        addItem(
+        stack.addItem(
             title: NSLocalizedString("History…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showHistory(_:)),
             keyEquivalent: "y")
 
-        addItem(
+        stack.addItem(
             title: NSLocalizedString("Settings…", comment: "Status bar menu item"),
             action: #selector(AppDelegate.showPreferences(_:)),
             keyEquivalent: ",")
 
-        addItem(
+        stack.addItem(
             title: NSLocalizedString("Quit", comment: "Status bar menu item"),
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q")
@@ -295,7 +295,7 @@ class PopoverView: NSView {
         view.playButton.keyEquivalent = "p"
         view.playButton.keyEquivalentModifierMask = .command
 
-        addView(view)
+        stack.addView(view)
     }
 
     /* ****************************************
@@ -310,7 +310,7 @@ class PopoverView: NSView {
         }
 
         if !showVolume && showMute {
-            let item = addItem(
+            let item = stack.addItem(
                 title: player.isMuted ?
                     NSLocalizedString("Unmute", comment: "Status bar menu Item") :
                     NSLocalizedString("Mute", comment: "Status bar menu Item"),
@@ -361,45 +361,7 @@ class PopoverView: NSView {
         airPlayButton.heightAnchor.constraint(equalToConstant: 16).isActive = true
         airPlayButton.widthAnchor.constraint(equalToConstant: 16).isActive = true
 
-        addView(view)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @discardableResult
-    private func addView(_ view: NSView) -> NSView {
-        stack.addArrangedSubview(view)
-        return view
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @discardableResult
-    private func addItem(_ item: PopoverItem) -> PopoverItem {
-        addView(item)
-        return item
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @discardableResult
-    private func insertItem(_ item: PopoverItem, at index: Int) -> PopoverItem {
-        stack.insertArrangedSubview(item, at: index)
-        return item
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @discardableResult
-    private func addSeparator() -> Separator {
-        let res = Separator()
-        res.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        addView(res)
-        return res
+        stack.addView(view)
     }
 
     /* ****************************************
@@ -413,10 +375,10 @@ class PopoverView: NSView {
      *
      * ****************************************/
     private func buildFlatFavoritesMenu() {
-        addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
+        stack.addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
 
         for (i, station) in AppState.shared.favoritesStations().enumerated() {
-            addItem(createStationItem(station, keyEquivalent: stationKeyEquivalent(i + 1)))
+            stack.addItem(createStationItem(station, keyEquivalent: stationKeyEquivalent(i + 1)))
         }
     }
 
@@ -432,7 +394,7 @@ class PopoverView: NSView {
                 if let station = item as? Station {
                     if station.isFavorite {
                         num += 1
-                        addItem(createStationItem(station, prefix: prefix, keyEquivalent: stationKeyEquivalent(num)))
+                        stack.addItem(createStationItem(station, prefix: prefix, keyEquivalent: stationKeyEquivalent(num)))
                     }
                 }
 
@@ -442,13 +404,13 @@ class PopoverView: NSView {
                     build(items: group.items, prefix: prefix + menuPrefix + "  ")
                     if stack.arrangedSubviews.count > n {
                         let groupItem = PopoverItem(title: prefix + group.title, action: nil, keyEquivalent: "")
-                        insertItem(groupItem, at: n)
+                        stack.insertItem(groupItem, at: n)
                     }
                 }
             }
         }
 
-        addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
+        stack.addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
         for list in AppState.shared.localStations {
             build(items: list.items, prefix: menuPrefix)
         }
@@ -496,13 +458,13 @@ class PopoverView: NSView {
         }
 
         var num = 0
-        addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
+        stack.addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
         for list in AppState.shared.localStations {
             for item in list.items {
                 if let station = item as? Station {
                     if station.isFavorite {
                         num += 1
-                        addItem(createStationItem(station, prefix: "", keyEquivalent: stationKeyEquivalent(num)))
+                        stack.addItem(createStationItem(station, prefix: "", keyEquivalent: stationKeyEquivalent(num)))
                     }
                 }
 
@@ -511,7 +473,7 @@ class PopoverView: NSView {
 
                     build(items: group.items, menu: menu)
                     if menu.numberOfItems > 0 {
-                        let item = addItem(title: group.title)
+                        let item = stack.addItem(title: group.title)
                         item.menu = menu
                     }
                 }
@@ -532,17 +494,6 @@ class PopoverView: NSView {
         }
 
         walk(stack)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @discardableResult
-    private func addItem(title: String, action selector: Selector? = nil, keyEquivalent: String = "") -> PopoverItem {
-        let res = PopoverItem(title: title, keyEquivalent: keyEquivalent)
-        res.action = selector
-        addView(res)
-        return res
     }
 
     /* ****************************************
@@ -574,5 +525,58 @@ class PopoverView: NSView {
             player.switchStation(station: station)
             window?.close()
         }
+    }
+}
+
+// MARK: - VerticalLayout
+
+fileprivate extension VerticalLayout {
+    /* ****************************************
+     *
+     * ****************************************/
+    @discardableResult
+    func addView(_ view: NSView) -> NSView {
+        addArrangedSubview(view)
+        return view
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @discardableResult
+    func addItem(_ item: PopoverItem) -> PopoverItem {
+        addView(item)
+        return item
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @discardableResult
+    func addItem(title: String, action selector: Selector? = nil, keyEquivalent: String = "") -> PopoverItem {
+        let res = PopoverItem(title: title, keyEquivalent: keyEquivalent)
+        res.action = selector
+        addView(res)
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @discardableResult
+    func insertItem(_ item: PopoverItem, at index: Int) -> PopoverItem {
+        insertArrangedSubview(item, at: index)
+        return item
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @discardableResult
+    func addSeparator() -> Separator {
+        let res = Separator()
+        res.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        addView(res)
+        return res
     }
 }
