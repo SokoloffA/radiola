@@ -190,6 +190,8 @@ class PopoverView: NSView {
     fileprivate let stack = VerticalLayout()
     private let scrollView = NSScrollView()
     private let stationsStack = VerticalLayout()
+    private let topArrow = Arrow(systemSymbolName: "chevron.compact.up", accessibilityDescription: "upbutton")
+    private let bottomArrow = Arrow(systemSymbolName: "chevron.compact.down", accessibilityDescription: "down button")
 
     /* ****************************************
      *
@@ -235,7 +237,27 @@ class PopoverView: NSView {
                                                name: Notification.Name.PlayerStatusChanged,
                                                object: nil)
 
+        scrollView.contentView.postsBoundsChangedNotifications = true
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(scrollViewDidScroll),
+                                               name: NSView.boundsDidChangeNotification,
+                                               object: scrollView.contentView)
+
         createMenu()
+
+        addSubview(topArrow)
+        addSubview(bottomArrow)
+        NSLayoutConstraint.activate([
+            topArrow.heightAnchor.constraint(equalToConstant: 10),
+            topArrow.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: -2),
+            topArrow.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            topArrow.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+
+            bottomArrow.heightAnchor.constraint(equalToConstant: 10),
+            bottomArrow.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: 2),
+            bottomArrow.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            bottomArrow.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+        ])
 
         reValidate()
         layoutSubtreeIfNeeded()
@@ -248,6 +270,27 @@ class PopoverView: NSView {
      * ****************************************/
     override func updateLayer() {
         layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func scrollViewDidScroll(_ notification: Notification) {
+        let contentView = scrollView.contentView
+        let totalHeight = stationsStack.fittingSize.height
+        let visibleHeight = contentView.bounds.height
+        let currentScrollY = contentView.bounds.origin.y
+
+        if totalHeight <= visibleHeight + 2 {
+            topArrow.isHidden = true
+            bottomArrow.isHidden = true
+            return
+        }
+
+        let maxScrollY = totalHeight - visibleHeight
+        topArrow.isHidden = currentScrollY >= maxScrollY - 1
+
+        bottomArrow.isHidden = currentScrollY <= 1
     }
 
     /* ****************************************
@@ -611,5 +654,38 @@ fileprivate extension VerticalLayout {
         res.heightAnchor.constraint(equalToConstant: 10).isActive = true
         addView(res)
         return res
+    }
+}
+
+// MARK: - Arrow
+
+fileprivate class Arrow: NSImageView {
+    /* ****************************************
+     *
+     * ****************************************/
+    init(image: NSImage? = nil) {
+        super.init(frame: .zero)
+
+        translatesAutoresizingMaskIntoConstraints = false
+        self.image = image
+        imageScaling = .scaleProportionallyUpOrDown
+        contentTintColor = .secondaryLabelColor
+        wantsLayer = true
+        layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
+        isHidden = true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    convenience init(systemSymbolName: String, accessibilityDescription: String) {
+        self.init(image: NSImage(systemSymbolName: NSImage.Name(systemSymbolName), accessibilityDescription: accessibilityDescription))
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
