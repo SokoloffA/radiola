@@ -23,19 +23,22 @@ class Popover: NSPanel, NSWindowDelegate {
             instance = Popover()
         }
 
-        guard let instance = instance else { return }
+        guard
+            let instance = instance,
+            let contentView = instance.contentView as? PopoverView,
+            let screen = NSScreen.screens.first(where: { NSMouseInRect(NSPoint(x: positioningRect.midX, y: positioningRect.midY), $0.frame, false) }) ?? NSScreen.main
+        else {
+            return
+        }
 
         var size = instance.frame.size
-        size.width = max(settings.popoveWidth, size.width)
-        var xCoord = positioningRect.origin.x + (positioningRect.width / 2) - (size.width / 2)
+        size.width = max(size.width, settings.popoveWidth)
+        size.height = min(size.height, screen.visibleFrame.height - 4)
+
         let yCoord = positioningRect.origin.y - size.height - 4
-
-        let currentScreen = NSScreen.screens.first { NSMouseInRect(NSPoint(x: positioningRect.midX, y: positioningRect.midY), $0.frame, false) } ?? NSScreen.main
-
-        if let screen = currentScreen {
-            if xCoord + size.width > screen.visibleFrame.maxX {
-                xCoord = screen.visibleFrame.maxX - size.width
-            }
+        var xCoord = positioningRect.origin.x + (positioningRect.width / 2) - (size.width / 2)
+        if xCoord + size.width > screen.visibleFrame.maxX {
+            xCoord = screen.visibleFrame.maxX - size.width
         }
 
         let rect = NSRect(
@@ -46,6 +49,7 @@ class Popover: NSPanel, NSWindowDelegate {
         )
 
         instance.setFrame(rect, display: true)
+        contentView.scrollToTop()
         instance.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
     }
@@ -74,7 +78,7 @@ class Popover: NSPanel, NSWindowDelegate {
     private init() {
         let contentView = PopoverView()
         contentView.layoutSubtreeIfNeeded()
-        let size = contentView.stack.fittingSize
+        let size = contentView.preferredSize()
 
         super.init(
             contentRect: NSRect(origin: .zero, size: size),
@@ -184,6 +188,8 @@ class Popover: NSPanel, NSWindowDelegate {
 
 class PopoverView: NSView {
     fileprivate let stack = VerticalLayout()
+    private let scrollView = NSScrollView()
+    private let stationsStack = VerticalLayout()
 
     /* ****************************************
      *
@@ -202,6 +208,15 @@ class PopoverView: NSView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.edgeInsets = NSEdgeInsets(top: 0, left: 16, bottom: 6, right: 16)
         addSubview(stack)
+
+        stationsStack.translatesAutoresizingMaskIntoConstraints = false
+        stationsStack.edgeInsets = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.hasVerticalScroller = false
+        scrollView.hasHorizontalScroller = false
+        scrollView.drawsBackground = false
+        scrollView.documentView = stationsStack
 
         NSLayoutConstraint.activate([
             stack.topAnchor.constraint(equalTo: topAnchor),
@@ -238,11 +253,32 @@ class PopoverView: NSView {
     /* ****************************************
      *
      * ****************************************/
+    fileprivate func scrollToTop() {
+        guard let documentView = scrollView.documentView else { return }
+        let topPoint = NSPoint(x: 0, y: documentView.frame.height - scrollView.contentView.bounds.height)
+        scrollView.contentView.scroll(to: topPoint)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    fileprivate func preferredSize() -> CGSize {
+        return CGSize(
+            width: stack.frame.width,
+            height: frame.height - scrollView.frame.height + stationsStack.frame.height)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     private func createMenu() {
         addPlayerView()
         addVolumeView()
 
         stack.addSeparator()
+        stack.addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
+        stack.addView(scrollView)
+
         switch settings.favoritesMenuType {
             case .flat: buildFlatFavoritesMenu()
             case .margin: buildMarginFavoritesMenu()
@@ -375,10 +411,8 @@ class PopoverView: NSView {
      *
      * ****************************************/
     private func buildFlatFavoritesMenu() {
-        stack.addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
-
         for (i, station) in AppState.shared.favoritesStations().enumerated() {
-            stack.addItem(createStationItem(station, keyEquivalent: stationKeyEquivalent(i + 1)))
+            stationsStack.addItem(createStationItem(station, keyEquivalent: stationKeyEquivalent(i + 1)))
         }
     }
 
@@ -394,23 +428,22 @@ class PopoverView: NSView {
                 if let station = item as? Station {
                     if station.isFavorite {
                         num += 1
-                        stack.addItem(createStationItem(station, prefix: prefix, keyEquivalent: stationKeyEquivalent(num)))
+                        stationsStack.addItem(createStationItem(station, prefix: prefix, keyEquivalent: stationKeyEquivalent(num)))
                     }
                 }
 
                 if let group = item as? StationGroup {
-                    let n = stack.arrangedSubviews.count
+                    let n = stationsStack.arrangedSubviews.count
 
                     build(items: group.items, prefix: prefix + menuPrefix + "  ")
-                    if stack.arrangedSubviews.count > n {
+                    if stationsStack.arrangedSubviews.count > n {
                         let groupItem = PopoverItem(title: prefix + group.title, action: nil, keyEquivalent: "")
-                        stack.insertItem(groupItem, at: n)
+                        stationsStack.insertItem(groupItem, at: n)
                     }
                 }
             }
         }
 
-        stack.addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
         for list in AppState.shared.localStations {
             build(items: list.items, prefix: menuPrefix)
         }
@@ -458,13 +491,12 @@ class PopoverView: NSView {
         }
 
         var num = 0
-        stack.addItem(title: NSLocalizedString("Favorite stations", comment: "Status bar menu item"), action: nil, keyEquivalent: "")
         for list in AppState.shared.localStations {
             for item in list.items {
                 if let station = item as? Station {
                     if station.isFavorite {
                         num += 1
-                        stack.addItem(createStationItem(station, prefix: "", keyEquivalent: stationKeyEquivalent(num)))
+                        stationsStack.addItem(createStationItem(station, prefix: "", keyEquivalent: stationKeyEquivalent(num)))
                     }
                 }
 
@@ -473,7 +505,7 @@ class PopoverView: NSView {
 
                     build(items: group.items, menu: menu)
                     if menu.numberOfItems > 0 {
-                        let item = stack.addItem(title: group.title)
+                        let item = stationsStack.addItem(title: group.title)
                         item.menu = menu
                     }
                 }
@@ -490,10 +522,11 @@ class PopoverView: NSView {
                 if let item = subview as? PopoverItem {
                     item.validate()
                 }
+                walk(subview)
             }
         }
 
-        walk(stack)
+        walk(self)
     }
 
     /* ****************************************
