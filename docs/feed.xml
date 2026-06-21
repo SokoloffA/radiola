@@ -5,6 +5,15 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 12.2.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Added the ability to scroll stations in the drop-down menu.&lt;/li&gt;
+&lt;li&gt;Added the ability to quickly add stations to favorites from web searches. Thanks to Matt Van Horn (mvanhorn).&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sun, 21 Jun 2026 20:55:22 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v12.2.0/Radiola-12.2.0.dmg" sparkle:version="12.2.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 12.1.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Redesigned the drop-down window in the menu bar&lt;/li&gt;
