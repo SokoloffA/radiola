@@ -241,11 +241,16 @@ class AppState: ObservableObject {
      *
      * ****************************************/
     func localStation(byURL: String) -> Station? {
-        var res: Station?
-        for sl in localStations {
-            res = sl.firstStation(byURL: byURL)
-            if res != nil {
-                return res
+        return localStationAndList(byURL: byURL)?.station
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func localStationAndList(byURL: String) -> (station: Station, list: any StationList)? {
+        for list in localStations {
+            if let station = list.firstStation(byURL: byURL) {
+                return (station, list)
             }
         }
 
