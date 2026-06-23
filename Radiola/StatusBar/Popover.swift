@@ -35,6 +35,9 @@ class Popover: NSPanel, NSWindowDelegate {
         size.width = max(size.width, settings.popoveWidth)
         size.height = min(size.height, screen.visibleFrame.height - 4)
 
+        // debug("@@@ frame.size: \(instance.frame.size) contentView.fittingSize: \(contentView.fittingSize) settings: \(settings.popoveWidth)")
+        // debug("@@@ result popover size: \(size)")
+
         let yCoord = positioningRect.origin.y - size.height - 4
         var xCoord = positioningRect.origin.x + (positioningRect.width / 2) - (size.width / 2)
         if xCoord + size.width > screen.visibleFrame.maxX {
@@ -225,6 +228,9 @@ class PopoverView: NSView {
             stack.leadingAnchor.constraint(equalTo: leadingAnchor),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor),
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
+
+            stationsStack.leadingAnchor.constraint(equalTo: scrollView.contentView.leadingAnchor),
+            stationsStack.trailingAnchor.constraint(equalTo: scrollView.contentView.trailingAnchor),
         ])
 
         NotificationCenter.default.addObserver(self,
