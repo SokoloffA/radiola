@@ -155,7 +155,10 @@ def write(releases):
     f.write(doc.toprettyxml(indent ="  ", encoding="UTF-8"))
     f.close()
 
-
+def writeCommitMessage(release):
+    f =  open("../.git/GITGUI_MSG", "w")
+    f.write(f"Add {release.version} to the feed.xml")
+    f.close()
 
 if __name__ == "__main__":
 
@@ -163,6 +166,9 @@ if __name__ == "__main__":
         data = download(URL_TEMPLATE % (GITHUB_USER, GITHUB_REPO))
         releases = parse(data)
         write(releases)
+
+        writeCommitMessage(releases[0])
+
 
     except Error as err:
         print("Error: %s" % err, file=sys.stderr)
