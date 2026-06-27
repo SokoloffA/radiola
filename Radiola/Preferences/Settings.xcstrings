@@ -776,6 +776,12 @@
     "Maximum width of the text in the menu bar:" : {
       "comment" : "Settings label",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Largeur maximale du texte dans le menu principal :"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -972,6 +978,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hauptfenster öffnen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir la fenêtre principale à l'ouverture"
           }
         },
         "it" : {
@@ -1353,6 +1365,12 @@
             "value" : "Stummschaltung im Menü anzeigen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher l’icône Silence dans le menu"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1380,6 +1398,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lautstärkeregler im Menü anzeigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher le contrôle du volume dans le menu"
           }
         },
         "it" : {
@@ -1411,6 +1435,12 @@
             "value" : "Verlauf anzeigen"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "affiche l'historique"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1438,6 +1468,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hauptfenster anzeigen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "affiche la fenêtre principale"
           }
         },
         "it" : {
@@ -1472,7 +1508,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "afficher le menu popup"
+            "value" : "affiche le menu popup"
           }
         },
         "it" : {
@@ -1539,6 +1575,12 @@
             "value" : "Lieblingssender wechseln"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "permute les stations favorites"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1566,6 +1608,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Stumm umschalten"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "bascule Silence"
           }
         },
         "it" : {
@@ -1659,6 +1707,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "wenn die Wiedergabe startet"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quand le playback démarre."
           }
         },
         "it" : {
