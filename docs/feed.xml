@@ -5,6 +5,16 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 12.3.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fix: The menu items for favorite stations had the wrong width&lt;/li&gt;
+&lt;li&gt;The width of the main menu is calculated automatically&lt;/li&gt;
+&lt;li&gt;Translations updated&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sat, 27 Jun 2026 09:11:29 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v12.3.0/Radiola-12.3.0.dmg" sparkle:version="12.3.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 12.2.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Added the ability to scroll stations in the drop-down menu.&lt;/li&gt;
