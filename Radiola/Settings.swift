@@ -7,6 +7,8 @@
 
 import Foundation
 
+let settings = Settings()
+
 class Settings {
     private let data = UserDefaults.standard
 
@@ -302,16 +304,9 @@ class Settings {
         get { data.string(forKey: lastExportTypeKey) }
         set { data.set(newValue, forKey: lastExportTypeKey) }
     }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @Setting("PopoveWidth", default: 350)
-    var popoveWidth: CGFloat
-
 }
 
-let settings = Settings()
+// MARK: - Settings propertyWrapper
 
 @propertyWrapper
 struct Setting<Value> {

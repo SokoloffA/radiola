@@ -93,8 +93,6 @@ class LocalStationRow: NSView, NSTextFieldDelegate {
     let menuButton = StationMenuButton()
     let separator = Separator()
 
-    private let contextMenu = NSMenu(title: "Context")
-
     private let favoriteIcons = [
         false: NSImage(systemSymbolName: NSImage.Name("star"), accessibilityDescription: "Favorite")?.tint(color: .lightGray),
         true: NSImage(systemSymbolName: NSImage.Name("star.fill"), accessibilityDescription: "Favorite")?.tint(color: .systemYellow),

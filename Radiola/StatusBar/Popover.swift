@@ -32,11 +32,7 @@ class Popover: NSPanel, NSWindowDelegate {
         }
 
         var size = instance.frame.size
-        size.width = max(size.width, settings.popoveWidth)
         size.height = min(size.height, screen.visibleFrame.height - 4)
-
-        // debug("@@@ frame.size: \(instance.frame.size) contentView.fittingSize: \(contentView.fittingSize) settings: \(settings.popoveWidth)")
-        // debug("@@@ result popover size: \(size)")
 
         let yCoord = positioningRect.origin.y - size.height - 4
         var xCoord = positioningRect.origin.x + (positioningRect.width / 2) - (size.width / 2)
@@ -150,7 +146,6 @@ class Popover: NSPanel, NSWindowDelegate {
      *
      * ****************************************/
     override func close() {
-        settings.popoveWidth = frame.width
         Popover.instance = nil
         super.close()
     }
