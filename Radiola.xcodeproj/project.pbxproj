@@ -86,7 +86,6 @@
 		39AE03752FF0958D0089E6C6 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AE03742FF0958D0089E6C6 /* Network.swift */; };
 		39AFBE3F2D18370E008D4087 /* MainMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */; };
 		39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */; };
-		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
 		39BF44B3291576B3008E5A30 /* AddGroupDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */; };
 		39C212D72FC33D3B00F3E8B9 /* PreferencesPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C212D62FC33D3B00F3E8B9 /* PreferencesPage.swift */; };
 		39C212D92FC4445F00F3E8B9 /* SpinBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39C212D82FC4445F00F3E8B9 /* SpinBox.swift */; };
@@ -207,7 +206,6 @@
 		39AE03742FF0958D0089E6C6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuDelegate.swift; sourceTree = "<group>"; };
 		39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioBrowserStatus.swift; sourceTree = "<group>"; };
-		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
 		39BF44B2291576B3008E5A30 /* AddGroupDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddGroupDialog.swift; sourceTree = "<group>"; };
 		39C212D62FC33D3B00F3E8B9 /* PreferencesPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesPage.swift; sourceTree = "<group>"; };
 		39C212D82FC4445F00F3E8B9 /* SpinBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinBox.swift; sourceTree = "<group>"; };
@@ -428,7 +426,6 @@
 				AAAA00012024120600000009 /* LocalStationSearchPanel.swift */,
 				396433952B502AE9009BE1CE /* LocalStationToolBox.swift */,
 				39A794072B4B5381000D9875 /* LocalStationRows.swift */,
-				39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */,
 			);
 			path = LocalStations;
 			sourceTree = "<group>";
@@ -612,7 +609,6 @@
 				393B221F2CE951380035233D /* Settings.xcstrings in Resources */,
 				394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */,
 				394C68792CFC7D30004EAE1C /* LogsWindow.xib in Resources */,
-				39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */,
 				39ADF3842C98D4C9009794C3 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

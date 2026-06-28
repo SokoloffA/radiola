@@ -7,44 +7,45 @@
 
 import Cocoa
 
-class AddGroupDialog: NSWindowController, NSTextFieldDelegate {
-    @IBOutlet var messageLabel: NSTextField!
-    @IBOutlet var titleEditLabel: NSTextField!
-    @IBOutlet var titleEdit: NSTextField!
-    @IBOutlet var okButton: NSButton!
-    @IBOutlet var cancelButton: NSButton!
+class AddGroupDialog: OkCancelDialog, NSTextFieldDelegate {
+    private let titleLabel = NSLocalizedString("Title:", comment: "Add group dialog label for TileEdit")
+    private let titleEdit = NSTextField()
 
-    var title: String { return titleEdit?.stringValue ?? "" }
+    var title: String { return titleEdit.stringValue }
 
     /* ****************************************
      *
      * ****************************************/
-    override var windowNibName: String! {
-        return "AddGroupDialog"
-    }
-
-    override func windowDidLoad() {
-        super.windowDidLoad()
-
+    override init(size: NSSize? = nil) {
+        super.init(size: size)
         messageLabel.stringValue = NSLocalizedString("To add a group, fill out the following information:", comment: "Add group dialog message")
-        titleEditLabel.stringValue = NSLocalizedString("Title:", comment: "Add group dialog label for TileEdit")
-        cancelButton.title = NSLocalizedString("Cancel", comment: "Cancel button")
         okButton.title = NSLocalizedString("Add group", comment: "Add group dialog button")
 
+        gridView.addRow(title: titleLabel, rightView: titleEdit)
+
         titleEdit.delegate = self
-        okButton.isEnabled = false
+
+        updateButtons()
     }
 
+    /* ****************************************
+     *
+     * ****************************************/
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func controlTextDidChange(_ obj: Notification) {
-        okButton.isEnabled =
-            !titleEdit.stringValue.isEmpty
+        updateButtons()
     }
 
-    @IBAction func cancelClicked(_ sender: Any) {
-        window?.sheetParent?.endSheet(window!, returnCode: .cancel)
-    }
-
-    @IBAction func okClicked(_ sender: Any) {
-        window?.sheetParent?.endSheet(window!, returnCode: .OK)
+    /* ****************************************
+     *
+     * ****************************************/
+    private func updateButtons() {
+        okButton.isEnabled = !titleEdit.stringValue.isEmpty
     }
 }

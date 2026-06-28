@@ -601,7 +601,7 @@ extension StationsWindow: NSUserInterfaceValidations {
     @objc func addGroup(_ sender: Any) {
         guard let delegate = stationsTree.delegate as? LocalStationDelegate else { return }
 
-        let dialog = AddGroupDialog()
+        let dialog = AddGroupDialog(size: NSSize(width: 400, height: 160))
         window?.beginSheet(dialog.window!) { response in
             if response != NSApplication.ModalResponse.OK {
                 return
