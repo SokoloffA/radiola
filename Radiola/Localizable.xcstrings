@@ -1623,6 +1623,9 @@
         }
       }
     },
+    "Fetch the name from the website" : {
+      "comment" : "Button tooltip "
+    },
     "Group name" : {
       "comment" : "Station group placeholder",
       "localizations" : {
@@ -2359,6 +2362,9 @@
           }
         }
       }
+    },
+    "OK" : {
+      "comment" : "OK button"
     },
     "Open Radiola…" : {
       "comment" : "Status bar menu item",

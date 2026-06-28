@@ -1,0 +1,16 @@
+<asx version="3.0">
+  <title>Example.com Live Stream</title>
+
+  <entry>
+    <title>Short Announcement to Play Before Main Stream</title>
+    <ref href="http://example.com/announcement.wma" />
+    <param name="aParameterName" value="aParameterValue" />
+  </entry>
+
+  <entry>
+    <title>Example radio</title>
+    <ref href="http://example.com:8080" />
+    <author>Example.com</author>
+    <copyright>Copyright © 2005 Example.com</copyright>
+  </entry>
+</asx>

@@ -14,7 +14,6 @@
 		391D64252FDBFA1F0023604F /* VerticalLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 391D64242FDBFA1F0023604F /* VerticalLayout.swift */; };
 		392024AF2A51953600670ABD /* ControlsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024AD2A51953600670ABD /* ControlsPage.swift */; };
 		392024B32A519FF900670ABD /* AppearancePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392024B12A519FF900670ABD /* AppearancePage.swift */; };
-		3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3926FF112AD4687A0094D875 /* AddStationDialog.xib */; };
 		392C469B2A6C21BD0095DDA2 /* MediaKeysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */; };
 		393A72BC2F82D59D0054A0CE /* PcmBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393A72BB2F82D59D0054A0CE /* PcmBuffer.swift */; };
 		393A72BE2F8ACE780054A0CE /* AirPlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 393A72BD2F8ACE780054A0CE /* AirPlayButton.swift */; };
@@ -81,7 +80,10 @@
 		39A794102B4B6483000D9875 /* Stations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A7940F2B4B6483000D9875 /* Stations.swift */; };
 		39A794122B4B65AF000D9875 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39A794112B4B65AF000D9875 /* AppState.swift */; };
 		39AAA2F02FC75ADD00C9C0AC /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AAA2EF2FC75ADD00C9C0AC /* Buttons.swift */; };
+		39ACF2A32FEA909F0053414B /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ACF2A22FEA909F0053414B /* Window.swift */; };
+		39ACF2A52FEAFC0C0053414B /* FormLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39ACF2A42FEAFC0C0053414B /* FormLayout.swift */; };
 		39ADF3842C98D4C9009794C3 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39ADF3832C98D4C9009794C3 /* MainMenu.xib */; };
+		39AE03752FF0958D0089E6C6 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AE03742FF0958D0089E6C6 /* Network.swift */; };
 		39AFBE3F2D18370E008D4087 /* MainMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */; };
 		39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */; };
 		39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */ = {isa = PBXBuildFile; fileRef = 39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */; };
@@ -130,7 +132,6 @@
 		391D64242FDBFA1F0023604F /* VerticalLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalLayout.swift; sourceTree = "<group>"; };
 		392024AD2A51953600670ABD /* ControlsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlsPage.swift; sourceTree = "<group>"; };
 		392024B12A519FF900670ABD /* AppearancePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearancePage.swift; sourceTree = "<group>"; };
-		3926FF112AD4687A0094D875 /* AddStationDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddStationDialog.xib; sourceTree = "<group>"; };
 		392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaKeysController.swift; sourceTree = "<group>"; };
 		393A72BB2F82D59D0054A0CE /* PcmBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PcmBuffer.swift; sourceTree = "<group>"; };
 		393A72BD2F8ACE780054A0CE /* AirPlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayButton.swift; sourceTree = "<group>"; };
@@ -199,8 +200,11 @@
 		39A7940F2B4B6483000D9875 /* Stations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stations.swift; sourceTree = "<group>"; };
 		39A794112B4B65AF000D9875 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		39AAA2EF2FC75ADD00C9C0AC /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
+		39ACF2A22FEA909F0053414B /* Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
+		39ACF2A42FEAFC0C0053414B /* FormLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormLayout.swift; sourceTree = "<group>"; };
 		39ADF3822C98D4C9009794C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		39ADF3852C98D4C9009794C3 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/MainMenu.xcstrings; sourceTree = "<group>"; };
+		39AE03742FF0958D0089E6C6 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		39AFBE3E2D18370E008D4087 /* MainMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuDelegate.swift; sourceTree = "<group>"; };
 		39B2E7132B434C94003A2762 /* RadioBrowserStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RadioBrowserStatus.swift; sourceTree = "<group>"; };
 		39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddGroupDialog.xib; sourceTree = "<group>"; };
@@ -325,11 +329,12 @@
 			children = (
 				394ABCAE2AA359E600E2B6E9 /* Stations */,
 				39DDF8412F66CB8400ED9441 /* FFPlayer */,
-				39F08E452A0CC582006B65D0 /* Types.swift */,
-				391500302EB89EB700060015 /* NotificationManager.swift */,
 				39C212D52FC33CFB00F3E8B9 /* Controls */,
+				39AE03712FF092D40089E6C6 /* Types */,
 				39A794112B4B65AF000D9875 /* AppState.swift */,
+				3985C9052E1163CD00C96D83 /* PlayList.swift */,
 				394F8A3B28739339005EA7FA /* AppDelegate.swift */,
+				391500302EB89EB700060015 /* NotificationManager.swift */,
 				392C469A2A6C21BD0095DDA2 /* MediaKeysController.swift */,
 				394F8A58287394FD005EA7FA /* Player.swift */,
 				3959DBB32C03327A0032A1BA /* TrackMetadata.swift */,
@@ -337,13 +342,9 @@
 				3962D0292BE0E39F0014BCFB /* History.swift */,
 				39D27F522BA36B2D00D5857A /* Credits.html */,
 				396704682943AD2700012FFD /* AudioDevice.swift */,
-				390C7293287B213200E17BAE /* Controls.swift */,
-				395001302FAFB4AA0029DF9B /* PlayView.swift */,
-				39D582C52C96C49B00AE3A01 /* VolumeView.swift */,
 				394F8A56287394F1005EA7FA /* Notifications.swift */,
 				39D79E622933BEAB00210D94 /* Settings.swift */,
 				39E8DFD62890839500082467 /* Updater.swift */,
-				393A72BD2F8ACE780054A0CE /* AirPlayButton.swift */,
 				39ADF3832C98D4C9009794C3 /* MainMenu.xib */,
 				394F8A402873933A005EA7FA /* Assets.xcassets */,
 				394F8A6C2873A2FE005EA7FA /* Info.plist */,
@@ -428,19 +429,33 @@
 				396433952B502AE9009BE1CE /* LocalStationToolBox.swift */,
 				39A794072B4B5381000D9875 /* LocalStationRows.swift */,
 				39BF44AF2915766A008E5A30 /* AddGroupDialog.xib */,
-				3926FF112AD4687A0094D875 /* AddStationDialog.xib */,
 			);
 			path = LocalStations;
+			sourceTree = "<group>";
+		};
+		39AE03712FF092D40089E6C6 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				39F08E452A0CC582006B65D0 /* Types.swift */,
+				39AE03742FF0958D0089E6C6 /* Network.swift */,
+			);
+			path = Types;
 			sourceTree = "<group>";
 		};
 		39C212D52FC33CFB00F3E8B9 /* Controls */ = {
 			isa = PBXGroup;
 			children = (
 				39C212D82FC4445F00F3E8B9 /* SpinBox.swift */,
+				39ACF2A22FEA909F0053414B /* Window.swift */,
 				391D64242FDBFA1F0023604F /* VerticalLayout.swift */,
+				39ACF2A42FEAFC0C0053414B /* FormLayout.swift */,
 				39AAA2EF2FC75ADD00C9C0AC /* Buttons.swift */,
 				395766252FC6E3A8002BC049 /* Label.swift */,
 				39C212D62FC33D3B00F3E8B9 /* PreferencesPage.swift */,
+				390C7293287B213200E17BAE /* Controls.swift */,
+				395001302FAFB4AA0029DF9B /* PlayView.swift */,
+				39D582C52C96C49B00AE3A01 /* VolumeView.swift */,
+				393A72BD2F8ACE780054A0CE /* AirPlayButton.swift */,
 			);
 			path = Controls;
 			sourceTree = "<group>";
@@ -448,7 +463,6 @@
 		39DDF8412F66CB8400ED9441 /* FFPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				3985C9052E1163CD00C96D83 /* PlayList.swift */,
 				393F9C0F2DFDA8C400870055 /* FFPlayer.swift */,
 				39DDF84C2F672FBA00ED9441 /* MacAudio.swift */,
 				393A72BF2F9551BE0054A0CE /* Metrics.swift */,
@@ -598,7 +612,6 @@
 				393B221F2CE951380035233D /* Settings.xcstrings in Resources */,
 				394ABC982A97AC9B00E2B6E9 /* SidebarTopLevelView.xib in Resources */,
 				394C68792CFC7D30004EAE1C /* LogsWindow.xib in Resources */,
-				3926FF122AD4687A0094D875 /* AddStationDialog.xib in Resources */,
 				39BF44B02915766A008E5A30 /* AddGroupDialog.xib in Resources */,
 				39ADF3842C98D4C9009794C3 /* MainMenu.xib in Resources */,
 			);
@@ -634,6 +647,7 @@
 				3964339B2B55A293009BE1CE /* InternetStationRows.swift in Sources */,
 				390C7294287B213200E17BAE /* Controls.swift in Sources */,
 				39B2E7142B434C94003A2762 /* RadioBrowserStatus.swift in Sources */,
+				39ACF2A52FEAFC0C0053414B /* FormLayout.swift in Sources */,
 				39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */,
 				39DDF84D2F672FBA00ED9441 /* MacAudio.swift in Sources */,
 				390C7298287B237B00E17BAE /* HistoryRow.swift in Sources */,
@@ -641,6 +655,7 @@
 				9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */,
 				39A794052B4B33F1000D9875 /* LocalStationDelegate.swift in Sources */,
 				393A72BE2F8ACE780054A0CE /* AirPlayButton.swift in Sources */,
+				39ACF2A32FEA909F0053414B /* Window.swift in Sources */,
 				3964339D2B55A69C009BE1CE /* InternetStationSearchPanel.swift in Sources */,
 				3962D03C2BE688DE0014BCFB /* Utilities.swift in Sources */,
 				39C212D72FC33D3B00F3E8B9 /* PreferencesPage.swift in Sources */,
@@ -650,6 +665,7 @@
 				39AAA2F02FC75ADD00C9C0AC /* Buttons.swift in Sources */,
 				39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
+				39AE03752FF0958D0089E6C6 /* Network.swift in Sources */,
 				39EF8B9E2BCC151A00733571 /* PlayMenuItem.swift in Sources */,
 				3962D0342BE688130014BCFB /* Name.swift in Sources */,
 				395001312FAFB4AA0029DF9B /* PlayView.swift in Sources */,
@@ -867,7 +883,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 12.3.0;
+				CURRENT_PROJECT_VERSION = 12.2.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 635H9TYSZJ;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -899,7 +915,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 12.3.0;
+				CURRENT_PROJECT_VERSION = 12.2.0;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 635H9TYSZJ;
 				ENABLE_HARDENED_RUNTIME = YES;

@@ -1,0 +1,15 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+  <playlist xmlns="http://xspf.org/ns/0/" version="1">
+    <title>ccMixter</title>
+    <location>http://ccmixter.org/media/api/query?f=xspf</location>
+    <trackList>
+      <track>
+        <location>http://ccmixter.org/people/FFGreen/FFGreen_-_Baltimore_Dreaming_(FF_remix).mp3</location>
+        <title>Track 01</title>
+      </track>
+      <track>
+        <location>http://ccmixter.org/people/FFGreen/FFGreen_-_Baltimore_Dreaming_(FF_remix).mp3</location>
+        <title>Track 02</title>
+      </track>
+    </trackList>
+  </playlist>

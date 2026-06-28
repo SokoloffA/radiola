@@ -7,43 +7,47 @@
 
 import Cocoa
 
-class AddStationDialog: NSWindowController, NSTextFieldDelegate {
-    @IBOutlet var messageLabel: NSTextField!
-    @IBOutlet var titleEditLabel: NSTextField!
-    @IBOutlet var urlEditLabel: NSTextField!
-    @IBOutlet var titleEdit: NSTextField!
-    @IBOutlet var urlEdit: NSTextField!
-    @IBOutlet var okButton: NSButton!
-    @IBOutlet var cancelButton: NSButton!
+// MARK: - AddStationDialog
 
-    var title: String { return titleEdit?.stringValue ?? "" }
-    var url: String { return urlEdit?.stringValue ?? "" }
+class AddStationDialog: OkCancelDialog, NSTextFieldDelegate {
+    private let titleLabel = NSLocalizedString("Title:", comment: "Add station dialog label for Tile edit")
+    private let urlLabel = NSLocalizedString("URL:", comment: "Add station dialog label for URL edit")
+    private let titleEdit = NSTextField()
+    private let urlEdit = NSTextField()
+    private let downloadTitleButton = SpinnerImageButton(systemSymbolName: "icloud.and.arrow.down", accessibilityDescription: "Download stations title from the internet")
+
+    var title: String { return titleEdit.stringValue }
+    var url: String { return urlEdit.stringValue }
 
     /* ****************************************
      *
      * ****************************************/
-    override var windowNibName: String! {
-        return "AddStationDialog"
+    override init(size: NSSize? = nil) {
+        super.init(size: size)
+        messageLabel.stringValue = NSLocalizedString("To add a station, fill out the following information:", comment: "Add station dialog message")
+        okButton.title = NSLocalizedString("Add station", comment: "Add station dialog button")
+
+        gridView.addRow(title: titleLabel, rightViews: [titleEdit, downloadTitleButton])
+        gridView.addRow(title: urlLabel, rightView: urlEdit)
+
+        titleEdit.delegate = self
+
+        downloadTitleButton.toolTip = NSLocalizedString("Fetch the name from the website", comment: "Button tooltip ")
+        downloadTitleButton.target = self
+        downloadTitleButton.action = #selector(downloadTitle)
+        downloadTitleButton.title = ""
+
+        urlEdit.delegate = self
+        urlEdit.stringValue = getUrlFromPasteboard() ?? ""
+
+        updateButtons()
     }
 
     /* ****************************************
      *
      * ****************************************/
-    override func windowDidLoad() {
-        super.windowDidLoad()
-
-        messageLabel.stringValue = NSLocalizedString("To add a station, fill out the following information:", comment: "Add station dialog message")
-        titleEditLabel.stringValue = NSLocalizedString("Title:", comment: "Add station dialog label for Tile edit")
-        urlEditLabel.stringValue = NSLocalizedString("URL:", comment: "Add station dialog label for URL edit")
-
-        cancelButton.title = NSLocalizedString("Cancel", comment: "Cancel button")
-        okButton.title = NSLocalizedString("Add station", comment: "Add station dialog button")
-
-        urlEdit.stringValue = getUrlFromPasteboard() ?? ""
-
-        urlEdit.delegate = self
-        titleEdit.delegate = self
-        updateButtons()
+    @MainActor required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     /* ****************************************
@@ -60,20 +64,8 @@ class AddStationDialog: NSWindowController, NSTextFieldDelegate {
         okButton.isEnabled =
             !urlEdit.stringValue.isEmpty &&
             !titleEdit.stringValue.isEmpty
-    }
 
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction func cancelClicked(_ sender: Any) {
-        window?.sheetParent?.endSheet(window!, returnCode: .cancel)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    @IBAction func okClick(_ sender: Any) {
-        window?.sheetParent?.endSheet(window!, returnCode: .OK)
+        downloadTitleButton.isEnabled = !urlEdit.stringValue.isEmpty
     }
 
     /* ****************************************
@@ -81,12 +73,54 @@ class AddStationDialog: NSWindowController, NSTextFieldDelegate {
      * ****************************************/
     private func getUrlFromPasteboard() -> String? {
         guard
-            let s = NSPasteboard.general.string(forType: .string),
-            let url = URL(string: s),
+            let res = NSPasteboard.general.string(forType: .string),
+            let url = URL(string: res),
             url.scheme == "http" || url.scheme == "https"
         else {
             return nil
         }
-        return s
+        return res
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc private func downloadTitle() {
+        guard
+            !self.url.isEmpty,
+            let url = URL(string: url)
+        else {
+            return
+        }
+
+        downloadTitleButton.setAsLoading(true)
+
+        Task {
+            do {
+                var title: String?
+                if PlayList.isPlayListURL(url) {
+                    let list = PlayList()
+                    try list.download(url: url)
+                    title = list.links.first?.title
+                } else {
+                    if #available(macOS 12.0, *) {
+                        var request = URLRequest(url: url)
+                        request.httpMethod = "GET"
+                        request.setValue("1", forHTTPHeaderField: "Icy-MetaData")
+                        let headers = try await fetchHTTPHeaders(request: request)
+                        title = headers["icy-name"]
+                    }
+                }
+
+                await MainActor.run {
+                    downloadTitleButton.setAsLoading(false)
+                    if let title = title {
+                        titleEdit.stringValue = title
+                    }
+                }
+
+            } catch {
+            }
+        }
     }
 }

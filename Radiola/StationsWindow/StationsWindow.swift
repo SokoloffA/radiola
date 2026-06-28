@@ -585,14 +585,14 @@ extension StationsWindow: NSUserInterfaceValidations {
     @objc func addStation(_ sender: Any) {
         guard let delegate = stationsTree.delegate as? LocalStationDelegate else { return }
 
-        let dialog = AddStationDialog()
-        window?.beginSheet(dialog.window!, completionHandler: { response in
+        let dialog = AddStationDialog(size: NSSize(width: 480, height: 200))
+        window?.beginSheet(dialog.window!) { response in
             if response != NSApplication.ModalResponse.OK || dialog.url.isEmpty {
                 return
             }
 
             delegate.addStation(title: dialog.title, url: dialog.url)
-        })
+        }
     }
 
     /* ****************************************
@@ -602,13 +602,13 @@ extension StationsWindow: NSUserInterfaceValidations {
         guard let delegate = stationsTree.delegate as? LocalStationDelegate else { return }
 
         let dialog = AddGroupDialog()
-        window?.beginSheet(dialog.window!, completionHandler: { response in
+        window?.beginSheet(dialog.window!) { response in
             if response != NSApplication.ModalResponse.OK {
                 return
             }
 
             delegate.addGroup(title: dialog.title)
-        })
+        }
     }
 
     /* ****************************************

@@ -72,3 +72,81 @@ class MenuButton: NSButton {
         menu!.popUp(positioning: nil, at: p, in: self)
     }
 }
+
+// MARK: - MenuButton
+
+class SpinnerImageButton: ImageButton {
+    private let spinner: NSProgressIndicator = {
+        let indicator = NSProgressIndicator()
+        indicator.style = .spinning
+        indicator.controlSize = .small
+        indicator.isDisplayedWhenStopped = false
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.wantsLayer = true
+        indicator.layer?.backgroundColor = NSColor.controlBackgroundColor.cgColor
+        return indicator
+    }()
+
+    private var spinnerIsActive = false
+    private var _isEnabled: Bool = true
+    override var isEnabled: Bool {
+        get { return _isEnabled }
+        set {
+            _isEnabled = newValue
+            super.isEnabled = newValue && !spinnerIsActive
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    override init(image: NSImage? = nil) {
+        super.init(image: image)
+        isEnabled = super.isEnabled
+        initSpinner()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        isEnabled = super.isEnabled
+        initSpinner()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func initSpinner() {
+        addSubview(spinner)
+
+        NSLayoutConstraint.activate([
+            spinner.leadingAnchor.constraint(equalTo: leadingAnchor),
+            spinner.trailingAnchor.constraint(equalTo: trailingAnchor),
+            spinner.topAnchor.constraint(equalTo: topAnchor),
+            spinner.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
+        spinner.isHidden = true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @MainActor
+    func setAsLoading(_ isLoading: Bool) {
+        if isLoading {
+            spinnerIsActive = true
+            imagePosition = .noImage
+            super.isEnabled = false
+            spinner.startAnimation(nil)
+            spinner.isHidden = false
+        } else {
+            spinnerIsActive = false
+            imagePosition = .imageOnly
+            spinner.stopAnimation(nil)
+            super.isEnabled = isEnabled
+            spinner.isHidden = true
+        }
+    }
+}

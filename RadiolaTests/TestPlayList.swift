@@ -15,15 +15,32 @@ extension RadiolaTests {
     func testPlayListDownload() throws {
         try walkDataDir(testName: #function) { dir in
 
-            let sourceFile = try findFile(name: "source", in: dir)
-            let resultFile = try findFile(name: "result", in: dir)
-
+            let sourceFile = try findFile(pattern: "source.*", in: dir)
             let expected = try readURLs(from: sourceFile, relativeTo: sourceFile)
 
             let playList = PlayList()
             try playList.download(url: sourceFile)
 
             XCTAssertEqual(playList.urls, expected, "\nFAILED TEST \(dir.path().removingPercentEncoding ?? "")\n")
+        }
+    }
+}
+
+extension RadiolaTests {
+    /* ****************************************
+     *
+     * ****************************************/
+    func testPlayListTitles() throws {
+        try walkDataDir(testName: #function) { dir in
+
+            let sourceFile = try findFile(pattern: "source.*", in: dir)
+            let expected = try loadJSON("expected.json", in: dir) as [String]
+
+            let playList = PlayList()
+            try playList.download(url: sourceFile)
+
+            let titles = playList.links.compactMap { $0.title ?? "" }
+            XCTAssertEqual(titles, expected, "\nFAILED TEST \(dir.path().removingPercentEncoding ?? "")\n")
         }
     }
 }

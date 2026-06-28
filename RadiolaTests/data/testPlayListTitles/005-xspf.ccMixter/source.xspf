@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <playlist xmlns="http://xspf.org/ns/0/" version="1">
+    <title>ccMixter</title>
+    <creator>http://ccmixter.org/</creator>
+    <annotation>Download, Sample, Cut-up, Share.</annotation>
+    <info>Download, Sample, Cut-up, Share.</info>
+    <location>http://ccmixter.org/media/api/query?f=xspf</location>
+    <date>Sat, 05 May 2007 14:04:44 CDT</date>
+    <trackList>
+      <track>
+        <location>http://ccmixter.org/people/FFGreen/FFGreen_-_Baltimore_Dreaming_(FF_remix).mp3</location>
+        <identifier>10165</identifier>
+        <title>Baltimore Dreaming (FF remix)</title>
+        <creator>FFGreen</creator>
+        <duration>2976018</duration>
+        <meta rel="http://creativecommons.org/licenses/by-nc/2.5/">http://creativecommons.org/licenses/by-nc/2.5/</meta>
+        <image>http://ccmixter.org/avatars/FF-old-ccmixterpic.jpg</image>
+      </track>
+    </trackList>
+  </playlist>
