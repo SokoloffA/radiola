@@ -98,6 +98,8 @@ class FFPlayer {
     private let streamPair = AsyncStream<FFPlayer.Event>.makeStream()
     var events: AsyncStream<FFPlayer.Event> { streamPair.stream }
 
+    var maxRetriesCount = 10
+
     /* ****************************************
      *
      * ****************************************/
@@ -113,7 +115,7 @@ class FFPlayer {
 
         playTask = Task {
             await currentStopTask?.value
-            await actor.start(url: url, volume: volume, audioDevice: audioDevice)
+            await actor.start(url: url, volume: volume, audioDevice: audioDevice, maxRetryCount: maxRetriesCount)
         }
     }
 
@@ -153,6 +155,14 @@ private actor FFPlayerActor {
     typealias Event = FFPlayer.Event
     private let continuation: AsyncStream<FFPlayer.Event>.Continuation
 
+    private let retryDelayStep: Double = 0.5 // sec
+    private var retryCount = 0
+    private var currentMaxRetryCount: Int = 0
+    private var currentURL: URL?
+    private var currentVolume: Float32 = 1.0
+    private var currentAudioDevice: AudioDevice?
+    private var jobID: UInt64 = 0
+
     /* ****************************************
      *
      * ****************************************/
@@ -168,7 +178,7 @@ private actor FFPlayerActor {
         decoder.onError = { [weak self] error in
             guard let self else { return }
             Task {
-                await self.setError(error)
+                await self.handleError(error)
             }
         }
 
@@ -190,7 +200,23 @@ private actor FFPlayerActor {
     /* ****************************************
      *
      * ****************************************/
-    func start(url: URL, volume: Float, audioDevice: AudioDevice?) {
+    func start(url: URL, volume: Float, audioDevice: AudioDevice?, maxRetryCount: Int) {
+        currentURL = url
+        currentVolume = volume
+        currentAudioDevice = audioDevice
+        currentMaxRetryCount = maxRetryCount
+        retryCount = Int.max
+        jobID += 1
+
+        doStart()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func doStart() {
+        guard let url = currentURL else { return }
+
         do {
             userInterrupt.value = false
             decoderInterrupt.value = false
@@ -212,14 +238,15 @@ private actor FFPlayerActor {
             try decoder.load(url: realURL)
             try fillRingBuffer()
 
-            try macAudio.start(format: decoder.format, audioDevice: audioDevice)
-            macAudio.fadeInVolume(to: volume)
+            try macAudio.start(format: decoder.format, audioDevice: currentAudioDevice)
+            macAudio.fadeInVolume(to: currentVolume)
 
             decoder.startDecodeThread()
 
+            retryCount = 0
             emit(.stateChanged(.playing))
         } catch {
-            setError(error as NSError)
+            handleError(error as NSError)
         }
     }
 
@@ -232,6 +259,12 @@ private actor FFPlayerActor {
 
         emit(.stateChanged(.stoped))
         emit(.metadataReady(nil))
+
+        currentURL = nil
+        currentVolume = 0
+        currentAudioDevice = nil
+        currentMaxRetryCount = 0
+        retryCount = 0
     }
 
     /* ****************************************
@@ -256,21 +289,47 @@ private actor FFPlayerActor {
      *
      * ****************************************/
     func setVolume(_ volume: Float) {
+        currentVolume = volume
         macAudio.setVolume(volume)
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func setError(_ error: NSError) {
+    private func handleError(_ error: NSError) {
         if userInterrupt.value || error.code == averror_exit {
             stop()
             emit(.stateChanged(.stoped))
             return
         }
 
-        emit(.stateChanged(.error(error)))
-        stop()
+        let isFatalError =
+            error.code == averror_http_not_found || // HTTP 404
+            error.code == averror_http_forbidden || // HTTP 403
+            error.code == averror_http_unauthorized || // HTTP 401
+            error.code == averror_decoder_not_found ||
+            error.code == FFPlayer.ErrorCode.noStreamFoundError.rawValue
+
+        if !isFatalError && retryCount < currentMaxRetryCount {
+            let delay = retryDelayStep * Double(retryCount)
+            retryCount += 1
+
+            macAudio.stop()
+            decoder.stop()
+            emit(.stateChanged(.connecting))
+
+            let id = jobID
+            Task {
+                debug("[FFPlayer] Network error: \(error)). Attempting to reconnect \(retryCount)/\(currentMaxRetryCount) in \(delay) seconds...")
+                try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
+                if currentURL != nil && id == self.jobID {
+                    self.doStart()
+                }
+            }
+        } else {
+            emit(.stateChanged(.error(error)))
+            stop()
+        }
     }
 
     /* ****************************************
@@ -332,45 +391,49 @@ extension NSError {
  *
  * ****************************************/
 func printFFErrors() {
-    func dump(_ code: Int32, _ name: String) {
+    func dump(_ code: Int32, _ swiftName: String, _ cName: String) {
         var errorBuffer = [CChar](repeating: 0, count: 1024)
         av_make_error_string(&errorBuffer, 1024, code)
         let ffError = String(cString: errorBuffer)
 
-        print(String(format: "%-5d - %@ %@", code, name, ffError))
+        print(String(format: "%12d - %@ %@ %@",
+                     code,
+                     swiftName.padding(toLength: 30, withPad: " ", startingAt: 0),
+                     cName.padding(toLength: 30, withPad: " ", startingAt: 0),
+                     ffError))
     }
 
-    dump(-ETIMEDOUT, "ETIMEDOUT")
-    dump(averror_bsf_not_found, "AVERROR_BSF_NOT_FOUND")
-    dump(averror_bsf_not_found, "AVERROR_BSF_NOT_FOUND")
-    dump(averror_bug, "AVERROR_BUG")
-    dump(averror_buffer_too_small, "AVERROR_BUFFER_TOO_SMALL")
-    dump(averror_decoder_not_found, "AVERROR_DECODER_NOT_FOUND")
-    dump(averror_demuxer_not_found, "AVERROR_DEMUXER_NOT_FOUND")
-    dump(averror_encoder_not_found, "AVERROR_ENCODER_NOT_FOUND")
-    dump(averror_eof, "AVERROR_EOF")
-    dump(averror_exit, "AVERROR_EXIT")
-    dump(averror_external, "AVERROR_EXTERNAL")
-    dump(averror_filter_not_found, "AVERROR_FILTER_NOT_FOUND")
-    dump(averror_invaliddata, "AVERROR_INVALIDDATA")
-    dump(averror_muxer_not_found, "AVERROR_MUXER_NOT_FOUND")
-    dump(averror_option_not_found, "AVERROR_OPTION_NOT_FOUND")
-    dump(averror_patchwelcome, "AVERROR_PATCHWELCOME")
-    dump(averror_protocol_not_found, "AVERROR_PROTOCOL_NOT_FOUND")
-    dump(averror_stream_not_found, "AVERROR_STREAM_NOT_FOUND")
-    dump(averror_bug2, "AVERROR_BUG2")
-    dump(averror_unknown, "AVERROR_UNKNOWN")
-    dump(averror_experimental, "AVERROR_EXPERIMENTAL")
-    dump(averror_input_changed, "AVERROR_INPUT_CHANGED")
-    dump(averror_output_changed, "AVERROR_OUTPUT_CHANGED")
-    dump(averror_http_bad_request, "AVERROR_HTTP_BAD_REQUEST")
-    dump(averror_http_unauthorized, "AVERROR_HTTP_UNAUTHORIZED")
-    dump(averror_http_forbidden, "AVERROR_HTTP_FORBIDDEN")
-    dump(averror_http_not_found, "AVERROR_HTTP_NOT_FOUND")
-    dump(averror_http_too_many_requests, "AVERROR_HTTP_TOO_MANY_REQUESTS")
-    dump(averror_http_other_4xx, "AVERROR_HTTP_OTHER_4XX")
-    dump(averror_http_server_error, "AVERROR_HTTP_SERVER_ERROR")
-    dump(av_error_max_string_size, "AV_ERROR_MAX_STRING_SIZE")
+    dump(-ETIMEDOUT, "-ETIMEDOUT", "ETIMEDOUT")
+    dump(averror_bsf_not_found, "averror_bsf_not_found", "AVERROR_BSF_NOT_FOUND")
+    dump(averror_bsf_not_found, "averror_bsf_not_found", "AVERROR_BSF_NOT_FOUND")
+    dump(averror_bug, "averror_bug", "AVERROR_BUG")
+    dump(averror_buffer_too_small, "averror_buffer_too_small", "AVERROR_BUFFER_TOO_SMALL")
+    dump(averror_decoder_not_found, "averror_decoder_not_found", "AVERROR_DECODER_NOT_FOUND")
+    dump(averror_demuxer_not_found, "averror_demuxer_not_found", "AVERROR_DEMUXER_NOT_FOUND")
+    dump(averror_encoder_not_found, "averror_encoder_not_found", "AVERROR_ENCODER_NOT_FOUND")
+    dump(averror_eof, "averror_eof", "AVERROR_EOF")
+    dump(averror_exit, "averror_exit", "AVERROR_EXIT")
+    dump(averror_external, "averror_external", "AVERROR_EXTERNAL")
+    dump(averror_filter_not_found, "averror_filter_not_found", "AVERROR_FILTER_NOT_FOUND")
+    dump(averror_invaliddata, "averror_invaliddata", "AVERROR_INVALIDDATA")
+    dump(averror_muxer_not_found, "averror_muxer_not_found", "AVERROR_MUXER_NOT_FOUND")
+    dump(averror_option_not_found, "averror_option_not_found", "AVERROR_OPTION_NOT_FOUND")
+    dump(averror_patchwelcome, "averror_patchwelcome", "AVERROR_PATCHWELCOME")
+    dump(averror_protocol_not_found, "averror_protocol_not_found", "AVERROR_PROTOCOL_NOT_FOUND")
+    dump(averror_stream_not_found, "averror_stream_not_found", "AVERROR_STREAM_NOT_FOUND")
+    dump(averror_bug2, "averror_bug2", "AVERROR_BUG2")
+    dump(averror_unknown, "averror_unknown", "AVERROR_UNKNOWN")
+    dump(averror_experimental, "averror_experimental", "AVERROR_EXPERIMENTAL")
+    dump(averror_input_changed, "averror_input_changed", "AVERROR_INPUT_CHANGED")
+    dump(averror_output_changed, "averror_output_changed", "AVERROR_OUTPUT_CHANGED")
+    dump(averror_http_bad_request, "averror_http_bad_request", "AVERROR_HTTP_BAD_REQUEST")
+    dump(averror_http_unauthorized, "averror_http_unauthorized", "AVERROR_HTTP_UNAUTHORIZED")
+    dump(averror_http_forbidden, "averror_http_forbidden", "AVERROR_HTTP_FORBIDDEN")
+    dump(averror_http_not_found, "averror_http_not_found", "AVERROR_HTTP_NOT_FOUND")
+    dump(averror_http_too_many_requests, "averror_http_too_many_requests", "AVERROR_HTTP_TOO_MANY_REQUESTS")
+    dump(averror_http_other_4xx, "averror_http_other_4xx", "AVERROR_HTTP_OTHER_4XX")
+    dump(averror_http_server_error, "averror_http_server_error", "AVERROR_HTTP_SERVER_ERROR")
+    dump(av_error_max_string_size, "av_error_max_string_size", "AV_ERROR_MAX_STRING_SIZE")
 }
 
 /* ****************************************
