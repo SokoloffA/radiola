@@ -155,7 +155,7 @@ private actor FFPlayerActor {
     typealias Event = FFPlayer.Event
     private let continuation: AsyncStream<FFPlayer.Event>.Continuation
 
-    private let retryDelayStep: Double = 0.5 // sec
+    private let retryDelayStep: TimeInterval = 0.5 // sec
     private var retryCount = 0
     private var currentMaxRetryCount: Int = 0
     private var currentURL: URL?
@@ -311,7 +311,7 @@ private actor FFPlayerActor {
             error.code == FFPlayer.ErrorCode.noStreamFoundError.rawValue
 
         if !isFatalError && retryCount < currentMaxRetryCount {
-            let delay = retryDelayStep * Double(retryCount)
+            let delay = retryDelayStep * TimeInterval(retryCount)
             retryCount += 1
 
             macAudio.stop()
