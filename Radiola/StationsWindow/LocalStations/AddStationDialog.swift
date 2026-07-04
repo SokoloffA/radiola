@@ -116,6 +116,7 @@ class AddStationDialog: OkCancelDialog, NSTextFieldDelegate {
                     downloadTitleButton.setAsLoading(false)
                     if let title = title {
                         titleEdit.stringValue = title
+                        updateButtons()
                     }
                 }
 
