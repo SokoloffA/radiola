@@ -8,7 +8,7 @@
 import Cocoa
 import Combine
 
-fileprivate var selectedListId: UUID? = AppState.shared.localStations.first?.id
+fileprivate var selectedListId: UUID?
 fileprivate var selectedRows: [UUID: Int] = [:]
 fileprivate let historyListId = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
 
@@ -195,6 +195,9 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     func windowWillClose(_ notification: Notification) {
+        if let listId = selectedListId {
+            selectedRows[listId] = stationsTree.selectedRowIndexes.first
+        }
         StationsWindow.instance = nil
     }
 
@@ -208,6 +211,25 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
     /* ****************************************
      *
      * ****************************************/
+    private class func findListID() -> UUID? {
+        if selectedListId != nil {
+            return selectedListId
+        }
+
+        // Find by current station
+        if let url = player.station?.url {
+            if let (_, list) = AppState.shared.localStationAndList(byURL: url) {
+                return list.id
+            }
+        }
+
+        // By default use first local station list
+        return AppState.shared.localStations.first?.id
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     class func show() {
         if instance == nil {
             instance = StationsWindow()
@@ -216,10 +238,9 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
         // Ensure the window is loaded before accessing outlets
         _ = instance?.window
 
-        // Always jump to the first local station list when opening from menu
-        if let localList = AppState.shared.localStations.first {
-            selectedListId = localList.id
-            instance?.sideBar.selectedListId = localList.id
+        if let listID = findListID() {
+            selectedListId = listID
+            instance?.sideBar.selectedListId = listID
             instance?.sidebarChanged()
         }
 
@@ -284,10 +305,6 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     @objc func selectionChanged() {
-        if let listId = sideBar.selectedListId {
-            selectedRows[listId] = stationsTree.selectedRowIndexes.first
-        }
-
         for button in toolBox?.findSubviews(ofType: NSButton.self) ?? [] {
             button.isEnabled = validateAction(action: button.action)
         }
@@ -315,6 +332,10 @@ class StationsWindow: NSWindowController, NSWindowDelegate, NSSplitViewDelegate 
      *
      * ****************************************/
     @objc private func sidebarChanged() {
+        if stationsTree.delegate != nil, let listId = selectedListId {
+            selectedRows[listId] = stationsTree.selectedRowIndexes.first
+        }
+
         selectedListId = sideBar.selectedListId
         stationsTree.delegate = nil
         stationsTree.dataSource = nil
