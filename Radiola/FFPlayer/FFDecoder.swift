@@ -75,6 +75,8 @@ class FFDecoder {
     let shouldInterrupt: AtomicBool
 
     private var decodeThread: Thread?
+    fileprivate var watchdogTime: TimeInterval = 0
+    fileprivate let watchdogTimeout: TimeInterval = 5.0
 
     private var speedMetric: SpeedMetric?
     private var readyBuffMetric: GaugeMetric?
@@ -152,6 +154,7 @@ class FFDecoder {
 
         formatContext.pointee.interrupt_callback = interruptCB
 
+        watchdogTime = ProcessInfo.processInfo.systemUptime
         err = avformat_open_input(&formatContext, url.absoluteString, nil, &options)
         if err < 0 {
             av_dict_free(&options)
@@ -303,6 +306,7 @@ class FFDecoder {
 
         while pcmBuffer.count < bufferSize {
             err = av_read_frame(formatContext, packet)
+
             if err == -ETIMEDOUT {
                 debug("Error calling av_read_frame: ETIMEDOUT")
                 timeoutCount += 1
@@ -317,6 +321,7 @@ class FFDecoder {
             }
 
             timeoutCount = 0
+            watchdogTime = ProcessInfo.processInfo.systemUptime
 
             defer {
                 av_packet_unref(packet)
@@ -495,12 +500,40 @@ class FFDecoder {
 }
 
 /* ****************************************
- *
+ * FFmpeg Network Watchdog / Interrupt Callback
+  * * Official FFmpeg Documentation (AVIOInterruptCB):
+  * https://ffmpeg.org/doxygen/trunk/structAVIOInterruptCB.html
+  *
+  * How it works according to FFmpeg source (libavformat/avio.h):
+  * "Callback for checking whether to abort blocking functions.
+  * AVERROR_EXIT is returned in this case by the interrupted function.
+  * During blocking operations, callback is called with opaque as parameter.
+  * If the callback returns 1, the blocking operation will be aborted."
+  *
+  * THREAD SAFETY:
+  * This callback is invoked SYNCHRONOUSLY from within the same thread (FFmpegDecoder)
+  * that executes `av_read_frame` or `avformat_open_input`. The FFmpeg network engine
+  * does not block the thread indefinitely in a system recv() call; instead, it uses
+  * non-blocking sockets and poll()/kevent() with a short timeout (50-100ms).
+  * Inside FFmpeg's internal read loop, it invokes this closure first. If it returns 1 (true),
+  * it immediately aborts the I/O operation, returning the error code AVERROR_EXIT (-1414092869).
+  *
+  * Since the invocation happens sequentially on a single thread, reading
+  * `lastActivityTime` here is inherently safe from race conditions.
  * ****************************************/
 typealias FFmpegInterruptCallback = @convention(c) (UnsafeMutableRawPointer?) -> Int32
 let interruptCallback: FFmpegInterruptCallback = { opaque in
     guard let opaque else { return 0 }
     let decoder = Unmanaged<FFDecoder>.fromOpaque(opaque).takeUnretainedValue()
 
-    return decoder.shouldInterrupt.value ? 1 : 0
+    if decoder.shouldInterrupt.value {
+        return 1
+    }
+
+    let now = ProcessInfo.processInfo.systemUptime
+    if now - decoder.watchdogTime > decoder.watchdogTimeout {
+        return 1
+    }
+
+    return 0
 }

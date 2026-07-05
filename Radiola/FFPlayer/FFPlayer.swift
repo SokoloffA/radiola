@@ -155,9 +155,8 @@ private actor FFPlayerActor {
     typealias Event = FFPlayer.Event
     private let continuation: AsyncStream<FFPlayer.Event>.Continuation
 
-    private let retryDelayStep: TimeInterval = 0.5 // sec
-    private var retryCount = 0
-    private var currentMaxRetryCount: Int = 0
+    private let retryManager = RetryManager()
+
     private var currentURL: URL?
     private var currentVolume: Float32 = 1.0
     private var currentAudioDevice: AudioDevice?
@@ -204,9 +203,9 @@ private actor FFPlayerActor {
         currentURL = url
         currentVolume = volume
         currentAudioDevice = audioDevice
-        currentMaxRetryCount = maxRetryCount
-        retryCount = Int.max
         jobID += 1
+
+        retryManager.reset(maxRetryCount: maxRetryCount)
 
         doStart()
     }
@@ -220,6 +219,7 @@ private actor FFPlayerActor {
         do {
             userInterrupt.value = false
             decoderInterrupt.value = false
+            retryManager.prepareForNextAttempt()
             emit(.stateChanged(.connecting))
 
             var realURL: URL
@@ -243,7 +243,7 @@ private actor FFPlayerActor {
 
             decoder.startDecodeThread()
 
-            retryCount = 0
+            retryManager.markAsPlaying()
             emit(.stateChanged(.playing))
         } catch {
             handleError(error as NSError)
@@ -263,8 +263,8 @@ private actor FFPlayerActor {
         currentURL = nil
         currentVolume = 0
         currentAudioDevice = nil
-        currentMaxRetryCount = 0
-        retryCount = 0
+
+        retryManager.reset(maxRetryCount: 0)
     }
 
     /* ****************************************
@@ -297,22 +297,15 @@ private actor FFPlayerActor {
      *
      * ****************************************/
     private func handleError(_ error: NSError) {
-        if userInterrupt.value || error.code == averror_exit {
+        if userInterrupt.value {
             stop()
             emit(.stateChanged(.stoped))
             return
         }
 
-        let isFatalError =
-            error.code == averror_http_not_found || // HTTP 404
-            error.code == averror_http_forbidden || // HTTP 403
-            error.code == averror_http_unauthorized || // HTTP 401
-            error.code == averror_decoder_not_found ||
-            error.code == FFPlayer.ErrorCode.noStreamFoundError.rawValue
-
-        if !isFatalError && retryCount < currentMaxRetryCount {
-            let delay = retryDelayStep * TimeInterval(retryCount)
-            retryCount += 1
+        if retryManager.shouldRetry(for: error) {
+            let delay = retryManager.nextDelay()
+            let retryCount = retryManager.retryCount
 
             macAudio.stop()
             decoder.stop()
@@ -320,7 +313,7 @@ private actor FFPlayerActor {
 
             let id = jobID
             Task {
-                debug("[FFPlayer] Network error: \(error)). Attempting to reconnect \(retryCount)/\(currentMaxRetryCount) in \(delay) seconds...")
+                debug("[FFPlayer] Network error: \(error)). Attempting to reconnect \(retryCount)/\(retryManager.maxRetryCount) in \(delay) seconds...")
                 try? await Task.sleep(nanoseconds: UInt64(delay * 1_000_000_000))
                 if currentURL != nil && id == self.jobID {
                     self.doStart()
@@ -337,6 +330,82 @@ private actor FFPlayerActor {
      * ****************************************/
     private func emit(_ event: Event) {
         continuation.yield(event)
+    }
+}
+
+// MARK: -  RetryManager
+
+final class RetryManager {
+    private let delayStep: TimeInterval = 0.5
+    private let stabilizationThreshold: TimeInterval = 15.0
+
+    private(set) var retryCount = 0
+    private(set) var maxRetryCount = 0
+    private var playingStartTime: TimeInterval = 0
+    private var isInitiallyConnected = false
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func reset(maxRetryCount: Int) {
+        self.maxRetryCount = maxRetryCount
+        retryCount = 0
+        playingStartTime = 0
+        isInitiallyConnected = false
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func markAsPlaying() {
+        isInitiallyConnected = true
+        playingStartTime = ProcessInfo.processInfo.systemUptime
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func prepareForNextAttempt() {
+        playingStartTime = 0
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func shouldRetry(for error: NSError) -> Bool {
+        let isFatalError =
+            error.code == averror_http_not_found || // HTTP 404
+            error.code == averror_http_forbidden || // HTTP 403
+            error.code == averror_http_unauthorized || // HTTP 401
+            error.code == averror_decoder_not_found ||
+            error.code == FFPlayer.ErrorCode.noStreamFoundError.rawValue
+
+        if isFatalError {
+            return false
+        }
+
+        if !isInitiallyConnected {
+            return false
+        }
+
+        let now = ProcessInfo.processInfo.systemUptime
+        let playbackDuration = playingStartTime > 0 ? (now - playingStartTime) : 0
+
+        if playbackDuration > stabilizationThreshold {
+            print("[RetryManager] Stream was stable for \(playbackDuration)s. Resetting retry count.")
+            retryCount = 0
+        }
+
+        return retryCount < maxRetryCount
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func nextDelay() -> TimeInterval {
+        let delay = delayStep * TimeInterval(retryCount)
+        retryCount += 1
+        return delay
     }
 }
 
