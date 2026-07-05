@@ -76,7 +76,7 @@ class FFDecoder {
 
     private var decodeThread: Thread?
     fileprivate var watchdogTime: TimeInterval = 0
-    fileprivate let watchdogTimeout: TimeInterval = 5.0
+    fileprivate let watchdogTimeout: TimeInterval = 10.0
 
     private var speedMetric: SpeedMetric?
     private var readyBuffMetric: GaugeMetric?
@@ -530,8 +530,9 @@ let interruptCallback: FFmpegInterruptCallback = { opaque in
         return 1
     }
 
-    let now = ProcessInfo.processInfo.systemUptime
-    if now - decoder.watchdogTime > decoder.watchdogTimeout {
+    let delay = ProcessInfo.processInfo.systemUptime - decoder.watchdogTime
+    if delay > decoder.watchdogTimeout {
+        debug("[FFmpeg] Network timeout. Delay: \(delay)")
         return 1
     }
 

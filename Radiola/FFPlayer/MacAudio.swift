@@ -28,8 +28,6 @@ class MacAudio {
     private var bytesPerFrame = 0
     private var ringBufferDuration: TimeInterval = 0
 
-    private var isRealigned = true
-
     var onNeedRestart: (() -> Void)?
 
     private var speedMetric: SpeedMetric?
@@ -146,14 +144,30 @@ class MacAudio {
             let renderer = audioRenderer,
             let synchronizer = renderSynchronizer else { return }
 
-        var duration = 0.0
-        while renderer.isReadyForMoreMediaData {
-            if isRealigned && ringBuffer.readyNum() < 50 { break }
-            isRealigned = false
+        // 1. GATEKEEPER / PREROLL CHECK
+        // If the timeline isn't running (either at initial startup or after recovering from starvation),
+        // we must block execution until the ring buffer accumulates enough chunks to satisfy our preroll target.
+        // This prevents a "rapid-fire" starvation loop where the player consumes 1-2 packets and stalls immediately.
+        if !timeline.isStarted && ringBuffer.readyNum() < timeline.prerollTarget {
+            let delay = ringBufferDuration * 0.8
+            playbackQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
+                self?.feedAudioRenderer()
+            }
+            return
+        }
 
+        var duration = 0.0
+        var enqueuedAny = false
+
+        // 2. MAIN FEED LOOP
+        // As long as the system audio renderer is capable of accepting more hardware buffers,
+        // we extract raw decoded frames from our ring buffer, wrap them into CMSampleBuffers, and push them.
+        while renderer.isReadyForMoreMediaData {
             guard let sampleBuffer = dequeueAudioSampleBuffer() else { break }
+            enqueuedAny = true
             duration += CMSampleBufferGetOutputDuration(sampleBuffer).seconds
 
+            // Capture the PTS of the very first buffer in this batch to act as our synchronization anchor.
             if timeline.prerollStartTime == nil {
                 timeline.prerollStartTime = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
             }
@@ -161,14 +175,37 @@ class MacAudio {
             renderer.enqueue(sampleBuffer)
             timeline.buffersQueued += 1
 
+            // 3. START SYSTEM CLOCK ON SUFFICIENT PREROLL
+            // If the clock is stopped, but we have successfully enqueued enough data to meet the preroll target,
+            // we start the AVSampleBufferRenderSynchronizer master clock exactly at the first frame's PTS.
             if !timeline.isStarted && timeline.buffersQueued >= timeline.prerollTarget {
                 startSynchronizer(synchronizer, at: timeline.prerollStartTime ?? timeline.nextPresentationTime)
                 timeline.isStarted = true
             }
         }
 
-        let delay = (duration > 0 ? duration : ringBufferDuration) * 0.8
+        // 4. ACTIVE STARVATION DETECTION
+        // If the timeline was supposed to be running, but we failed to feed even a single frame during this cycle
+        // because the ring buffer was completely drained, it means the network stream is starving.
+        if timeline.isStarted && !enqueuedAny && ringBuffer.readyNum() == 0 {
+            debug("[MacAudio] Buffer starvation detected! Pausing master clock and resetting timeline.")
 
+            // Stop the master timeline clock immediately so it doesn't drift ahead into the future.
+            synchronizer.rate = 0.0
+
+            // Evacuate any potentially corrupt, incomplete, or late blocks remaining in Apple's hardware pipeline.
+            renderer.flush()
+
+            // Re-anchor our internal timeline to the exact playback time where the user stopped hearing sound.
+            // When the network recovers, new frames will be assigned a PTS perfectly matched to this point.
+            let currentTrackTime = synchronizer.currentTime()
+            timeline.reset(at: currentTrackTime)
+        }
+
+        // 5. SCHEDULE NEXT FEeder ITERATION
+        // If we pushed data, wake up when about 80% of that data has been played back to ensure smooth continuous delivery.
+        // If we are stalling/waiting, sleep for a standard ring buffer interval to poll again later without burning CPU.
+        let delay = (duration > 0 ? duration : ringBufferDuration) * 0.8
         playbackQueue.asyncAfter(deadline: .now() + delay) { [weak self] in
             self?.feedAudioRenderer()
         }
@@ -252,21 +289,6 @@ class MacAudio {
         let hostStart = CMTimeAdd(CMClockGetTime(CMClockGetHostTimeClock()), CMTime(seconds: 0.2, preferredTimescale: 1000))
         synchronizer.setRate(1.0, time: t, atHostTime: hostStart)
     }
-
-    /* ****************************************
-     *
-     * ****************************************/
-//    private func realignAfterFlush() {
-//        audioRenderer?.flush()
-//        guard let synchronizer = renderSynchronizer else { return }
-//
-//        let current = synchronizer.currentTime()
-//        synchronizer.rate = 0.0
-//        timeline.reset(at: current)
-//
-//        isRealigned = true
-//        feedAudioRenderer()
-//    }
 
     /* ****************************************
      *
