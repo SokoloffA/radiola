@@ -45,12 +45,16 @@ class AudioSytstem {
 
         // number of devices
         let deviceCount = Int(size) / MemoryLayout<AudioDeviceID>.size
+        guard deviceCount > 0 else { return [] }
+
         var audioDevices = [AudioDeviceID](repeating: AudioDeviceID(0), count: deviceCount)
 
         // get device ids
-        if AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &propertyAddress, 0, nil, &size, &audioDevices[0]) != noErr {
-            return []
+        let status = audioDevices.withUnsafeMutableBufferPointer { buffer in
+            guard let baseAddress = buffer.baseAddress else { return OSStatus(paramErr) }
+            return AudioObjectGetPropertyData(AudioObjectID(kAudioObjectSystemObject), &propertyAddress, 0, nil, &size, baseAddress)
         }
+        if status != noErr { return [] }
 
         return audioDevices.compactMap {
             return AudioDevice(deviceID: $0)
