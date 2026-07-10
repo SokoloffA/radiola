@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="24765" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="24765"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -29,7 +29,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="682" height="375"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="3440" height="1415"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1170"/>
             <value key="minSize" type="size" width="500" height="200"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="682" height="375"/>
@@ -142,7 +142,7 @@
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
                                             </textField>
-                                            <progressIndicator maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="aBa-WI-6bB" userLabel="stateIndicatorSpinner">
+                                            <progressIndicator wantsLayer="YES" maxValue="100" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="aBa-WI-6bB" userLabel="stateIndicatorSpinner">
                                                 <rect key="frame" x="41" y="20" width="16" height="16"/>
                                             </progressIndicator>
                                         </subviews>
@@ -189,9 +189,9 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="E603DE99-C223-49D2-AC20-617FF561695E" autosavesConfiguration="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="dvN-S5-4WP">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="9847B8CC-FB77-48AF-BB86-C525422033E6" label="Toggle sidebar" paletteLabel="Toggle sidebar" tag="-1" image="sidebar.left" catalog="system" bordered="YES" id="iyL-Mv-jxL">
+                    <toolbarItem implicitItemIdentifier="9847B8CC-FB77-48AF-BB86-C525422033E6" label="Toggle sidebar" paletteLabel="Toggle sidebar" tag="-1" image="sidebar.left" catalog="system" id="iyL-Mv-jxL">
                         <size key="minSize" width="31" height="25"/>
-                        <size key="maxSize" width="31" height="25"/>
+                        <size key="maxSize" width="0.0" height="25"/>
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
