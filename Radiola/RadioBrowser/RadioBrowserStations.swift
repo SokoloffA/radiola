@@ -69,10 +69,10 @@ extension RadioBrowser {
         var lastcheckok: Bool
 
         /// The last time when any radio-browser server checked the online state of this stream
-        var lastchecktime: Date
+        var lastchecktime: Date?
 
         /// datetime, YYYY-MM-DD HH:mm:ss    The last time when the stream was checked for the online status with a positive result
-        var lastcheckoktime: Date
+        var lastcheckoktime: Date?
 
         /// datetime, YYYY-MM-DD HH:mm:ss    The last time when this server checked the online state and the metadata of this stream
         var lastlocalchecktime: Date?
@@ -149,13 +149,13 @@ extension RadioBrowser {
             language = try container.decode(String.self, forKey: .language).split(separator: ",").map { String($0) }
             languagecodes = try container.decode(String.self, forKey: .languagecodes).split(separator: ",").map { String($0) }
             votes = try container.decode(Int.self, forKey: .votes)
-            lastchangetime = Date()
+            lastchangetime = try container.decode(Date.self, forKey: .lastchangetime_iso8601)
             codec = try container.decode(String.self, forKey: .codec)
             bitrate = try container.decode(Int.self, forKey: .bitrate)
             hls = try container.decode(Int.self, forKey: .hls) > 0
             lastcheckok = try container.decode(Int.self, forKey: .lastcheckok) > 0
-            lastchecktime = try container.decode(Date.self, forKey: .lastchecktime_iso8601)
-            lastcheckoktime = try container.decode(Date.self, forKey: .lastcheckoktime_iso8601)
+            lastchecktime = try container.decode(Date?.self, forKey: .lastchecktime_iso8601)
+            lastcheckoktime = try container.decode(Date?.self, forKey: .lastcheckoktime_iso8601)
             let s = try container.decode(String?.self, forKey: .lastlocalchecktime_iso8601)
             if s != nil && !s!.isEmpty {
                 lastlocalchecktime = try container.decode(Date.self, forKey: .lastlocalchecktime_iso8601)
@@ -164,9 +164,9 @@ extension RadioBrowser {
             clickcount = try container.decode(Int.self, forKey: .clickcount)
             clicktrend = try container.decode(Int.self, forKey: .clicktrend)
             ssl_error = try container.decode(Int.self, forKey: .ssl_error) > 0
-            geo_lat = try container.decode(Double?.self, forKey: .geo_lat)
-            geo_long = try container.decode(Double?.self, forKey: .geo_long)
-            has_extended_info = try container.decode(Bool.self, forKey: .has_extended_info)
+            geo_lat = try container.decodeIfPresent(Double.self, forKey: .geo_lat)
+            geo_long = try container.decodeIfPresent(Double.self, forKey: .geo_long)
+            has_extended_info = try container.decodeIfPresent(Bool.self, forKey: .has_extended_info)
         }
     }
 }
@@ -255,9 +255,31 @@ extension RadioBrowser.Server {
             queryItems.append(URLQueryItem(name: "hidebroken", value: "true"))
         }
 
-        let path = "/json/stations/\(by.rawValue.lowercased())/\(searchTerm)"
+        let escapedTerm = try escapeSearchTerm(searchTerm)
+        let path = "/json/stations/\(by.rawValue.lowercased())/\(escapedTerm)"
 
         return try await fetch([RadioBrowser.Station].self, path: path, queryItems: queryItems)
+    }
+
+    /* ************************************************
+     * Encodes the search term using a strict whitelist approach to ensure safe transmission.
+     *
+     * Standard Foundation character sets (like `.urlPathAllowed` or `.urlQueryAllowed`)
+     * are too permissive for dynamic payload embedded directly into a URL path segment.
+     * They leave structural characters like `/`, `+`, `&`, or `;` unescaped, which breaks
+     * routing and parsing on the Radio-Browser backend.
+     *
+     * Per **RFC 3986, Section 2.3 (Unreserved Characters)**, the only characters allowed
+     * in a URI without percent-encoding are alphanumeric characters and the following four
+     * symbols: hyphens, periods, underscores, and tildes (`-`, `.`, `_`, `~`).
+     * Everything else must be strictly percent-encoded.
+     * ************************************************/
+    private func escapeSearchTerm(_ searchTerm: String) throws -> String {
+        let allowed = CharacterSet.alphanumerics.union(.init(charactersIn: "._-~"))
+        guard let res = searchTerm.addingPercentEncoding(withAllowedCharacters: allowed) else {
+            throw RadioBrowser.Error("Invalid search term")
+        }
+        return res
     }
 
     // ******************************************************************

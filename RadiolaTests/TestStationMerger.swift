@@ -13,7 +13,7 @@ extension RadiolaTests {
      *
      * ****************************************/
     func testStationMerger() throws {
-        try walkDataDir(testName: #function) { dir in
+        try walkDataSubDirs(testName: #function) { dir in
 
             let cur = OpmlStations(icon: "", file: dir.appendingPathComponent("current.opml"))
             try cur.load()

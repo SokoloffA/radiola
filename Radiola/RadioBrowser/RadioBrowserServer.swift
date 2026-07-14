@@ -19,7 +19,7 @@ extension RadioBrowser {
             url.scheme = self.url.scheme
             url.host = self.url.host
             url.port = self.url.port
-            url.path = path
+            url.percentEncodedPath = path
             url.queryItems = queryItems
 
             guard let url = url.url else {

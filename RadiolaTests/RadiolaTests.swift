@@ -49,12 +49,35 @@ final class RadiolaTests: XCTestCase {
     /* ****************************************
      *
      * ****************************************/
-    func walkDataDir(testName: String, handler: (URL) throws -> Void) throws {
+    func walkDataSubDirs(testName: String, handler: (URL) throws -> Void) throws {
         let dir = dataDir(testName: testName)
         let dirs = try FileManager.default.contentsOfDirectory(at: dir, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]).filter(\.hasDirectoryPath).sorted { $0.path() < $1.path() }
 
         for d in dirs {
             try handler(d)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func walkDataFiles(testName: String, pattern: String, handler: (URL) throws -> Void) throws {
+        let dir = dataDir(testName: testName).path
+        let files = findFiles(pattern: dir + "/" + pattern)
+        if files.isEmpty {
+            XCTFail("Tests not found for \(testName) (pattern: \(pattern))")
+            return
+        }
+
+        for f in findFiles(pattern: dir + "/" + pattern) {
+            let url = URL(fileURLWithPath: f)
+            XCTContext.runActivity(named: "Testing \(testName):\(url.lastPathComponent)") { _ in
+                do {
+                    try handler(url)
+                } catch {
+                    XCTFail("Test \(testName):\(url.lastPathComponent) fail: \(error)")
+                }
+            }
         }
     }
 

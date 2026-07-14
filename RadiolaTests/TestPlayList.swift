@@ -13,7 +13,7 @@ extension RadiolaTests {
      *
      * ****************************************/
     func testPlayListDownload() throws {
-        try walkDataDir(testName: #function) { dir in
+        try walkDataSubDirs(testName: #function) { dir in
 
             let sourceFile = try findFile(pattern: "source.*", in: dir)
             let expected = try readURLs(from: sourceFile, relativeTo: sourceFile)
@@ -31,7 +31,7 @@ extension RadiolaTests {
      *
      * ****************************************/
     func testPlayListTitles() throws {
-        try walkDataDir(testName: #function) { dir in
+        try walkDataSubDirs(testName: #function) { dir in
 
             let sourceFile = try findFile(pattern: "source.*", in: dir)
             let expected = try loadJSON("expected.json", in: dir) as [String]
