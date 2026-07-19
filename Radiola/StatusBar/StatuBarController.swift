@@ -10,14 +10,15 @@ import Cocoa
 /* ****************************************
  *
  * ****************************************/
-class StatusBarController: NSObject, NSMenuDelegate {
+class StatusBarController: NSObject {
     private let appState = AppState.shared
-    let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    private let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let icon = StatusBarIcon(size: 16)
     private let padding: CGFloat = 2
 
-    private var middleMouseMonitor: Any?
-    private var scrollWheelMonitor: Any?
+    private var popover: Popover?
+    private var mouseLocalMonitor: Any?
+    private var mouseGlobalMonitor: Any?
 
     /* ****************************************
      *
@@ -55,13 +56,16 @@ class StatusBarController: NSObject, NSMenuDelegate {
                                                object: nil
         )
 
-        menuItem.button?.sendAction(on: [.leftMouseUp, .rightMouseUp, .otherMouseUp])
-        menuItem.button?.target = self
-        menuItem.button?.action = #selector(leftRightMouseAction)
         menuItem.button?.imagePosition = .imageTrailing
 
-        middleMouseMonitor = NSEvent.addLocalMonitorForEvents(matching: [.otherMouseDown, .otherMouseUp], handler: middleMouseDown)
-        scrollWheelMonitor = NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel], handler: scrollWheel)
+        let eventTypeMask: NSEvent.EventTypeMask = [
+            .leftMouseDown, .rightMouseDown, .otherMouseDown,
+            .leftMouseUp, .rightMouseUp, .otherMouseUp,
+            .scrollWheel,
+        ]
+
+        mouseGlobalMonitor = NSEvent.addGlobalMonitorForEvents(matching: eventTypeMask) { [weak self] event in self?.mouseEvent(event) }
+        mouseLocalMonitor = NSEvent.addLocalMonitorForEvents(matching: eventTypeMask) { [weak self] event in self?.mouseEvent(event); return event }
 
         playerStatusChanged()
     }
@@ -70,66 +74,104 @@ class StatusBarController: NSObject, NSMenuDelegate {
      *
      * ****************************************/
     deinit {
-        if let monitor = middleMouseMonitor { NSEvent.removeMonitor(monitor) }
-        if let monitor = scrollWheelMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = mouseLocalMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = mouseGlobalMonitor { NSEvent.removeMonitor(monitor) }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    @objc func leftRightMouseAction() {
-        if let event = NSApp.currentEvent {
-            processEvent(event)
+    private func mouseOverButton(_ event: NSEvent) -> Bool {
+        guard
+            let btnWindow = menuItem.button?.window
+        else {
+            return false
+        }
+
+        if let wnd = event.window {
+            return wnd == btnWindow
+        } else {
+            return btnWindow.frame.contains(event.locationInWindow)
         }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func middleMouseDown(_ event: NSEvent) -> NSEvent? {
-        if event.window != menuItem.button?.window {
-            return event
+    private func mouseOverPopover(_ event: NSEvent) -> Bool {
+        guard
+            let popover = popover
+        else {
+            return false
         }
 
-        menuItem.button?.highlight(event.type == .otherMouseDown)
-
-        if event.type == .otherMouseDown {
-            processEvent(event)
+        if let wnd = event.window {
+            return wnd == popover
+        } else {
+            return popover.frame.contains(event.locationInWindow)
         }
-
-        return event
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func scrollWheel(_ event: NSEvent) -> NSEvent? {
-        if event.window != menuItem.button?.window {
-            return event
-        }
+    private func mouseEvent(_ event: NSEvent) {
+        if mouseOverButton(event) {
+            switch event.type {
+                case .leftMouseDown, .rightMouseDown, .otherMouseDown:
+                    if event.eventNumber != 0 {
+                        mouseDownEvent(event)
+                    }
 
-        if settings.mouseWheelAction != MouseWheelAction.nothing {
-            var vol = Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
-            if event.isDirectionInvertedFromDevice {
-                vol = -vol
+                case .leftMouseUp, .rightMouseUp, .otherMouseUp:
+                    if event.eventNumber != 0 {
+                        mouseUpEvent(event)
+                    }
+
+                case .scrollWheel: mouseScrollEvent(event)
+                default: break
             }
-
-            player.volume += vol
+            return
         }
 
-        return event
+        if event.type == .leftMouseDown || event.type == .rightMouseDown || event.type == .otherMouseDown {
+            if !mouseOverPopover(event) {
+                closePopover()
+            }
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func processEvent(_ event: NSEvent) {
-        guard let action = actionType(event) else { return }
+    private func mouseDownEvent(_ event: NSEvent) {
+        menuItem.button?.highlight(true)
+
+        var action: MouseButtonAction?
+        switch event.type {
+            case .leftMouseDown:
+                action = settings.mouseAction(forButton: .left)
+
+            case .rightMouseDown:
+                action = settings.mouseAction(forButton: .right)
+
+            case .otherMouseDown:
+                action = settings.mouseAction(forButton: .middle)
+
+            default:
+                break
+        }
+
+        if action != .showMenu {
+            closePopover()
+        }
 
         switch action {
+            case .none:
+                return
+
             case .showMenu:
-                showPopover()
-                break
+                togglePopover()
 
             case .playPause:
                 player.toggle()
@@ -151,6 +193,29 @@ class StatusBarController: NSObject, NSMenuDelegate {
     /* ****************************************
      *
      * ****************************************/
+    private func mouseUpEvent(_ event: NSEvent) {
+        menuItem.button?.highlight(false)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func mouseScrollEvent(_ event: NSEvent) {
+        switch (settings.mouseWheelAction, event.isDirectionInvertedFromDevice) {
+            case (.nothing, _):
+                return
+
+            case (.volume, true):
+                player.volume += Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+
+            case (.volume, false):
+                player.volume -= Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
     func showPopover() {
         guard
             let button = menuItem.button,
@@ -161,20 +226,57 @@ class StatusBarController: NSObject, NSMenuDelegate {
         }
 
         let rectInScreen = window.convertToScreen(cellRect)
-        Popover.toggle(relativeTo: rectInScreen)
+
+        guard
+            let screen = NSScreen.screens.first(where: { NSMouseInRect(NSPoint(x: rectInScreen.midX, y: rectInScreen.midY), $0.frame, false) }) ?? NSScreen.main
+        else {
+            return
+        }
+
+        if popover == nil {
+            popover = Popover()
+            popover?.onClose = { [weak self] in self?.popover = nil }
+        }
+
+        if let popover = popover {
+            var size = popover.frame.size
+            size.height = min(size.height, screen.visibleFrame.height - 4)
+
+            let yCoord = rectInScreen.origin.y - size.height - 4
+            var xCoord = rectInScreen.origin.x + (rectInScreen.width / 2) - (size.width / 2)
+            if xCoord + size.width > screen.visibleFrame.maxX {
+                xCoord = screen.visibleFrame.maxX - size.width
+            }
+
+            let rect = NSRect(
+                x: xCoord,
+                y: yCoord,
+                width: size.width,
+                height: size.height
+            )
+
+            popover.setFrame(rect, display: true)
+            NSApp.activate(ignoringOtherApps: true)
+            popover.makeKeyAndOrderFront(nil)
+        }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    private func actionType(_ event: NSEvent) -> MouseButtonAction? {
-        guard let mouseButton = MouseButton(rawValue: event.buttonNumber) else { return nil }
+    func closePopover() {
+        popover?.close()
+    }
 
-        if event.modifierFlags.contains(.control) {
-            return MouseButtonAction.showMenu
+    /* ****************************************
+     *
+     * ****************************************/
+    func togglePopover() {
+        if popover != nil {
+            closePopover()
+        } else {
+            showPopover()
         }
-
-        return settings.mouseAction(forButton: mouseButton)
     }
 
     /* ****************************************

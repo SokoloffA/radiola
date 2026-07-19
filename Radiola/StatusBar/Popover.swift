@@ -11,70 +11,12 @@ import Foundation
 // MARK: - Popover
 
 class Popover: NSPanel, NSWindowDelegate {
-    private static var instance: Popover?
-    private var mouseLocalMonitor: Any?
-    private var mouseGlobalMonitor: Any?
+    var onClose: (() -> Void)?
 
     /* ****************************************
      *
      * ****************************************/
-    static func show(relativeTo positioningRect: NSRect) {
-        if instance == nil {
-            instance = Popover()
-        }
-
-        guard
-            let instance = instance,
-            let contentView = instance.contentView as? PopoverView,
-            let screen = NSScreen.screens.first(where: { NSMouseInRect(NSPoint(x: positioningRect.midX, y: positioningRect.midY), $0.frame, false) }) ?? NSScreen.main
-        else {
-            return
-        }
-
-        var size = instance.frame.size
-        size.height = min(size.height, screen.visibleFrame.height - 4)
-
-        let yCoord = positioningRect.origin.y - size.height - 4
-        var xCoord = positioningRect.origin.x + (positioningRect.width / 2) - (size.width / 2)
-        if xCoord + size.width > screen.visibleFrame.maxX {
-            xCoord = screen.visibleFrame.maxX - size.width
-        }
-
-        let rect = NSRect(
-            x: xCoord,
-            y: yCoord,
-            width: size.width,
-            height: size.height
-        )
-
-        instance.setFrame(rect, display: true)
-        contentView.scrollToTop()
-        instance.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    static func close() {
-        instance?.close()
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    static func toggle(relativeTo positioningRect: NSRect) {
-        if instance == nil {
-            Popover.show(relativeTo: positioningRect)
-        } else {
-            Popover.close()
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private init() {
+    init() {
         let contentView = PopoverView()
         contentView.layoutSubtreeIfNeeded()
         let size = contentView.preferredSize()
@@ -86,6 +28,7 @@ class Popover: NSPanel, NSWindowDelegate {
             defer: false
         )
 
+        hidesOnDeactivate = false
         delegate = self
 
         isFloatingPanel = true
@@ -101,25 +44,6 @@ class Popover: NSPanel, NSWindowDelegate {
         contentView.layer?.cornerRadius = 12
         contentView.layer?.masksToBounds = true
         self.contentView = contentView
-
-        // minSize = NSSize(width: 250, height: 300)
-        // maxSize = NSSize(width: 800, height: 1280)
-
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(popupDidResignKey),
-            name: NSWindow.didResignKeyNotification,
-            object: self
-        )
-
-        mouseLocalMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp]) { [weak self] event in
-            if event.window != self { self?.close() }
-            return event
-        }
-
-        mouseGlobalMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.leftMouseUp, .rightMouseUp, .otherMouseUp]) { [weak self] event in
-            if event.window != self { self?.close() }
-        }
     }
 
     /* ****************************************
@@ -133,28 +57,14 @@ class Popover: NSPanel, NSWindowDelegate {
      *
      * ****************************************/
     deinit {
-        if let monitor = mouseLocalMonitor {
-            NSEvent.removeMonitor(monitor)
-        }
-
-        if let monitor = mouseGlobalMonitor {
-            NSEvent.removeMonitor(monitor)
-        }
     }
 
     /* ****************************************
      *
      * ****************************************/
-    override func close() {
-        Popover.instance = nil
-        super.close()
-    }
-
-    /* ****************************************
-         *
-     * ****************************************/
-    @objc private func popupDidResignKey(_ notification: Notification) {
-        close()
+    override func makeKeyAndOrderFront(_ sender: Any?) {
+        (contentView as? PopoverView)?.scrollToTop()
+        super.makeKeyAndOrderFront(sender)
     }
 
     /* ****************************************
@@ -167,18 +77,22 @@ class Popover: NSPanel, NSWindowDelegate {
     /* ****************************************
      *
      * ****************************************/
-    func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-        let delta = frameSize.width - frame.width
-        let newOriginX = frame.origin.x - delta / 2
+    override func setFrame(_ frameRect: NSRect, display flag: Bool) {
+        var adjustedFrame = frameRect
 
-        DispatchQueue.main.async {
-            var newFrame = self.frame
-            newFrame.origin.x = newOriginX
-            newFrame.size = frameSize
-            super.setFrame(newFrame, display: true)
+        if frame.width > 0 && frameRect.width != frame.width {
+            let deltaX = frameRect.width - frame.width
+            adjustedFrame.origin.x -= deltaX / 2
         }
 
-        return frameSize
+        super.setFrame(adjustedFrame, display: flag)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func windowWillClose(_ notification: Notification) {
+        onClose?()
     }
 }
 
@@ -264,6 +178,10 @@ class PopoverView: NSView {
         layoutSubtreeIfNeeded()
         let size = stack.fittingSize
         frame = NSRect(origin: .zero, size: size)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     /* ****************************************
