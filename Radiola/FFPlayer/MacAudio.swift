@@ -187,14 +187,18 @@ class MacAudio {
         // 4. ACTIVE STARVATION DETECTION
         // If the timeline was supposed to be running, but we failed to feed even a single frame during this cycle
         // because the ring buffer was completely drained, it means the network stream is starving.
-        if timeline.isStarted && !enqueuedAny && ringBuffer.readyNum() == 0 {
+
+        let isRendererEmpty = CMTimeCompare(synchronizer.currentTime(), timeline.nextPresentationTime) >= 0
+        if isRendererEmpty && timeline.isStarted && !enqueuedAny && ringBuffer.readyNum() == 0 {
             debug("[MacAudio] Buffer starvation detected! Pausing master clock and resetting timeline.")
+            debug("[MacAudio]  * playback time: \(synchronizer.currentTime().seconds)")
+            debug("[MacAudio]  * timeline time: \(timeline.nextPresentationTime.seconds)")
 
             // Stop the master timeline clock immediately so it doesn't drift ahead into the future.
             synchronizer.rate = 0.0
 
             // Evacuate any potentially corrupt, incomplete, or late blocks remaining in Apple's hardware pipeline.
-            renderer.flush()
+            // renderer.flush()
 
             // Re-anchor our internal timeline to the exact playback time where the user stopped hearing sound.
             // When the network recovers, new frames will be assigned a PTS perfectly matched to this point.
