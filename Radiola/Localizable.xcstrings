@@ -1624,7 +1624,15 @@
       }
     },
     "Fetch the name from the website" : {
-      "comment" : "Button tooltip "
+      "comment" : "Button tooltip ",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Получить имя с веб-сайта"
+          }
+        }
+      }
     },
     "Group name" : {
       "comment" : "Station group placeholder",
