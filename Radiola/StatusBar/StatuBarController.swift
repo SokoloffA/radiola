@@ -17,8 +17,10 @@ class StatusBarController: NSObject {
     private let padding: CGFloat = 2
 
     private var popover: Popover?
-    private var mouseLocalMonitor: Any?
-    private var mouseGlobalMonitor: Any?
+    private var mouseClickLocalMonitor: Any?
+    private var mouseClickGlobalMonitor: Any?
+    private var mouseScrollLocalMonitor: Any?
+    private var mouseScrollGlobalMonitor: Any?
 
     /* ****************************************
      *
@@ -60,12 +62,12 @@ class StatusBarController: NSObject {
 
         let eventTypeMask: NSEvent.EventTypeMask = [
             .leftMouseDown, .rightMouseDown, .otherMouseDown,
-            .leftMouseUp, .rightMouseUp, .otherMouseUp,
-            .scrollWheel,
-        ]
+            .leftMouseUp, .rightMouseUp, .otherMouseUp]
 
-        mouseGlobalMonitor = NSEvent.addGlobalMonitorForEvents(matching: eventTypeMask) { [weak self] event in self?.mouseEvent(event) }
-        mouseLocalMonitor = NSEvent.addLocalMonitorForEvents(matching: eventTypeMask) { [weak self] event in self?.mouseEvent(event); return event }
+        mouseClickGlobalMonitor = NSEvent.addGlobalMonitorForEvents(matching: eventTypeMask) { [weak self] event in self?.mouseClickEvent(event) }
+        mouseClickLocalMonitor = NSEvent.addLocalMonitorForEvents(matching: eventTypeMask) { [weak self] event in self?.mouseClickEvent(event); return event }
+        mouseScrollGlobalMonitor = NSEvent.addGlobalMonitorForEvents(matching: [.scrollWheel]) { [weak self] event in self?.mouseScrollEvent(event) }
+        mouseScrollLocalMonitor = NSEvent.addLocalMonitorForEvents(matching: [.scrollWheel]) { [weak self] event in self?.mouseScrollEvent(event); return event }
 
         playerStatusChanged()
     }
@@ -74,8 +76,10 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     deinit {
-        if let monitor = mouseLocalMonitor { NSEvent.removeMonitor(monitor) }
-        if let monitor = mouseGlobalMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = mouseClickGlobalMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = mouseClickLocalMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = mouseScrollGlobalMonitor { NSEvent.removeMonitor(monitor) }
+        if let monitor = mouseScrollLocalMonitor { NSEvent.removeMonitor(monitor) }
     }
 
     /* ****************************************
@@ -98,35 +102,18 @@ class StatusBarController: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    private func mouseOverPopover(_ event: NSEvent) -> Bool {
-        guard
-            let popover = popover
-        else {
-            return false
+    private func mouseClickEvent(_ event: NSEvent) {
+        if event.eventNumber == 0 {
+            return
         }
 
-        if let wnd = event.window {
-            return wnd == popover
-        } else {
-            return popover.frame.contains(event.locationInWindow)
-        }
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func mouseEvent(_ event: NSEvent) {
         if mouseOverButton(event) {
             switch event.type {
                 case .leftMouseDown, .rightMouseDown, .otherMouseDown:
-                    if event.eventNumber != 0 {
-                        mouseDownEvent(event)
-                    }
+                    mouseDownEvent(event)
 
                 case .leftMouseUp, .rightMouseUp, .otherMouseUp:
-                    if event.eventNumber != 0 {
-                        mouseUpEvent(event)
-                    }
+                    mouseUpEvent(event)
 
                 case .scrollWheel: mouseScrollEvent(event)
                 default: break
@@ -134,8 +121,13 @@ class StatusBarController: NSObject {
             return
         }
 
-        if event.type == .leftMouseDown || event.type == .rightMouseDown || event.type == .otherMouseDown {
-            if !mouseOverPopover(event) {
+        if let popover = popover {
+            var pos = event.locationInWindow
+            if let window = event.window {
+                pos = window.convertPoint(toScreen: pos)
+            }
+
+            if pos.y > popover.frame.maxY {
                 closePopover()
             }
         }
@@ -201,15 +193,17 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     private func mouseScrollEvent(_ event: NSEvent) {
-        switch (settings.mouseWheelAction, event.isDirectionInvertedFromDevice) {
-            case (.nothing, _):
-                return
+        if mouseOverButton(event) {
+            switch (settings.mouseWheelAction, event.isDirectionInvertedFromDevice) {
+                case (.nothing, _):
+                    return
 
-            case (.volume, true):
-                player.volume += Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+                case (.volume, true):
+                    player.volume += Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
 
-            case (.volume, false):
-                player.volume -= Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+                case (.volume, false):
+                    player.volume -= Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+            }
         }
     }
 

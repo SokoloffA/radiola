@@ -94,6 +94,13 @@ class Popover: NSPanel, NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
         onClose?()
     }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func windowDidResignKey(_ notification: Notification) {
+        close()
+    }
 }
 
 // MARK: - PopoverView
