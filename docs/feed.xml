@@ -5,6 +5,21 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 13.0.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Added an option to fetch station title in the Add Station dialog&lt;/li&gt;
+&lt;li&gt;Improved playback stability on slow or unstable internet connections&lt;/li&gt;
+&lt;li&gt;The player now automatically restarts playback after a temporary network loss&lt;/li&gt;
+&lt;li&gt;Fixed a program crash when changing the list of audio devices.&lt;/li&gt;
+&lt;li&gt;Improved handling of special characters in search queries in RadioBrowser&lt;/li&gt;
+&lt;li&gt;Improved JSON handling in RadioBrowser.&lt;/li&gt;
+&lt;li&gt;Improved compatibility with macOS 27 beta&lt;/li&gt;
+&lt;li&gt;Translations updated&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Fri, 24 Jul 2026 17:08:10 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v13.0.0/Radiola-13.0.0.dmg" sparkle:version="13.0.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 12.3.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Fix: The menu items for favorite stations had the wrong width&lt;/li&gt;
