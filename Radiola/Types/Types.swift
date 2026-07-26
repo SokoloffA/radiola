@@ -157,41 +157,6 @@ struct RadiolaError: LocalizedError {
     }
 }
 
-/* ****************************************
- *
- * ****************************************/
-fileprivate var logsData: [String] = []
-
-/* ****************************************
- *
- * ****************************************/
-func allLogs() -> [String] {
-    return logsData
-}
-
-/* ****************************************
- *
- * ****************************************/
-fileprivate func logMsg(prefix: String, _ items: Any..., separator: String = " ", terminator: String = "\n") {
-    let s = prefix + ": \(Date()) [\(pthread_mach_thread_np(pthread_self()))] " + items.map { "\($0)" }.joined(separator: separator)
-    logsData.append(s)
-    print(s)
-}
-
-/* ****************************************
- *
- * ****************************************/
-func debug(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    logMsg(prefix: "Debug", items, separator: separator, terminator: terminator)
-}
-
-/* ****************************************
- *
- * ****************************************/
-func warning(_ items: Any..., separator: String = " ", terminator: String = "\n") {
-    logMsg(prefix: "Warning", items, separator: separator, terminator: terminator)
-}
-
 // MARK: - NSMenuItem
 
 extension NSMenuItem {
