@@ -21,6 +21,7 @@ class StatusBarController: NSObject {
     private var mouseClickGlobalMonitor: Any?
     private var mouseScrollLocalMonitor: Any?
     private var mouseScrollGlobalMonitor: Any?
+    private var prevMouseDowTimes: [NSEvent.EventType: Date] = [:]
 
     /* ****************************************
      *
@@ -103,10 +104,6 @@ class StatusBarController: NSObject {
      *
      * ****************************************/
     private func mouseClickEvent(_ event: NSEvent) {
-        if event.eventNumber == 0 {
-            return
-        }
-
         if mouseOverButton(event) {
             switch event.type {
                 case .leftMouseDown, .rightMouseDown, .otherMouseDown:
@@ -134,9 +131,21 @@ class StatusBarController: NSObject {
     }
 
     /* ****************************************
+     * Workaround for a macOS 27 beta bug. Clicking the status bar icon triggers
+     * two MouseDown events: a normal one, and a duplicate with an eventNumber of 0.
+     * ****************************************/
+    private func checkMouseDownEvent(_ event: NSEvent) -> Bool {
+        let res = Date().timeIntervalSince(prevMouseDowTimes[event.type] ?? .distantPast) > 0.150 // 150 ms
+        prevMouseDowTimes[event.type] = Date()
+        return res
+    }
+
+    /* ****************************************
      *
      * ****************************************/
     private func mouseDownEvent(_ event: NSEvent) {
+        if !checkMouseDownEvent(event) { return } // Workaround for a macOS 27 beta bug.
+
         menuItem.button?.highlight(true)
 
         var action: MouseButtonAction?
