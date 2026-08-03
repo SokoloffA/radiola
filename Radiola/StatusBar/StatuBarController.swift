@@ -208,10 +208,10 @@ class StatusBarController: NSObject {
                     return
 
                 case (.volume, true):
-                    player.volume += Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+                    player.volume -= Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
 
                 case (.volume, false):
-                    player.volume -= Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
+                    player.volume += Player.mouseWheelToVolume(delta: event.scrollingDeltaY)
             }
         }
     }

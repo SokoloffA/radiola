@@ -38,11 +38,19 @@ class Player: NSObject {
     /* ****************************************
      *
      * ****************************************/
-    var volume: Float = 1.0 { didSet {
-        updateVolume()
-        settings.volumeLevel = volume
-        NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
-    }}
+    private var _volume: Float = 1.0
+    var volume: Float {
+        get { _volume }
+        set {
+            let v = min(max(newValue, 0.0), 1.0)
+            guard v != _volume else { return }
+
+            _volume = v
+            updateVolume()
+            settings.volumeLevel = volume
+            NotificationCenter.default.post(name: Notification.Name.PlayerVolumeChanged, object: nil)
+        }
+    }
 
     /* ****************************************
      *
@@ -65,10 +73,10 @@ class Player: NSObject {
      *
      * ****************************************/
     override init() {
+        super.init()
+
         self.volume = settings.volumeLevel
         self.isMuted = settings.volumeIsMuted
-
-        super.init()
 
         NotificationCenter.default.addObserver(
             self,
