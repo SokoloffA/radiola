@@ -5,6 +5,14 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 13.1.1</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fixed an issue where volume could overshoot limits when scrolling with the mouse wheel on the menu bar icon.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Thu, 06 Aug 2026 15:34:47 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v13.1.1/Radiola-13.1.1.dmg" sparkle:version="13.1.1" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 13.0.1</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Added an option to fetch station title in the Add Station dialog&lt;/li&gt;
