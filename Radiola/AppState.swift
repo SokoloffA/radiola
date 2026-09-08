@@ -80,6 +80,8 @@ class AppState: ObservableObject {
 
     public var history = History()
 
+    public var collapsedItems = Set<UUID>()
+
     /* ****************************************
      *
      * ****************************************/

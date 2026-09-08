@@ -19,6 +19,7 @@ private class FilteredGroup: StationGroup {
         get { original.title }
         set { original.title = newValue }
     }
+
     var items: [StationItem] {
         get { filteredItems }
         set { filteredItems = newValue }
@@ -59,7 +60,26 @@ class LocalStationDelegate: NSObject {
     func refresh() {
         updateFilteredItems()
         outlineView?.reloadData()
-        outlineView?.expandItem(nil, expandChildren: true)
+        expandItems()
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func expandItems() {
+        guard let view = outlineView else { return }
+        func traverse(_ parent: Any?) {
+            let count = outlineView(view, numberOfChildrenOfItem: parent)
+            for index in 0 ..< count {
+                guard let item = outlineView(view, child: index, ofItem: parent) as? StationGroup else { continue }
+                if AppState.shared.collapsedItems.contains(item.id) {
+                    view.collapseItem(item, collapseChildren: false)
+                } else {
+                    view.expandItem(item, expandChildren: false)
+                }
+            }
+        }
+        traverse(nil)
     }
 
     /* ****************************************
@@ -132,10 +152,10 @@ class LocalStationDelegate: NSObject {
      * ****************************************/
     private func applySort(items: [StationItem]) -> [StationItem] {
         switch sortOrder {
-        case .myOrdering:
-            return items
-        case .byName:
-            return items.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+            case .myOrdering:
+                return items
+            case .byName:
+                return items.sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
         }
     }
 
@@ -187,6 +207,22 @@ extension LocalStationDelegate: NSOutlineViewDelegate {
         }
 
         return nil
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func outlineViewItemDidExpand(_ notification: Notification) {
+        guard let item = notification.userInfo?["NSObject"] as? StationGroup else { return }
+        AppState.shared.collapsedItems.remove(item.id)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    func outlineViewItemDidCollapse(_ notification: Notification) {
+        guard let item = notification.userInfo?["NSObject"] as? StationGroup else { return }
+        AppState.shared.collapsedItems.insert(item.id)
     }
 }
 
