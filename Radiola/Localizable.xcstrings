@@ -894,7 +894,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Êtes-vous sûr de vouloir supprimer la station \"%@«  ?"
+            "value" : "Êtes-vous sûr de vouloir supprimer la station  \"%@\" ?"
           }
         },
         "it" : {
@@ -1626,6 +1626,18 @@
     "Fetch the name from the website" : {
       "comment" : "Button tooltip ",
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Récupérer le nom depuis le site web"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ottieni nome dal sito web"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
