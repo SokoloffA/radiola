@@ -77,6 +77,7 @@ class LocalStationDelegate: NSObject {
                 } else {
                     view.expandItem(item, expandChildren: false)
                 }
+                traverse(item)
             }
         }
         traverse(nil)
