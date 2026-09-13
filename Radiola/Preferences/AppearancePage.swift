@@ -79,6 +79,7 @@ class AppearancePage: PreferencesPage {
         notificationsWhenPlaybackStarts.state = settings.showNotificationWhenPlaybackStarts ? .on : .off
         notificationsWhenPlaybackStarts.target = self
         notificationsWhenPlaybackStarts.action = #selector(notificationsWhenPlaybackStartsChanged)
+        refresh()
     }
 
     /* ****************************************
@@ -86,6 +87,13 @@ class AppearancePage: PreferencesPage {
      * ****************************************/
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func refresh() {
+        showMuteCheckBox.isEnabled = !(showVolumeCheckBox.state == .on)
     }
 
     /* ****************************************
@@ -119,6 +127,7 @@ class AppearancePage: PreferencesPage {
      * ****************************************/
     @objc func showVolumeChanged(_ sender: NSButton) {
         settings.showVolumeInMenu = showVolumeCheckBox.state == .on
+        refresh()
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 
