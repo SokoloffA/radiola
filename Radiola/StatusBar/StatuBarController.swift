@@ -14,7 +14,9 @@ class StatusBarController: NSObject {
     private let appState = AppState.shared
     private let menuItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let icon = StatusBarIcon(size: 16)
+    private let titleView = StatusBarTitleView()
     private let padding: CGFloat = 2
+    private let titleIconSpacing: CGFloat = 16
 
     private var popover: Popover?
     private var mouseClickLocalMonitor: Any?
@@ -60,6 +62,12 @@ class StatusBarController: NSObject {
         )
 
         menuItem.button?.imagePosition = .imageTrailing
+
+        if let button = menuItem.button {
+            titleView.frame = button.bounds
+            titleView.autoresizingMask = [.width, .height]
+            button.addSubview(titleView)
+        }
 
         let eventTypeMask: NSEvent.EventTypeMask = [
             .leftMouseDown, .rightMouseDown, .otherMouseDown,
@@ -371,18 +379,33 @@ class StatusBarController: NSObject {
         guard let button = menuItem.button else { return }
 
         if str.isEmpty {
+            titleView.setTitle("", visibleWidth: 0)
             button.attributedTitle = NSAttributedString()
             menuItem.length = CGFloat(icon.size) + padding * 2
             return
         }
 
-        str = str.truncatedMiddle(toWidth: CGFloat(settings.songInStatusBarWidth), font: NSFont.menuBarFont(ofSize: 0))
+        let font = NSFont.menuBarFont(ofSize: 0)
+        let fullTitle = str
+        str = str.truncatedMiddle(toWidth: CGFloat(settings.songInStatusBarWidth), font: font)
+
+        // A long title is scrolled: the button gets an invisible truncated title
+        // of the same width, and StatusBarTitleView draws the text on top of it.
+        var titleAttrs: [NSAttributedString.Key: Any] = [:]
+        if settings.scrollSongInStatusBar && str != fullTitle {
+            titleAttrs[.foregroundColor] = NSColor.clear
+            let spaceWidth = (" " as NSString).size(withAttributes: [.font: font]).width
+            titleView.spacing = spaceWidth + titleIconSpacing
+            titleView.setTitle(fullTitle, visibleWidth: ceil((str as NSString).size(withAttributes: [.font: font]).width))
+        } else {
+            titleView.setTitle("", visibleWidth: 0)
+        }
 
         let label = NSMutableAttributedString()
-        label.append(NSAttributedString(string: str))
+        label.append(NSAttributedString(string: str, attributes: titleAttrs))
         label.append(NSAttributedString(
             string: " ",
-            attributes: [.kern: 16] // the distance between the image and the text
+            attributes: [.kern: titleIconSpacing] // the distance between the image and the text
         ))
 
         menuItem.length = NSStatusItem.variableLength

@@ -23,6 +23,7 @@ class AppearancePage: PreferencesPage {
     private let songInStatusBarWidthLabel = NSLocalizedString("Maximum width of the text in the menu bar:", tableName: "Settings", comment: "Settings label")
     private let songInStatusBarWidthEdit = SpinBox()
     private let songInStatusBarUnitLabel = NSLocalizedString("pixels", tableName: "Settings", comment: "Settings label")
+    private let scrollSongInStatusBarCheckBox = Checkbox(title: NSLocalizedString("Scroll long song titles in the menu bar", tableName: "Settings", comment: "Settings label"))
 
     /* ****************************************
      *
@@ -40,6 +41,7 @@ class AppearancePage: PreferencesPage {
         addRow(rightView: showToolTipCheckBox)
         addRow(title: showSongInStatusBarLabel, rightView: showSongInStatusBarEdit)
         addRow(title: songInStatusBarWidthLabel, rightViews: [songInStatusBarWidthEdit, Label(text: songInStatusBarUnitLabel)])
+        addRow(rightView: scrollSongInStatusBarCheckBox)
         addSeparator()
         addRow(title: notifiactionsLabel, rightView: notificationsWhenPlaybackStarts)
 
@@ -71,6 +73,10 @@ class AppearancePage: PreferencesPage {
         songInStatusBarWidthEdit.integerValue = settings.songInStatusBarWidth
         songInStatusBarWidthEdit.target = self
         songInStatusBarWidthEdit.action = #selector(songInStatusBarWidthChanged)
+
+        scrollSongInStatusBarCheckBox.state = settings.scrollSongInStatusBar ? .on : .off
+        scrollSongInStatusBarCheckBox.target = self
+        scrollSongInStatusBarCheckBox.action = #selector(scrollSongInStatusBarChanged)
 
         showCopyToClipboardCheckBox.state = settings.showCopyToClipboardInMenu ? .on : .off
         showCopyToClipboardCheckBox.target = self
@@ -210,6 +216,14 @@ class AppearancePage: PreferencesPage {
      * ****************************************/
     @objc func songInStatusBarWidthChanged(_ sender: Any) {
         settings.songInStatusBarWidth = songInStatusBarWidthEdit.integerValue
+        NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @objc func scrollSongInStatusBarChanged(_ sender: NSButton) {
+        settings.scrollSongInStatusBar = sender.state == .on
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
     }
 }

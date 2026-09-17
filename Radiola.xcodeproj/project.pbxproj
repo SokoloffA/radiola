@@ -108,6 +108,7 @@
 		39F869B5288C2B1800273AB0 /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869B4288C2B1800273AB0 /* PreferencesWindow.swift */; };
 		39F869BC288C56C300273AB0 /* UpdatePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39F869BA288C56C300273AB0 /* UpdatePanel.swift */; };
 		39FF07732933A59900751A03 /* StatuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39FF07722933A59900751A03 /* StatuBarController.swift */; };
+		55361DB63615B9B7FE263971 /* StatusBarTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A45D4EEA7FADF0D55097D58F /* StatusBarTitleView.swift */; };
 		9D1D31CA2A06448200F0BA44 /* AdvancedPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */; };
 		AAAA00012024120600000001 /* HistoryDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA00012024120600000002 /* HistoryDelegate.swift */; };
 		AAAA00012024120600000003 /* HistoryToolBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAA00012024120600000004 /* HistoryToolBox.swift */; };
@@ -229,6 +230,7 @@
 		39F869BA288C56C300273AB0 /* UpdatePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePanel.swift; sourceTree = "<group>"; };
 		39FF07722933A59900751A03 /* StatuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatuBarController.swift; sourceTree = "<group>"; };
 		9D1D31C92A06448200F0BA44 /* AdvancedPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedPage.swift; sourceTree = "<group>"; };
+		A45D4EEA7FADF0D55097D58F /* StatusBarTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarTitleView.swift; sourceTree = "<group>"; };
 		AAAA00012024120600000002 /* HistoryDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDelegate.swift; sourceTree = "<group>"; };
 		AAAA00012024120600000004 /* HistoryToolBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryToolBox.swift; sourceTree = "<group>"; };
 		AAAA00012024120600000007 /* HistorySearchPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistorySearchPanel.swift; sourceTree = "<group>"; };
@@ -497,6 +499,7 @@
 				3950012E2FAF5A7E0029DF9B /* Popover.swift */,
 				395001322FB234B70029DF9B /* PopoverItem.swift */,
 				39121EAF2A373954004AB7D4 /* StatusBarIcon.swift */,
+				A45D4EEA7FADF0D55097D58F /* StatusBarTitleView.swift */,
 				39EF8B9D2BCC151A00733571 /* PlayMenuItem.swift */,
 			);
 			path = StatusBar;
@@ -666,6 +669,7 @@
 				396433962B502AE9009BE1CE /* LocalStationToolBox.swift in Sources */,
 				39AAA2F02FC75ADD00C9C0AC /* Buttons.swift in Sources */,
 				39121EB02A373954004AB7D4 /* StatusBarIcon.swift in Sources */,
+				55361DB63615B9B7FE263971 /* StatusBarTitleView.swift in Sources */,
 				394F8A57287394F1005EA7FA /* Notifications.swift in Sources */,
 				39AE03752FF0958D0089E6C6 /* Network.swift in Sources */,
 				39EF8B9E2BCC151A00733571 /* PlayMenuItem.swift in Sources */,
