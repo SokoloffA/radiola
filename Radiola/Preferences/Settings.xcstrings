@@ -1193,7 +1193,15 @@
       }
     },
     "Scroll long song titles in the menu bar" : {
-      "comment" : "Settings label"
+      "comment" : "Settings label",
+      "localizations" : {
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Прокручивать длинные названия песен в строке меню"
+          }
+        }
+      }
     },
     "Show a tooltip with the radiostation and song" : {
       "comment" : "Settings label",
