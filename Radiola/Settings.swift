@@ -290,6 +290,12 @@ class Settings {
     /* ****************************************
      *
      * ****************************************/
+    @Setting("ScrollSongInStatusBar", default: false)
+    var scrollSongInStatusBar: Bool
+
+    /* ****************************************
+     *
+     * ****************************************/
     private let proxyKey = "Proxy"
     var proxy: String? {
         get { data.string(forKey: proxyKey) }

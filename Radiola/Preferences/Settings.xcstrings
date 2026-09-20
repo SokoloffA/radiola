@@ -1192,6 +1192,9 @@
         }
       }
     },
+    "Scroll long song titles in the menu bar" : {
+      "comment" : "Settings label"
+    },
     "Show a tooltip with the radiostation and song" : {
       "comment" : "Settings label",
       "localizations" : {
