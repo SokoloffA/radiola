@@ -21,7 +21,6 @@ import Cocoa
 class StatusBarTitleView: NSView {
     private let pointsPerSecond: CGFloat = 30
     private let pauseSeconds: TimeInterval = 3
-    private let framesPerSecond: TimeInterval = 60
     private let fadeWidth: CGFloat = 8
     private let startOffset: CGFloat = -0.5 // lines the resting text up with the native title
     private let separator = "   •   "
@@ -34,10 +33,9 @@ class StatusBarTitleView: NSView {
     private var clipRect = NSRect.zero
     private var textY: CGFloat = 0
 
-    private var offset: CGFloat = 0
-    private var scrollStart: TimeInterval = 0
-    private var pauseTimer: Timer?
-    private var scrollTimer: Timer?
+    private let containerLayer = CALayer()
+    private let textLayer = CALayer()
+    private let maskLayer = CAGradientLayer()
 
     /// Distance between the end of the text and the icon.
     var spacing: CGFloat = 0 { didSet { needsLayout = true } }
@@ -56,6 +54,22 @@ class StatusBarTitleView: NSView {
         // Own layer, so the edge fade (destinationOut) only erases this view's text.
         wantsLayer = true
         isHidden = true
+
+        guard let layer = layer else { return }
+        containerLayer.masksToBounds = true
+        layer.addSublayer(containerLayer)
+
+        maskLayer.colors = [
+            NSColor.clear.cgColor,
+            NSColor.black.cgColor,
+            NSColor.black.cgColor,
+            NSColor.clear.cgColor,
+        ]
+        maskLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        maskLayer.endPoint = CGPoint(x: 1, y: 0.5)
+
+        textLayer.anchorPoint = CGPoint(x: 0, y: 0)
+        containerLayer.addSublayer(textLayer)
     }
 
     /* ****************************************
@@ -63,20 +77,6 @@ class StatusBarTitleView: NSView {
      * ****************************************/
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    deinit {
-        stopTimers()
-    }
-
-    /* ****************************************
-     * Clicks go to the status bar button
-     * ****************************************/
-    override func hitTest(_ point: NSPoint) -> NSView? {
-        return nil
     }
 
     /* ****************************************
@@ -90,11 +90,10 @@ class StatusBarTitleView: NSView {
 
         self.title = title
         self.visibleWidth = visibleWidth
+        textLayer.removeAllAnimations()
 
-        stopTimers()
-        offset = 0
         isHidden = title.isEmpty
-        if title.isEmpty {
+        if isHidden {
             return
         }
 
@@ -102,13 +101,65 @@ class StatusBarTitleView: NSView {
 
         if textWidth <= visibleWidth {
             scrollDistance = 0
+            renderText(string: title)
         } else {
             scrollDistance = ceil(((title + separator) as NSString).size(withAttributes: textAttributes).width)
-            beginPause()
+            renderText(string: title + separator + title)
         }
 
         needsLayout = true
-        needsDisplay = true
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func renderText(string: String) {
+        let scale = window?.backingScaleFactor ?? NSScreen.main?.backingScaleFactor ?? 2.0
+        let size = (string as NSString).size(withAttributes: textAttributes)
+        let imageSize = CGSize(width: ceil(size.width), height: ceil(size.height))
+
+        guard imageSize.width > 0 && imageSize.height > 0 else {
+            textLayer.contents = nil
+            return
+        }
+
+        let image = NSImage(size: imageSize, flipped: false) { rect in
+            self.effectiveAppearance.performAsCurrentDrawingAppearance {
+                guard let context = NSGraphicsContext.current?.cgContext else { return }
+                context.setShouldSmoothFonts(true)
+                context.setAllowsFontSmoothing(true)
+                (string as NSString).draw(in: rect, withAttributes: self.textAttributes)
+            }
+            return true
+        }
+
+        textLayer.contentsScale = scale
+        textLayer.contents = image.layerContents(forContentsScale: scale)
+        textLayer.bounds = CGRect(origin: .zero, size: imageSize)
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func startAnimation() {
+        guard isScrolling, scrollDistance > 0 else { return }
+        if textLayer.animation(forKey: "marquee") != nil { return }
+
+        let scrollDuration = Double(scrollDistance / pointsPerSecond)
+        let totalDuration = scrollDuration + pauseSeconds
+        let pauseFraction = pauseSeconds / totalDuration
+
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.values = [0, 0, -scrollDistance]
+        animation.keyTimes = [0, NSNumber(value: pauseFraction), 1.0]
+        animation.duration = totalDuration
+        animation.repeatCount = .infinity
+        animation.timingFunctions = [
+            CAMediaTimingFunction(name: .linear),
+            CAMediaTimingFunction(name: .linear),
+        ]
+
+        textLayer.add(animation, forKey: "marquee")
     }
 
     /* ****************************************
@@ -141,7 +192,33 @@ class StatusBarTitleView: NSView {
             NSRect(x: 0, y: midY - textHeight / 2, width: 1, height: textHeight),
             options: .alignAllEdgesNearest).minY
 
-        needsDisplay = true
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+
+        containerLayer.frame = clipRect
+
+        if isScrolling {
+            containerLayer.mask = maskLayer
+            maskLayer.frame = containerLayer.bounds
+            if containerLayer.bounds.width > 0 {
+                let fadeFraction = fadeWidth / containerLayer.bounds.width
+                maskLayer.locations = [
+                    0,
+                    NSNumber(value: fadeFraction),
+                    NSNumber(value: 1.0 - fadeFraction),
+                    1.0,
+                ]
+            }
+
+            textLayer.position = CGPoint(x: fadeWidth + startOffset, y: textY)
+            startAnimation()
+        } else {
+            containerLayer.mask = nil
+            textLayer.position = CGPoint(x: 0, y: textY)
+            textLayer.removeAllAnimations()
+        }
+
+        CATransaction.commit()
     }
 
     /* ****************************************
@@ -155,37 +232,15 @@ class StatusBarTitleView: NSView {
     /* ****************************************
      *
      * ****************************************/
-    override func draw(_ dirtyRect: NSRect) {
-        guard !title.isEmpty, clipRect.width > 0, let context = NSGraphicsContext.current else { return }
-
-        context.saveGraphicsState()
-        defer { context.restoreGraphicsState() }
-
-        clipRect.clip()
-
-        if !isScrolling {
-            (title as NSString).draw(at: NSPoint(x: clipRect.minX, y: textY), withAttributes: textAttributes)
-            return
-        }
-
-        // The title followed by its next copy, so the text runs in seamlessly from the right.
-        let x = clipRect.minX + fadeWidth + startOffset - offset
-        ((title + separator) as NSString).draw(at: NSPoint(x: x, y: textY), withAttributes: textAttributes)
-        (title as NSString).draw(at: NSPoint(x: x + scrollDistance, y: textY), withAttributes: textAttributes)
-
-        // Fade out both edges.
-        context.compositingOperation = .destinationOut
-        let fade = NSGradient(starting: NSColor.black, ending: NSColor.black.withAlphaComponent(0))
-        fade?.draw(in: NSRect(x: clipRect.minX, y: clipRect.minY, width: fadeWidth, height: clipRect.height), angle: 0)
-        fade?.draw(in: NSRect(x: clipRect.maxX - fadeWidth, y: clipRect.minY, width: fadeWidth, height: clipRect.height), angle: 180)
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
     override func viewDidChangeEffectiveAppearance() {
         super.viewDidChangeEffectiveAppearance()
-        needsDisplay = true
+        // Render the text again when the theme changes (Dark/Light)
+        if !title.isEmpty {
+            let currentTitle = title
+            let currentWidth = visibleWidth
+            title = ""
+            setTitle(currentTitle, visibleWidth: currentWidth)
+        }
     }
 
     /* ****************************************
@@ -193,65 +248,8 @@ class StatusBarTitleView: NSView {
      * ****************************************/
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
-        stopTimers()
-        offset = 0
-        if window != nil && isScrolling {
-            beginPause()
+        if window != nil && !title.isEmpty {
+            needsLayout = true
         }
-    }
-
-    /* ****************************************
-     * Marquee: pause, scroll by one "title + separator", pause again...
-     * ****************************************/
-    private func beginPause() {
-        stopTimers()
-        offset = 0
-        needsDisplay = true
-
-        let timer = Timer(timeInterval: pauseSeconds, repeats: false) { [weak self] _ in
-            self?.beginScroll()
-        }
-        RunLoop.main.add(timer, forMode: .common)
-        pauseTimer = timer
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func beginScroll() {
-        stopTimers()
-        scrollStart = ProcessInfo.processInfo.systemUptime
-
-        let timer = Timer(timeInterval: 1.0 / framesPerSecond, repeats: true) { [weak self] _ in
-            self?.scrollStep()
-        }
-        RunLoop.main.add(timer, forMode: .common)
-        scrollTimer = timer
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func scrollStep() {
-        let elapsed = ProcessInfo.processInfo.systemUptime - scrollStart
-        offset = CGFloat(elapsed) * pointsPerSecond
-
-        if offset >= scrollDistance {
-            // The next copy of the title is now exactly at the start position.
-            beginPause()
-            return
-        }
-
-        needsDisplay = true
-    }
-
-    /* ****************************************
-     *
-     * ****************************************/
-    private func stopTimers() {
-        pauseTimer?.invalidate()
-        pauseTimer = nil
-        scrollTimer?.invalidate()
-        scrollTimer = nil
     }
 }

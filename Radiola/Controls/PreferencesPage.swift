@@ -113,3 +113,55 @@ class PreferencesPage: NSViewController {
                             verticalRange: NSRange(location: rowIndex, length: 1))
     }
 }
+
+extension NSGridRow {
+    /* ****************************************
+     *
+     * ****************************************/
+    var isEnabled: Bool {
+        get {
+            for i in 0 ..< numberOfCells {
+                if let cellView = cell(at: i).contentView,
+                   let control = findFirstControl(in: cellView) {
+                    return control.isEnabled
+                }
+            }
+            return true
+        }
+        set {
+            for i in 0 ..< numberOfCells {
+                if let cellView = cell(at: i).contentView {
+                    setControlEnabled(newValue, in: cellView)
+                }
+            }
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func setControlEnabled(_ enabled: Bool, in view: NSView) {
+        if let control = view as? NSControl {
+            control.isEnabled = enabled
+        }
+
+        for subview in view.subviews {
+            setControlEnabled(enabled, in: subview)
+        }
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    private func findFirstControl(in view: NSView) -> NSControl? {
+        if let control = view as? NSControl {
+            return control
+        }
+        for subview in view.subviews {
+            if let control = findFirstControl(in: subview) {
+                return control
+            }
+        }
+        return nil
+    }
+}

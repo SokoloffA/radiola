@@ -25,6 +25,9 @@ class AppearancePage: PreferencesPage {
     private let songInStatusBarUnitLabel = NSLocalizedString("pixels", tableName: "Settings", comment: "Settings label")
     private let scrollSongInStatusBarCheckBox = Checkbox(title: NSLocalizedString("Scroll long song titles in the menu bar", tableName: "Settings", comment: "Settings label"))
 
+    private weak var songInStatusBarRow: NSGridRow?
+    private weak var scrollSongInStatusBarRow: NSGridRow?
+
     /* ****************************************
      *
      * ****************************************/
@@ -40,8 +43,8 @@ class AppearancePage: PreferencesPage {
         addSeparator()
         addRow(rightView: showToolTipCheckBox)
         addRow(title: showSongInStatusBarLabel, rightView: showSongInStatusBarEdit)
-        addRow(title: songInStatusBarWidthLabel, rightViews: [songInStatusBarWidthEdit, Label(text: songInStatusBarUnitLabel)])
-        addRow(rightView: scrollSongInStatusBarCheckBox)
+        songInStatusBarRow = addRow(title: songInStatusBarWidthLabel, rightViews: [songInStatusBarWidthEdit, Label(text: songInStatusBarUnitLabel)])
+        scrollSongInStatusBarRow = addRow(rightView: scrollSongInStatusBarCheckBox)
         addSeparator()
         addRow(title: notifiactionsLabel, rightView: notificationsWhenPlaybackStarts)
 
@@ -100,6 +103,10 @@ class AppearancePage: PreferencesPage {
      * ****************************************/
     private func refresh() {
         showMuteCheckBox.isEnabled = !(showVolumeCheckBox.state == .on)
+
+        let enabled = settings.showSongInStatusBar != .never
+        songInStatusBarRow?.isEnabled = enabled
+        scrollSongInStatusBarRow?.isEnabled = enabled
     }
 
     /* ****************************************
@@ -193,6 +200,7 @@ class AppearancePage: PreferencesPage {
 
         settings.showSongInStatusBar = val
         NotificationCenter.default.post(name: Notification.Name.SettingsChanged, object: nil)
+        refresh()
     }
 
     /* ****************************************
