@@ -1,14 +1,14 @@
 #if os(macOS)
-extension KeyboardShortcuts {
+extension KeyboardShortcutsLegacy {
 	/**
 	The strongly-typed name of the keyboard shortcut.
 
 	After registering it, you can use it in, for example, `KeyboardShortcut.Recorder` and `KeyboardShortcut.onKeyUp()`.
 
 	```swift
-	import KeyboardShortcuts
+	import KeyboardShortcutsLegacy
 
-	extension KeyboardShortcuts.Name {
+	extension KeyboardShortcutsLegacy.Name {
 		static let toggleUnicornMode = Self("toggleUnicornMode")
 	}
 	```
@@ -16,7 +16,7 @@ extension KeyboardShortcuts {
 	public struct Name: Hashable, Sendable {
 		// This makes it possible to use `Shortcut` without the namespace.
 		/// :nodoc:
-		public typealias Shortcut = KeyboardShortcuts.Shortcut
+		public typealias Shortcut = KeyboardShortcutsLegacy.Shortcut
 
 		public let rawValue: String
 		public let defaultShortcut: Shortcut?
@@ -25,9 +25,9 @@ extension KeyboardShortcuts {
 		The keyboard shortcut assigned to the name.
 		*/
 		public var shortcut: Shortcut? {
-			get { KeyboardShortcuts.getShortcut(for: self) }
+			get { KeyboardShortcutsLegacy.getShortcut(for: self) }
 			nonmutating set {
-				KeyboardShortcuts.setShortcut(newValue, for: self)
+				KeyboardShortcutsLegacy.setShortcut(newValue, for: self)
 			}
 		}
 
@@ -46,12 +46,12 @@ extension KeyboardShortcuts {
 				setShortcut(initialShortcut, for: self)
 			}
 
-			KeyboardShortcuts.initialize()
+			KeyboardShortcutsLegacy.initialize()
 		}
 	}
 }
 
-extension KeyboardShortcuts.Name: RawRepresentable {
+extension KeyboardShortcutsLegacy.Name: RawRepresentable {
 	/// :nodoc:
 	public init?(rawValue: String) {
 		self.init(rawValue)

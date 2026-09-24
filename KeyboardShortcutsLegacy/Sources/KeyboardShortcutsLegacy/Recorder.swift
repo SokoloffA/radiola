@@ -1,7 +1,7 @@
 #if os(macOS)
 import SwiftUI
 
-extension KeyboardShortcuts {
+extension KeyboardShortcutsLegacy {
 	private struct _Recorder: NSViewRepresentable { // swiftlint:disable:this type_name
 		typealias NSViewType = RecorderCocoa
 
@@ -28,12 +28,12 @@ extension KeyboardShortcuts {
 
 	```swift
 	import SwiftUI
-	import KeyboardShortcuts
+	import KeyboardShortcutsLegacy
 
 	struct SettingsScreen: View {
 		var body: some View {
 			Form {
-				KeyboardShortcuts.Recorder("Toggle Unicorn Mode:", name: .toggleUnicornMode)
+				KeyboardShortcutsLegacy.Recorder("Toggle Unicorn Mode:", name: .toggleUnicornMode)
 			}
 		}
 	}
@@ -87,14 +87,14 @@ extension KeyboardShortcuts {
 	}
 }
 
-extension KeyboardShortcuts.Recorder<EmptyView> {
+extension KeyboardShortcutsLegacy.Recorder<EmptyView> {
 	/**
 	- Parameter name: Strongly-typed keyboard shortcut name.
 	- Parameter onChange: Callback which will be called when the keyboard shortcut is changed/removed by the user. This can be useful when you need more control. For example, when migrating from a different keyboard shortcut solution and you need to store the keyboard shortcut somewhere yourself instead of relying on the built-in storage. However, it's strongly recommended to just rely on the built-in storage when possible.
 	*/
 	public init(
-		for name: KeyboardShortcuts.Name,
-		onChange: ((KeyboardShortcuts.Shortcut?) -> Void)? = nil
+		for name: KeyboardShortcutsLegacy.Name,
+		onChange: ((KeyboardShortcutsLegacy.Shortcut?) -> Void)? = nil
 	) {
 		self.init(
 			for: name,
@@ -104,7 +104,7 @@ extension KeyboardShortcuts.Recorder<EmptyView> {
 	}
 }
 
-extension KeyboardShortcuts.Recorder<Text> {
+extension KeyboardShortcutsLegacy.Recorder<Text> {
 	/**
 	- Parameter title: The title of the keyboard shortcut recorder, describing its purpose.
 	- Parameter name: Strongly-typed keyboard shortcut name.
@@ -112,8 +112,8 @@ extension KeyboardShortcuts.Recorder<Text> {
 	*/
 	public init(
 		_ title: LocalizedStringKey,
-		name: KeyboardShortcuts.Name,
-		onChange: ((KeyboardShortcuts.Shortcut?) -> Void)? = nil
+		name: KeyboardShortcutsLegacy.Name,
+		onChange: ((KeyboardShortcutsLegacy.Shortcut?) -> Void)? = nil
 	) {
 		self.init(
 			for: name,
@@ -125,7 +125,7 @@ extension KeyboardShortcuts.Recorder<Text> {
 	}
 }
 
-extension KeyboardShortcuts.Recorder<Text> {
+extension KeyboardShortcutsLegacy.Recorder<Text> {
 	/**
 	- Parameter title: The title of the keyboard shortcut recorder, describing its purpose.
 	- Parameter name: Strongly-typed keyboard shortcut name.
@@ -134,8 +134,8 @@ extension KeyboardShortcuts.Recorder<Text> {
 	@_disfavoredOverload
 	public init(
 		_ title: String,
-		name: KeyboardShortcuts.Name,
-		onChange: ((KeyboardShortcuts.Shortcut?) -> Void)? = nil
+		name: KeyboardShortcutsLegacy.Name,
+		onChange: ((KeyboardShortcutsLegacy.Shortcut?) -> Void)? = nil
 	) {
 		self.init(
 			for: name,
@@ -147,15 +147,15 @@ extension KeyboardShortcuts.Recorder<Text> {
 	}
 }
 
-extension KeyboardShortcuts.Recorder {
+extension KeyboardShortcutsLegacy.Recorder {
 	/**
 	- Parameter name: Strongly-typed keyboard shortcut name.
 	- Parameter onChange: Callback which will be called when the keyboard shortcut is changed/removed by the user. This can be useful when you need more control. For example, when migrating from a different keyboard shortcut solution and you need to store the keyboard shortcut somewhere yourself instead of relying on the built-in storage. However, it's strongly recommended to just rely on the built-in storage when possible.
 	- Parameter label: A view that describes the purpose of the keyboard shortcut recorder.
 	*/
 	public init(
-		for name: KeyboardShortcuts.Name,
-		onChange: ((KeyboardShortcuts.Shortcut?) -> Void)? = nil,
+		for name: KeyboardShortcutsLegacy.Name,
+		onChange: ((KeyboardShortcutsLegacy.Shortcut?) -> Void)? = nil,
 		@ViewBuilder label: () -> Label
 	) {
 		self.init(
@@ -168,17 +168,17 @@ extension KeyboardShortcuts.Recorder {
 }
 /*
 #Preview {
-	KeyboardShortcuts.Recorder("record_shortcut", name: .init("xcodePreview"))
+	KeyboardShortcutsLegacy.Recorder("record_shortcut", name: .init("xcodePreview"))
 		.environment(\.locale, .init(identifier: "en"))
 }
 
 #Preview {
-	KeyboardShortcuts.Recorder("record_shortcut", name: .init("xcodePreview"))
+	KeyboardShortcutsLegacy.Recorder("record_shortcut", name: .init("xcodePreview"))
 		.environment(\.locale, .init(identifier: "zh-Hans"))
 }
 
 #Preview {
-	KeyboardShortcuts.Recorder("record_shortcut", name: .init("xcodePreview"))
+	KeyboardShortcutsLegacy.Recorder("record_shortcut", name: .init("xcodePreview"))
 		.environment(\.locale, .init(identifier: "ru"))
 }
  */

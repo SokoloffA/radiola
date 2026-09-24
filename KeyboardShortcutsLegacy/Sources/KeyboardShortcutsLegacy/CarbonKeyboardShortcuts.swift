@@ -7,18 +7,18 @@ private func carbonKeyboardShortcutsEventHandler(eventHandlerCall: EventHandlerC
 
 enum CarbonKeyboardShortcuts {
 	private final class HotKey {
-		let shortcut: KeyboardShortcuts.Shortcut
+		let shortcut: KeyboardShortcutsLegacy.Shortcut
 		let carbonHotKeyId: Int
 		var carbonHotKey: EventHotKeyRef?
-		let onKeyDown: (KeyboardShortcuts.Shortcut) -> Void
-		let onKeyUp: (KeyboardShortcuts.Shortcut) -> Void
+		let onKeyDown: (KeyboardShortcutsLegacy.Shortcut) -> Void
+		let onKeyUp: (KeyboardShortcutsLegacy.Shortcut) -> Void
 
 		init(
-			shortcut: KeyboardShortcuts.Shortcut,
+			shortcut: KeyboardShortcutsLegacy.Shortcut,
 			carbonHotKeyID: Int,
 			carbonHotKey: EventHotKeyRef,
-			onKeyDown: @escaping (KeyboardShortcuts.Shortcut) -> Void,
-			onKeyUp: @escaping (KeyboardShortcuts.Shortcut) -> Void
+			onKeyDown: @escaping (KeyboardShortcutsLegacy.Shortcut) -> Void,
+			onKeyUp: @escaping (KeyboardShortcutsLegacy.Shortcut) -> Void
 		) {
 			self.shortcut = shortcut
 			self.carbonHotKeyId = carbonHotKeyID
@@ -93,8 +93,8 @@ enum CarbonKeyboardShortcuts {
 			return
 		}
 
-		if KeyboardShortcuts.isEnabled {
-			if KeyboardShortcuts.isMenuOpen {
+		if KeyboardShortcutsLegacy.isEnabled {
+			if KeyboardShortcutsLegacy.isMenuOpen {
 				softUnregisterAll()
 				RemoveEventTypesFromHandler(eventHandler, hotKeyEventTypes.count, hotKeyEventTypes)
 
@@ -127,9 +127,9 @@ enum CarbonKeyboardShortcuts {
 	}
 
 	static func register(
-		_ shortcut: KeyboardShortcuts.Shortcut,
-		onKeyDown: @escaping (KeyboardShortcuts.Shortcut) -> Void,
-		onKeyUp: @escaping (KeyboardShortcuts.Shortcut) -> Void
+		_ shortcut: KeyboardShortcutsLegacy.Shortcut,
+		onKeyDown: @escaping (KeyboardShortcutsLegacy.Shortcut) -> Void,
+		onKeyUp: @escaping (KeyboardShortcutsLegacy.Shortcut) -> Void
 	) {
 		hotKeyId += 1
 
@@ -194,7 +194,7 @@ enum CarbonKeyboardShortcuts {
 		hotKeys.removeValue(forKey: hotKey.carbonHotKeyId)
 	}
 
-	static func unregister(_ shortcut: KeyboardShortcuts.Shortcut) {
+	static func unregister(_ shortcut: KeyboardShortcutsLegacy.Shortcut) {
 		for hotKey in hotKeys.values where hotKey.shortcut == shortcut {
 			unregisterHotKey(hotKey)
 		}
@@ -298,7 +298,7 @@ enum CarbonKeyboardShortcuts {
 			return keyModifiersError
 		}
 
-		let shortcut = KeyboardShortcuts.Shortcut(carbonKeyCode: Int(eventKeyCode), carbonModifiers: Int(eventKeyModifiers))
+		let shortcut = KeyboardShortcutsLegacy.Shortcut(carbonKeyCode: Int(eventKeyCode), carbonModifiers: Int(eventKeyModifiers))
 
 		guard let hotKey = (hotKeys.values.first { $0.shortcut == shortcut }) else {
 			return OSStatus(eventNotHandledErr)
@@ -320,7 +320,7 @@ enum CarbonKeyboardShortcuts {
 }
 
 extension CarbonKeyboardShortcuts {
-	static var system: [KeyboardShortcuts.Shortcut] {
+	static var system: [KeyboardShortcutsLegacy.Shortcut] {
 		var shortcutsUnmanaged: Unmanaged<CFArray>?
 		guard
 			CopySymbolicHotKeys(&shortcutsUnmanaged) == noErr,
@@ -339,7 +339,7 @@ extension CarbonKeyboardShortcuts {
 				return nil
 			}
 
-			return KeyboardShortcuts.Shortcut(
+			return KeyboardShortcutsLegacy.Shortcut(
 				carbonKeyCode: carbonKeyCode,
 				carbonModifiers: carbonModifiers
 			)

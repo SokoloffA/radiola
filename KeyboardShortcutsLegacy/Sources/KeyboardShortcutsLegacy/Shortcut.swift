@@ -2,7 +2,7 @@
 import AppKit
 import Carbon.HIToolbox
 
-extension KeyboardShortcuts {
+extension KeyboardShortcutsLegacy {
 	/**
 	A keyboard shortcut.
 	*/
@@ -87,7 +87,7 @@ extension KeyboardShortcuts {
 	}
 }
 
-extension KeyboardShortcuts.Shortcut {
+extension KeyboardShortcutsLegacy.Shortcut {
 	/**
 	System-defined keyboard shortcuts.
 	*/
@@ -107,7 +107,7 @@ extension KeyboardShortcuts.Shortcut {
 	}
 }
 
-extension KeyboardShortcuts.Shortcut {
+extension KeyboardShortcutsLegacy.Shortcut {
 	/**
 	Recursively finds a menu item in the given menu that has a matching key equivalent and modifier.
 	*/
@@ -153,7 +153,7 @@ extension KeyboardShortcuts.Shortcut {
 	}
 }
 
-private let keyToCharacterMapping: [KeyboardShortcuts.Key: String] = [
+private let keyToCharacterMapping: [KeyboardShortcutsLegacy.Key: String] = [
 	.return: "↩",
 	.delete: "⌫",
 	.deleteForward: "⌦",
@@ -218,7 +218,7 @@ private func stringFromKeyCode(_ keyCode: Int) -> String {
 	String(format: "%C", keyCode)
 }
 
-private let keyToKeyEquivalentString: [KeyboardShortcuts.Key: String] = [
+private let keyToKeyEquivalentString: [KeyboardShortcutsLegacy.Key: String] = [
 	.space: stringFromKeyCode(0x20),
 	.f1: stringFromKeyCode(NSF1FunctionKey),
 	.f2: stringFromKeyCode(NSF2FunctionKey),
@@ -242,7 +242,7 @@ private let keyToKeyEquivalentString: [KeyboardShortcuts.Key: String] = [
 	.f20: stringFromKeyCode(NSF20FunctionKey)
 ]
 
-extension KeyboardShortcuts.Shortcut {
+extension KeyboardShortcutsLegacy.Shortcut {
 	@MainActor // `TISGetInputSourceProperty` crashes if called on a non-main thread.
 	fileprivate func keyToCharacter() -> String? {
 		// Some characters cannot be automatically translated.
@@ -312,12 +312,12 @@ extension KeyboardShortcuts.Shortcut {
 	}
 }
 
-extension KeyboardShortcuts.Shortcut: CustomStringConvertible {
+extension KeyboardShortcutsLegacy.Shortcut: CustomStringConvertible {
 	/**
 	The string representation of the keyboard shortcut.
 
 	```swift
-	print(KeyboardShortcuts.Shortcut(.a, modifiers: [.command]))
+	print(KeyboardShortcutsLegacy.Shortcut(.a, modifiers: [.command]))
 	//=> "⌘A"
 	```
 	*/

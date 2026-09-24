@@ -14,11 +14,11 @@ extension View {
 	*/
 	@MainActor
 	public func onKeyboardShortcut(
-		_ shortcut: KeyboardShortcuts.Name,
-		perform: @escaping (KeyboardShortcuts.EventType) -> Void
+		_ shortcut: KeyboardShortcutsLegacy.Name,
+		perform: @escaping (KeyboardShortcutsLegacy.EventType) -> Void
 	) -> some View {
 		task {
-			for await eventType in KeyboardShortcuts.events(for: shortcut) {
+			for await eventType in KeyboardShortcutsLegacy.events(for: shortcut) {
 				perform(eventType)
 			}
 		}
@@ -35,12 +35,12 @@ extension View {
 	*/
 	@MainActor
 	public func onKeyboardShortcut(
-		_ shortcut: KeyboardShortcuts.Name,
-		type: KeyboardShortcuts.EventType,
+		_ shortcut: KeyboardShortcutsLegacy.Name,
+		type: KeyboardShortcutsLegacy.EventType,
 		perform: @escaping () -> Void
 	) -> some View {
 		task {
-			for await _ in KeyboardShortcuts.events(type, for: shortcut) {
+			for await _ in KeyboardShortcutsLegacy.events(type, for: shortcut) {
 				perform()
 			}
 		}

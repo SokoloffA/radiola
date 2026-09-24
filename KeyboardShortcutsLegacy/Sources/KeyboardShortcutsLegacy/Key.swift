@@ -1,7 +1,7 @@
 #if os(macOS)
 import Carbon.HIToolbox
 
-extension KeyboardShortcuts {
+extension KeyboardShortcutsLegacy {
 	// swiftlint:disable identifier_name
 	/**
 	Represents a key on the keyboard.
@@ -161,7 +161,7 @@ extension KeyboardShortcuts {
 	}
 }
 
-extension KeyboardShortcuts.Key {
+extension KeyboardShortcutsLegacy.Key {
 	/**
 	All the function keys.
 	*/

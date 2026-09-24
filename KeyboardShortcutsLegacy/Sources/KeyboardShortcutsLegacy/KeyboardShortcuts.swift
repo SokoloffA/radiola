@@ -4,7 +4,7 @@ import AppKit.NSMenu
 /**
 Global keyboard shortcuts for your macOS app.
 */
-public enum KeyboardShortcuts {
+public enum KeyboardShortcutsLegacy {
 	private static var registeredShortcuts = Set<Shortcut>()
 
 	private static var legacyKeyDownHandlers = [Name: [() -> Void]]()
@@ -219,14 +219,14 @@ public enum KeyboardShortcuts {
 
 	```swift
 	import SwiftUI
-	import KeyboardShortcuts
+	import KeyboardShortcutsLegacy
 
 	struct SettingsScreen: View {
 		var body: some View {
 			VStack {
 				// …
 				Button("Reset All") {
-					KeyboardShortcuts.reset(
+					KeyboardShortcutsLegacy.reset(
 						.toggleUnicornMode,
 						.showRainbow
 					)
@@ -249,14 +249,14 @@ public enum KeyboardShortcuts {
 
 	```swift
 	import SwiftUI
-	import KeyboardShortcuts
+	import KeyboardShortcutsLegacy
 
 	struct SettingsScreen: View {
 		var body: some View {
 			VStack {
 				// …
 				Button("Reset All") {
-					KeyboardShortcuts.reset(
+					KeyboardShortcutsLegacy.reset(
 						.toggleUnicornMode,
 						.showRainbow
 					)
@@ -364,12 +364,12 @@ public enum KeyboardShortcuts {
 
 	```swift
 	import AppKit
-	import KeyboardShortcuts
+	import KeyboardSKeyboardShortcutsLegacyhortcuts
 
 	@main
 	final class AppDelegate: NSObject, NSApplicationDelegate {
 		func applicationDidFinishLaunching(_ notification: Notification) {
-			KeyboardShortcuts.onKeyDown(for: .toggleUnicornMode) { [self] in
+			KeyboardShortcutsLegacy.onKeyDown(for: .toggleUnicornMode) { [self] in
 				isUnicornMode.toggle()
 			}
 		}
@@ -390,12 +390,12 @@ public enum KeyboardShortcuts {
 
 	```swift
 	import AppKit
-	import KeyboardShortcuts
+	import KeyboardShortcutsLegacy
 
 	@main
 	final class AppDelegate: NSObject, NSApplicationDelegate {
 		func applicationDidFinishLaunching(_ notification: Notification) {
-			KeyboardShortcuts.onKeyUp(for: .toggleUnicornMode) { [self] in
+			KeyboardShortcutsLegacy.onKeyUp(for: .toggleUnicornMode) { [self] in
 				isUnicornMode.toggle()
 			}
 		}
@@ -456,7 +456,7 @@ public enum KeyboardShortcuts {
 	}
 }
 
-extension KeyboardShortcuts {
+extension KeyboardShortcutsLegacy {
 	public enum EventType: Sendable {
 		case keyDown
 		case keyUp
@@ -473,7 +473,7 @@ extension KeyboardShortcuts {
 
 	```swift
 	import SwiftUI
-	import KeyboardShortcuts
+	import KeyboardShortcutsLegacy
 
 	struct ContentView: View {
 		@State private var isUnicornMode = false
@@ -481,7 +481,7 @@ extension KeyboardShortcuts {
 		var body: some View {
 			Text(isUnicornMode ? "🦄" : "🐴")
 				.task {
-					for await event in KeyboardShortcuts.events(for: .toggleUnicornMode) where event == .keyUp {
+					for await event in KeyboardShortcutsLegacy.events(for: .toggleUnicornMode) where event == .keyUp {
 						isUnicornMode.toggle()
 					}
 				}
@@ -491,7 +491,7 @@ extension KeyboardShortcuts {
 
 	- Note: This method is not affected by `.removeAllHandlers()`.
 	*/
-	public static func events(for name: Name) -> AsyncStream<KeyboardShortcuts.EventType> {
+	public static func events(for name: Name) -> AsyncStream<KeyboardShortcutsLegacy.EventType> {
 		AsyncStream { continuation in
 			let id = UUID()
 
@@ -529,7 +529,7 @@ extension KeyboardShortcuts {
 
 	```swift
 	import SwiftUI
-	import KeyboardShortcuts
+	import KeyboardShortcutsLegacy
 
 	struct ContentView: View {
 		@State private var isUnicornMode = false
@@ -537,7 +537,7 @@ extension KeyboardShortcuts {
 		var body: some View {
 			Text(isUnicornMode ? "🦄" : "🐴")
 				.task {
-					for await event in KeyboardShortcuts.events(for: .toggleUnicornMode) where event == .keyUp {
+					for await event in KeyboardShortcutsLegacy.events(for: .toggleUnicornMode) where event == .keyUp {
 						isUnicornMode.toggle()
 					}
 				}

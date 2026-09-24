@@ -6,9 +6,11 @@
 //
 
 import Cocoa
+import KeyboardShortcuts
+import KeyboardShortcutsLegacy
 
 fileprivate struct GlobalKeyDef {
-    var key: KeyboardShortcuts.Name
+    var key: GlobalShortcut
     var label: String
 }
 
@@ -81,11 +83,19 @@ class ControlsPage: PreferencesPage {
      * ****************************************/
     private func addGlobalKeys() {
         for globKeyDef in globalKeys {
-            let ctrl = KeyboardShortcuts.RecorderCocoa(for: globKeyDef.key)
-            ctrl.pressShortcutText = NSLocalizedString("Press shortcut", tableName: "Settings", comment: "Settings label")
-            ctrl.recordShortcutText = NSLocalizedString("Record shortcut", tableName: "Settings", comment: "Settings label")
+            if #available(macOS 15.4, *) {
+                let shortcut = KeyboardShortcuts.Name(globKeyDef.key.rawValue)
+                let ctrl = KeyboardShortcuts.RecorderCocoa(for: shortcut)
 
-            addRow(title: globKeyDef.label, rightView: ctrl)
+                addRow(title: globKeyDef.label, rightView: ctrl)
+            } else {
+                let shortcut = KeyboardShortcutsLegacy.Name(globKeyDef.key.rawValue)
+                let ctrl = KeyboardShortcutsLegacy.RecorderCocoa(for: shortcut)
+                ctrl.pressShortcutText = NSLocalizedString("Press shortcut", tableName: "Settings", comment: "Settings label")
+                ctrl.recordShortcutText = NSLocalizedString("Record shortcut", tableName: "Settings", comment: "Settings label")
+
+                addRow(title: globKeyDef.label, rightView: ctrl)
+            }
         }
     }
 

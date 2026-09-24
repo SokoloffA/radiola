@@ -7,12 +7,14 @@
 //
 
 import Cocoa
+import KeyboardShortcuts
+import KeyboardShortcutsLegacy
 
-extension KeyboardShortcuts.Name {
-    static let showMainWindow = Self("showMainWindow")
-    static let showHistoryWindow = Self("showHistoryWindow")
-    static let togglePlayPuse = Self("togglePlayPuse")
-    static let showMainMenu = Self("showMainMenu")
+enum GlobalShortcut: String, CaseIterable {
+    case showMainWindow
+    case showHistoryWindow
+    case togglePlayPuse
+    case showMainMenu
 }
 
 @NSApplicationMain
@@ -82,10 +84,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         checkForUpdatesMenuItem.target = updater
         checkForUpdatesMenuItem.action = #selector(Updater.checkForUpdates)
 
-        KeyboardShortcuts.onKeyUp(for: .showMainWindow) { [self] in showStationView(nil) }
-        KeyboardShortcuts.onKeyUp(for: .showHistoryWindow) { [self] in showHistory(nil) }
-        KeyboardShortcuts.onKeyUp(for: .togglePlayPuse) { [self] in togglePlay(nil) }
-        KeyboardShortcuts.onKeyUp(for: .showMainMenu) { [self] in showMainMenu(nil) }
+        addShortcut(for: .showMainWindow) { [self] in showStationView(nil) }
+        addShortcut(for: .showHistoryWindow) { [self] in showHistory(nil) }
+        addShortcut(for: .togglePlayPuse) { [self] in togglePlay(nil) }
+        addShortcut(for: .showMainMenu) { [self] in showMainMenu(nil) }
 
         AppState.shared.applyProxySettings()
 
@@ -123,6 +125,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      * ****************************************/
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+    }
+
+    /* ****************************************
+     *
+     * ****************************************/
+    @MainActor private func addShortcut(for shortcut: GlobalShortcut, action: @escaping () -> Void) {
+        if #available(macOS 15.4, *) {
+            KeyboardShortcuts.onKeyUp(for: .init(shortcut.rawValue), action: action)
+        } else {
+            KeyboardShortcutsLegacy.onKeyUp(for: .init(shortcut.rawValue), action: action)
+        }
     }
 
     /* ****************************************

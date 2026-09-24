@@ -2,7 +2,7 @@
 import AppKit
 import Carbon.HIToolbox
 
-extension KeyboardShortcuts {
+extension KeyboardShortcutsLegacy {
 	/**
 	A `NSView` that lets the user record a keyboard shortcut.
 
@@ -14,13 +14,13 @@ extension KeyboardShortcuts {
 
 	```swift
 	import AppKit
-	import KeyboardShortcuts
+	import KeyboardShortcutsLegacy
 
 	final class SettingsViewController: NSViewController {
 		override func loadView() {
 			view = NSView()
 
-			let recorder = KeyboardShortcuts.RecorderCocoa(for: .toggleUnicornMode)
+			let recorder = KeyboardShortcutsLegacy.RecorderCocoa(for: .toggleUnicornMode)
 			view.addSubview(recorder)
 		}
 	}
@@ -114,7 +114,7 @@ extension KeyboardShortcuts {
 			fatalError("init(coder:) has not been implemented")
 		}
 
-		private func setStringValue(name: KeyboardShortcuts.Name) {
+		private func setStringValue(name: KeyboardShortcutsLegacy.Name) {
 			stringValue = getShortcut(for: shortcutName).map { "\($0)" } ?? ""
 
 			// If `stringValue` is empty, hide the cancel button to let the placeholder center.
@@ -125,7 +125,7 @@ extension KeyboardShortcuts {
 			shortcutsNameChangeObserver = NotificationCenter.default.addObserver(forName: .shortcutByNameDidChange, object: nil, queue: nil) { [weak self] notification in
 				guard
 					let self,
-					let nameInNotification = notification.userInfo?["name"] as? KeyboardShortcuts.Name,
+					let nameInNotification = notification.userInfo?["name"] as? KeyboardShortcutsLegacy.Name,
 					nameInNotification == self.shortcutName
 				else {
 					return
@@ -140,7 +140,7 @@ extension KeyboardShortcuts {
 			placeholderString = recordShortcutText
 			showsCancelButton = !stringValue.isEmpty
 			restoreCaret()
-			KeyboardShortcuts.isPaused = false
+			KeyboardShortcutsLegacy.isPaused = false
 		}
 
 		private func preventBecomingKey() {
@@ -213,7 +213,7 @@ extension KeyboardShortcuts {
 			placeholderString = pressShortcutText
 			showsCancelButton = !stringValue.isEmpty
 			hideCaret()
-			KeyboardShortcuts.isPaused = true // The position here matters.
+			KeyboardShortcutsLegacy.isPaused = true // The position here matters.
 
 			eventMonitor = LocalEventMonitor(events: [.keyDown, .leftMouseUp, .rightMouseUp]) { [weak self] event in
 				guard let self else {
