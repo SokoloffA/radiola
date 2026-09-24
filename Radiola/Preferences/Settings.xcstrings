@@ -1195,6 +1195,12 @@
     "Scroll long song titles in the menu bar" : {
       "comment" : "Settings label",
       "localizations" : {
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scorri i titoli lunghi dei brani nella barra dei menu"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
