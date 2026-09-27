@@ -5,6 +5,16 @@
     <description>Most recent updates to </description>
     <language>en</language>
     <item>
+      <title>Radiola 13.3.0</title>
+      <description>&lt;ul&gt;
+&lt;li&gt;Fixed an issue where recording global keyboard shortcuts did not work on macOS 27 and later.&lt;/li&gt;
+&lt;li&gt;Fixed an issue that could cause the app to crash unexpectedly during playback&lt;/li&gt;
+&lt;li&gt;Remember whether station groups are open or closed when switching lists.&lt;/li&gt;
+&lt;/ul&gt;</description>
+      <pubDate>Sun, 27 Sep 2026 07:17:12 +0000</pubDate>
+      <enclosure url="https://github.com/SokoloffA/radiola/releases/download/v13.3.0/Radiola-13.3.0.dmg" sparkle:version="13.3.0" length="0" type="application/octet-stream"/>
+    </item>
+    <item>
       <title>Radiola 13.2.0</title>
       <description>&lt;ul&gt;
 &lt;li&gt;Fixed an issue that could cause the app to crash unexpectedly during playback&lt;/li&gt;
