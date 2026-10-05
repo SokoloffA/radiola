@@ -42,63 +42,47 @@ class MediaKeysController: NSObject {
      *
      * ****************************************/
     @objc private func playerStatusChanged() {
-        switch player.status {
-            case .playing:
-                if MPNowPlayingInfoCenter.default().playbackState != .playing {
-                    debug("[NowPlayingInfo] Set playbackState to playing")
-                    MPNowPlayingInfoCenter.default().playbackState = .playing
-                }
-
-            case .connecting:
-                updateNowPlayingInfo(artist: player.station?.title)
-                if MPNowPlayingInfoCenter.default().playbackState != .playing {
-                    debug("[NowPlayingInfo] Set playbackState to playing")
-                    MPNowPlayingInfoCenter.default().playbackState = .playing
-                }
-                break
-
-            case .paused:
-                if MPNowPlayingInfoCenter.default().playbackState != .paused {
-                    debug("[NowPlayingInfo] Set playbackState to paused")
-                    MPNowPlayingInfoCenter.default().playbackState = .paused
-                }
-                updateNowPlayingInfo(artist: player.station?.title)
+        let playbackState: MPNowPlayingPlaybackState = player.isPlaying ? .playing : .paused
+        if MPNowPlayingInfoCenter.default().playbackState != playbackState {
+            debug("[NowPlayingInfo] Set playbackState to \(player.isPlaying ? "playing" : "paused")")
+            MPNowPlayingInfoCenter.default().playbackState = playbackState
         }
+
+        updateNowPlayingInfo()
     }
 
     /* ****************************************
      *
      * ****************************************/
-    @objc private func playerMetadataChanged(_ notification: Notification) {
-        if player.status == .paused {
-            return
-        }
-
-        updateNowPlayingInfo(artist: player.station?.title, title: notification.userInfo?["title"] as? String)
+    @objc private func playerMetadataChanged() {
+        updateNowPlayingInfo()
     }
 
     /* ****************************************
-     *
+     * MediaRemote clients (Control Center, VoiceInk, etc.) treat an entry
+     * without a title as not playing and won't resume it, so the station
+     * name is used as the title when the stream has no song title.
      * ****************************************/
-    private func updateNowPlayingInfo(artist: String?, title: String? = nil) {
-        let curArtist = MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyArtist] as? String?
-        let curTitle = MPNowPlayingInfoCenter.default().nowPlayingInfo?[MPMediaItemPropertyTitle] as? String?
+    private func updateNowPlayingInfo() {
+        guard let station = player.station else { return }
 
-        if artist == curArtist && title == curTitle {
+        var info: [String: Any] = [
+            MPMediaItemPropertyTitle: station.title,
+            MPNowPlayingInfoPropertyPlaybackRate: player.isPlaying ? 1.0 : 0.0,
+            MPNowPlayingInfoPropertyMediaType: MPNowPlayingInfoMediaType.audio.rawValue,
+            MPNowPlayingInfoPropertyIsLiveStream: true,
+        ]
+
+        if !player.songTitle.isEmpty {
+            info[MPMediaItemPropertyTitle] = player.songTitle
+            info[MPMediaItemPropertyArtist] = station.title
+        }
+
+        if let current = MPNowPlayingInfoCenter.default().nowPlayingInfo, NSDictionary(dictionary: current).isEqual(to: info) {
             return
         }
 
-        var info: [String: Any] = [:]
-
-        if artist != nil {
-            info[MPMediaItemPropertyArtist] = artist
-        }
-
-        if title != nil {
-            info[MPMediaItemPropertyTitle] = title
-        }
-
-        debug("[NowPlayingInfo] Update playing info to Artist:\(artist ?? "nil"), Title: \(title ?? "nil")")
+        debug("[NowPlayingInfo] Update playing info to \(info)")
         MPNowPlayingInfoCenter.default().nowPlayingInfo = info
     }
 

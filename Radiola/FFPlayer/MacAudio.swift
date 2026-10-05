@@ -28,6 +28,10 @@ class MacAudio {
     private var bytesPerFrame = 0
     private var ringBufferDuration: TimeInterval = 0
 
+    // AVSampleBufferAudioRenderer stops accepting data after about 1 second of queued audio,
+    // so the preroll must be measured in time, not in a fixed number of ring buffers.
+    private let prerollDuration: TimeInterval = 0.2
+
     var onNeedRestart: (() -> Void)?
 
     private var speedMetric: SpeedMetric?
@@ -64,6 +68,7 @@ class MacAudio {
             throw NSError(code: .formatError, message: internalErrorDescription, debug: "Incorrect audio format bytesPerFrame=\(bytesPerFrame)")
         }
         ringBufferDuration = Double(ringBuffer.bufferSize / bytesPerFrame) / avFormat.sampleRate
+        timeline.prerollTarget = max(1, Int((prerollDuration / ringBufferDuration).rounded(.up)))
 
         debug("FFFormat: \(ffFormat))")
         debug("AVFormat: \(avFormat)")
@@ -334,14 +339,7 @@ private class AudioTimeline {
     var prerollStartTime: CMTime?
     var buffersQueued = 0
     var isStarted = false
-    let prerollTarget: Int
-
-    /* ****************************************
-     *
-     * ****************************************/
-    init(prerollTarget: Int = 8) {
-        self.prerollTarget = prerollTarget
-    }
+    var prerollTarget = 1
 
     /* ****************************************
      *
