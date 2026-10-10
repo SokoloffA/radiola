@@ -71,6 +71,9 @@ class FFDecoder {
 
     private var prevNowPlaying = ""
 
+    private var invalidPacketsInRow = 0
+    private let maxInvalidPacketsInRow = 100
+
     private var interruptCB: AVIOInterruptCB!
     let shouldInterrupt: AtomicBool
 
@@ -251,6 +254,7 @@ class FFDecoder {
         av_channel_layout_uninit(&outLayout)
 
         prevNowPlaying = ""
+        invalidPacketsInRow = 0
     }
 
     /* ****************************************
@@ -333,6 +337,10 @@ class FFDecoder {
             }
 
             err = avcodec_send_packet(codecContext, packet)
+            if err == averror_invaliddata {
+                try skipInvalidPacket(error: err, function: "avcodec_send_packet")
+                continue
+            }
             if err < 0 {
                 throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_send_packet")
             }
@@ -340,9 +348,13 @@ class FFDecoder {
             err = avcodec_receive_frame(codecContext, frame)
             if err == -EAGAIN {
                 continue
+            } else if err == averror_invaliddata {
+                try skipInvalidPacket(error: err, function: "avcodec_receive_frame")
+                continue
             } else if err < 0 {
                 throw NSError(ffCode: err, message: internalErrorDescription, debug: "Error calling avcodec_receive_frame")
             }
+            invalidPacketsInRow = 0
 
             let dstNbSamples = av_rescale_rnd(
                 swr_get_delay(swrContext, Int64(codecContext.pointee.sample_rate)) + Int64(frame.pointee.nb_samples),
@@ -411,6 +423,20 @@ class FFDecoder {
             pcmBuffer.replaceSubrange(0 ..< toCopy, with: [])
         } else {
             pcmBuffer.removeAll()
+        }
+    }
+
+    /* ****************************************
+     * Live streams may contain corrupted packets, especially right after
+     * connecting in the middle of a stream. Skip them like ffmpeg does,
+     * and give up only if the stream keeps producing invalid data.
+     * ****************************************/
+    private func skipInvalidPacket(error: Int32, function: String) throws {
+        invalidPacketsInRow += 1
+        debug("[FFDecoder] Skip invalid packet (\(invalidPacketsInRow) in a row) from \(function)")
+
+        if invalidPacketsInRow >= maxInvalidPacketsInRow {
+            throw NSError(ffCode: error, message: internalErrorDescription, debug: "Too many invalid packets in a row, last error from \(function)")
         }
     }
 
