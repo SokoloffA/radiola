@@ -94,7 +94,11 @@ class StatusBarIcon {
         }
         state = st
 
-        frames = images[st]!
+        guard let newFrames = images[st], !newFrames.isEmpty else {
+            warning("StatusBarIcon: no images for state \(st)")
+            return
+        }
+        frames = newFrames
         currentFrame = 0
 
         if frames.count > 1 {
@@ -112,7 +116,10 @@ class StatusBarIcon {
     private func loadImages(_ names: [String]) -> [NSImage] {
         var res: [NSImage] = []
         for name in names {
-            guard let img = NSImage(named: NSImage.Name(name)) else { continue }
+            guard let img = NSImage(named: NSImage.Name(name)) else {
+                warning("StatusBarIcon: image \"\(name)\" not found")
+                continue
+            }
             img.size = NSSize(width: size, height: size)
             img.isTemplate = true
             res.append(img)
@@ -150,7 +157,7 @@ class StatusBarIcon {
      *
      * ****************************************/
     @objc private func changeIcon() {
-        guard let item = statusItem else { return }
+        guard let item = statusItem, !frames.isEmpty else { return }
         let cnt = frames.count
         item.button?.image = frames[currentFrame]
         currentFrame = (currentFrame + 1) % cnt
