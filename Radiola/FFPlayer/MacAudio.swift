@@ -184,6 +184,14 @@ class MacAudio {
             }
         }
 
+        // At low sample rates, the renderer can fill up before accepting the
+        // target number of preroll buffers. Start with the buffers it accepted
+        // so playback can drain the queue and make room for more data.
+        if !timeline.isStarted && timeline.buffersQueued > 0 && !renderer.isReadyForMoreMediaData {
+            startSynchronizer(synchronizer, at: timeline.prerollStartTime ?? timeline.nextPresentationTime)
+            timeline.isStarted = true
+        }
+
         // 4. ACTIVE STARVATION DETECTION
         // If the timeline was supposed to be running, but we failed to feed even a single frame during this cycle
         // because the ring buffer was completely drained, it means the network stream is starving.
