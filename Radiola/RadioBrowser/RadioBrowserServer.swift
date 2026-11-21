@@ -112,12 +112,13 @@ extension RadioBrowser {
             defer {
                 hostname.deallocate()
             }
-            let error = getnameinfo(pointee.ai_addr, pointee.ai_addrlen, hostname, socklen_t(NI_MAXHOST), nil, 0, 0)
+            // NI_NAMEREQD: we need a real host name, TLS certificates are not issued for bare IPs
+            let error = getnameinfo(pointee.ai_addr, pointee.ai_addrlen, hostname, socklen_t(NI_MAXHOST), nil, 0, NI_NAMEREQD)
             if error != 0 {
                 continue
             }
 
-            if let url = URL(string: "http://" + String(cString: hostname)) {
+            if let url = URL(string: "https://" + String(cString: hostname)) {
                 urls.insert(url)
             }
         }
